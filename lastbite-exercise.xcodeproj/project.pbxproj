@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		23351FFE2EA6168D0033FBF6 /* lastbite-exercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lastbite-exercise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23351FFE2EA6168D0033FBF6 /* Exa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Exa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "lastbite-exercise" target */ = {
+		2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "Exa" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 23351FFD2EA6168D0033FBF6 /* lastbite-exercise */;
+			target = 23351FFD2EA6168D0033FBF6 /* Exa */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -24,7 +24,7 @@
 		233520002EA6168D0033FBF6 /* lastbite-exercise */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "lastbite-exercise" target */,
+				2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "Exa" target */,
 			);
 			path = "lastbite-exercise";
 			sourceTree = "<group>";
@@ -53,7 +53,7 @@
 		23351FFF2EA6168D0033FBF6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				23351FFE2EA6168D0033FBF6 /* lastbite-exercise.app */,
+				23351FFE2EA6168D0033FBF6 /* Exa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,9 +61,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		23351FFD2EA6168D0033FBF6 /* lastbite-exercise */ = {
+		23351FFD2EA6168D0033FBF6 /* Exa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2335200C2EA6168E0033FBF6 /* Build configuration list for PBXNativeTarget "lastbite-exercise" */;
+			buildConfigurationList = 2335200C2EA6168E0033FBF6 /* Build configuration list for PBXNativeTarget "Exa" */;
 			buildPhases = (
 				23351FFA2EA6168D0033FBF6 /* Sources */,
 				23351FFB2EA6168D0033FBF6 /* Frameworks */,
@@ -77,11 +77,11 @@
 			fileSystemSynchronizedGroups = (
 				233520002EA6168D0033FBF6 /* lastbite-exercise */,
 			);
-			name = "lastbite-exercise";
+			name = Exa;
 			packageProductDependencies = (
 			);
 			productName = "lastbite-exercise";
-			productReference = 23351FFE2EA6168D0033FBF6 /* lastbite-exercise.app */;
+			productReference = 23351FFE2EA6168D0033FBF6 /* Exa.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -116,7 +116,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				23351FFD2EA6168D0033FBF6 /* lastbite-exercise */,
+				23351FFD2EA6168D0033FBF6 /* Exa */,
 			);
 		};
 /* End PBXProject section */
@@ -358,7 +358,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2335200C2EA6168E0033FBF6 /* Build configuration list for PBXNativeTarget "lastbite-exercise" */ = {
+		2335200C2EA6168E0033FBF6 /* Build configuration list for PBXNativeTarget "Exa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2335200D2EA6168E0033FBF6 /* Debug */,
