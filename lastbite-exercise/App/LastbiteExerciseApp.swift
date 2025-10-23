@@ -1,6 +1,6 @@
 //
 //  lastbite_exerciseApp.swift
-//  lastbite-exercise
+//  Exa
 //
 //  Created by Niken Larasati on 20/10/25.
 //
@@ -31,7 +31,7 @@ struct LastbiteExerciseApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FrequencyView()
         }
         .modelContainer(sharedModelContainer)
     }
