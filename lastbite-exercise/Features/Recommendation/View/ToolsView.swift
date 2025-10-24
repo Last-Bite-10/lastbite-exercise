@@ -36,7 +36,7 @@ struct ToolsView: View {
                 LazyVGrid(
                     columns: [
                         GridItem(.flexible(), spacing: -24),
-                        GridItem(.flexible()),
+                        GridItem(.flexible())
                     ],
                     spacing: 5,
                     content: {
