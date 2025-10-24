@@ -10,6 +10,7 @@ import SwiftUI
 
 @main
 struct LastbiteExerciseApp: App {
+<<<<<<< HEAD
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self
@@ -29,10 +30,11 @@ struct LastbiteExerciseApp: App {
         }
     }()
 
+=======
+>>>>>>> SMS-62-Navigasi-Aplikasi
     var body: some Scene {
         WindowGroup {
             FrequencyView()
         }
-        .modelContainer(sharedModelContainer)
     }
 }

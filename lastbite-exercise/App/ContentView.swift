@@ -9,10 +9,10 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @State private var selectedTab = 0
+    
     var body: some View {
+<<<<<<< HEAD
         NavigationSplitView {
             List {
                 ForEach(items) { item in
@@ -41,23 +41,17 @@ struct ContentView: View {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
+=======
+        TabView(selection: $selectedTab) {
+            MyExercise()
+            .tabItem {
+                Label("My Exercise", systemImage: "person.circle")
+>>>>>>> SMS-62-Navigasi-Aplikasi
             }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+            
+            MyProgress()
+            .tabItem {
+                Label("My Progress", systemImage: "person.circle")
             }
         }
     }
@@ -65,5 +59,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
