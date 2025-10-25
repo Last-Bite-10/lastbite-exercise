@@ -43,3 +43,26 @@ struct RecentHistoryView: View {
         }
     }
 }
+
+#Preview {
+    RecentHistoryView(historyItems: [HistoryItem(
+        minutes: 25,
+        totalMinutes: 30,
+        date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+    ),
+    HistoryItem(
+        minutes: 25,
+        totalMinutes: 30,
+        date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+    ),
+    HistoryItem(
+        minutes: 25,
+        totalMinutes: 30,
+        date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+    ),
+    HistoryItem(
+        minutes: 25,
+        totalMinutes: 30,
+        date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+    )])
+}

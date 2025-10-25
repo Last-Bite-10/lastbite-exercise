@@ -21,10 +21,14 @@ struct StreakView: View {
             HStack(spacing: 20) {
                 ForEach(0..<weeklyStreaks.count, id: \.self) { index in
                     VStack(spacing: 8) {
-                        Image(systemName: weeklyStreaks[index] ? "flame.fill" : "flame")
-                            .foregroundColor(weeklyStreaks[index] ? .orange : .gray.opacity(0.3))
-                            .font(.system(size: 24))
-                        
+                        ZStack {
+                            Circle()
+                                .fill(Color(.systemGray6))
+                            
+                            Image(systemName: weeklyStreaks[index] ? "flame.fill" : "flame")
+                                .foregroundColor(weeklyStreaks[index] ? .orange : .gray.opacity(0.8))
+                                .font(.system(size: 24))
+                        }
                         Text("W\(index + 1)")
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -33,8 +37,10 @@ struct StreakView: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
-            .background(Color(.systemGray6))
+            .background(Color(.white))
             .cornerRadius(12)
+            
+            Spacer()
             
             // No Streaks Message - hanya muncul jika tidak ada streak
             if !hasAnyStreak {
@@ -48,10 +54,10 @@ struct StreakView: View {
                             Image(systemName: "flame")
                                 .foregroundColor(.gray)
                             Text("No streaks yet!")
-                                .font(.headline)
+                                .font(.subheadline)
                         }
-                        Text("Start exercising to get\nthe fire going!")
-                            .font(.subheadline)
+                        Text("Start exercising to get the fire going!")
+                            .font(.caption)
                             .foregroundColor(.secondary)
                     }
                     
@@ -72,10 +78,10 @@ struct StreakView: View {
                         HStack {
                             Image(systemName: "flame")
                             Text("Keep the Streak Going!")
-                                .font(.headline)
+                                .font(.subheadline)
                         }
-                        Text("Start exercising to get\nthe fire going!")
-                            .font(.subheadline)
+                        Text("Start exercising to get the fire going!")
+                            .font(.caption)
                             .foregroundColor(.secondary)
                     }
                     
@@ -85,8 +91,16 @@ struct StreakView: View {
                 .background(Color.pink.opacity(0.1))
                 .cornerRadius(12)
             }
-            
         }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .fill(Color(.systemGray6))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .strokeBorder(Color(.systemGray4).opacity(0.4), lineWidth: 0.5)
+        )
     }
 }
 

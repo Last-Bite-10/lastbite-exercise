@@ -8,49 +8,59 @@
 import SwiftUI
 
 struct MyExercise: View {
-    @State private var weeklyStreaks = [true, true, true, false, true]
-    @State private var exercises = [
-        Exercise(name: "Brisk Walk", duration: 20, icon: "figure.walk"),
-        Exercise(name: "Cardio Dance", duration: 10, icon: "figure.dance")
-    ]
+    // State untuk data
+    @State private var weeklyStreaks = [true, true, false, true, false]
+    @State private var currentDate = Date()
+    @State private var progress: Double = 0.2
     @State private var completedMinutes = 2
     @State private var totalMinutes = 10
     @State private var historyItems = [
-        HistoryItem(minutes: 25, totalMinutes: 30, date: Calendar.current.date(byAdding: .day, value: -8, to: Date())!),
-        HistoryItem(minutes: 25, totalMinutes: 30, date: Calendar.current.date(byAdding: .day, value: -8, to: Date())!),
-        HistoryItem(minutes: 25, totalMinutes: 30, date: Calendar.current.date(byAdding: .day, value: -8, to: Date())!),
-        HistoryItem(minutes: 25, totalMinutes: 30, date: Calendar.current.date(byAdding: .day, value: -8, to: Date())!)
+        HistoryItem(
+            minutes: 25,
+            totalMinutes: 30,
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+        ),
+        HistoryItem(
+            minutes: 25,
+            totalMinutes: 30,
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+        ),
+        HistoryItem(
+            minutes: 25,
+            totalMinutes: 30,
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+        ),
+        HistoryItem(
+            minutes: 25,
+            totalMinutes: 30,
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+        )
     ]
-
+    
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ScrollView {
                 VStack(spacing: 24) {
                     // Streak Section
                     StreakView(weeklyStreaks: weeklyStreaks)
-
+                        .padding(.horizontal)
+                    
                     // Today's Plan Section
-                    TodaysPlanView(
-                        exercises: exercises,
+                    TodaysPlan(
+                        date: currentDate,
+                        progress: progress,
                         completedMinutes: completedMinutes,
-                        totalMinutes: totalMinutes,
-                        date: Date(),
-                        onStartExercise: { exercise in
-                            print("Starting exercise: \(exercise.name)")
-                            // Handle start exercise
-                        },
-                        onModify: {
-                            print("Modify plan tapped")
-                            // Handle modify
-                        }
+                        totalMinutes: totalMinutes
                     )
-
+                    
                     // Recent History Section
                     RecentHistoryView(historyItems: historyItems)
+                        .padding(.horizontal)
                 }
-                .padding()
+                .padding(.top)
             }
-            .navigationTitle(Text("My Exercise"))
+            .navigationTitle("My Exercise")
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }
