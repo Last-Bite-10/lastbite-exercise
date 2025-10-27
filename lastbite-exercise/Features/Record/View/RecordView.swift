@@ -1,6 +1,6 @@
 //
 //  HealthKitView.swift
-//  JogTrack
+//  Exa
 //
 //  Created by Ammar Alifian Fahdan on 20/10/25.
 //
@@ -13,7 +13,7 @@ func formatTime(duration: Int) -> String {
 }
 
 struct HealthKitView: View {
-//    @StateObject private var healthKitManager = HealthKitManager()
+    @StateObject private var healthKitManager = HealthKitManager()
     @State private var progress: CGFloat = 1.0
     @State private var activeTimeRemaining: Int
     @State private var timeRecorded: Int = 0
@@ -81,11 +81,11 @@ struct HealthKitView: View {
             .padding(.vertical, 36)
 
             VStack {
-                Button ("Pause") {
+                RecordPlayButton(title: "Pause") {
                     handlePauseExercise()
                 }
 
-                Button ("End") {
+                RecordPlayButton(title: "End") {
                     handleFinishExercise()
                 }
             }
@@ -95,7 +95,7 @@ struct HealthKitView: View {
             BPMNow = Double.random(in: 60...120)
 
             // TODO: get real BPM treshold
-            let BPMTreshold = 90.0
+            let BPMTreshold = 100.0
             isBPMUnder = BPMNow < BPMTreshold
             print("BPM Now: \(BPMNow), captured on: \(activeTimeRemaining)")
         }
@@ -103,9 +103,12 @@ struct HealthKitView: View {
             guard activeTimeRemaining > 0 else { return }
 
             timeRecorded += 1
-            
             if !isBPMUnder {
                 activeTimeRemaining -= 1
+            } else {
+                // trigger vibration
+                let generator = UIImpactFeedbackGenerator(style: .medium)
+                generator.impactOccurred()
             }
             progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
         }
