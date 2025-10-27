@@ -33,6 +33,5 @@ struct LastbiteExerciseApp: App {
         WindowGroup {
             FrequencyView()
         }
-        .modelContainer(sharedModelContainer)
     }
 }
