@@ -31,7 +31,7 @@ struct LastbiteExerciseApp: App {
 
     var body: some Scene {
         WindowGroup {
-            FrequencyView()
+            HomeView()
         }
     }
 }

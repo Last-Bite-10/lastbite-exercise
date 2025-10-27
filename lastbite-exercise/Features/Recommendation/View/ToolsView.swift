@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ToolsView: View {
     @State private var viewModel = RecommendationViewModel()
+    @Environment(HomeViewModel.self) private var homeViewModel
 
     var body: some View {
         NavigationStack {
@@ -60,7 +61,7 @@ struct ToolsView: View {
                 ).padding(.top, 48)
 
                 NavigationLink(
-                    destination: LocationView(),
+                    destination: LocationView().environment(homeViewModel),
                     label: {
                         RecommendationNavButtonLabel(
                             title: "Get Recommendation"
@@ -73,7 +74,10 @@ struct ToolsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(
-                        action: {},
+                        action: {
+                            homeViewModel.firstLaunch = false
+                            homeViewModel.currentView = .home
+                        },
                         label: {
                             Text("Skip")
                                 .foregroundColor(.red)
@@ -86,5 +90,5 @@ struct ToolsView: View {
 }
 
 #Preview {
-    ToolsView()
+    ToolsView().environment(HomeViewModel())
 }

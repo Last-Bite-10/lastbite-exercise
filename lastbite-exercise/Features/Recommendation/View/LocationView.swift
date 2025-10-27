@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LocationView: View {
     @State private var viewModel = RecommendationViewModel()
+    @Environment(HomeViewModel.self) private var homeViewModel
 
     var body: some View {
         NavigationStack {
@@ -35,8 +36,11 @@ struct LocationView: View {
                     )
                 }
 
-                NavigationLink(
-                    destination: Text("Home Screen"),
+                Button(
+                    action: {
+                        homeViewModel.firstLaunch = false
+                        homeViewModel.currentView = .home
+                    },
                     label: { RecommendationNavButtonLabel(title: "Next") }
                 ).padding(.top, 64)
 
@@ -44,8 +48,11 @@ struct LocationView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(
-                        destination: Text("Home Screen"),
+                    Button(
+                        action: {
+                            homeViewModel.firstLaunch = false
+                            homeViewModel.currentView = .home
+                        },
                         label: {
                             Text("Skip")
                                 .foregroundColor(.red)
@@ -58,5 +65,5 @@ struct LocationView: View {
 }
 
 #Preview {
-    LocationView()
+    LocationView().environment(HomeViewModel())
 }

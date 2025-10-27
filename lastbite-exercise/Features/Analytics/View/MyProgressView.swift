@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyProgress: View {
+struct MyProgressView: View {
     @State private var currentWeeklyMinutes = 15
     @State private var totalWeeklyMinutes = 30
     @State private var trophies = [
@@ -16,9 +16,9 @@ struct MyProgress: View {
         Trophy(milestone: 10, isAchieved: false),
         Trophy(milestone: 15, isAchieved: false),
         Trophy(milestone: 20, isAchieved: false),
-        Trophy(milestone: 25, isAchieved: false)
+        Trophy(milestone: 25, isAchieved: false),
     ]
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -27,10 +27,10 @@ struct MyProgress: View {
                     currentMinutes: currentWeeklyMinutes,
                     totalMinutes: totalWeeklyMinutes
                 )
-                
+
                 // Trophies Section
                 TrophiesView(trophies: trophies)
-                
+
                 Spacer()
             }
             .padding()
@@ -40,5 +40,5 @@ struct MyProgress: View {
 }
 
 #Preview {
-    MyProgress()
+    MyProgressView()
 }

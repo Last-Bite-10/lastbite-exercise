@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyExercise: View {
+struct MyExerciseView: View {
     // State untuk data
     @State private var weeklyStreaks = [true, true, false, true, false]
     @State private var currentDate = Date()
@@ -34,9 +34,9 @@ struct MyExercise: View {
             minutes: 25,
             totalMinutes: 30,
             date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
-        )
+        ),
     ]
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -44,7 +44,7 @@ struct MyExercise: View {
                     // Streak Section
                     StreakView(weeklyStreaks: weeklyStreaks)
                         .padding(.horizontal)
-                    
+
                     // Today's Plan Section
                     TodaysPlan(
                         date: currentDate,
@@ -52,7 +52,7 @@ struct MyExercise: View {
                         completedMinutes: completedMinutes,
                         totalMinutes: totalMinutes
                     )
-                    
+
                     // Recent History Section
                     RecentHistoryView(historyItems: historyItems)
                         .padding(.horizontal)
@@ -66,5 +66,5 @@ struct MyExercise: View {
 }
 
 #Preview {
-    MyExercise()
+    MyExerciseView()
 }

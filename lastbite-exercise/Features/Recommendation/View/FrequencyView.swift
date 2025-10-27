@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FrequencyView: View {
     @State private var viewModel = RecommendationViewModel()
+    @Environment(HomeViewModel.self) private var homeViewModel
 
     var body: some View {
         NavigationStack {
@@ -31,7 +32,7 @@ struct FrequencyView: View {
                 }
 
                 NavigationLink(
-                    destination: ToolsView(),
+                    destination: ToolsView().environment(homeViewModel),
                     label: { RecommendationNavButtonLabel(title: "Next") }
                 ).padding(.top, 64)
 
@@ -39,8 +40,11 @@ struct FrequencyView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(
-                        destination: Text("Home Screen"),
+                    Button(
+                        action: {
+                            homeViewModel.firstLaunch = false
+                            homeViewModel.currentView = .home
+                        },
                         label: {
                             Text("Skip")
                                 .foregroundColor(.red)
@@ -53,5 +57,5 @@ struct FrequencyView: View {
 }
 
 #Preview {
-    FrequencyView()
+    FrequencyView().environment(HomeViewModel())
 }
