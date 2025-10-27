@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct FrequencyView: View {
-    @State private var viewModel = RecommendationViewModel()
     @Environment(HomeViewModel.self) private var homeViewModel
+    @State private var viewModel = RecommendationViewModel()
 
     var body: some View {
         NavigationStack {
@@ -32,7 +32,9 @@ struct FrequencyView: View {
                 }
 
                 NavigationLink(
-                    destination: ToolsView().environment(homeViewModel),
+                    destination:
+                        ToolsView()
+                        .environment(homeViewModel),
                     label: { RecommendationNavButtonLabel(title: "Next") }
                 ).padding(.top, 64)
 
