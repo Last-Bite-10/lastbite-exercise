@@ -36,11 +36,11 @@ struct ToolsView: View {
                 LazyVGrid(
                     columns: [
                         GridItem(.flexible(), spacing: -24),
-                        GridItem(.flexible())
+                        GridItem(.flexible()),
                     ],
                     spacing: 5,
                     content: {
-                        ForEach(ToolsType.allCases, id: \.self) { type in
+                        ForEach(ToolType.allCases, id: \.self) { type in
                             RecommendationSelectionButton(
                                 title: type.rawValue,
                                 isSelected: viewModel.selectedTools.contains(
