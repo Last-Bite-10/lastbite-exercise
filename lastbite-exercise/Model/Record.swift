@@ -6,18 +6,70 @@
 //
 
 import Foundation
-import FoundationModels
+import SwiftData
 
-struct Record: Codable, Hashable {
+@Model
+class Record {
     var id: UUID
     var date: Date
-    var activetime: TimeInterval
-    var totalTime: TimeInterval
+    var weekNumber: Int
+    var activetime: TimeInterval?
+    var totalTime: TimeInterval?
     var targetTime: TimeInterval
-    var sportType: SportType
-}
+    var exercise: Exercise
 
-@Generable(description: "Type of sport activity")
-enum SportType: String, Codable, Hashable, CaseIterable {
-    case running
+    init(
+        date: Date,
+        weekNumber: Int,
+        chosenFrequency: FrequencyType,
+        exercise: Exercise
+    ) {
+        self.id = UUID()
+        self.date = date
+        self.weekNumber = weekNumber
+        self.targetTime = Record.getDistributedTargetTime(
+            chosenFrequency: chosenFrequency,
+            weekNumber: weekNumber
+        )
+        self.exercise = exercise
+    }
+
+    static private func getDistributedTargetTime(
+        chosenFrequency: FrequencyType,
+        weekNumber: Int
+    )
+        -> TimeInterval
+    {
+        switch chosenFrequency {
+        case .oneDay:
+            return getBaseTargetTime(weekNumber: weekNumber) / 1
+        case .twoDays:
+            return getBaseTargetTime(weekNumber: weekNumber) / 2
+        case .threeDays:
+            return getBaseTargetTime(weekNumber: weekNumber) / 3
+        case .fourDays:
+            return getBaseTargetTime(weekNumber: weekNumber) / 4
+        case .fiveDays:
+            return getBaseTargetTime(weekNumber: weekNumber) / 5
+        }
+    }
+
+    static private func getBaseTargetTime(weekNumber: Int) -> TimeInterval {
+        switch weekNumber {
+        case 1:
+            return 30
+        case 2:
+            return 36
+        case 3:
+            return 45
+        case 4:
+            return 60
+        case 5:
+            return 100
+        case 6:
+            return 120
+        default:
+            return 150
+        }
+    }
 }

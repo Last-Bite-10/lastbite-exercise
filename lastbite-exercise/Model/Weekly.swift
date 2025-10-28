@@ -6,19 +6,21 @@
 //
 
 import Foundation
+import SwiftData
 
-struct Weekly: Codable, Hashable {
+@Model
+class Weekly {
     var id: UUID
     var weekNumber: Int
     var startDate: Date
-    var endDate: Date
-    var frequency: FrequencyType
-}
+    var endDate: Date?
 
-enum FrequencyType: String, Codable, Hashable, CaseIterable {
-    case oneDay = "1 Day (30 Minutes per Day)"
-    case twoDays = "2 Day (15 Minutes per Day)"
-    case threeDays = "3 Days (10 Minutes per Day)"
-    case fourDays = "4 Days (8 Minutes per Day)"
-    case fiveDays = "5 Days (6 Minutes per Day)"
+    init(
+        weekNumber: Int,
+        startDate: Date,
+    ) {
+        self.id = UUID()
+        self.weekNumber = weekNumber
+        self.startDate = startDate
+    }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecommendationNavButtonLabel: View {
+struct QuestionnaireNavButtonLabel: View {
     var title: String
 
     var body: some View {
@@ -27,11 +27,11 @@ struct RecommendationNavButtonLabel: View {
 
 #Preview {
     VStack(spacing: 16) {
-        RecommendationNavButtonLabel(
+        QuestionnaireNavButtonLabel(
             title: "1 Day (30 Minutes per Day)"
         )
         .padding(.horizontal)
-        RecommendationNavButtonLabel(title: "Get Recommendation")
+        QuestionnaireNavButtonLabel(title: "Get Recommendation")
             .padding(.horizontal)
     }
 }

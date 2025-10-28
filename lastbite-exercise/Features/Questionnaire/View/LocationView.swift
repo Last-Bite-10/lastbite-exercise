@@ -5,15 +5,18 @@
 //  Created by Ali Ahmad Fahrezy on 23/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct LocationView: View {
-    @Environment(HomeViewModel.self) private var homeViewModel
-    @State private var viewModel = RecommendationViewModel()
+    @Environment(QuestionnaireViewModel.self) private var viewModel
+    @Environment(\.modelContext) private var modelContext
+    @Query private var preferences: [Preference]
+    @Binding var showQuestionnaire: Bool
 
     var body: some View {
         VStack(spacing: 10) {
-            Text("Choose your preferred frequency")
+            Text("Help us determined what exercise plan is perfect for you!")
                 .font(Font.headline)
 
             Image(systemName: "house.fill")
@@ -27,7 +30,7 @@ struct LocationView: View {
                 .padding(.bottom, 48)
 
             ForEach(LocationType.allCases, id: \.self) { type in
-                RecommendationSelectionButton(
+                QuestionnaireSelectionButton(
                     title: type.rawValue,
                     isSelected: viewModel.selectedLocation == type,
                     widthReduction: 160,
@@ -37,10 +40,20 @@ struct LocationView: View {
 
             Button(
                 action: {
-                    homeViewModel.firstLaunch = false
-                    homeViewModel.currentView = .home
+                    if let existingPreference = preferences.first {
+                        modelContext.delete(existingPreference)
+                    }
+
+                    let preference = Preference(
+                        isUsingPlan: true,
+                        equipments: viewModel.selectedEquipment,
+                        location: viewModel.selectedLocation,
+                        frequency: viewModel.selectedFrequency
+                    )
+                    modelContext.insert(preference)
+                    showQuestionnaire = false
                 },
-                label: { RecommendationNavButtonLabel(title: "Next") }
+                label: { QuestionnaireNavButtonLabel(title: "Done") }
             ).padding(.top, 64)
 
             Spacer()
@@ -49,8 +62,7 @@ struct LocationView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        homeViewModel.firstLaunch = false
-                        homeViewModel.currentView = .home
+                        showQuestionnaire = false
                     },
                     label: {
                         Text("Skip")
@@ -63,5 +75,6 @@ struct LocationView: View {
 }
 
 #Preview {
-    LocationView().environment(HomeViewModel())
+    LocationView(showQuestionnaire: .constant(true))
+        .environment(QuestionnaireViewModel())
 }

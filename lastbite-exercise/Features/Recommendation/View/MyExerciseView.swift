@@ -5,9 +5,12 @@
 //  Created by Ali Ahmad Fahrezy on 22/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct MyExerciseView: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var currentWeekly: Weekly?
     // State untuk data
     @State private var weeklyStreaks = [true, true, false, true, false]
     @State private var currentDate = Date()
@@ -36,6 +39,10 @@ struct MyExerciseView: View {
             date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
         ),
     ]
+    @Query private var weekly: [Weekly]
+
+    init() {
+    }
 
     var body: some View {
         NavigationView {
@@ -46,12 +53,7 @@ struct MyExerciseView: View {
                         .padding(.horizontal)
 
                     // Today's Plan Section
-                    TodaysPlan(
-                        date: currentDate,
-                        progress: progress,
-                        completedMinutes: completedMinutes,
-                        totalMinutes: totalMinutes
-                    )
+                    TodaysPlan()
 
                     // Recent History Section
                     RecentHistoryView(historyItems: historyItems)

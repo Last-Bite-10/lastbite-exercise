@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ToolsView: View {
-    @Environment(HomeViewModel.self) private var homeViewModel
-    @State private var viewModel = RecommendationViewModel()
+struct EquipmentView: View {
+    @Environment(QuestionnaireViewModel.self) private var viewModel
+    @Binding var showQuestionnaire: Bool
 
     var body: some View {
         VStack(spacing: 10) {
@@ -40,18 +40,20 @@ struct ToolsView: View {
                 ],
                 spacing: 5,
                 content: {
-                    ForEach(ToolType.allCases, id: \.self) { type in
-                        RecommendationSelectionButton(
+                    ForEach(EquipmentType.allCases, id: \.self) { type in
+                        QuestionnaireSelectionButton(
                             title: type.rawValue,
-                            isSelected: viewModel.selectedTools.contains(
+                            isSelected: viewModel.selectedEquipment.contains(
                                 type
                             ),
                             widthReduction: 240,
                             action: {
-                                if viewModel.selectedTools.contains(type) {
-                                    viewModel.selectedTools.remove(type)
+                                if viewModel.selectedEquipment.contains(type) {
+                                    viewModel.selectedEquipment.removeAll {
+                                        $0 == type
+                                    }
                                 } else {
-                                    viewModel.selectedTools.insert(type)
+                                    viewModel.selectedEquipment.append(type)
                                 }
                             }
                         )
@@ -60,9 +62,10 @@ struct ToolsView: View {
             ).padding(.top, 48)
 
             NavigationLink(
-                destination: LocationView().environment(homeViewModel),
+                destination: LocationView(showQuestionnaire: $showQuestionnaire)
+                    .environment(viewModel),
                 label: {
-                    RecommendationNavButtonLabel(
+                    QuestionnaireNavButtonLabel(
                         title: "Get Recommendation"
                     )
                 }
@@ -74,8 +77,7 @@ struct ToolsView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        homeViewModel.firstLaunch = false
-                        homeViewModel.currentView = .home
+                        showQuestionnaire = false
                     },
                     label: {
                         Text("Skip")
@@ -88,5 +90,6 @@ struct ToolsView: View {
 }
 
 #Preview {
-    ToolsView()
+    EquipmentView(showQuestionnaire: .constant(true))
+        .environment(QuestionnaireViewModel())
 }

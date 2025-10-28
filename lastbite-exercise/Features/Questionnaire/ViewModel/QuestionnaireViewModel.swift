@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-@Observable class RecommendationViewModel {
+@Observable class QuestionnaireViewModel {
     var selectedFrequency: FrequencyType = .oneDay
-    var selectedTools: Set<ToolType> = []
+    var selectedEquipment: [EquipmentType] = []
     var selectedLocation: LocationType = .indoor
 }

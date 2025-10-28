@@ -5,14 +5,49 @@
 //  Created by Ali Ahmad Fahrezy on 23/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct TodaysPlan: View {
-    // Sample data
-    let date: Date
-    let progress: Double  // 0...1
-    let completedMinutes: Int
-    let totalMinutes: Int
+    @State private var tfModel: TFIDFRecommenderViewModel
+    @State private var weekNumber: Int = 1
+    @State private var currentRecords: [Record]
+    @Query private var records: [Record]
+    @Query private var preference: [Preference]
+    @Environment(\.modelContext) private var modelContext
+
+    let progress = 0.2
+    let completedMinutes = 2
+    let totalMinutes = 10
+
+    private let date: Date = .now
+
+    init() {
+        _tfModel = State(
+            initialValue: TFIDFRecommenderViewModel(preference.first!)
+        )
+        if records.isEmpty {
+            let firstRecord = Record(
+                date: date,
+                weekNumber: weekNumber,
+                chosenFrequency: preference.first!.frequency,
+                exercise: tfModel.recommendedExercises.first!
+            )
+            let secondRecord = Record(
+                date: date,
+                weekNumber: weekNumber,
+                chosenFrequency: preference.first!.frequency,
+                exercise: tfModel.recommendedExercises[1]
+            )
+            _currentRecords = State(initialValue: [firstRecord, secondRecord])
+            modelContext.insert(firstRecord)
+            modelContext.insert(secondRecord)
+        } else {
+            _currentRecords = State(
+                initialValue: records.suffix(2)
+            )
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -20,9 +55,13 @@ struct TodaysPlan: View {
             progressSection
             Divider().padding(.horizontal, 8)
             VStack(spacing: 20) {
-                ExerciseRow(title: "Bicycling", duration: 20, action: {})
-                Divider()
-                ExerciseRow(title: "Squats", duration: 10, action: {})
+                ForEach(currentRecords) { record in
+                    ExerciseRow(
+                        title: record.exercise.name,
+                        duration: Int(record.targetTime),
+                        action: {}
+                    )
+                }
             }
         }
         .padding(20)
@@ -157,13 +196,5 @@ struct ProgressBar: View {
 }
 
 #Preview {
-    TodaysPlan(
-        date: Calendar.current.date(
-            from: DateComponents(year: 2025, month: 10, day: 16)
-        ) ?? .now,
-        progress: 0.2,
-        completedMinutes: 2,
-        totalMinutes: 10
-    )
-    .tint(Color(#colorLiteral(red: 0.113, green: 0.356, blue: 0.617, alpha: 1)))
+    TodaysPlan()
 }

@@ -9,14 +9,13 @@ import SwiftData
 import SwiftUI
 
 struct HomeView: View {
-    @State private var viewModel = HomeViewModel()
     @State private var selectedTab = 0
+    @State private var showQuestionnaire = true
 
     var body: some View {
-        if viewModel.firstLaunch || viewModel.currentView == .questionnaire {
-            FrequencyView()
-                .environment(viewModel)
-        } else if viewModel.currentView == .home {
+        if showQuestionnaire {
+            FrequencyView(showQuestionnaire: $showQuestionnaire)
+        } else {
             TabView(selection: $selectedTab) {
                 MyExerciseView()
                     .tabItem {

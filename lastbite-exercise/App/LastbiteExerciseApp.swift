@@ -12,7 +12,8 @@ import SwiftUI
 struct LastbiteExerciseApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            User.self
+            Preference.self,
+            Weekly.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,
