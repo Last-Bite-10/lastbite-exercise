@@ -13,23 +13,59 @@ func formatTime(duration: Int) -> String {
     return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
 }
 
-struct HealthKitView: View {
+struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
     @State private var progress: CGFloat = 1.0
     @State private var activeTimeRemaining: Int
     @State private var timeRecorded: Int = 0
-    @State private var isPaused: Bool = false
+    @State private var isPaused: Bool = true
     @State private var isBPMUnder: Bool = false
     @State private var cancellables = Set<AnyCancellable>()
+    @State private var timerCancellable: AnyCancellable?
 
     let totalTime: Int
-    let activeTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     func handleFinishExercise() {
+        // Stop the timer
+        timerCancellable?.cancel()
+        timerCancellable = nil
+        
+        // Stop heart rate monitoring
         healthKitManager.stopWatchHeartRateMonitoring()
+        
+        // TODO: Save workout data or navigate away
+        // You might want to save the workout here or dismiss the view
     }
 
-    func handlePauseExercise() {}
+    func handlePauseExercise() {
+        isPaused.toggle()
+        
+        if isPaused {
+            // Pause: cancel the timer
+            timerCancellable?.cancel()
+            timerCancellable = nil
+        } else {
+            // Resume: restart the timer
+            startTimer()
+        }
+    }
+    
+    func startTimer() {
+        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                guard activeTimeRemaining > 0 else {
+                    handleFinishExercise()
+                    return
+                }
+
+                timeRecorded += 1
+                if !isBPMUnder {
+                    activeTimeRemaining -= 1
+                }
+                progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
+            }
+    }
 
     init(totalTime: Int) {
         self.totalTime = totalTime
@@ -92,11 +128,11 @@ struct HealthKitView: View {
             .padding(.vertical, 36)
 
             VStack {
-                RecordPlayButton(title: "Pause") {
+                RecordPlayButton(title: isPaused ? "Start" : "Pause") {
                     handlePauseExercise()
                 }
 
-                RecordPlayButton(title: "End") {
+                Button("End") {
                     handleFinishExercise()
                 }
             }
@@ -119,21 +155,19 @@ struct HealthKitView: View {
                 .store(in: &cancellables)
         }
         .onDisappear {
+            // Clean up timer
+            timerCancellable?.cancel()
+            timerCancellable = nil
+            
+            // Stop heart rate monitoring
             healthKitManager.stopWatchHeartRateMonitoring()
+            
+            // Clear subscriptions
             cancellables.removeAll()
-        }
-        .onReceive(activeTimer) { _ in
-            guard activeTimeRemaining > 0 else { return }
-
-            timeRecorded += 1
-            if !isBPMUnder {
-                activeTimeRemaining -= 1
-            }
-            progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
         }
     }
 }
 
 #Preview {
-    HealthKitView(totalTime: 300)
+    RecordView(totalTime: 300)
 }

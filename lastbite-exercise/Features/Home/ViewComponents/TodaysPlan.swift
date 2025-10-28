@@ -13,6 +13,18 @@ struct TodaysPlan: View {
     let progress: Double  // 0...1
     let completedMinutes: Int
     let totalMinutes: Int
+    
+    // TODO: change to a real Sport struct type
+    struct SportItem: Identifiable {
+        let id = UUID()
+        let sport: String
+        let time: Int
+    }
+    
+    // TODO: selected sport still in String, would need to change to specific data type
+    // Also ExerciseRow is still passed as a static data.
+    // On SwiftData implementation, please change this onto a more dynamic approach
+    @State private var selectedSport: SportItem?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -20,9 +32,13 @@ struct TodaysPlan: View {
             progressSection
             Divider().padding(.horizontal, 8)
             VStack(spacing: 20) {
-                ExerciseRow(title: "Bicycling", duration: 20, action: {})
+                ExerciseRow(title: "Bicycling", duration: 20, action: {
+                        selectedSport = SportItem(sport: "Bicycling", time: 20)
+                })
                 Divider()
-                ExerciseRow(title: "Squats", duration: 10, action: {})
+                ExerciseRow(title: "Squats", duration: 10, action: {
+                    selectedSport = SportItem(sport: "Squats", time: 10)
+                })
             }
         }
         .padding(20)
@@ -35,6 +51,9 @@ struct TodaysPlan: View {
                 .strokeBorder(Color(.systemGray4).opacity(0.4), lineWidth: 0.5)
         )
         .padding()
+        .sheet(item: $selectedSport) { sport in
+            RecordView(totalTime: sport.time * 60)
+        }
     }
 
     private var header: some View {
