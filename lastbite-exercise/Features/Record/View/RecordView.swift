@@ -77,12 +77,12 @@ struct RecordView: View {
             ZStack {
                 // Background circle
                 Circle()
-                    .stroke(Color.accentColor.opacity(0.2), lineWidth: 30)
+                    .stroke(!isPaused ? Color.accentColor.opacity(0.2) : Color.gray2.opacity(1), lineWidth: 30)
 
                 // Progress circle
                 Circle()
                     .trim(from: 0, to: progress)
-                    .stroke(Color.blue2, style: StrokeStyle(lineWidth: 30, lineCap: .round))
+                    .stroke(!isPaused ? Color.blue2 : Color.gray3, style: StrokeStyle(lineWidth: 30, lineCap: .round))
                     .rotationEffect(.degrees(-90))
                     .animation(.easeInOut(duration: 0.5), value: progress)
 
@@ -169,5 +169,5 @@ struct RecordView: View {
 }
 
 #Preview {
-    RecordView(totalTime: 300)
+    RecordView(totalTime: 100)
 }
