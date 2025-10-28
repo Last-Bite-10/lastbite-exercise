@@ -11,7 +11,7 @@ struct RecordPlayButton: View {
     var action: () -> Void
 
     var body: some View {
-        Button(action: action){
+        Button(action: action) {
             Text(title)
                 .font(.body)
                 .padding(.vertical, 12)

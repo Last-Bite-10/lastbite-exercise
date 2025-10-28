@@ -7,6 +7,7 @@
 
 import SwiftUI
 import HealthKit
+import Combine
 
 func formatTime(duration: Int) -> String {
     return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
@@ -19,15 +20,13 @@ struct HealthKitView: View {
     @State private var timeRecorded: Int = 0
     @State private var isPaused: Bool = false
     @State private var isBPMUnder: Bool = false
-    @State private var BPMNow: Double = Double.random(in: 60...120)
+    @State private var cancellables = Set<AnyCancellable>()
 
     let totalTime: Int
     let activeTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    let BPMTimer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
 
     func handleFinishExercise() {
-//        isPaused = true
-//        activeTimer.
+        healthKitManager.stopWatchHeartRateMonitoring()
     }
 
     func handlePauseExercise() {}
@@ -62,12 +61,24 @@ struct HealthKitView: View {
                     VStack {
                         Text("BPM")
 
-                        Text("\(Int(BPMNow))")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                isBPMUnder ? Color.red : Color.black
-                        )
+                        if let bpm = healthKitManager.latestBPM {
+                            Text("\(Int(bpm))")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundStyle(
+                                    isBPMUnder ? Color.red : Color.black
+                                )
+                        } else {
+                            Text("--")
+                                .font(.title)
+                                .fontWeight(.bold)
+                        }
+                        
+                        if healthKitManager.isReceivingFromWatch {
+                            Image(systemName: "applewatch")
+                                .foregroundStyle(.blue)
+                                .font(.caption)
+                        }
                     }
                 }
             }
@@ -90,14 +101,26 @@ struct HealthKitView: View {
                 }
             }
         }
-        .onReceive(BPMTimer) { _ in
-            // TODO: change to a real HealthKit provider
-            BPMNow = Double.random(in: 60...120)
-
-            // TODO: get real BPM treshold
-            let BPMTreshold = 100.0
-            isBPMUnder = BPMNow < BPMTreshold
-            print("BPM Now: \(BPMNow), captured on: \(activeTimeRemaining)")
+        .onAppear {
+            // Start receiving BPM from Watch
+            healthKitManager.startWatchHeartRateMonitoring()
+            
+            // Subscribe to BPM updates
+            healthKitManager.bpmPublisher
+                .sink { bpm in
+                    let BPMThreshold = 100.0
+                    isBPMUnder = bpm < BPMThreshold
+                    
+                    if isBPMUnder {
+                        let generator = UIImpactFeedbackGenerator(style: .medium)
+                        generator.impactOccurred()
+                    }
+                }
+                .store(in: &cancellables)
+        }
+        .onDisappear {
+            healthKitManager.stopWatchHeartRateMonitoring()
+            cancellables.removeAll()
         }
         .onReceive(activeTimer) { _ in
             guard activeTimeRemaining > 0 else { return }
@@ -105,10 +128,6 @@ struct HealthKitView: View {
             timeRecorded += 1
             if !isBPMUnder {
                 activeTimeRemaining -= 1
-            } else {
-                // trigger vibration
-                let generator = UIImpactFeedbackGenerator(style: .medium)
-                generator.impactOccurred()
             }
             progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
         }
