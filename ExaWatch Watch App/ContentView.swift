@@ -8,14 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var healthManager = WatchHealthManager()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
+        VStack(spacing: 16) {
+            Image(systemName: "heart.fill")
                 .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+                .foregroundStyle(.red)
+            
+            Text("\(Int(healthManager.heartRate))")
+                .font(.system(size: 60, weight: .bold, design: .rounded))
+            
+            Text("BPM")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
         .padding()
+        .onAppear {
+            healthManager.requestAuthorization()
+            healthManager.startStreaming()
+        }
+        .onDisappear {
+            healthManager.stopStreaming()
+        }
     }
 }
 

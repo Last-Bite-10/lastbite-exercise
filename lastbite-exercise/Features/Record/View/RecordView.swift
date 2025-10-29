@@ -13,6 +13,13 @@ func formatTime(duration: Int) -> String {
     return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
 }
 
+enum TimerStatus {
+    case timerPaused
+    case timerStarted
+    case timerStopped
+    case timerOverflown
+}
+
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
     @State private var progress: CGFloat = 1.0
@@ -22,6 +29,7 @@ struct RecordView: View {
     @State private var isBPMUnder: Bool = false
     @State private var cancellables = Set<AnyCancellable>()
     @State private var timerCancellable: AnyCancellable?
+    @State private var timerStatus: TimerStatus = .timerPaused
 
     let totalTime: Int
 
@@ -44,6 +52,7 @@ struct RecordView: View {
             // Pause: cancel the timer
             timerCancellable?.cancel()
             timerCancellable = nil
+            timerStatus = .timerPaused
         } else {
             // Resume: restart the timer
             startTimer()
@@ -65,6 +74,7 @@ struct RecordView: View {
                 }
                 progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
             }
+        timerStatus = .timerStarted
     }
 
     init(totalTime: Int) {

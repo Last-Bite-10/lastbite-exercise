@@ -583,12 +583,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "ExaWatch Watch App/ExaWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kerupuksambel.lastbite;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -616,12 +619,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "ExaWatch Watch App/ExaWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kerupuksambel.lastbite;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -652,6 +658,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need this data to track your BPM.";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kerupuksambel.ExaWatch-Watch-AppTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -675,6 +682,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need this data to track your BPM.";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kerupuksambel.ExaWatch-Watch-AppTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
