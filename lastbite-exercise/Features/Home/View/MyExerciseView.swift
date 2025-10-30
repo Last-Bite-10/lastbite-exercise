@@ -18,22 +18,38 @@ struct MyExercise: View {
         HistoryItem(
             minutes: 25,
             totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
+            entries: [
+                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
+                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
+            ]
         ),
         HistoryItem(
             minutes: 25,
             totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
+            entries: [
+                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
+                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
+            ]
         ),
         HistoryItem(
             minutes: 25,
             totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
+            entries: [
+                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
+                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
+            ]
         ),
         HistoryItem(
             minutes: 25,
             totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
+            entries: [
+                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
+                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
+            ]
         )
     ]
     
@@ -55,9 +71,8 @@ struct MyExercise: View {
                     
                     // Recent History Section
                     RecentHistoryView(historyItems: historyItems)
-                        .padding(.horizontal)
+                       
                 }
-                .padding(.top)
             }
             .navigationTitle("My Exercise")
             .navigationBarTitleDisplayMode(.large)
