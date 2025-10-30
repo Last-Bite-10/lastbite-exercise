@@ -214,7 +214,7 @@ struct Exercise {
                 needsTutorial: false,
                 equipment: "Volleyball",
                 weather: "Avoid strong wind"
-            ),
+            )
         ]
     }
 }

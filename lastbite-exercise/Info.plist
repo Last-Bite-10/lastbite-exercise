@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>We would need this information to get the BPM for your training.</string>
-	<key>NSHealthShareUsageDescription</key>
-	<string>We would need this information to get the BPM for your training.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -16,6 +16,8 @@ struct LocationView: View {
         VStack(spacing: 10) {
             Text("Help us determined what exercise plan is perfect for you!")
                 .font(Font.headline)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 300)
 
             Image(systemName: "house.fill")
                 .resizable()

@@ -9,9 +9,9 @@ import SwiftUI
 import HealthKit
 import Combine
 
-//func formatTime(duration: Int) -> String {
+// func formatTime(duration: Int) -> String {
 //    return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
-//}
+// }
 
 enum TimerStatus {
     case timerPaused

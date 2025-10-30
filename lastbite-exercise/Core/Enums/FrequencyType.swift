@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  FrequencyType.swift
 //  Exa
 //
 //  Created by Ali Ahmad Fahrezy on 30/10/25.
