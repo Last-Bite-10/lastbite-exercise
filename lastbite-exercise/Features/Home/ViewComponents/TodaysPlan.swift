@@ -5,6 +5,7 @@
 //  Created by Ali Ahmad Fahrezy on 30/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct TodaysPlan: View {

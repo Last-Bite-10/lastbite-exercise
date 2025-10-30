@@ -1,5 +1,5 @@
 //
-//  LocationView.swift
+//  FrequencyView.swift
 //  Exa
 //
 //  Created by Ali Ahmad Fahrezy on 23/10/25.
@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct LocationView: View {
-    @State private var viewModel = RecommendationViewModel()
+struct FrequencyView: View {
+    @State private var viewModel = QuestionnaireViewModel()
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         NavigationStack {
@@ -16,36 +17,36 @@ struct LocationView: View {
                 Text("Choose your preferred frequency")
                     .font(Font.headline)
 
-                Image(systemName: "house.fill")
+                Image(systemName: "clock")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 150, height: 210)
                     .foregroundStyle(Color.accentColor)
 
-                Text("Where do you prefer to do your exercise?")
-                    .font(.body)
-                    .padding(.bottom, 48)
-
-                ForEach(LocationType.allCases, id: \.self) { type in
-                    RecommendationSelectionButton(
+                ForEach(FrequencyType.allCases, id: \.self) { type in
+                    QuestionnaireSelectionButton(
                         title: type.rawValue,
-                        isSelected: viewModel.selectedLocation == type,
-                        widthReduction: 160,
-                        action: { viewModel.selectedLocation = type }
+                        isSelected: viewModel.selectedFrequency == type,
+                        action: { viewModel.selectedFrequency = type }
                     )
                 }
 
                 NavigationLink(
-                    destination: Text("Home Screen"),
-                    label: { RecommendationNavButtonLabel(title: "Next") }
+                    destination:
+                        EquipmentView()
+                        .environment(viewModel),
+                    label: { QuestionnaireNavButtonLabel(title: "Next") }
                 ).padding(.top, 64)
 
                 Spacer()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(
-                        destination: Text("Home Screen"),
+                    Button(
+                        action: {
+                            let preference = Preference()
+                            modelContext.insert(preference)
+                        },
                         label: {
                             Text("Skip")
                                 .foregroundColor(.red)
@@ -58,5 +59,5 @@ struct LocationView: View {
 }
 
 #Preview {
-    LocationView()
+    FrequencyView()
 }

@@ -28,12 +28,5 @@ struct RecordPlayButton: View {
 }
 
 #Preview {
-    VStack(spacing: 16) {
-        RecommendationNavButtonLabel(
-            title: "1 Day (30 Minutes per Day)"
-        )
-        .padding(.horizontal)
-        RecommendationNavButtonLabel(title: "Get Recommendation")
-            .padding(.horizontal)
-    }
+    RecordPlayButton(title: "Record", action: {})
 }

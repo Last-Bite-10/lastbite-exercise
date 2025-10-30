@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyExercise: View {
+struct MyExerciseView: View {
     // State untuk data
     @State private var weeklyStreaks = [true, true, false, true, false]
     @State private var currentDate = Date()
@@ -62,12 +62,7 @@ struct MyExercise: View {
                         .padding(.horizontal)
                     
                     // Today's Plan Section
-                    TodaysPlan(
-                        date: currentDate,
-                        progress: progress,
-                        completedMinutes: completedMinutes,
-                        totalMinutes: totalMinutes
-                    )
+                    TodaysPlan()
                     
                     // Recent History Section
                     RecentHistoryView(historyItems: historyItems)
@@ -81,5 +76,5 @@ struct MyExercise: View {
 }
 
 #Preview {
-    MyExercise()
+    MyExerciseView()
 }

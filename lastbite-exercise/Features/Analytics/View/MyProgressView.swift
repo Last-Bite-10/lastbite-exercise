@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyProgress: View {
+struct MyProgressView: View {
     @State private var currentWeeklyMinutes = 15
     @State private var totalWeeklyMinutes = 30
     @State private var trophies = [
@@ -40,5 +40,5 @@ struct MyProgress: View {
 }
 
 #Preview {
-    MyProgress()
+    MyProgressView()
 }
