@@ -12,7 +12,7 @@ import SwiftUI
 struct LastbiteExerciseApp: App {
     var body: some Scene {
         WindowGroup {
-            FrequencyView()
+            ContentView()
         }
     }
 }
