@@ -40,8 +40,6 @@ struct StreakView: View {
             .background(Color(.white))
             .cornerRadius(12)
             
-            Spacer()
-            
             // No Streaks Message - hanya muncul jika tidak ada streak
             if !hasAnyStreak {
                 HStack(spacing: 16) {
@@ -60,8 +58,6 @@ struct StreakView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
-                    
-                    Spacer()
                 }
                 .padding()
                 .background(Color.pink.opacity(0.1))
@@ -84,8 +80,6 @@ struct StreakView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
-                    
-                    Spacer()
                 }
                 .padding()
                 .background(Color.pink.opacity(0.1))
