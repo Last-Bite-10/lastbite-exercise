@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecommendationSelectionButton: View {
+struct QuestionnaireSelectionButton: View {
     var title: String
     var isSelected: Bool = false
     var widthReduction: CGFloat = 64
@@ -35,9 +35,9 @@ struct RecommendationSelectionButton: View {
 
 #Preview {
     VStack(spacing: 16) {
-        RecommendationSelectionButton(title: "1 Day (30 Minutes per Day)") {}
+        QuestionnaireSelectionButton(title: "1 Day (30 Minutes per Day)") {}
             .padding(.horizontal)
-        RecommendationSelectionButton(title: "Get Recommendation") {}
+        QuestionnaireSelectionButton(title: "Get Recommendation") {}
             .padding(.horizontal)
     }
 }

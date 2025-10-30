@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct FrequencyView: View {
-    @State private var viewModel = RecommendationViewModel()
+    @State private var viewModel = QuestionnaireViewModel()
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         NavigationStack {
@@ -23,7 +24,7 @@ struct FrequencyView: View {
                     .foregroundStyle(Color.accentColor)
 
                 ForEach(FrequencyType.allCases, id: \.self) { type in
-                    RecommendationSelectionButton(
+                    QuestionnaireSelectionButton(
                         title: type.rawValue,
                         isSelected: viewModel.selectedFrequency == type,
                         action: { viewModel.selectedFrequency = type }
@@ -31,16 +32,21 @@ struct FrequencyView: View {
                 }
 
                 NavigationLink(
-                    destination: ToolsView(),
-                    label: { RecommendationNavButtonLabel(title: "Next") }
+                    destination:
+                        EquipmentView()
+                        .environment(viewModel),
+                    label: { QuestionnaireNavButtonLabel(title: "Next") }
                 ).padding(.top, 64)
 
                 Spacer()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(
-                        destination: Text("Home Screen"),
+                    Button(
+                        action: {
+                            let preference = Preference()
+                            modelContext.insert(preference)
+                        },
                         label: {
                             Text("Skip")
                                 .foregroundColor(.red)
