@@ -9,9 +9,9 @@ import SwiftUI
 import HealthKit
 import Combine
 
-func formatTime(duration: Int) -> String {
-    return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
-}
+//func formatTime(duration: Int) -> String {
+//    return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
+//}
 
 enum TimerStatus {
     case timerPaused
@@ -22,64 +22,12 @@ enum TimerStatus {
 
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
-    @State private var progress: CGFloat = 1.0
-    @State private var activeTimeRemaining: Int
-    @State private var timeRecorded: Int = 0
-    @State private var isPaused: Bool = true
-    @State private var isBPMUnder: Bool = false
-    @State private var cancellables = Set<AnyCancellable>()
-    @State private var timerCancellable: AnyCancellable?
-    @State private var timerStatus: TimerStatus = .timerPaused
-
-    let totalTime: Int
-
-    func handleFinishExercise() {
-        // Stop the timer
-        timerCancellable?.cancel()
-        timerCancellable = nil
-        
-        // Stop heart rate monitoring
-        healthKitManager.stopWatchHeartRateMonitoring()
-        
-        // TODO: Save workout data or navigate away
-        // You might want to save the workout here or dismiss the view
-    }
-
-    func handlePauseExercise() {
-        isPaused.toggle()
-        
-        if isPaused {
-            // Pause: cancel the timer
-            timerCancellable?.cancel()
-            timerCancellable = nil
-            timerStatus = .timerPaused
-        } else {
-            // Resume: restart the timer
-            startTimer()
-        }
-    }
+    @StateObject private var viewModel: RecordViewModel
     
-    func startTimer() {
-        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
-            .autoconnect()
-            .sink { _ in
-                guard activeTimeRemaining > 0 else {
-                    handleFinishExercise()
-                    return
-                }
-
-                timeRecorded += 1
-                if !isBPMUnder {
-                    activeTimeRemaining -= 1
-                }
-                progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
-            }
-        timerStatus = .timerStarted
-    }
-
     init(totalTime: Int) {
-        self.totalTime = totalTime
-        _activeTimeRemaining = State(initialValue: totalTime)
+        let manager = HealthKitManager()
+        _healthKitManager = StateObject(wrappedValue: manager)
+        _viewModel = StateObject(wrappedValue: RecordViewModel(totalTime: totalTime, healthKitManager: manager))
     }
 
     var body: some View {
@@ -87,19 +35,29 @@ struct RecordView: View {
             ZStack {
                 // Background circle
                 Circle()
-                    .stroke(!isPaused ? Color.accentColor.opacity(0.2) : Color.gray2.opacity(1), lineWidth: 30)
+                    .stroke(
+                        !viewModel.isPaused
+                        ? Color.accentColor.opacity(0.2)
+                        : Color.gray2.opacity(1),
+                        lineWidth: 30
+                    )
 
                 // Progress circle
                 Circle()
-                    .trim(from: 0, to: progress)
-                    .stroke(!isPaused ? Color.blue2 : Color.gray3, style: StrokeStyle(lineWidth: 30, lineCap: .round))
+                    .trim(from: 0, to: viewModel.progress)
+                    .stroke(
+                        !viewModel.isPaused
+                        ? Color.blue2
+                        : Color.gray3,
+                        style: StrokeStyle(lineWidth: 30, lineCap: .round)
+                    )
                     .rotationEffect(.degrees(-90))
-                    .animation(.easeInOut(duration: 0.5), value: progress)
+                    .animation(.easeInOut(duration: 0.5), value: viewModel.progress)
 
                 VStack {
                     VStack {
                         Text("Active Time")
-                        Text(formatTime(duration: activeTimeRemaining))
+                        Text(viewModel.activeTimeFormatted)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                     }.padding(.bottom, 12)
@@ -107,12 +65,12 @@ struct RecordView: View {
                     VStack {
                         Text("BPM")
 
-                        if let bpm = healthKitManager.latestBPM {
-                            Text("\(Int(bpm))")
+                        if let bpm = viewModel.currentBPM {
+                            Text("\(bpm)")
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .foregroundStyle(
-                                    isBPMUnder ? Color.red : Color.black
+                                    viewModel.isBPMUnder ? Color.red : Color.black
                                 )
                         } else {
                             Text("--")
@@ -120,7 +78,7 @@ struct RecordView: View {
                                 .fontWeight(.bold)
                         }
                         
-                        if healthKitManager.isReceivingFromWatch {
+                        if viewModel.isReceivingFromWatch {
                             Image(systemName: "applewatch")
                                 .foregroundStyle(.blue)
                                 .font(.caption)
@@ -133,47 +91,25 @@ struct RecordView: View {
             VStack {
                 Text("Total Time").font(.title2).padding(.bottom, 4)
 
-                Text(formatTime(duration: timeRecorded)).font(.title).fontWeight(.bold)
+                Text(viewModel.totalTimeFormatted).font(.title).fontWeight(.bold)
             }
             .padding(.vertical, 36)
 
             VStack {
-                RecordPlayButton(title: isPaused ? "Start" : "Pause") {
-                    handlePauseExercise()
+                RecordPlayButton(title: viewModel.isPaused ? "Start" : "Pause") {
+                    viewModel.togglePause()
                 }
 
                 Button("End") {
-                    handleFinishExercise()
+                    viewModel.finishExercise()
                 }
             }
         }
         .onAppear {
-            // Start receiving BPM from Watch
-            healthKitManager.startWatchHeartRateMonitoring()
-            
-            // Subscribe to BPM updates
-            healthKitManager.bpmPublisher
-                .sink { bpm in
-                    let BPMThreshold = 100.0
-                    isBPMUnder = bpm < BPMThreshold
-                    
-                    if isBPMUnder {
-                        let generator = UIImpactFeedbackGenerator(style: .medium)
-                        generator.impactOccurred()
-                    }
-                }
-                .store(in: &cancellables)
+            viewModel.startMonitoring()
         }
         .onDisappear {
-            // Clean up timer
-            timerCancellable?.cancel()
-            timerCancellable = nil
-            
-            // Stop heart rate monitoring
-            healthKitManager.stopWatchHeartRateMonitoring()
-            
-            // Clear subscriptions
-            cancellables.removeAll()
+            viewModel.stopMonitoring()
         }
     }
 }

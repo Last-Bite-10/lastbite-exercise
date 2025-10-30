@@ -159,7 +159,7 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
         session.activate()
     }
     
-    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         if let bpm = message["bpm"] as? Double {
             Task { @MainActor in
                 self.latestBPM = bpm
