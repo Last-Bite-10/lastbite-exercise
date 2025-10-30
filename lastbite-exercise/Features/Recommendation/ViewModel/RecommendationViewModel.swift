@@ -1,37 +1,152 @@
 //
-//  RecommendationViewModel.swift
+//  CoreViewModel.swift
 //  Exa
 //
-//  Created by Ali Ahmad Fahrezy on 22/10/25.
+//  Created by Ali Ahmad Fahrezy on 30/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
-@Observable class RecommendationViewModel {
-    var selectedFrequency: FrequencyType = .oneDay
-    var selectedTools: Set<ToolsType> = []
-    var selectedLocation: LocationType = .indoor
-}
+@Observable
+class RecommendationViewModel {
+    var currentWeek: Weekly?
+    var showSettings = false
 
-enum FrequencyType: String, CaseIterable {
-    case oneDay = "1 Day (30 Minutes per Day)"
-    case twoDays = "2 Day (15 Minutes per Day)"
-    case threeDays = "3 Days (10 Minutes per Day)"
-    case fourDays = "4 Days (8 Minutes per Day)"
-    case fiveDays = "5 Days (6 Minutes per Day)"
-}
+    private var modelContext: ModelContext?
+    private let recommender = TFIDFRecommender()
 
-enum LocationType: String, CaseIterable {
-    case indoor = "Indoor"
-    case outdoor = "Outdoor"
-    case both = "Both"
-}
+    func setup(modelContext: ModelContext) {
+        self.modelContext = modelContext
+        loadOrCreateCurrentWeek()
+    }
 
-enum ToolsType: String, CaseIterable {
-    case matress = "Matress"
-    case dumbbell = "Dumbbell"
-    case bike = "Bike"
-    case yogaMat = "Yoga Mat"
-    case jumpRope = "Jump Rope"
-    case stairs = "Stairs"
+    func loadOrCreateCurrentWeek() {
+        guard let context = modelContext else { return }
+
+        let descriptor = FetchDescriptor<Weekly>(sortBy: [
+            SortDescriptor(\.weekNumber, order: .reverse)
+        ])
+        let weeklies = try? context.fetch(descriptor)
+
+        let calendar = Calendar.current
+        let today = Date()
+
+        // Check if we have a current week
+        if let latestWeek = weeklies?.first,
+            calendar.isDate(
+                today,
+                equalTo: latestWeek.startDate,
+                toGranularity: .weekOfYear
+            )
+        {
+            currentWeek = latestWeek
+        } else {
+            // Create new week
+            let weekNumber = (weeklies?.first?.weekNumber ?? 0) + 1
+            let startOfWeek = calendar.startOfDay(for: today)
+            let endOfWeek = calendar.date(
+                byAdding: .day,
+                value: 6,
+                to: startOfWeek
+            )!
+
+            let newWeek = Weekly(
+                weekNumber: weekNumber,
+                startDate: startOfWeek,
+            )
+            context.insert(newWeek)
+            try? context.save()
+            currentWeek = newWeek
+        }
+    }
+
+    func initializeWeeklyExercises(preference: Preference) {
+        guard let context = modelContext,
+            let week = currentWeek,
+            week.records.isEmpty
+        else { return }
+
+        // Load feedback data
+        let feedbackDescriptor = FetchDescriptor<FeedbackRecord>()
+        let feedbackRecords = try? context.fetch(feedbackDescriptor)
+
+        if let feedbacks = feedbackRecords {
+            recommender.loadFeedback(feedbacks)
+        }
+
+        // Get recommendations
+        let recommendations = recommender.recommend(
+            equipmentAvailable: preference.equipmentAvailable.map {
+                $0.rawValue
+            }.joined(separator: " "),
+            location: preference.location?.rawValue ?? "",
+        )
+
+        // Create 2 exercise records for this week
+        let topExercises = recommendations.prefix(2)
+        let minutes = extractMinutes(from: preference.frequency ?? .oneDay)
+
+        for (exercise, _) in topExercises {
+            let record = ExerciseRecord(
+                exerciseName: exercise.name,
+                exerciseId: exercise.id,
+                requiredMinutes: minutes,
+                week: week
+            )
+            context.insert(record)
+            week.records.append(record)
+
+            print("Inserted exercise: \(exercise.name) with \(minutes) minutes")
+        }
+
+        try? context.save()
+    }
+
+    func completeExercise(record: ExerciseRecord, minutes: Int) {
+        guard let context = modelContext else { return }
+
+        // Check if all exercises in the week are completed
+        if let week = currentWeek {
+            let allCompleted = week.records.allSatisfy { $0.isCompleted }
+            week.isCompleted = allCompleted
+        }
+
+        try? context.save()
+    }
+
+    private func baseMinutes() -> Int {
+        switch currentWeek?.weekNumber {
+        case 1:
+            return 30
+        case 2:
+            return 36
+        case 3:
+            return 45
+        case 4:
+            return 60
+        case 5:
+            return 100
+        case 6:
+            return 120
+        default:
+            return 150
+        }
+    }
+
+    private func extractMinutes(from frequency: FrequencyType) -> Int {
+        switch frequency {
+        case .oneDay:
+            baseMinutes() / 1
+        case .twoDays:
+            baseMinutes() / 2
+        case .threeDays:
+            baseMinutes() / 3
+        case .fourDays:
+            baseMinutes() / 4
+        case .fiveDays:
+            baseMinutes() / 5
+
+        }
+    }
 }
