@@ -11,8 +11,6 @@ import SwiftUI
 struct LocationView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
     @Environment(\.modelContext) private var modelContext
-    @Query private var preferences: [Preference]
-    @Binding var showQuestionnaire: Bool
 
     var body: some View {
         VStack(spacing: 10) {
@@ -40,18 +38,13 @@ struct LocationView: View {
 
             Button(
                 action: {
-                    if let existingPreference = preferences.first {
-                        modelContext.delete(existingPreference)
-                    }
-
                     let preference = Preference(
                         isUsingPlan: true,
-                        equipments: viewModel.selectedEquipment,
-                        location: viewModel.selectedLocation,
-                        frequency: viewModel.selectedFrequency
+                        frequency: viewModel.selectedFrequency,
+                        equipmentAvailable: Array(viewModel.selectedEquipment),
+                        location: viewModel.selectedLocation
                     )
                     modelContext.insert(preference)
-                    showQuestionnaire = false
                 },
                 label: { QuestionnaireNavButtonLabel(title: "Done") }
             ).padding(.top, 64)
@@ -62,7 +55,13 @@ struct LocationView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        showQuestionnaire = false
+                        let preference = Preference(
+                            frequency: viewModel.selectedFrequency,
+                            equipmentAvailable: Array(
+                                viewModel.selectedEquipment
+                            ),
+                        )
+                        modelContext.insert(preference)
                     },
                     label: {
                         Text("Skip")
@@ -75,6 +74,6 @@ struct LocationView: View {
 }
 
 #Preview {
-    LocationView(showQuestionnaire: .constant(true))
+    LocationView()
         .environment(QuestionnaireViewModel())
 }

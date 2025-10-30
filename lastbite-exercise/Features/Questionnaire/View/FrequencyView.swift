@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FrequencyView: View {
     @State private var viewModel = QuestionnaireViewModel()
-    @Binding var showQuestionnaire: Bool
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         NavigationStack {
@@ -33,7 +33,7 @@ struct FrequencyView: View {
 
                 NavigationLink(
                     destination:
-                        EquipmentView(showQuestionnaire: $showQuestionnaire)
+                        EquipmentView()
                         .environment(viewModel),
                     label: { QuestionnaireNavButtonLabel(title: "Next") }
                 ).padding(.top, 64)
@@ -44,7 +44,8 @@ struct FrequencyView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(
                         action: {
-                            showQuestionnaire = false
+                            let preference = Preference()
+                            modelContext.insert(preference)
                         },
                         label: {
                             Text("Skip")
@@ -58,5 +59,5 @@ struct FrequencyView: View {
 }
 
 #Preview {
-    FrequencyView(showQuestionnaire: .constant(true))
+    FrequencyView()
 }

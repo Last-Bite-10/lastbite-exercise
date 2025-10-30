@@ -14,6 +14,7 @@ struct LastbiteExerciseApp: App {
         let schema = Schema([
             Preference.self,
             Weekly.self,
+            ExerciseRecord.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,
@@ -33,6 +34,7 @@ struct LastbiteExerciseApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .modelContainer(sharedModelContainer)
         }
     }
 }

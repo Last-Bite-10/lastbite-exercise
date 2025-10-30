@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EquipmentView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
-    @Binding var showQuestionnaire: Bool
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         VStack(spacing: 10) {
@@ -49,11 +49,9 @@ struct EquipmentView: View {
                             widthReduction: 240,
                             action: {
                                 if viewModel.selectedEquipment.contains(type) {
-                                    viewModel.selectedEquipment.removeAll {
-                                        $0 == type
-                                    }
+                                    viewModel.selectedEquipment.remove(type)
                                 } else {
-                                    viewModel.selectedEquipment.append(type)
+                                    viewModel.selectedEquipment.insert(type)
                                 }
                             }
                         )
@@ -62,11 +60,11 @@ struct EquipmentView: View {
             ).padding(.top, 48)
 
             NavigationLink(
-                destination: LocationView(showQuestionnaire: $showQuestionnaire)
+                destination: LocationView()
                     .environment(viewModel),
                 label: {
                     QuestionnaireNavButtonLabel(
-                        title: "Get Recommendation"
+                        title: "Next"
                     )
                 }
             ).padding(.top, 64)
@@ -77,7 +75,10 @@ struct EquipmentView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        showQuestionnaire = false
+                        let preference = Preference(
+                            frequency: viewModel.selectedFrequency
+                        )
+                        modelContext.insert(preference)
                     },
                     label: {
                         Text("Skip")
@@ -90,6 +91,6 @@ struct EquipmentView: View {
 }
 
 #Preview {
-    EquipmentView(showQuestionnaire: .constant(true))
+    EquipmentView()
         .environment(QuestionnaireViewModel())
 }

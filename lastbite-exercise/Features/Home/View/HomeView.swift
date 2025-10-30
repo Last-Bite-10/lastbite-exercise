@@ -9,23 +9,26 @@ import SwiftData
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.modelContext) private var modelContext
     @State private var selectedTab = 0
-    @State private var showQuestionnaire = true
+    @Query private var preferences: [Preference]
 
     var body: some View {
-        if showQuestionnaire {
-            FrequencyView(showQuestionnaire: $showQuestionnaire)
-        } else {
-            TabView(selection: $selectedTab) {
-                MyExerciseView()
-                    .tabItem {
-                        Label("My Exercise", systemImage: "person.circle")
-                    }
+        Group {
+            if preferences.isEmpty {
+                FrequencyView()
+            } else {
+                TabView(selection: $selectedTab) {
+                    MyExerciseView()
+                        .tabItem {
+                            Label("My Exercise", systemImage: "person.circle")
+                        }
 
-                MyProgressView()
-                    .tabItem {
-                        Label("My Progress", systemImage: "person.circle")
-                    }
+                    MyProgressView()
+                        .tabItem {
+                            Label("My Progress", systemImage: "person.circle")
+                        }
+                }
             }
         }
     }
