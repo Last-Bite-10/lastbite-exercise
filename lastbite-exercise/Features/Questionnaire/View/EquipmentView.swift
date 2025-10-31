@@ -75,9 +75,8 @@ struct EquipmentView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        let preference = Preference(
-                            frequency: viewModel.selectedFrequency
-                        )
+                        // DIUBAH: Logika "Skip" disamakan
+                        let preference = Preference()
                         modelContext.insert(preference)
                     },
                     label: {

@@ -1,5 +1,5 @@
 //
-//  Analytics.swift
+//  MyProgressView.swift
 //  lastbite-exercise
 //
 //  Created by Ali Ahmad Fahrezy on 22/10/25.
@@ -8,29 +8,27 @@
 import SwiftUI
 
 struct MyProgressView: View {
-    @State private var currentWeeklyMinutes = 15
-    @State private var totalWeeklyMinutes = 30
-    @State private var trophies = [
-        Trophy(milestone: 3, isAchieved: true),
-        Trophy(milestone: 5, isAchieved: true),
-        Trophy(milestone: 10, isAchieved: false),
-        Trophy(milestone: 15, isAchieved: false),
-        Trophy(milestone: 20, isAchieved: false),
-        Trophy(milestone: 25, isAchieved: false)
-    ]
+    // DIHAPUS: Semua @State data hardcoded telah dihapus.
     
+    // DITAMBAHKAN: ViewModel diinisialisasi sebagai source of truth
+    @State private var viewModel = MyProgressViewModel()
+     
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
                 // Weekly Progress Section
                 WeeklyProgressView(
-                    currentMinutes: currentWeeklyMinutes,
-                    totalMinutes: totalWeeklyMinutes
+                    // DIUBAH: Data diambil dari viewModel
+                    currentMinutes: viewModel.currentWeeklyMinutes,
+                    totalMinutes: viewModel.totalWeeklyMinutes
                 )
-                
+                 
                 // Trophies Section
-                TrophiesView(trophies: trophies)
-                
+                TrophiesView(
+                    // DIUBAH: Data diambil dari viewModel
+                    trophies: viewModel.trophies
+                )
+                 
                 Spacer()
             }
             .padding()

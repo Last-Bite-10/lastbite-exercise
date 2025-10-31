@@ -1,5 +1,5 @@
 //
-//  CoreViewModel.swift
+//  RecommendationViewModel.swift
 //  Exa
 //
 //  Created by Ali Ahmad Fahrezy on 30/10/25.
@@ -34,17 +34,18 @@ class RecommendationViewModel {
 
         // Check if we have a current week
         if let latestWeek = weeklies?.first,
-            calendar.isDate(
-                today,
-                equalTo: latestWeek.startDate,
-                toGranularity: .weekOfYear
-            )
+           calendar.isDate(
+               today,
+               equalTo: latestWeek.startDate,
+               toGranularity: .weekOfYear
+           )
         {
             currentWeek = latestWeek
         } else {
             // Create new week
             let weekNumber = (weeklies?.first?.weekNumber ?? 0) + 1
             let startOfWeek = calendar.startOfDay(for: today)
+            // (Note: Logic untuk endOfWeek tidak digunakan, tapi dibiarkan)
             let endOfWeek = calendar.date(
                 byAdding: .day,
                 value: 6,
@@ -61,11 +62,19 @@ class RecommendationViewModel {
         }
     }
 
+    // MARK: - Refactored Function
+    
     func initializeWeeklyExercises(preference: Preference) {
         guard let context = modelContext,
-            let week = currentWeek,
-            week.records.isEmpty
+              let week = currentWeek,
+              week.records.isEmpty
         else { return }
+
+        // DIPERBARUI: Kita perlu lokasi yang valid untuk recommender baru.
+        guard let userLocation = preference.location else {
+            print("Rekomendasi dibatalkan: Preferensi lokasi pengguna belum diatur.")
+            return
+        }
 
         // Load feedback data
         let feedbackDescriptor = FetchDescriptor<FeedbackRecord>()
@@ -75,12 +84,10 @@ class RecommendationViewModel {
             recommender.loadFeedback(feedbacks)
         }
 
-        // Get recommendations
+        // Get recommendations (Logika kotor dihapus)
         let recommendations = recommender.recommend(
-            equipmentAvailable: preference.equipmentAvailable.map {
-                $0.rawValue
-            }.joined(separator: " "),
-            location: preference.location?.rawValue ?? "",
+            equipment: preference.equipmentAvailable, // DIUBAH: Dilewatkan langsung
+            location: userLocation                  // DIUBAH: Dilewatkan langsung
         )
 
         // Create 2 exercise records for this week
@@ -106,6 +113,7 @@ class RecommendationViewModel {
     func completeExercise(record: ExerciseRecord, minutes: Int) {
         guard let context = modelContext else { return }
 
+        // (Catatan: Logic ini mungkin perlu dijalankan setelah 'record.isCompleted' di-set)
         // Check if all exercises in the week are completed
         if let week = currentWeek {
             let allCompleted = week.records.allSatisfy { $0.isCompleted }
@@ -146,7 +154,6 @@ class RecommendationViewModel {
             baseMinutes() / 4
         case .fiveDays:
             baseMinutes() / 5
-
         }
     }
 }

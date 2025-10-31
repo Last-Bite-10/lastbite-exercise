@@ -13,20 +13,20 @@ final class FeedbackRecord {
     var id: UUID
     var exerciseId: Int
     var exerciseName: String
-    var equipmentAvailable: String
-    var location: String
+    var equipmentAvailable: EquipmentType // DIUBAH dari String
+    var location: LocationType           // DIUBAH dari String
     var weather: String
-    var needsTutorial: String
+    var needsTutorial: Bool              // DIUBAH dari String
     var wasGood: Bool
     var timestamp: Date
 
     init(
         exerciseId: Int,
         exerciseName: String,
-        equipmentAvailable: String,
-        location: String,
+        equipmentAvailable: EquipmentType, // DIUBAH
+        location: LocationType,           // DIUBAH
         weather: String,
-        needsTutorial: String,
+        needsTutorial: Bool,              // DIUBAH
         wasGood: Bool
     ) {
         self.id = UUID()

@@ -12,9 +12,12 @@ struct TodaysPlan: View {
     @State private var viewModel = RecommendationViewModel()
     @Environment(\.modelContext) private var modelContext
     @Query private var preferences: [Preference]
-    @Query private var weeklies: [Weekly]
+    @Query private var weeklies: [Weekly] // (Catatan: Ini mungkin tidak diperlukan jika viewModel sudah memuatnya)
 
-    @State private var showRecording = false
+    // DIHAPUS: State 'showRecording' tidak lagi diperlukan
+    // @State private var showRecording = false
+    
+    // DITAMBAHKAN: State 'selectedRecord' akan MENGONTROL sheet
     @State private var selectedRecord: ExerciseRecord?
 
     private let date: Date = .now
@@ -53,8 +56,9 @@ struct TodaysPlan: View {
                             duration: Int(record.requiredMinutes),
                             isCompleted: record.isCompleted,
                             action: {
+                                // DIUBAH: Cukup atur selectedRecord,
+                                // ini akan memicu sheet secara otomatis.
                                 selectedRecord = record
-                                showRecording = true
                             }
                         )
                     }
@@ -71,9 +75,21 @@ struct TodaysPlan: View {
                 .strokeBorder(Color(.systemGray4).opacity(0.4), lineWidth: 0.5)
         )
         .padding()
-        .sheet(isPresented: $showRecording) {
-//            RecordView()
+        
+        // --- PERBAIKAN UTAMA DI SINI ---
+        // DIUBAH: Menggunakan .sheet(item:content:)
+        .sheet(item: $selectedRecord) { record in
+            // 'record' di sini adalah jaminan non-nil dari selectedRecord
+            RecordView(
+                totalTime: Int(record.requiredMinutes) * 60, // Ubah menit ke detik
+                exerciseId: record.exerciseId,
+                exerciseName: record.exerciseName,
+                week: viewModel.currentWeek, // Ambil 'week' dari viewModel
+                modelContext: modelContext   // Lewatkan modelContext
+            )
         }
+        // ---------------------------------
+        
         .onAppear {
             viewModel.setup(modelContext: modelContext)
             if let preference = preferences.first {
@@ -81,7 +97,6 @@ struct TodaysPlan: View {
             }
         }
     }
-
     private var header: some View {
         HStack(alignment: .top) {
             ZStack {

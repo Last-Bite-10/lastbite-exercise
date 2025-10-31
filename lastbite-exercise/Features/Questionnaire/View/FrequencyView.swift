@@ -44,6 +44,7 @@ struct FrequencyView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(
                         action: {
+                            // Logika "Skip" yang Benar
                             let preference = Preference()
                             modelContext.insert(preference)
                         },

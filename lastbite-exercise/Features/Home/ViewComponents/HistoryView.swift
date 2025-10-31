@@ -7,21 +7,6 @@
 
 import SwiftUI
 
-struct ExerciseEntry: Identifiable {
-    let id = UUID()
-    let name: String
-    let doneMinutes: Int
-    let targetMinutes: Int
-}
-
-struct HistoryItem: Identifiable {
-    let id = UUID()
-    let minutes: Int
-    let totalMinutes: Int
-    let date: Date
-    let entries: [ExerciseEntry]
-}
-
 struct RecentHistoryView: View {
     let historyItems: [HistoryItem]
     @State private var selectedItem: HistoryItem? = nil

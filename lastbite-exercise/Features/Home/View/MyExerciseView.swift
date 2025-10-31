@@ -1,5 +1,5 @@
 //
-//  Analytics.swift
+//  Analytics.swift (MyExerciseView.swift)
 //  lastbite-exercise
 //
 //  Created by Ali Ahmad Fahrezy on 22/10/25.
@@ -8,65 +8,37 @@
 import SwiftUI
 
 struct MyExerciseView: View {
-    // State untuk data
-    @State private var weeklyStreaks = [true, true, false, true, false]
+    
+    // DIHAPUS: @State private var weeklyStreaks
+    // DIHAPUS: @State private var historyItems
+    
+    // DITAMBAHKAN: ViewModels untuk mengelola state
+    @State private var streakViewModel = StreakViewModel()
+    @State private var historyViewModel = HistoryViewModel()
+    
+    // State yang tersisa (belum diminta untuk dipindahkan)
     @State private var currentDate = Date()
     @State private var progress: Double = 0.2
     @State private var completedMinutes = 2
     @State private var totalMinutes = 10
-    @State private var historyItems = [
-        HistoryItem(
-            minutes: 25,
-            totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-            entries: [
-                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
-            ]
-        ),
-        HistoryItem(
-            minutes: 25,
-            totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-            entries: [
-                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
-            ]
-        ),
-        HistoryItem(
-            minutes: 25,
-            totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-            entries: [
-                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
-            ]
-        ),
-        HistoryItem(
-            minutes: 25,
-            totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-            entries: [
-                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
-            ]
-        )
-    ]
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 24) {
                     // Streak Section
-                    StreakView(weeklyStreaks: weeklyStreaks)
+                    // DIUBAH: Menggunakan data dari streakViewModel
+                    StreakView(weeklyStreaks: streakViewModel.weeklyStreaks)
                         .padding(.horizontal)
-                    
+                        
                     // Today's Plan Section
+                    // (Masih menggunakan @State lokal, sesuai instruksi)
                     TodaysPlan()
-                    
+                        
                     // Recent History Section
-                    RecentHistoryView(historyItems: historyItems)
-                       
+                    // DIUBAH: Menggunakan data dari historyViewModel
+                    RecentHistoryView(historyItems: historyViewModel.historyItems)
+                        
                 }
             }
             .navigationTitle("My Exercise")

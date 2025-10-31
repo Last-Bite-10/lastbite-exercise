@@ -38,6 +38,7 @@ struct LocationView: View {
                 )
             }
 
+            // Tombol "Done" ini sudah benar (menyimpan semua data)
             Button(
                 action: {
                     let preference = Preference(
@@ -57,12 +58,8 @@ struct LocationView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        let preference = Preference(
-                            frequency: viewModel.selectedFrequency,
-                            equipmentAvailable: Array(
-                                viewModel.selectedEquipment
-                            ),
-                        )
+                        // DIUBAH: Logika "Skip" disamakan
+                        let preference = Preference()
                         modelContext.insert(preference)
                     },
                     label: {

@@ -7,13 +7,9 @@
 
 import SwiftUI
 import Combine
+import SwiftData // DITAMBAHKAN
 
-// TODO: change struct with real data structure of Workouts
-struct RecordModel {
-    let time: Float
-    let date: Date
-    let sportType: String
-}
+// DIHAPUS: struct RecordModel yang duplikat telah dihapus.
 
 @MainActor
 class RecordViewModel: ObservableObject {
@@ -24,53 +20,82 @@ class RecordViewModel: ObservableObject {
     @Published var isPaused: Bool = true
     @Published var isBPMUnder: Bool = false
     @Published var timerStatus: TimerStatus = .timerPaused
-    
+     
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
     private var timerCancellable: AnyCancellable?
     private let healthKitManager: HealthKitManager
     private let totalTime: Int
     
+    // DITAMBAHKAN: Properti untuk SwiftData
+    private var modelContext: ModelContext
+    private var exerciseId: Int
+    private var exerciseName: String
+    private var week: Weekly?
+     
     // TODO: BPM should be dynamically set based on user's age
     private let bpmThreshold: Double = 100.0
-    
+     
     // MARK: - Initialization
-    init(totalTime: Int, healthKitManager: HealthKitManager) {
+    // DIUBAH: init() sekarang menerima ModelContext dan detail latihan
+    init(
+        totalTime: Int,
+        exerciseId: Int,
+        exerciseName: String,
+        week: Weekly?,
+        healthKitManager: HealthKitManager,
+        modelContext: ModelContext // DITAMBAHKAN
+    ) {
         self.totalTime = totalTime
         self.activeTimeRemaining = totalTime
+        self.exerciseId = exerciseId
+        self.exerciseName = exerciseName
+        self.week = week
         self.healthKitManager = healthKitManager
+        self.modelContext = modelContext // DITAMBAHKAN
     }
-    
+     
     // MARK: - Public Methods
     func startMonitoring() {
         healthKitManager.startWatchHeartRateMonitoring()
         subscribeToBPMUpdates()
     }
-    
+     
     func stopMonitoring() {
         cleanup()
     }
-    
+     
     func togglePause() {
         isPaused.toggle()
-        
+         
         if isPaused {
             pauseTimer()
         } else {
             resumeTimer()
         }
     }
-    
+     
+    // DIUBAH: Fungsi ini sekarang menyimpan ke SwiftData
     func finishExercise() {
         cleanup()
+         
+        // Konversi detik ke menit, bulatkan ke atas
+        let completedMinutes = (self.timeRecorded + 59) / 60
         
-        let storedRecord: RecordModel = RecordModel(
-            time: Float(self.timeRecorded),
-            date: Date(),
-            sportType: "Bicycling" // TODO: still
+        // Ganti RecordModel dengan ExerciseRecord
+        let storedRecord = ExerciseRecord(
+            exerciseName: self.exerciseName,
+            exerciseId: self.exerciseId,
+            // Asumsi: 'requiredMinutes' di sini digunakan untuk menyimpan
+            // menit yang *diselesaikan* (dari timeRecorded).
+            requiredMinutes: completedMinutes,
+            week: self.week
         )
+        
+        // Panggil modelContext.insert
+        modelContext.insert(storedRecord)
     }
-    
+     
     // MARK: - Private Methods
     private func startTimer() {
         timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
@@ -80,30 +105,30 @@ class RecordViewModel: ObservableObject {
             }
         timerStatus = .timerStarted
     }
-    
+     
     private func handleTimerTick() {
         guard activeTimeRemaining > 0 else {
             finishExercise()
             return
         }
-        
+         
         timeRecorded += 1
         if !isBPMUnder {
             activeTimeRemaining -= 1
         }
         progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
     }
-    
+     
     private func pauseTimer() {
         timerCancellable?.cancel()
         timerCancellable = nil
         timerStatus = .timerPaused
     }
-    
+     
     private func resumeTimer() {
         startTimer()
     }
-    
+     
     private func subscribeToBPMUpdates() {
         healthKitManager.bpmPublisher
             .sink { [weak self] bpm in
@@ -111,39 +136,39 @@ class RecordViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
+     
     private func handleBPMUpdate(_ bpm: Double) {
         let wasUnder = isBPMUnder
         isBPMUnder = bpm < bpmThreshold
-        
+         
         // Trigger haptic feedback when BPM drops below threshold
         if isBPMUnder && !wasUnder {
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
         }
     }
-    
+     
     private func cleanup() {
         timerCancellable?.cancel()
         timerCancellable = nil
         healthKitManager.stopWatchHeartRateMonitoring()
         cancellables.removeAll()
     }
-    
+     
     // MARK: - Computed Properties
     var activeTimeFormatted: String {
         formatTime(duration: activeTimeRemaining)
     }
-    
+     
     var totalTimeFormatted: String {
         formatTime(duration: timeRecorded)
     }
-    
+     
     var currentBPM: Int? {
         guard let bpm = healthKitManager.latestBPM else { return nil }
         return Int(bpm)
     }
-    
+     
     var isReceivingFromWatch: Bool {
         healthKitManager.isReceivingFromWatch
     }
