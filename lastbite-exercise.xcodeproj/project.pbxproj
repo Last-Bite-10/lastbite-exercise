@@ -520,6 +520,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "lastbite-exercise/Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We would need this information to get the BPM for your training.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We would need this information to get the BPM for your training.";
@@ -560,6 +561,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "lastbite-exercise/Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We would need this information to get the BPM for your training.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We would need this information to get the BPM for your training.";
