@@ -14,7 +14,14 @@ class RecommendationViewModel {
     var showSettings = false
 
     private var modelContext: ModelContext?
-    private let recommender = TFIDFRecommender()
+    
+    // 1. UBAH INI: dari 'let' menjadi 'var' dan tipe 'Protocol'
+    private var recommender: ExerciseRecommenderProtocol
+
+    // 2. BUAT INIT BARU: untuk menyuntikkan dependensi
+    init(recommender: ExerciseRecommenderProtocol = ExerciseRecommender()) {
+        self.recommender = recommender
+    }
 
     func setup(modelContext: ModelContext) {
         self.modelContext = modelContext

@@ -18,6 +18,13 @@
 			remoteGlobalIDString = 23351FFD2EA6168D0033FBF6;
 			remoteInfo = Exa;
 		};
+		23D5494B2EB464A1000311C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 23351FF62EA6168D0033FBF6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 23351FFD2EA6168D0033FBF6;
+			remoteInfo = Exa;
+		};
 		39E2BC462EAF7A3300714C26 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 23351FF62EA6168D0033FBF6 /* Project object */;
@@ -58,6 +65,7 @@
 /* Begin PBXFileReference section */
 		23351FFE2EA6168D0033FBF6 /* Exa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Exa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23D5491D2EB4623F000311C7 /* ExaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		23D549472EB464A1000311C7 /* ExaUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExaUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39E2BC392EAF7A3200714C26 /* ExaWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ExaWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39E2BC452EAF7A3300714C26 /* ExaWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ExaWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39E2BC4F2EAF7A3300714C26 /* ExaWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ExaWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +88,11 @@
 				2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "Exa" target */,
 			);
 			path = "lastbite-exercise";
+			sourceTree = "<group>";
+		};
+		23D549482EB464A1000311C7 /* ExaUnitTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ExaUnitTests;
 			sourceTree = "<group>";
 		};
 		39E2BC3A2EAF7A3200714C26 /* ExaWatch Watch App */ = {
@@ -108,6 +121,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		23D5491A2EB4623F000311C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23D549442EB464A1000311C7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -145,6 +165,7 @@
 				39E2BC3A2EAF7A3200714C26 /* ExaWatch Watch App */,
 				39E2BC482EAF7A3300714C26 /* ExaWatch Watch AppTests */,
 				39E2BC522EAF7A3300714C26 /* ExaWatch Watch AppUITests */,
+				23D549482EB464A1000311C7 /* ExaUnitTests */,
 				23351FFF2EA6168D0033FBF6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -157,6 +178,7 @@
 				39E2BC452EAF7A3300714C26 /* ExaWatch Watch AppTests.xctest */,
 				39E2BC4F2EAF7A3300714C26 /* ExaWatch Watch AppUITests.xctest */,
 				23D5491D2EB4623F000311C7 /* ExaTests.xctest */,
+				23D549472EB464A1000311C7 /* ExaUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -207,6 +229,29 @@
 			);
 			productName = ExaTests;
 			productReference = 23D5491D2EB4623F000311C7 /* ExaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		23D549462EB464A1000311C7 /* ExaUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23D5494D2EB464A1000311C7 /* Build configuration list for PBXNativeTarget "ExaUnitTests" */;
+			buildPhases = (
+				23D549432EB464A1000311C7 /* Sources */,
+				23D549442EB464A1000311C7 /* Frameworks */,
+				23D549452EB464A1000311C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				23D5494C2EB464A1000311C7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				23D549482EB464A1000311C7 /* ExaUnitTests */,
+			);
+			name = ExaUnitTests;
+			packageProductDependencies = (
+			);
+			productName = ExaUnitTests;
+			productReference = 23D549472EB464A1000311C7 /* ExaUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		39E2BC382EAF7A3200714C26 /* ExaWatch Watch App */ = {
@@ -294,6 +339,10 @@
 						CreatedOnToolsVersion = 26.0.1;
 						TestTargetID = 23351FFD2EA6168D0033FBF6;
 					};
+					23D549462EB464A1000311C7 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 23351FFD2EA6168D0033FBF6;
+					};
 					39E2BC382EAF7A3200714C26 = {
 						CreatedOnToolsVersion = 26.0.1;
 					};
@@ -329,6 +378,7 @@
 				39E2BC442EAF7A3300714C26 /* ExaWatch Watch AppTests */,
 				39E2BC4E2EAF7A3300714C26 /* ExaWatch Watch AppUITests */,
 				23D5491C2EB4623F000311C7 /* ExaTests */,
+				23D549462EB464A1000311C7 /* ExaUnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -342,6 +392,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		23D5491B2EB4623F000311C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23D549452EB464A1000311C7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -386,6 +443,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		23D549432EB464A1000311C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		39E2BC352EAF7A3200714C26 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -414,6 +478,11 @@
 			isa = PBXTargetDependency;
 			target = 23351FFD2EA6168D0033FBF6 /* Exa */;
 			targetProxy = 23D549212EB4623F000311C7 /* PBXContainerItemProxy */;
+		};
+		23D5494C2EB464A1000311C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 23351FFD2EA6168D0033FBF6 /* Exa */;
+			targetProxy = 23D5494B2EB464A1000311C7 /* PBXContainerItemProxy */;
 		};
 		39E2BC472EAF7A3300714C26 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -684,6 +753,50 @@
 			};
 			name = Release;
 		};
+		23D5494E2EB464A1000311C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D65356M48A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exa.lastbite.ExaUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Exa.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Exa";
+			};
+			name = Debug;
+		};
+		23D5494F2EB464A1000311C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D65356M48A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exa.lastbite.ExaUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Exa.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Exa";
+			};
+			name = Release;
+		};
 		39E2BC5B2EAF7A3300714C26 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -874,6 +987,15 @@
 			buildConfigurations = (
 				23D549242EB4623F000311C7 /* Debug */,
 				23D549252EB4623F000311C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23D5494D2EB464A1000311C7 /* Build configuration list for PBXNativeTarget "ExaUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23D5494E2EB464A1000311C7 /* Debug */,
+				23D5494F2EB464A1000311C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

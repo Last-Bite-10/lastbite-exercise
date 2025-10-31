@@ -5,7 +5,12 @@
 //  Created by Ali Ahmad Fahrezy on 30/10/25.
 //
 
-class TFIDFRecommender {
+protocol ExerciseRecommenderProtocol {
+    func loadFeedback(_ feedback: [FeedbackRecord])
+    func recommend(equipment: [EquipmentType], location: LocationType) -> [(Exercise, Double)]
+}
+
+class ExerciseRecommender: ExerciseRecommenderProtocol {
     private var exercises: [Exercise] = []
     private var feedbackData: [FeedbackRecord] = []
 

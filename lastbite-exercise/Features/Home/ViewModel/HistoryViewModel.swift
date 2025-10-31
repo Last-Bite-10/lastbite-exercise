@@ -1,84 +1,44 @@
 //
 //  HistoryViewModel.swift
-//  lastbite-exercise
+//  Exa
 //
 //  Created by Niken Larasati on 31/10/25.
 //
 
 import Foundation
-import SwiftUI
-
-// MARK: - Data Structures
-// Struct ini dipindahkan dari View ke sini
-
-struct ExerciseEntry: Identifiable {
-    let id = UUID()
-    let name: String
-    let doneMinutes: Int
-    let targetMinutes: Int
-}
-
-struct HistoryItem: Identifiable {
-    let id = UUID()
-    let minutes: Int
-    let totalMinutes: Int
-    let date: Date
-    let entries: [ExerciseEntry]
-}
-
-// MARK: - History View Model
+import SwiftData
+import Observation
 
 @Observable
 class HistoryViewModel {
     
-    // Properti yang dipindahkan dari MyExerciseView
     var historyItems: [HistoryItem] = []
+    
+    // Hapus data hardcoded dan 'init()'
 
-    init() {
-        // Logika untuk memuat data (sebelumnya @State) sekarang ada di sini
-        loadHistory()
+    // Fungsi 'setup' ini dipanggil oleh View
+    func setup(modelContext: ModelContext) {
+        fetchHistory(modelContext: modelContext)
     }
     
-    // Di masa depan, fungsi ini dapat mengambil data dari ModelContext
-    func loadHistory() {
-        // Data hardcoded dipindahkan ke sini
-        self.historyItems = [
-            HistoryItem(
-                minutes: 25,
-                totalMinutes: 30,
-                date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-                entries: [
-                    ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                    ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
-                ]
-            ),
-            HistoryItem(
-                minutes: 25,
-                totalMinutes: 30,
-                date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-                entries: [
-                    ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                    ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
-                ]
-            ),
-            HistoryItem(
-                minutes: 25,
-                totalMinutes: 30,
-                date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-                entries: [
-                    ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                    ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
-                ]
-            ),
-            HistoryItem(
-                minutes: 25,
-                totalMinutes: 30,
-                date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-                entries: [
-                    ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                    ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
-                ]
-            )
-        ]
+    /// "Kaki Tangan": Tugasnya hanya I/O (Fetch) dan mendelegasikan ke "Otak" (Compute)
+    func fetchHistory(modelContext: ModelContext) {
+        // 1. Ambil SEMUA ExerciseRecord yang sudah selesai
+        let descriptor = FetchDescriptor<ExerciseRecord>(
+            predicate: #Predicate { $0.isCompleted == true },
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
+        )
+        
+        let records: [ExerciseRecord]
+        do {
+            records = try modelContext.fetch(descriptor)
+        } catch {
+            print("Gagal fetch ExerciseRecord: \(error)")
+            self.historyItems = []
+            return
+        }
+        
+        // 2. Panggil "Otak" (Pure Function) untuk melakukan logika berat
+        self.historyItems = Self.computeHistoryItems(from: records)
     }
 }

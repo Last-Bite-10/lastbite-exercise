@@ -24,7 +24,7 @@ class RecordViewModel: ObservableObject {
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
     private var timerCancellable: AnyCancellable?
-    private let healthKitManager: HealthKitManager
+    private let healthKitManager: HealthKitManagerProtocol
     private let totalTime: Int
     
     // DITAMBAHKAN: Properti untuk SwiftData
@@ -43,7 +43,7 @@ class RecordViewModel: ObservableObject {
         exerciseId: Int,
         exerciseName: String,
         week: Weekly?,
-        healthKitManager: HealthKitManager,
+        healthKitManager: HealthKitManagerProtocol,
         modelContext: ModelContext // DITAMBAHKAN
     ) {
         self.totalTime = totalTime

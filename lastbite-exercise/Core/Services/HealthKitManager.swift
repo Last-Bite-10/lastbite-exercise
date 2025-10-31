@@ -11,7 +11,20 @@ import WatchConnectivity
 import Combine
 
 @MainActor
-class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
+protocol HealthKitManagerProtocol {
+    // Properti yang dibutuhkan
+    var latestBPM: Double? { get }
+    var isReceivingFromWatch: Bool { get }
+    var bpmPublisher: AnyPublisher<Double, Never> { get }
+    
+    // Fungsi yang dibutuhkan
+    func startWatchHeartRateMonitoring()
+    func stopWatchHeartRateMonitoring()
+    func requestAuthorization() // (Jika Anda memindahkannya ke sini)
+}
+
+@MainActor
+class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate, HealthKitManagerProtocol {
     private let healthStore = HKHealthStore()
     @Published var latestBPM: Double?
     @Published var isReceivingFromWatch: Bool = false
