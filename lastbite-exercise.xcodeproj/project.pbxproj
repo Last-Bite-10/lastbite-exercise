@@ -198,7 +198,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E547FA4F2EA61A3F00DBFB5C /* PBXTargetDependency */,
 				39E2BC582EAF7A3300714C26 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -366,7 +365,6 @@
 			mainGroup = 23351FF52EA6168D0033FBF6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				E547FA4D2EA61A3100DBFB5C /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 23351FFF2EA6168D0033FBF6 /* Products */;
@@ -498,10 +496,6 @@
 			isa = PBXTargetDependency;
 			target = 39E2BC382EAF7A3200714C26 /* ExaWatch Watch App */;
 			targetProxy = 39E2BC572EAF7A3300714C26 /* PBXContainerItemProxy */;
-		};
-		E547FA4F2EA61A3F00DBFB5C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = E547FA4E2EA61A3F00DBFB5C /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1030,25 +1024,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		E547FA4D2EA61A3100DBFB5C /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.62.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		E547FA4E2EA61A3F00DBFB5C /* SwiftLintBuildToolPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E547FA4D2EA61A3100DBFB5C /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
-			productName = "plugin:SwiftLintBuildToolPlugin";
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 23351FF62EA6168D0033FBF6 /* Project object */;
 }
