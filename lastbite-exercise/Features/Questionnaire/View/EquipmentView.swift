@@ -1,5 +1,5 @@
 //
-//  ToolsView.swift
+//  EquipmentView.swift
 //  Exa
 //
 //  Created by Ali Ahmad Fahrezy on 23/10/25.

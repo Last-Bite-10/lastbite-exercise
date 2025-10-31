@@ -595,7 +595,7 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kerupuksambel.lastbite;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.niken.lastbite;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -631,7 +631,7 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kerupuksambel.lastbite;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.niken.lastbite;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

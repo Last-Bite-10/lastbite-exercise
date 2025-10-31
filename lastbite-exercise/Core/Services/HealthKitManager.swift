@@ -1,5 +1,5 @@
 //
-//  Health.swift
+//  HealthKitManager.swift
 //  Exa
 //
 //  Created by Ammar Alifian Fahdan on 21/10/25.

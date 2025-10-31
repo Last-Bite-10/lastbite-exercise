@@ -72,7 +72,7 @@ struct TodaysPlan: View {
         )
         .padding()
         .sheet(isPresented: $showRecording) {
-            // TODO: Implement ExerciseRecordingView
+//            RecordView()
         }
         .onAppear {
             viewModel.setup(modelContext: modelContext)
