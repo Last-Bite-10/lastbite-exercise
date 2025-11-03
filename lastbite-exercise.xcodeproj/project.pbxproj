@@ -385,7 +385,7 @@
 				CODE_SIGN_ENTITLEMENTS = "lastbite-exercise/lastbite_exercise.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D65356M48A;
+				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -405,7 +405,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerupuksambel.lastbite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -425,7 +425,7 @@
 				CODE_SIGN_ENTITLEMENTS = "lastbite-exercise/lastbite_exercise.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D65356M48A;
+				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -445,7 +445,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerupuksambel.lastbite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -588,7 +588,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ExaWatch Watch App/ExaWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D65356M48A;
+				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
@@ -601,7 +601,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerupuksambel.lastbite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -624,7 +624,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ExaWatch Watch App/ExaWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D65356M48A;
+				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
@@ -637,7 +637,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerupuksambel.lastbite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
