@@ -10,26 +10,22 @@ import SwiftData
 
 @Model
 final class ExerciseRecord {
-    var id: UUID
-    var exerciseName: String
-    var exerciseId: Int
-    var requiredMinutes: Int
-    var recordedMinutes: Int
-    var isCompleted: Bool
-    var createdAt: Date
+    var id: UUID = UUID()
+    var exercise: Exercise?
+    var requiredMinutes: Int = 0
+    var recordedMinutes: Int = 0
+    var isCompleted: Bool = false
+    var createdAt: Date = Date()
     var completedAt: Date?
-
     var week: Weekly?
 
     init(
-        exerciseName: String,
-        exerciseId: Int,
+        exercise: Exercise,
         requiredMinutes: Int,
         week: Weekly? = nil
     ) {
         self.id = UUID()
-        self.exerciseName = exerciseName
-        self.exerciseId = exerciseId
+        self.exercise = exercise
         self.requiredMinutes = requiredMinutes
         self.recordedMinutes = 0
         self.isCompleted = false
