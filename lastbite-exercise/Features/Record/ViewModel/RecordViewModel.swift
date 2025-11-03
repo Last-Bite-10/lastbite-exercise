@@ -31,7 +31,6 @@ class RecordViewModel: ObservableObject {
     private let healthKitManager: HealthKitManager
     private let record: ExerciseRecord
     
-    // TODO: BPM should be dynamically set based on user's age
     private let bpmThreshold: Double
     
     // MARK: - Initialization
@@ -40,6 +39,7 @@ class RecordViewModel: ObservableObject {
         self.activeTimeRemaining = record.requiredMinutes * 60
         self.healthKitManager = healthKitManager
         self.bpmThreshold = Double(healthKitManager.bpmThreshold ?? 100)
+        print(self.bpmThreshold)
     }
     
     // MARK: - Public Methods
@@ -75,7 +75,7 @@ class RecordViewModel: ObservableObject {
         let recordedMinutes = timeRecorded / 60
         record.recordedMinutes += recordedMinutes
         record.isCompleted = recordedMinutes >= record.requiredMinutes
-        if(record.isCompleted){
+        if record.isCompleted {
             record.completedAt = Date()
         }
     }
