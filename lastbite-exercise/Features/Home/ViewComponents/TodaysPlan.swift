@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct TodaysPlan: View {
-    @State private var viewModel = RecommendationViewModel()
+    @Environment(RecommendationViewModel.self) private var viewModel
     @Environment(\.modelContext) private var modelContext
     @Query private var preferences: [Preference]
     @Query private var weeklies: [Weekly]
@@ -49,7 +49,7 @@ struct TodaysPlan: View {
                 VStack(spacing: 20) {
                     ForEach(currentRecords) { record in
                         ExerciseRow(
-                            title: record.exerciseName,
+                            title: record.exercise?.name ?? "Unnamed Exercise",
                             duration: Int(record.requiredMinutes),
                             isCompleted: record.isCompleted,
                             action: {

@@ -5,9 +5,11 @@
 //  Created by Ali Ahmad Fahrezy on 30/10/25.
 //
 
-class TFIDFRecommender {
+class ExerciseRecommender {
     private var exercises: [Exercise] = []
     private var feedbackData: [FeedbackRecord] = []
+
+    static let shared = ExerciseRecommender()
 
     init() {
         exercises = Exercise.loadExercises()
@@ -18,8 +20,8 @@ class TFIDFRecommender {
     }
 
     func recommend(
-        equipmentAvailable: String,
-        location: String,
+        equipments: [EquipmentType],
+        location: LocationType,
     ) -> [(Exercise, Double)] {
         var scores: [(Exercise, Double)] = []
 
@@ -27,29 +29,21 @@ class TFIDFRecommender {
             var score = 0.0
 
             // Equipment matching
-            let equip = equipmentAvailable.lowercased()
-            let exerciseEquip = exercise.equipment.lowercased()
-
-            if exerciseEquip.contains("no equipment")
-                && (equip.isEmpty || equip.contains("none"))
-            {
+            if exercise.equipment == .none && equipments.contains(.none) {
                 score += 3.0
-            } else if !exerciseEquip.contains("no equipment")
-                && equip.contains(exerciseEquip)
-            {
+            } else if equipments.contains(exercise.equipment) {
                 score += 5.0
             }
 
             // Location matching
-            let loc = location.lowercased()
-            if exercise.location.lowercased().contains(loc) {
+            if location == exercise.location {
                 score += 2.0
             }
 
             // Apply feedback learning
             score += calculateFeedbackBonus(
                 exercise: exercise,
-                equipmentAvailable: equipmentAvailable,
+                equipments: equipments,
                 location: location,
             )
 
@@ -61,24 +55,23 @@ class TFIDFRecommender {
 
     private func calculateFeedbackBonus(
         exercise: Exercise,
-        equipmentAvailable: String,
-        location: String,
+        equipments: [EquipmentType],
+        location: LocationType,
     ) -> Double {
         var bonus = 0.0
 
         let relevantFeedback = feedbackData.filter {
-            $0.exerciseId == exercise.id
+            $0.exercise == exercise
         }
 
         for feedback in relevantFeedback {
             var similarity = 0.0
 
-            if feedback.equipmentAvailable.lowercased().contains(
-                equipmentAvailable.lowercased()
-            ) {
+            if feedback.equipments.contains(where: { equipments.contains($0) })
+            {
                 similarity += 1.0
             }
-            if feedback.location.lowercased() == location.lowercased() {
+            if feedback.location == location {
                 similarity += 1.0
             }
 
