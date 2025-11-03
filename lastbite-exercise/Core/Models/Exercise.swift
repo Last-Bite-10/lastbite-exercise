@@ -9,10 +9,10 @@ struct Exercise: Codable, Identifiable, Hashable {
     let id: Int
     let name: String
     let imageName: String?
-    let location: String
+    let location: LocationType
     let needsTutorial: Bool
-    let equipment: String
-    let weather: String
+    let equipment: EquipmentType
+    let weather: WeatherType
 
     public static func loadExercises() -> [Exercise] {
         return [
@@ -20,226 +20,226 @@ struct Exercise: Codable, Identifiable, Hashable {
                 id: 1,
                 name: "Brisk walking",
                 imageName: "brisk-walking",
-                location: "Outdoor",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: "No equipment",
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 2,
                 name: "Push up",
                 imageName: "push-up",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "No equipment",
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 3,
                 name: "Invisible jump rope",
                 imageName: "invisible-jump-rope",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "No equipment",
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 4,
                 name: "Vertical jump",
                 imageName: "vertical-jump",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "No equipment",
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 5,
                 name: "Butt kicks",
                 imageName: "butt-kicks",
-                location: "Indoor/Outdoor",
+                location: .both,
                 needsTutorial: true,
-                equipment: "No equipment",
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 6,
                 name: "Bodyweight squats",
                 imageName: "bodyweight-squats",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "No equipment",
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 7,
                 name: "March in place",
                 imageName: "march-in-place",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "No equipment",
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 8,
                 name: "Skipping",
                 imageName: "skipping",
-                location: "Indoor/Outdoor",
+                location: .both,
                 needsTutorial: true,
-                equipment: "Jump Rope",
-                weather: "Clear weather"
+                equipment: .jumpRope,
+                weather: .clear
             ),
             Exercise(
                 id: 9,
                 name: "Plank shoulder tap",
                 imageName: "plank-shoulder-tap",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "Exercise mat",
-                weather: "Not affected by weather"
+                equipment: .exerciseMat,
+                weather: .notAffected
             ),
             Exercise(
                 id: 10,
                 name: "Dumbbell deadlift",
                 imageName: "dumbbell-deadlift",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "Dumbbell",
-                weather: "Not affected by weather"
+                equipment: .dumbbell,
+                weather: .notAffected
             ),
             Exercise(
                 id: 11,
                 name: "Stair climbing",
                 imageName: "stair-climbing",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: false,
-                equipment: "Stairs",
-                weather: "Not affected by weather"
+                equipment: .stairs,
+                weather: .notAffected
             ),
             Exercise(
                 id: 12,
                 name: "Wall sit",
                 imageName: "wall-sit",
-                location: "Indoor",
-                needsTutorial: false,
-                equipment: "Wall surface",
-                weather: "Not affected by weather"
+                location: .indoor,
+                needsTutorial: true,
+                equipment: .wallSurface,
+                weather: .notAffected
             ),
             Exercise(
                 id: 13,
-                name: "Frog Jumps",
+                name: "Frog jumps",
                 imageName: "frog-jumps",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "No equipment",
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 14,
                 name: "Slow mountain climbers",
                 imageName: "slow-mountain-climbers",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "Exercise Mat",
-                weather: "Not affected by weather"
+                equipment: .exerciseMat,
+                weather: .notAffected
             ),
             Exercise(
                 id: 15,
                 name: "Squat jump",
                 imageName: "squat-jump",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "No equipment",
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 16,
                 name: "Jumping jacks",
                 imageName: "jumping-jacks",
-                location: "Indoor/Outdoor",
+                location: .both,
                 needsTutorial: false,
-                equipment: "No equipment",
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 17,
                 name: "Jog in place",
                 imageName: "jog-in-place",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: false,
-                equipment: "No equipment",
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 18,
                 name: "Bicep curl",
                 imageName: "bicep-curl",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "Dumbbell",
-                weather: "Not affected by weather"
+                equipment: .dumbbell,
+                weather: .notAffected
             ),
             Exercise(
                 id: 19,
                 name: "Dumbbell thruster",
                 imageName: "dumbbell-thruster",
-                location: "Indoor",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: "Dumbbell",
-                weather: "Not affected by weather"
+                equipment: .dumbbell,
+                weather: .notAffected
             ),
             Exercise(
                 id: 20,
-                name: "Lunges",
-                imageName: "lunges",
-                location: "Indoor/Outdoor",
-                needsTutorial: false,
-                equipment: "No equipment",
-                weather: "Clear weather"
+                name: "Lunge",
+                imageName: "lunge",
+                location: .both,
+                needsTutorial: true,
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 21,
                 name: "Badminton",
                 imageName: "badminton",
-                location: "Outdoor",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: "Racket",
-                weather: "No strong wind"
+                equipment: .racket,
+                weather: .noStrongWind
             ),
             Exercise(
                 id: 22,
-                name: "Basketball",
-                imageName: "basketball",
-                location: "Outdoor",
+                name: "Jogging",
+                imageName: "jogging",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: "Ball",
-                weather: "Avoid rain"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 23,
                 name: "Cycling",
                 imageName: "cycling",
-                location: "Outdoor",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: "Bicycle",
-                weather: "Clear weather"
+                equipment: .bicycle,
+                weather: .clear
             ),
             Exercise(
                 id: 24,
                 name: "Tennis",
                 imageName: "tennis",
-                location: "Outdoor",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: "Paddle tennis",
-                weather: "Not affected by weather"
+                equipment: .paddleTennis,
+                weather: .notAffected
             ),
             Exercise(
                 id: 25,
                 name: "Volleyball",
                 imageName: "volleyball",
-                location: "Outdoor",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: "Volleyball",
-                weather: "Avoid strong wind"
+                equipment: .volleyball,
+                weather: .avoidStrongWind
             ),
         ]
     }

@@ -13,7 +13,7 @@ class RecommendationViewModel {
     var currentWeek: Weekly?
 
     private var modelContext: ModelContext?
-    private let recommender = TFIDFRecommender()
+    private let recommender = ExerciseRecommender.shared
 
     func setup(modelContext: ModelContext) {
         self.modelContext = modelContext
@@ -71,10 +71,8 @@ class RecommendationViewModel {
 
         // Get recommendations
         let recommendations = recommender.recommend(
-            equipmentAvailable: preference.equipmentAvailable.map {
-                $0.rawValue
-            }.joined(separator: " "),
-            location: preference.location?.rawValue ?? "",
+            equipments: preference.equipmentAvailable,
+            location: preference.location ?? .indoor,
         )
 
         // Create 2 exercise records for this week

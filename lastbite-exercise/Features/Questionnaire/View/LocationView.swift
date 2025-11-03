@@ -57,12 +57,7 @@ struct LocationView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        let preference = Preference(
-                            frequency: viewModel.selectedFrequency,
-                            equipmentAvailable: Array(
-                                viewModel.selectedEquipment
-                            ),
-                        )
+                        let preference = Preference()
                         modelContext.insert(preference)
                     },
                     label: {

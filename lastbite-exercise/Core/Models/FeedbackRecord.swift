@@ -11,28 +11,25 @@ import SwiftData
 @Model
 final class FeedbackRecord {
     var id: UUID
-    var exerciseId: Int
-    var exerciseName: String
-    var equipmentAvailable: String
-    var location: String
-    var weather: String
-    var needsTutorial: String
+    var exercise: Exercise?
+    var equipments: [EquipmentType]
+    var location: LocationType
+    var weather: WeatherType
+    var needsTutorial: Bool
     var wasGood: Bool
     var timestamp: Date
 
     init(
-        exerciseId: Int,
-        exerciseName: String,
-        equipmentAvailable: String,
-        location: String,
-        weather: String,
-        needsTutorial: String,
+        exercise: Exercise,
+        equipments: [EquipmentType],
+        location: LocationType,
+        weather: WeatherType,
+        needsTutorial: Bool,
         wasGood: Bool
     ) {
         self.id = UUID()
-        self.exerciseId = exerciseId
-        self.exerciseName = exerciseName
-        self.equipmentAvailable = equipmentAvailable
+        self.exercise = exercise
+        self.equipments = equipments
         self.location = location
         self.weather = weather
         self.needsTutorial = needsTutorial
