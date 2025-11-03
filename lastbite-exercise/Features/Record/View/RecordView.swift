@@ -119,26 +119,28 @@ struct RecordView: View {
     }
 }
 
-#Preview {
-    do {
-        // Create an in-memory model container for preview
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: ExerciseRecord.self, configurations: config)
-        
-        // Create a sample exercise record
-        let sampleRecord = ExerciseRecord(
-            exerciseName: "Running",
-            exerciseId: 1,
-            requiredMinutes: 30,
-            week: nil
-        )
-        
-        // Insert it into the container's context
-        container.mainContext.insert(sampleRecord)
-        
-        return RecordView(record: sampleRecord)
-            .modelContainer(container)
-    } catch {
-        return Text("Failed to create preview: \(error.localizedDescription)")
-    }
-}
+//#Preview {
+//    do {
+//        // Create an in-memory model container for preview
+//        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//        let container = try ModelContainer(for: ExerciseRecord.self, configurations: config)
+//        
+//        // Create a sample exercise record
+//        let sampleRecord = ExerciseRecord(
+//            exerciseName: "Running",
+//            exerciseId: 1,
+//            requiredMinutes: 30,
+//            week: nil
+//        )
+//        
+//        // Insert it into the container's context
+//        container.mainContext.insert(sampleRecord)
+//        
+//        
+//            RecordView(record: sampleRecord)
+//                .modelContainer(container)
+//    } catch {
+//        print("Can't get preview!")
+//    }
+//}
+//
