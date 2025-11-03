@@ -70,7 +70,13 @@ class RecordViewModel: ObservableObject {
 //            sportType: "Bicycling"
 //        )
         
-        let storedRecord: ExerciseRecord
+        // Update the record with recorded time
+        let recordedMinutes = timeRecorded / 60
+        record.recordedMinutes = recordedMinutes
+        record.isCompleted = recordedMinutes >= record.requiredMinutes
+        if(record.isCompleted){
+            record.completedAt = Date()
+        }
     }
     
     // MARK: - Private Methods
