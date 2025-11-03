@@ -20,6 +20,7 @@ enum TimerStatus {
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
     @StateObject private var viewModel: RecordViewModel
+    @Environment(\.dismiss) private var dismiss
     
     init(record: ExerciseRecord) {
         let manager = HealthKitManager()
@@ -107,6 +108,7 @@ struct RecordView: View {
 
                 Button("End") {
                     viewModel.finishExercise()
+                    dismiss()
                 }
             }
         }
