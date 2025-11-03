@@ -1,3 +1,5 @@
 disabled_rules:
- - trailing_whitespace
- - function_body_length
+  - function_body_length
+  - trailing_comma
+  - trailing_whitespace
+  - opening_brace

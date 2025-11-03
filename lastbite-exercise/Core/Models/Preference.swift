@@ -10,12 +10,12 @@ import SwiftData
 
 @Model
 final class Preference {
-    var id: UUID
-    var isUsingPlan: Bool
+    var id: UUID = UUID()
+    var isUsingPlan: Bool = false
     var frequency: FrequencyType?
-    var equipmentAvailable: [EquipmentType]
+    var equipmentAvailable: [EquipmentType] = []
     var location: LocationType?
-    var lastUpdated: Date
+    var lastUpdated: Date = Date()
 
     init(
         isUsingPlan: Bool = false,

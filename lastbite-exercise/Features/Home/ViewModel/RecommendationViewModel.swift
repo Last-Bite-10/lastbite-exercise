@@ -11,7 +11,6 @@ import SwiftUI
 @Observable
 class RecommendationViewModel {
     var currentWeek: Weekly?
-    var showSettings = false
 
     private var modelContext: ModelContext?
     private let recommender = TFIDFRecommender()
@@ -45,11 +44,6 @@ class RecommendationViewModel {
             // Create new week
             let weekNumber = (weeklies?.first?.weekNumber ?? 0) + 1
             let startOfWeek = calendar.startOfDay(for: today)
-            let endOfWeek = calendar.date(
-                byAdding: .day,
-                value: 6,
-                to: startOfWeek
-            )!
 
             let newWeek = Weekly(
                 weekNumber: weekNumber,
@@ -64,7 +58,7 @@ class RecommendationViewModel {
     func initializeWeeklyExercises(preference: Preference) {
         guard let context = modelContext,
             let week = currentWeek,
-            week.records.isEmpty
+            week.records!.isEmpty
         else { return }
 
         // Load feedback data
@@ -89,17 +83,22 @@ class RecommendationViewModel {
 
         for (exercise, _) in topExercises {
             let record = ExerciseRecord(
-                exerciseName: exercise.name,
-                exerciseId: exercise.id,
+                exercise: exercise,
                 requiredMinutes: minutes,
                 week: week
             )
             context.insert(record)
-            week.records.append(record)
+            week.records!.append(record)
 
             print("Inserted exercise: \(exercise.name) with \(minutes) minutes")
         }
 
+        try? context.save()
+    }
+
+    func modifyExerciseRecords(records: [ExerciseRecord]) {
+        guard let context = modelContext else { return }
+        currentWeek?.records = records
         try? context.save()
     }
 
@@ -108,8 +107,9 @@ class RecommendationViewModel {
 
         // Check if all exercises in the week are completed
         if let week = currentWeek {
-            let allCompleted = week.records.allSatisfy { $0.isCompleted }
+            let allCompleted = week.records!.allSatisfy { $0.isCompleted }
             week.isCompleted = allCompleted
+            week.endDate = allCompleted ? Date() : nil
         }
 
         try? context.save()

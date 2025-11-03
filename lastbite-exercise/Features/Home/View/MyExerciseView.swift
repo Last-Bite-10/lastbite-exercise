@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MyExerciseView: View {
     // State untuk data
+    @State private var viewModel = RecommendationViewModel()
+    @State private var showModifySheet = false
     @State private var weeklyStreaks = [true, true, false, true, false]
     @State private var currentDate = Date()
     @State private var progress: Double = 0.2
@@ -20,8 +22,16 @@ struct MyExerciseView: View {
             totalMinutes: 30,
             date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
             entries: [
-                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
+                ExerciseEntry(
+                    name: "Brisk Walk",
+                    doneMinutes: 20,
+                    targetMinutes: 20
+                ),
+                ExerciseEntry(
+                    name: "Squats",
+                    doneMinutes: 10,
+                    targetMinutes: 10
+                ),
             ]
         ),
         HistoryItem(
@@ -29,8 +39,16 @@ struct MyExerciseView: View {
             totalMinutes: 30,
             date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
             entries: [
-                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
+                ExerciseEntry(
+                    name: "Brisk Walk",
+                    doneMinutes: 20,
+                    targetMinutes: 20
+                ),
+                ExerciseEntry(
+                    name: "Squats",
+                    doneMinutes: 10,
+                    targetMinutes: 10
+                ),
             ]
         ),
         HistoryItem(
@@ -38,8 +56,16 @@ struct MyExerciseView: View {
             totalMinutes: 30,
             date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
             entries: [
-                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
+                ExerciseEntry(
+                    name: "Brisk Walk",
+                    doneMinutes: 20,
+                    targetMinutes: 20
+                ),
+                ExerciseEntry(
+                    name: "Squats",
+                    doneMinutes: 10,
+                    targetMinutes: 10
+                ),
             ]
         ),
         HistoryItem(
@@ -47,12 +73,20 @@ struct MyExerciseView: View {
             totalMinutes: 30,
             date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
             entries: [
-                ExerciseEntry(name: "Brisk Walk", doneMinutes: 20, targetMinutes: 20),
-                ExerciseEntry(name: "Squats", doneMinutes: 10, targetMinutes: 10)
+                ExerciseEntry(
+                    name: "Brisk Walk",
+                    doneMinutes: 20,
+                    targetMinutes: 20
+                ),
+                ExerciseEntry(
+                    name: "Squats",
+                    doneMinutes: 10,
+                    targetMinutes: 10
+                ),
             ]
-        )
+        ),
     ]
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -60,17 +94,24 @@ struct MyExerciseView: View {
                     // Streak Section
                     StreakView(weeklyStreaks: weeklyStreaks)
                         .padding(.horizontal)
-                    
+
+                    // Today's Plan Header
+                    TodaysPlanHeader(onModifyTapped: {
+                        showModifySheet = true
+                    })
+
                     // Today's Plan Section
-                    TodaysPlan()
-                    
+                    TodaysPlan().environment(viewModel)
+
                     // Recent History Section
                     RecentHistoryView(historyItems: historyItems)
-                       
+
                 }
             }
             .navigationTitle("My Exercise")
             .navigationBarTitleDisplayMode(.large)
+        }.fullScreenCover(isPresented: $showModifySheet) {
+            ExerciseSelectionSheet().environment(viewModel)
         }
     }
 }
