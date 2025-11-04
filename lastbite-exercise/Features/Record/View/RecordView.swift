@@ -18,12 +18,12 @@ enum TimerStatus {
 }
 
 struct RecordView: View {
-    @StateObject private var healthKitManager = HealthKitManager()
+    @StateObject private var healthKitManager: HealthKitManager
     @StateObject private var viewModel: RecordViewModel
     @Environment(\.dismiss) private var dismiss
     
     init(record: ExerciseRecord) {
-        let manager = HealthKitManager()
+        let manager = HealthKitManager.shared
         _healthKitManager = StateObject(wrappedValue: manager)
         _viewModel = StateObject(wrappedValue: RecordViewModel(record: record, healthKitManager: manager))
     }

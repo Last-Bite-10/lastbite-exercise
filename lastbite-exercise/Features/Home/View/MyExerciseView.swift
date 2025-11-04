@@ -87,6 +87,12 @@ struct MyExerciseView: View {
         ),
     ]
 
+    private let healthKitManager = HealthKitManager.shared
+
+    init() {
+        healthKitManager.requestAuthorization()
+    }
+
     var body: some View {
         NavigationView {
             ScrollView {

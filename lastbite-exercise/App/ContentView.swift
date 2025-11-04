@@ -16,19 +16,26 @@ struct ContentView: View {
     var body: some View {
         Group {
             if preferences.isEmpty {
-                FrequencyView()
+                GetStartedView()
             } else {
                 TabView(selection: $selectedTab) {
                     MyExerciseView()
                         .tabItem {
-                            Label("My Exercise", systemImage: "person.circle")
+                            Label(
+                                "My Exercise",
+                                systemImage: "person.circle"
+                            )
                         }
 
                     MyProgressView()
                         .tabItem {
-                            Label("My Progress", systemImage: "person.circle")
+                            Label(
+                                "My Progress",
+                                systemImage: "person.circle"
+                            )
                         }
                 }
+
             }
         }
     }
