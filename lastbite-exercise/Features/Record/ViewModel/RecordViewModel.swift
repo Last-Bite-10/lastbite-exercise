@@ -8,12 +8,12 @@
 import SwiftUI
 import Combine
 
-// TODO: change struct with real data structure of Workouts
-struct RecordModel {
-    let time: Float
-    let date: Date
-    let sportType: String
-}
+//// TODO: change struct with real data structure of Workouts
+//struct RecordModel {
+//    let time: Float
+//    let date: Date
+//    let sportType: String
+//}
 
 @MainActor
 class RecordViewModel: ObservableObject {
@@ -29,16 +29,17 @@ class RecordViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var timerCancellable: AnyCancellable?
     private let healthKitManager: HealthKitManager
-    private let totalTime: Int
+    private let record: ExerciseRecord
     
-    // TODO: BPM should be dynamically set based on user's age
-    private let bpmThreshold: Double = 100.0
+    private let bpmThreshold: Double
     
     // MARK: - Initialization
-    init(totalTime: Int, healthKitManager: HealthKitManager) {
-        self.totalTime = totalTime
-        self.activeTimeRemaining = totalTime
+    init(record: ExerciseRecord, healthKitManager: HealthKitManager) {
+        self.record = record
+        self.activeTimeRemaining = record.requiredMinutes * 60
         self.healthKitManager = healthKitManager
+        self.bpmThreshold = Double(healthKitManager.bpmThreshold ?? 100)
+        print(self.bpmThreshold)
     }
     
     // MARK: - Public Methods
@@ -64,11 +65,19 @@ class RecordViewModel: ObservableObject {
     func finishExercise() {
         cleanup()
         
-        let storedRecord: RecordModel = RecordModel(
-            time: Float(self.timeRecorded),
-            date: Date(),
-            sportType: "Bicycling" // TODO: still
-        )
+//        let storedRecord: RecordModel = RecordModel(
+//            time: Float(self.timeRecorded),
+//            date: Date(),
+//            sportType: "Bicycling"
+//        )
+        
+        // Update the record with recorded time
+        let recordedMinutes = timeRecorded / 60
+        record.recordedMinutes += recordedMinutes
+        record.isCompleted = recordedMinutes >= record.requiredMinutes
+        if record.isCompleted {
+            record.completedAt = Date()
+        }
     }
     
     // MARK: - Private Methods
@@ -91,7 +100,7 @@ class RecordViewModel: ObservableObject {
         if !isBPMUnder {
             activeTimeRemaining -= 1
         }
-        progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
+        progress = CGFloat(activeTimeRemaining) / CGFloat(record.requiredMinutes * 60)
     }
     
     private func pauseTimer() {

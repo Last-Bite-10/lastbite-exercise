@@ -73,6 +73,9 @@ struct TodaysPlan: View {
         .padding()
         .sheet(isPresented: $showRecording) {
             // TODO: Implement ExerciseRecordingView
+            if(selectedRecord != nil){
+                RecordView(record: selectedRecord!)
+            }
         }
         .onAppear {
             viewModel.setup(modelContext: modelContext)

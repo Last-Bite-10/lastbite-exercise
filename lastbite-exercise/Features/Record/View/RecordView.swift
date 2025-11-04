@@ -8,10 +8,7 @@
 import SwiftUI
 import HealthKit
 import Combine
-
-// func formatTime(duration: Int) -> String {
-//    return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
-// }
+import SwiftData
 
 enum TimerStatus {
     case timerPaused
@@ -23,11 +20,12 @@ enum TimerStatus {
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
     @StateObject private var viewModel: RecordViewModel
+    @Environment(\.dismiss) private var dismiss
     
-    init(totalTime: Int) {
+    init(record: ExerciseRecord) {
         let manager = HealthKitManager()
         _healthKitManager = StateObject(wrappedValue: manager)
-        _viewModel = StateObject(wrappedValue: RecordViewModel(totalTime: totalTime, healthKitManager: manager))
+        _viewModel = StateObject(wrappedValue: RecordViewModel(record: record, healthKitManager: manager))
     }
 
     var body: some View {
@@ -73,6 +71,10 @@ struct RecordView: View {
                                     viewModel.isBPMUnder ? Color.red : Color.black
                                 )
                         } else {
+                            
+                            if !viewModel.isReceivingFromWatch {
+                                Text("Apple Watch not connected")
+                            }
                             Text("--")
                                 .font(.title)
                                 .fontWeight(.bold)
@@ -81,6 +83,10 @@ struct RecordView: View {
                         if viewModel.isReceivingFromWatch {
                             Image(systemName: "applewatch")
                                 .foregroundStyle(.blue)
+                                .font(.caption)
+                        } else {
+                            Image(systemName: "applewatch.slash")
+                                .foregroundStyle(.red)
                                 .font(.caption)
                         }
                     }
@@ -102,6 +108,7 @@ struct RecordView: View {
 
                 Button("End") {
                     viewModel.finishExercise()
+                    dismiss()
                 }
             }
         }
@@ -114,6 +121,28 @@ struct RecordView: View {
     }
 }
 
-#Preview {
-    RecordView(totalTime: 100)
-}
+//#Preview {
+//    do {
+//        // Create an in-memory model container for preview
+//        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//        let container = try ModelContainer(for: ExerciseRecord.self, configurations: config)
+//        
+//        // Create a sample exercise record
+//        let sampleRecord = ExerciseRecord(
+//            exerciseName: "Running",
+//            exerciseId: 1,
+//            requiredMinutes: 30,
+//            week: nil
+//        )
+//        
+//        // Insert it into the container's context
+//        container.mainContext.insert(sampleRecord)
+//        
+//        
+//            RecordView(record: sampleRecord)
+//                .modelContainer(container)
+//    } catch {
+//        print("Can't get preview!")
+//    }
+//}
+//
