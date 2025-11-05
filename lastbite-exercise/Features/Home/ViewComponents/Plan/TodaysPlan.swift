@@ -11,6 +11,7 @@ import SwiftUI
 struct TodaysPlan: View {
     @Environment(RecommendationViewModel.self) private var viewModel
     @Environment(\.modelContext) private var modelContext
+    
     @Query private var preferences: [Preference]
     @Query private var weeklies: [Weekly]
 
@@ -72,9 +73,8 @@ struct TodaysPlan: View {
         )
         .padding()
         .sheet(isPresented: $showRecording) {
-            // TODO: Implement ExerciseRecordingView
-            if selectedRecord != nil {
-                RecordView(record: selectedRecord!)
+            if(selectedRecord != nil){
+                RecordView(record: selectedRecord!, modelContext: modelContext)
             }
         }
         .onAppear {

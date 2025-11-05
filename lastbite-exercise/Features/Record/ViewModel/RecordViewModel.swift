@@ -5,15 +5,10 @@
 //  Created by [Your Name] on [Date]
 //
 
+import SwiftUI
+import SwiftData
 import Combine
 import SwiftUI
-
-//// TODO: change struct with real data structure of Workouts
-//struct RecordModel {
-//    let time: Float
-//    let date: Date
-//    let sportType: String
-//}
 
 @MainActor
 class RecordViewModel: ObservableObject {
@@ -30,14 +25,15 @@ class RecordViewModel: ObservableObject {
     private var timerCancellable: AnyCancellable?
     private let healthKitManager: HealthKitManager
     private let record: ExerciseRecord
-
+    private var context: ModelContext
     private let bpmThreshold: Double
 
     // MARK: - Initialization
-    init(record: ExerciseRecord, healthKitManager: HealthKitManager) {
+    init(record: ExerciseRecord, healthKitManager: HealthKitManager, modelContext: ModelContext) {
         self.record = record
         self.activeTimeRemaining = record.requiredMinutes * 60
         self.healthKitManager = healthKitManager
+        self.context = modelContext
         self.bpmThreshold = Double(healthKitManager.bpmThreshold ?? 100)
         print(self.bpmThreshold)
     }
@@ -64,19 +60,23 @@ class RecordViewModel: ObservableObject {
 
     func finishExercise() {
         cleanup()
-
-        //        let storedRecord: RecordModel = RecordModel(
-        //            time: Float(self.timeRecorded),
-        //            date: Date(),
-        //            sportType: "Bicycling"
-        //        )
-
+        
         // Update the record with recorded time
         let recordedMinutes = timeRecorded / 60
         record.recordedMinutes += recordedMinutes
         record.isCompleted = recordedMinutes >= record.requiredMinutes
         if record.isCompleted {
             record.completedAt = Date()
+        }
+        
+        // Save the changes to the model context
+        try? context.save()
+                
+        // Perbaiki optional unwrapping
+        if let exerciseName = record.exercise?.name {
+            print("Exercise finished: \(exerciseName), recorded: \(recordedMinutes) minutes")
+        } else {
+            print("Exercise finished: recorded: \(recordedMinutes) minutes")
         }
     }
 

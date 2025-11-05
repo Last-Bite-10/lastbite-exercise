@@ -1,5 +1,5 @@
 //
-//  Analytics.swift
+//  MyExerciseView.swift
 //  lastbite-exercise
 //
 //  Created by Ali Ahmad Fahrezy on 22/10/25.
@@ -9,7 +9,6 @@ import SwiftData
 import SwiftUI
 
 struct MyExerciseView: View {
-    // State untuk data
     @State private var viewModel = RecommendationViewModel()
     @State private var showQuestionnaire: Bool = false
     @State private var showPlan: Bool = false
@@ -19,78 +18,6 @@ struct MyExerciseView: View {
     @State private var progress: Double = 0.2
     @State private var completedMinutes = 2
     @State private var totalMinutes = 10
-    @Query private var preferences: [Preference]
-    @Query private var records: [ExerciseRecord]
-    @State private var historyItems = [
-        HistoryItem(
-            minutes: 25,
-            totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-            entries: [
-                ExerciseEntry(
-                    name: "Brisk Walk",
-                    doneMinutes: 20,
-                    targetMinutes: 20
-                ),
-                ExerciseEntry(
-                    name: "Squats",
-                    doneMinutes: 10,
-                    targetMinutes: 10
-                ),
-            ]
-        ),
-        HistoryItem(
-            minutes: 25,
-            totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-            entries: [
-                ExerciseEntry(
-                    name: "Brisk Walk",
-                    doneMinutes: 20,
-                    targetMinutes: 20
-                ),
-                ExerciseEntry(
-                    name: "Squats",
-                    doneMinutes: 10,
-                    targetMinutes: 10
-                ),
-            ]
-        ),
-        HistoryItem(
-            minutes: 25,
-            totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-            entries: [
-                ExerciseEntry(
-                    name: "Brisk Walk",
-                    doneMinutes: 20,
-                    targetMinutes: 20
-                ),
-                ExerciseEntry(
-                    name: "Squats",
-                    doneMinutes: 10,
-                    targetMinutes: 10
-                ),
-            ]
-        ),
-        HistoryItem(
-            minutes: 25,
-            totalMinutes: 30,
-            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
-            entries: [
-                ExerciseEntry(
-                    name: "Brisk Walk",
-                    doneMinutes: 20,
-                    targetMinutes: 20
-                ),
-                ExerciseEntry(
-                    name: "Squats",
-                    doneMinutes: 10,
-                    targetMinutes: 10
-                ),
-            ]
-        ),
-    ]
 
     private let healthKitManager = HealthKitManager.shared
 

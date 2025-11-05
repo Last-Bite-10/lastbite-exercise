@@ -10,8 +10,10 @@
 	<string>Development</string>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
-		<string>iCloud.com.niken.lastbite</string>
+		<string>iCloud.lastbite</string>
 	</array>
+	<key>com.apple.developer.icloud-extended-share-access</key>
+	<array/>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
 		<string>CloudKit</string>

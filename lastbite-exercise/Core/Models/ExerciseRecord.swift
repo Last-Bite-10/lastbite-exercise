@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class ExerciseRecord {
+final class ExerciseRecord: Identifiable {
     var id: UUID = UUID()
     var exercise: Exercise?
     var requiredMinutes: Int = 0
