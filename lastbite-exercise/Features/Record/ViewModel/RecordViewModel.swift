@@ -5,9 +5,8 @@
 //  Created by [Your Name] on [Date]
 //
 
-import SwiftUI
-import SwiftData
 import Combine
+import SwiftData
 import SwiftUI
 
 @MainActor
@@ -29,7 +28,11 @@ class RecordViewModel: ObservableObject {
     private let bpmThreshold: Double
 
     // MARK: - Initialization
-    init(record: ExerciseRecord, healthKitManager: HealthKitManager, modelContext: ModelContext) {
+    init(
+        record: ExerciseRecord,
+        healthKitManager: HealthKitManager,
+        modelContext: ModelContext
+    ) {
         self.record = record
         self.activeTimeRemaining = record.requiredMinutes * 60
         self.healthKitManager = healthKitManager
@@ -60,7 +63,7 @@ class RecordViewModel: ObservableObject {
 
     func finishExercise() {
         cleanup()
-        
+
         // Update the record with recorded time
         let recordedMinutes = timeRecorded / 60
         record.recordedMinutes += recordedMinutes
@@ -68,13 +71,15 @@ class RecordViewModel: ObservableObject {
         if record.isCompleted {
             record.completedAt = Date()
         }
-        
+
         // Save the changes to the model context
         try? context.save()
-                
+
         // Perbaiki optional unwrapping
         if let exerciseName = record.exercise?.name {
-            print("Exercise finished: \(exerciseName), recorded: \(recordedMinutes) minutes")
+            print(
+                "Exercise finished: \(exerciseName), recorded: \(recordedMinutes) minutes"
+            )
         } else {
             print("Exercise finished: recorded: \(recordedMinutes) minutes")
         }

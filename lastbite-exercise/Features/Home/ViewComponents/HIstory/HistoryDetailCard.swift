@@ -1,5 +1,5 @@
 //
-//  HistoryDetailCard.swift
+//  HistoryDetailView.swift
 //  lastbite-exercise
 //
 //  Created by Ali Ahmad Fahrezy on 05/11/25.
@@ -12,7 +12,9 @@ struct HistoryDetailCard: View {
     let onSetAsPlan: () -> Void
 
     var totalTime: String {
-        "\(historyItem.minutes) mins"
+        let total = historyItem.entries.reduce(0) { $0 + $1.recordedMinutes }
+
+        return "\(total) mins"
     }
 
     @Environment(\.dismiss) private var dismiss
@@ -30,11 +32,14 @@ struct HistoryDetailCard: View {
                         ForEach(historyItem.entries) { entry in
                             VStack {
                                 HStack {
-                                    Text(entry.name)
-                                        .font(.headline)
+                                    Text(
+                                        entry.exercise?.name
+                                            ?? "Unnamed Exercise"
+                                    )
+                                    .font(.headline)
                                     Spacer()
                                     Text(
-                                        "\(entry.doneMinutes)/\(entry.targetMinutes) mins"
+                                        "\(entry.recordedMinutes)/\(entry.requiredMinutes) mins"
                                     )
                                     .font(.headline)
                                 }
@@ -58,18 +63,14 @@ struct HistoryDetailCard: View {
                             .foregroundColor(.white)
                             .padding(.vertical, 12)
                             .frame(width: geometry.size.width * 0.5)
-                            .background(Color("Blue2"))
+                            .background(Color.blueTwo)
                             .cornerRadius(50)
                             .position(x: geometry.size.width / 2, y: 30)
                     }
                 }
             }
             .padding()
-            .navigationTitle(
-                historyItem.date.formatted(
-                    .dateTime.weekday(.wide).day().month(.wide).year()
-                )
-            )
+            .navigationTitle(historyItem.date)
             .navigationBarTitleDisplayMode(.inline)
             .ignoresSafeArea(edges: .bottom)
             .toolbar {

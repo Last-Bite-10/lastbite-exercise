@@ -22,14 +22,17 @@ struct RecordView: View {
     @StateObject private var viewModel: RecordViewModel
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    
+
     init(record: ExerciseRecord, modelContext: ModelContext) {
-        let manager = HealthKitManager()
-        _viewModel = StateObject(wrappedValue: RecordViewModel(
-            record: record,
-            healthKitManager: manager,
-            modelContext: modelContext
-        ))
+        let manager = HealthKitManager.shared
+        _viewModel = StateObject(
+            wrappedValue: RecordViewModel(
+                record: record,
+                healthKitManager: manager,
+                modelContext: modelContext
+            )
+        )
+        _healthKitManager = StateObject(wrappedValue: manager)
     }
 
     var body: some View {

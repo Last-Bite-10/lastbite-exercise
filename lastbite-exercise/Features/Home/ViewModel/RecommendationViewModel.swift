@@ -112,23 +112,23 @@ class RecommendationViewModel {
 
         try? context.save()
     }
-    
+
     private func baseMinutes() -> Int {
         switch currentWeek?.weekNumber {
         case 1:
-            return 30
+            return 15
         case 2:
-            return 36
+            return 18
         case 3:
-            return 45
+            return 23
         case 4:
-            return 60
+            return 30
         case 5:
-            return 100
+            return 50
         case 6:
-            return 120
+            return 60
         default:
-            return 150
+            return 75
         }
     }
 
@@ -144,7 +144,6 @@ class RecommendationViewModel {
             baseMinutes() / 4
         case .fiveDays:
             baseMinutes() / 5
-
         }
     }
 }

@@ -19,6 +19,9 @@ struct MyExerciseView: View {
     @State private var completedMinutes = 2
     @State private var totalMinutes = 10
 
+    @Query private var preferences: [Preference]
+    @Query private var records: [ExerciseRecord]
+
     private let healthKitManager = HealthKitManager.shared
 
     init() {
@@ -48,8 +51,8 @@ struct MyExerciseView: View {
                     }
 
                     // Recent History Section
-                    RecentHistoryView(historyItems: historyItems)
-                        .padding(.top, -24)
+                    RecentHistoryView().environment(viewModel)
+                        .padding(.top, -20)
                 }
             }
             .navigationTitle("My Exercise")
@@ -57,10 +60,21 @@ struct MyExerciseView: View {
         }.fullScreenCover(isPresented: $showPlanModifySheet) {
             ExerciseSelectionSheet().environment(viewModel)
         }.fullScreenCover(isPresented: $showQuestionnaire) {
-            FrequencyView(onDone: {
-                showQuestionnaire = false
-                showPlan = true
-            })
+            if preferences.first?.planChosen == .beginner {
+                NavigationStack {
+                    BeginnerPlanView(onDone: {
+                        showQuestionnaire = false
+                        showPlan = true
+                    })
+                }
+            } else {
+                NavigationStack {
+                    FrequencyView(onDone: {
+                        showQuestionnaire = false
+                        showPlan = true
+                    })
+                }
+            }
         }
     }
 }
