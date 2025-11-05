@@ -112,7 +112,7 @@ class RecommendationViewModel {
 
         try? context.save()
     }
-
+    
     private func baseMinutes() -> Int {
         switch currentWeek?.weekNumber {
         case 1:
