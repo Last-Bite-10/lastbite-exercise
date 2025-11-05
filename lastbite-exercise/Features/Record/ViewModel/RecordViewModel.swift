@@ -9,6 +9,14 @@ import SwiftUI
 import SwiftData
 import Combine
 
+enum TimerStatus {
+    case timerPaused
+    case timerStarted
+    case timerStopped
+    case timerOverflown
+    case timerBelowBPM
+}
+
 @MainActor
 class RecordViewModel: ObservableObject {
     // MARK: - Published Properties
@@ -33,9 +41,7 @@ class RecordViewModel: ObservableObject {
         self.activeTimeRemaining = record.requiredMinutes * 60
         self.healthKitManager = healthKitManager
         self.context = modelContext
-        self.bpmThreshold = Double(healthKitManager.bpmThreshold ?? 100)
-        print(self.bpmThreshold)
-    }
+        self.bpmThreshold = Double(healthKitManager.bpmThreshold ?? 100)    }
     
     // MARK: - Public Methods
     func startMonitoring() {
@@ -55,6 +61,8 @@ class RecordViewModel: ObservableObject {
         } else {
             resumeTimer()
         }
+        
+        handleTimerStatusChange()
     }
     
     func finishExercise() {
@@ -89,17 +97,35 @@ class RecordViewModel: ObservableObject {
         timerStatus = .timerStarted
     }
     
-    private func handleTimerTick() {
-        guard activeTimeRemaining > 0 else {
-            finishExercise()
-            return
+    private func handleTimerStatusChange () {
+        if isPaused {
+            if isBPMUnder {
+                if activeTimeRemaining < 0 {
+                    timerStatus = .timerOverflown
+                } else {
+                    timerStatus = .timerStarted
+                }
+            } else {
+                timerStatus = .timerBelowBPM
+            }
+        } else {
+            timerStatus = .timerPaused
         }
+    }
+    
+    private func handleTimerTick () {
+//        guard activeTimeRemaining > 0 else {
+//            finishExercise()
+//            return
+//        }
         
-        timeRecorded += 1
         if !isBPMUnder {
             activeTimeRemaining -= 1
         }
-        progress = CGFloat(activeTimeRemaining) / CGFloat(record.requiredMinutes * 60)
+        
+        timeRecorded += 1
+        
+        progress = min(CGFloat(activeTimeRemaining) / CGFloat(record.requiredMinutes * 60), 1)
     }
     
     private func pauseTimer() {

@@ -10,13 +10,6 @@ import HealthKit
 import Combine
 import SwiftData
 
-enum TimerStatus {
-    case timerPaused
-    case timerStarted
-    case timerStopped
-    case timerOverflown
-}
-
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
     @StateObject private var viewModel: RecordViewModel
@@ -123,4 +116,9 @@ struct RecordView: View {
             viewModel.stopMonitoring()
         }
     }
+}
+
+#Preview {
+    @Environment(\.modelContext) private var modelContext
+    RecordView()
 }
