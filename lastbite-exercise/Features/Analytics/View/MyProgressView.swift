@@ -16,9 +16,9 @@ struct MyProgressView: View {
         Trophy(milestone: 10, isAchieved: false),
         Trophy(milestone: 15, isAchieved: false),
         Trophy(milestone: 20, isAchieved: false),
-        Trophy(milestone: 25, isAchieved: false)
+        Trophy(milestone: 25, isAchieved: false),
     ]
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -27,10 +27,10 @@ struct MyProgressView: View {
                     currentMinutes: currentWeeklyMinutes,
                     totalMinutes: totalWeeklyMinutes
                 )
-                
+
                 // Trophies Section
                 TrophiesView(trophies: trophies)
-                
+
                 Spacer()
             }
             .padding()

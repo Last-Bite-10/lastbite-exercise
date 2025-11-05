@@ -27,7 +27,7 @@ struct GetStartedView: View {
                         modelContext.insert(preference)
                     }
                 },
-                label: { CoreNavButtonLabel(title: "Get Started") }
+                label: { CoreButtonLabel(title: "Get Started") }
             )
         }
     }

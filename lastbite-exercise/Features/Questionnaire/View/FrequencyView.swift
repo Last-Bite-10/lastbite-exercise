@@ -5,37 +5,39 @@
 //  Created by Ali Ahmad Fahrezy on 23/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct FrequencyView: View {
     @State private var viewModel = QuestionnaireViewModel()
-    @Environment(\.modelContext) private var modelContext
+    let onDone: () -> Void
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
+                Text("1/3")
+                    .font(.headline)
                 Text("Choose your preferred frequency")
-                    .font(Font.headline)
+                    .font(.headline)
 
-                Image(systemName: "clock")
+                Image("FrequencyQuestion")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 150, height: 210)
-                    .foregroundStyle(Color.accentColor)
 
                 ForEach(FrequencyType.allCases, id: \.self) { type in
                     QuestionnaireSelectionButton(
                         title: type.rawValue,
                         isSelected: viewModel.selectedFrequency == type,
+                        widthReduction: 200,
                         action: { viewModel.selectedFrequency = type }
                     )
                 }
 
                 NavigationLink(
                     destination:
-                        EquipmentView()
+                        EquipmentView(onDone: onDone)
                         .environment(viewModel),
-                    label: { QuestionnaireNavButtonLabel(title: "Next") }
+                    label: { CoreButtonLabel(title: "Next") }
                 ).padding(.top, 64)
 
                 Spacer()
@@ -44,14 +46,14 @@ struct FrequencyView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(
                         action: {
-                            let preference = Preference()
-                            modelContext.insert(preference)
+                            onDone()
                         },
                         label: {
-                            Text("Skip")
+                            Text("Cancel")
                                 .foregroundColor(.red)
                         }
-                    ).buttonStyle(.borderless)
+                    )
+                    .buttonStyle(.glass)
                 }
             }
         }
@@ -59,5 +61,5 @@ struct FrequencyView: View {
 }
 
 #Preview {
-    FrequencyView()
+    FrequencyView(onDone: {})
 }

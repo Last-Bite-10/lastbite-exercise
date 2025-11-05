@@ -73,7 +73,7 @@ struct TodaysPlan: View {
         .padding()
         .sheet(isPresented: $showRecording) {
             // TODO: Implement ExerciseRecordingView
-            if(selectedRecord != nil){
+            if selectedRecord != nil {
                 RecordView(record: selectedRecord!)
             }
         }

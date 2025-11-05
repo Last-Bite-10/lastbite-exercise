@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct CoreNavButtonLabel: View {
+struct CoreButtonLabel: View {
     var title: String
 
     var body: some View {
         Text(title)
-            .font(.body)
+            .font(.subheadline)
             .padding(.vertical, 12)
             .padding(.horizontal, 28)
             .frame(width: UIScreen.main.bounds.width - 128)
             .foregroundStyle(Color.white)
             .background(
                 Capsule()
-                    .fill(Color.blue2)
+                    .fill(Color.interactiveBlue)
             )
             .accessibilityLabel(title)
     }
@@ -27,11 +27,11 @@ struct CoreNavButtonLabel: View {
 
 #Preview {
     VStack(spacing: 16) {
-        QuestionnaireNavButtonLabel(
+        CoreButtonLabel(
             title: "1 Day (30 Minutes per Day)"
         )
         .padding(.horizontal)
-        QuestionnaireNavButtonLabel(title: "Get Recommendation")
+        CoreButtonLabel(title: "Get Recommendation")
             .padding(.horizontal)
     }
 }
