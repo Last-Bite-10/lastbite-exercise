@@ -77,7 +77,10 @@ class RecommendationViewModel {
 
         // Create 2 exercise records for this week
         let topExercises = recommendations.prefix(2)
-        let minutes = extractMinutes(from: preference.frequency ?? .oneDay)
+        let minutes = extractMinutes(
+            from: preference.frequency ?? .oneDay,
+            isUsingBeginnerPlan: preference.planChosen == .beginner
+        )
 
         for (exercise, _) in topExercises {
             let record = ExerciseRecord(
@@ -113,7 +116,7 @@ class RecommendationViewModel {
         try? context.save()
     }
 
-    private func baseMinutes() -> Int {
+    private func beginnerPlanMinutes() -> Int {
         switch currentWeek?.weekNumber {
         case 1:
             return 15
@@ -132,18 +135,30 @@ class RecommendationViewModel {
         }
     }
 
-    private func extractMinutes(from frequency: FrequencyType) -> Int {
+    private func extractMinutes(
+        from frequency: FrequencyType,
+        isUsingBeginnerPlan: Bool
+    ) -> Int {
+        var result: Int = 0
+        var baseMinute: Int = 0
+
+        if isUsingBeginnerPlan {
+            baseMinute = beginnerPlanMinutes()
+        } else {
+            baseMinute = 75
+        }
         switch frequency {
         case .oneDay:
-            baseMinutes() / 1
+            result = baseMinute / 1
         case .twoDays:
-            baseMinutes() / 2
+            result = baseMinute / 2
         case .threeDays:
-            baseMinutes() / 3
+            result = baseMinute / 3
         case .fourDays:
-            baseMinutes() / 4
+            result = baseMinute / 4
         case .fiveDays:
-            baseMinutes() / 5
+            result = baseMinute / 5
         }
+        return result
     }
 }
