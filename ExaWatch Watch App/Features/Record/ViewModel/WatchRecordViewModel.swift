@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+// MARK: - Main Actors
 @MainActor
 class WatchRecordViewModel: ObservableObject {
     @Published var progress: CGFloat = 1.0
@@ -18,9 +19,11 @@ class WatchRecordViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     var timeRemainingFormatted: String {
-        let minutes = timeRemaining / 60
-        let seconds = timeRemaining % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        return formatTime(duration: timeRemaining)
+    }
+    
+    var timeTotalFormatted: String {
+        return formatTime(duration: totalDuration)
     }
     
     func connectToHealthManager(_ healthManager: WatchHealthManager) {
@@ -47,4 +50,9 @@ struct ProgressData {
     let isPaused: Bool
     let timeRemaining: Int
     let totalDuration: Int
+}
+
+// MARK: - Helper Functions
+private func formatTime(duration: Int) -> String {
+    return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
 }
