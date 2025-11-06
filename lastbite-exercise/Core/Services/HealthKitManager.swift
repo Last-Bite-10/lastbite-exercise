@@ -189,6 +189,7 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
     }
     
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        print("Received by phone: \(message)")
         if let bpm = message["bpm"] as? Double {
             print("BPM received : \(bpm)")
             Task { @MainActor in
