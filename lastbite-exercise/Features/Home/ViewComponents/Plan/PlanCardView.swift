@@ -1,0 +1,56 @@
+//
+//  PlanCardView.swift
+//  lastbite-exercise
+//
+//  Created by Ali Ahmad Fahrezy on 05/11/25.
+//
+
+import SwiftUI
+
+struct PlanCardView: View {
+    let title: String
+    let subtitle: String
+    let image: String
+    let action: () -> Void
+
+    var body: some View {
+        HStack {
+            Image(image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100, height: 100)
+
+            VStack(alignment: .leading, spacing: 16) {
+                Text(title)
+                    .font(.system(size: 18, weight: .semibold))
+
+                Text(subtitle)
+                    .font(.footnote)
+
+                Button(action: action) {
+                    Text("Choose")
+                        .font(.subheadline)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 8)
+                        .background(Color.interactiveBlue)
+                        .foregroundColor(.white)
+                        .clipShape(Capsule())
+                }
+            }
+        }
+        .padding(.vertical, 20)
+        .background(Color.cardGray)
+        .cornerRadius(28)
+    }
+}
+
+#Preview {
+    PlanCardView(
+        title: "7 Days Plan",
+        subtitle: "A comprehensive 7-day plan to kickstart your journey.",
+        image: "StartStrong",
+        action: {
+            print("Plan chosen")
+        }
+    )
+}
