@@ -5,14 +5,10 @@
 //  Created by Ammar Alifian Fahdan on 20/10/25.
 //
 
-import SwiftUI
-import HealthKit
 import Combine
-import SwiftData // DITAMBAHKAN
-
-// func formatTime(duration: Int) -> String {
-//     return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
-// }
+import HealthKit
+import SwiftData
+import SwiftUI
 
 enum TimerStatus {
     case timerPaused
@@ -22,29 +18,21 @@ enum TimerStatus {
 }
 
 struct RecordView: View {
-    @StateObject private var healthKitManager: HealthKitManager // DIUBAH: Dihapus inisialisasi default
+    @StateObject private var healthKitManager: HealthKitManager
     @StateObject private var viewModel: RecordViewModel
-    
-    // DIUBAH: init() sekarang menerima semua parameter yang diperlukan
-    init(
-        totalTime: Int,
-        exerciseId: Int,
-        exerciseName: String,
-        week: Weekly?,
-        modelContext: ModelContext // DITAMBAHKAN
-    ) {
-        let manager = HealthKitManager()
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+
+    init(record: ExerciseRecord, modelContext: ModelContext) {
+        let manager = HealthKitManager.shared
+        _viewModel = StateObject(
+            wrappedValue: RecordViewModel(
+                record: record,
+                healthKitManager: manager,
+                modelContext: modelContext
+            )
+        )
         _healthKitManager = StateObject(wrappedValue: manager)
-        
-        // DIUBAH: Melewatkan semua parameter ke viewModel
-        _viewModel = StateObject(wrappedValue: RecordViewModel(
-            totalTime: totalTime,
-            exerciseId: exerciseId,
-            exerciseName: exerciseName,
-            week: week,
-            healthKitManager: manager,
-            modelContext: modelContext
-        ))
     }
 
     var body: some View {
@@ -54,8 +42,8 @@ struct RecordView: View {
                 Circle()
                     .stroke(
                         !viewModel.isPaused
-                        ? Color.accentColor.opacity(0.2)
-                        : Color.gray2.opacity(1),
+                            ? Color.accentColor.opacity(0.2)
+                            : Color.cardGray.opacity(1),
                         lineWidth: 30
                     )
 
@@ -64,12 +52,15 @@ struct RecordView: View {
                     .trim(from: 0, to: viewModel.progress)
                     .stroke(
                         !viewModel.isPaused
-                        ? Color.blue2
-                        : Color.gray3,
+                            ? Color.blueTwo
+                            : Color.pausedGray,
                         style: StrokeStyle(lineWidth: 30, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
-                    .animation(.easeInOut(duration: 0.5), value: viewModel.progress)
+                    .animation(
+                        .easeInOut(duration: 0.5),
+                        value: viewModel.progress
+                    )
 
                 VStack {
                     VStack {
@@ -87,17 +78,26 @@ struct RecordView: View {
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .foregroundStyle(
-                                    viewModel.isBPMUnder ? Color.red : Color.black
+                                    viewModel.isBPMUnder
+                                        ? Color.red : Color.black
                                 )
                         } else {
+
+                            if !viewModel.isReceivingFromWatch {
+                                Text("Apple Watch not connected")
+                            }
                             Text("--")
                                 .font(.title)
                                 .fontWeight(.bold)
                         }
-                         
+
                         if viewModel.isReceivingFromWatch {
                             Image(systemName: "applewatch")
                                 .foregroundStyle(.blue)
+                                .font(.caption)
+                        } else {
+                            Image(systemName: "applewatch.slash")
+                                .foregroundStyle(.red)
                                 .font(.caption)
                         }
                     }
@@ -108,17 +108,21 @@ struct RecordView: View {
             VStack {
                 Text("Total Time").font(.title2).padding(.bottom, 4)
 
-                Text(viewModel.totalTimeFormatted).font(.title).fontWeight(.bold)
+                Text(viewModel.totalTimeFormatted).font(.title).fontWeight(
+                    .bold
+                )
             }
             .padding(.vertical, 36)
 
             VStack {
-                RecordPlayButton(title: viewModel.isPaused ? "Start" : "Pause") {
+                RecordPlayButton(title: viewModel.isPaused ? "Start" : "Pause")
+                {
                     viewModel.togglePause()
                 }
 
                 Button("End") {
                     viewModel.finishExercise()
+                    dismiss()
                 }
             }
         }
@@ -128,31 +132,5 @@ struct RecordView: View {
         .onDisappear {
             viewModel.stopMonitoring()
         }
-    }
-}
-
-// DIUBAH: Preview diperbarui agar menyertakan SwiftData ModelContainer
-#Preview {
-    do {
-        // 1. Buat ModelContainer in-memory
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: Weekly.self, ExerciseRecord.self, configurations: config)
-        
-        // 2. Buat data palsu (mock)
-        let week = Weekly(weekNumber: 1, startDate: Date())
-        container.mainContext.insert(week)
-        
-        // 3. Injeksi container dan context ke View
-        return RecordView(
-            totalTime: 100,
-            exerciseId: 1,
-            exerciseName: "Preview Exercise",
-            week: week,
-            modelContext: container.mainContext
-        )
-        .modelContainer(container)
-        
-    } catch {
-        return Text("Failed to create preview: \(error.localizedDescription)")
     }
 }

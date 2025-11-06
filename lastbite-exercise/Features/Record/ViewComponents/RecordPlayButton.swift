@@ -20,7 +20,7 @@ struct RecordPlayButton: View {
                 .foregroundStyle(Color.white)
                 .background(
                     Capsule()
-                        .fill(Color.blue2)
+                        .fill(Color.interactiveBlue)
                 )
                 .accessibilityLabel(title)
         }

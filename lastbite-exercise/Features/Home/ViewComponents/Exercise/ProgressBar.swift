@@ -20,14 +20,7 @@ struct ProgressBar: View {
                     y: 1
                 )
                 Capsule().fill(
-                    Color(
-                        #colorLiteral(
-                            red: 0.113,
-                            green: 0.356,
-                            blue: 0.617,
-                            alpha: 1
-                        )
-                    )
+                    Color.blueTwo
                 ).frame(width: max(12, geo.size.width * value))
             }
         }

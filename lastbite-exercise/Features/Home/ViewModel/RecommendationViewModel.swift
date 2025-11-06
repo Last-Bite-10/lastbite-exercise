@@ -11,17 +11,9 @@ import SwiftUI
 @Observable
 class RecommendationViewModel {
     var currentWeek: Weekly?
-    var showSettings = false
 
     private var modelContext: ModelContext?
-    
-    // 1. UBAH INI: dari 'let' menjadi 'var' dan tipe 'Protocol'
-    private var recommender: ExerciseRecommenderProtocol
-
-    // 2. BUAT INIT BARU: untuk menyuntikkan dependensi
-    init(recommender: ExerciseRecommenderProtocol = ExerciseRecommender()) {
-        self.recommender = recommender
-    }
+    private let recommender = ExerciseRecommender.shared
 
     func setup(modelContext: ModelContext) {
         self.modelContext = modelContext
@@ -52,12 +44,6 @@ class RecommendationViewModel {
             // Create new week
             let weekNumber = (weeklies?.first?.weekNumber ?? 0) + 1
             let startOfWeek = calendar.startOfDay(for: today)
-            // (Note: Logic untuk endOfWeek tidak digunakan, tapi dibiarkan)
-            let endOfWeek = calendar.date(
-                byAdding: .day,
-                value: 6,
-                to: startOfWeek
-            )!
 
             let newWeek = Weekly(
                 weekNumber: weekNumber,
@@ -73,8 +59,8 @@ class RecommendationViewModel {
     
     func initializeWeeklyExercises(preference: Preference) {
         guard let context = modelContext,
-              let week = currentWeek,
-              week.records.isEmpty
+            let week = currentWeek,
+            week.records!.isEmpty
         else { return }
 
         // DIPERBARUI: Kita perlu lokasi yang valid untuk recommender baru.
@@ -93,27 +79,35 @@ class RecommendationViewModel {
 
         // Get recommendations (Logika kotor dihapus)
         let recommendations = recommender.recommend(
-            equipment: preference.equipmentAvailable, // DIUBAH: Dilewatkan langsung
-            location: userLocation                  // DIUBAH: Dilewatkan langsung
+            equipments: preference.equipmentAvailable,
+            location: preference.location ?? .indoor,
         )
 
         // Create 2 exercise records for this week
         let topExercises = recommendations.prefix(2)
-        let minutes = extractMinutes(from: preference.frequency ?? .oneDay)
+        let minutes = extractMinutes(
+            from: preference.frequency ?? .oneDay,
+            isUsingBeginnerPlan: preference.planChosen == .beginner
+        )
 
         for (exercise, _) in topExercises {
             let record = ExerciseRecord(
-                exerciseName: exercise.name,
-                exerciseId: exercise.id,
+                exercise: exercise,
                 requiredMinutes: minutes,
                 week: week
             )
             context.insert(record)
-            week.records.append(record)
+            week.records!.append(record)
 
             print("Inserted exercise: \(exercise.name) with \(minutes) minutes")
         }
 
+        try? context.save()
+    }
+
+    func modifyExerciseRecords(records: [ExerciseRecord]) {
+        guard let context = modelContext else { return }
+        currentWeek?.records = records
         try? context.save()
     }
 
@@ -123,44 +117,57 @@ class RecommendationViewModel {
         // (Catatan: Logic ini mungkin perlu dijalankan setelah 'record.isCompleted' di-set)
         // Check if all exercises in the week are completed
         if let week = currentWeek {
-            let allCompleted = week.records.allSatisfy { $0.isCompleted }
+            let allCompleted = week.records!.allSatisfy { $0.isCompleted }
             week.isCompleted = allCompleted
+            week.endDate = allCompleted ? Date() : nil
         }
 
         try? context.save()
     }
 
-    private func baseMinutes() -> Int {
+    private func beginnerPlanMinutes() -> Int {
         switch currentWeek?.weekNumber {
         case 1:
-            return 30
+            return 15
         case 2:
-            return 36
+            return 18
         case 3:
-            return 45
+            return 23
         case 4:
-            return 60
+            return 30
         case 5:
-            return 100
+            return 50
         case 6:
-            return 120
+            return 60
         default:
-            return 150
+            return 75
         }
     }
 
-    private func extractMinutes(from frequency: FrequencyType) -> Int {
+    private func extractMinutes(
+        from frequency: FrequencyType,
+        isUsingBeginnerPlan: Bool
+    ) -> Int {
+        var result: Int = 0
+        var baseMinute: Int = 0
+
+        if isUsingBeginnerPlan {
+            baseMinute = beginnerPlanMinutes()
+        } else {
+            baseMinute = 75
+        }
         switch frequency {
         case .oneDay:
-            baseMinutes() / 1
+            result = baseMinute / 1
         case .twoDays:
-            baseMinutes() / 2
+            result = baseMinute / 2
         case .threeDays:
-            baseMinutes() / 3
+            result = baseMinute / 3
         case .fourDays:
-            baseMinutes() / 4
+            result = baseMinute / 4
         case .fiveDays:
-            baseMinutes() / 5
+            result = baseMinute / 5
         }
+        return result
     }
 }

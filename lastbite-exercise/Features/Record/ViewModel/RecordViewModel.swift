@@ -5,11 +5,9 @@
 //  Created by [Your Name] on [Date]
 //
 
-import SwiftUI
 import Combine
-import SwiftData // DITAMBAHKAN
-
-// DIHAPUS: struct RecordModel yang duplikat telah dihapus.
+import SwiftData
+import SwiftUI
 
 @MainActor
 class RecordViewModel: ObservableObject {
@@ -20,82 +18,73 @@ class RecordViewModel: ObservableObject {
     @Published var isPaused: Bool = true
     @Published var isBPMUnder: Bool = false
     @Published var timerStatus: TimerStatus = .timerPaused
-     
+
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
     private var timerCancellable: AnyCancellable?
-    private let healthKitManager: HealthKitManagerProtocol
-    private let totalTime: Int
-    
-    // DITAMBAHKAN: Properti untuk SwiftData
-    private var modelContext: ModelContext
-    private var exerciseId: Int
-    private var exerciseName: String
-    private var week: Weekly?
-     
-    // TODO: BPM should be dynamically set based on user's age
-    private let bpmThreshold: Double = 100.0
-     
+    private let healthKitManager: HealthKitManager
+    private let record: ExerciseRecord
+    private var context: ModelContext
+    private let bpmThreshold: Double
+
     // MARK: - Initialization
-    // DIUBAH: init() sekarang menerima ModelContext dan detail latihan
     init(
-        totalTime: Int,
-        exerciseId: Int,
-        exerciseName: String,
-        week: Weekly?,
-        healthKitManager: HealthKitManagerProtocol,
-        modelContext: ModelContext // DITAMBAHKAN
+        record: ExerciseRecord,
+        healthKitManager: HealthKitManager,
+        modelContext: ModelContext
     ) {
-        self.totalTime = totalTime
-        self.activeTimeRemaining = totalTime
-        self.exerciseId = exerciseId
-        self.exerciseName = exerciseName
-        self.week = week
+        self.record = record
+        self.activeTimeRemaining = record.requiredMinutes * 60
         self.healthKitManager = healthKitManager
-        self.modelContext = modelContext // DITAMBAHKAN
+        self.context = modelContext
+        self.bpmThreshold = Double(healthKitManager.bpmThreshold ?? 100)
+        print(self.bpmThreshold)
     }
-     
+
     // MARK: - Public Methods
     func startMonitoring() {
         healthKitManager.startWatchHeartRateMonitoring()
         subscribeToBPMUpdates()
     }
-     
+
     func stopMonitoring() {
         cleanup()
     }
-     
+
     func togglePause() {
         isPaused.toggle()
-         
+
         if isPaused {
             pauseTimer()
         } else {
             resumeTimer()
         }
     }
-     
-    // DIUBAH: Fungsi ini sekarang menyimpan ke SwiftData
+
     func finishExercise() {
         cleanup()
-         
-        // Konversi detik ke menit, bulatkan ke atas
-        let completedMinutes = (self.timeRecorded + 59) / 60
-        
-        // Ganti RecordModel dengan ExerciseRecord
-        let storedRecord = ExerciseRecord(
-            exerciseName: self.exerciseName,
-            exerciseId: self.exerciseId,
-            // Asumsi: 'requiredMinutes' di sini digunakan untuk menyimpan
-            // menit yang *diselesaikan* (dari timeRecorded).
-            requiredMinutes: completedMinutes,
-            week: self.week
-        )
-        
-        // Panggil modelContext.insert
-        modelContext.insert(storedRecord)
+
+        // Update the record with recorded time
+        let recordedMinutes = timeRecorded / 60
+        record.recordedMinutes += recordedMinutes
+        record.isCompleted = recordedMinutes >= record.requiredMinutes
+        if record.isCompleted {
+            record.completedAt = Date()
+        }
+
+        // Save the changes to the model context
+        try? context.save()
+
+        // Perbaiki optional unwrapping
+        if let exerciseName = record.exercise?.name {
+            print(
+                "Exercise finished: \(exerciseName), recorded: \(recordedMinutes) minutes"
+            )
+        } else {
+            print("Exercise finished: recorded: \(recordedMinutes) minutes")
+        }
     }
-     
+
     // MARK: - Private Methods
     private func startTimer() {
         timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
@@ -105,30 +94,31 @@ class RecordViewModel: ObservableObject {
             }
         timerStatus = .timerStarted
     }
-     
+
     private func handleTimerTick() {
         guard activeTimeRemaining > 0 else {
             finishExercise()
             return
         }
-         
+
         timeRecorded += 1
         if !isBPMUnder {
             activeTimeRemaining -= 1
         }
-        progress = CGFloat(activeTimeRemaining) / CGFloat(totalTime)
+        progress =
+            CGFloat(activeTimeRemaining) / CGFloat(record.requiredMinutes * 60)
     }
-     
+
     private func pauseTimer() {
         timerCancellable?.cancel()
         timerCancellable = nil
         timerStatus = .timerPaused
     }
-     
+
     private func resumeTimer() {
         startTimer()
     }
-     
+
     private func subscribeToBPMUpdates() {
         healthKitManager.bpmPublisher
             .sink { [weak self] bpm in
@@ -136,39 +126,39 @@ class RecordViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-     
+
     private func handleBPMUpdate(_ bpm: Double) {
         let wasUnder = isBPMUnder
         isBPMUnder = bpm < bpmThreshold
-         
+
         // Trigger haptic feedback when BPM drops below threshold
         if isBPMUnder && !wasUnder {
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
         }
     }
-     
+
     private func cleanup() {
         timerCancellable?.cancel()
         timerCancellable = nil
         healthKitManager.stopWatchHeartRateMonitoring()
         cancellables.removeAll()
     }
-     
+
     // MARK: - Computed Properties
     var activeTimeFormatted: String {
         formatTime(duration: activeTimeRemaining)
     }
-     
+
     var totalTimeFormatted: String {
         formatTime(duration: timeRecorded)
     }
-     
+
     var currentBPM: Int? {
         guard let bpm = healthKitManager.latestBPM else { return nil }
         return Int(bpm)
     }
-     
+
     var isReceivingFromWatch: Bool {
         healthKitManager.isReceivingFromWatch
     }
@@ -176,5 +166,6 @@ class RecordViewModel: ObservableObject {
 
 // MARK: - Helper Functions
 private func formatTime(duration: Int) -> String {
-    return "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
+    return
+        "\(String(format: "%02d", duration / 60)):\(String(format: "%02d", duration % 60))"
 }

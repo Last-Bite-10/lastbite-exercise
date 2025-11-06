@@ -11,15 +11,15 @@ import SwiftUI
 // View ini sekarang akan menggunakan definisi dari MyProgressViewModel.
 
 struct TrophiesView: View {
-    var trophies: [Trophy] // Tipe data ini merujuk ke struct di ViewModel
-     
+    var trophies: [Trophy]
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("My Trophies")
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(Color(red: 0.2, green: 0.5, blue: 0.8))
-           
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     // ForEach tetap berfungsi karena 'Trophy'
@@ -29,19 +29,27 @@ struct TrophiesView: View {
                             ZStack {
                                 Circle()
                                     .strokeBorder(
-                                        trophy.isAchieved ? Color.blue : Color.gray.opacity(0.3),
+                                        trophy.isAchieved
+                                            ? Color.blue
+                                            : Color.gray.opacity(0.3),
                                         lineWidth: 3
                                     )
                                     .frame(width: 60, height: 60)
-                               
+
                                 Image(systemName: "medal.fill")
                                     .font(.system(size: 30))
-                                    .foregroundColor(trophy.isAchieved ? .blue : .gray.opacity(0.3))
+                                    .foregroundColor(
+                                        trophy.isAchieved
+                                            ? .blue : .gray.opacity(0.3)
+                                    )
                             }
-                           
+
                             Text("\(trophy.milestone)")
                                 .font(.headline)
-                                .foregroundColor(trophy.isAchieved ? .blue : .gray.opacity(0.5))
+                                .foregroundColor(
+                                    trophy.isAchieved
+                                        ? .blue : .gray.opacity(0.5)
+                                )
                         }
                     }
                 }
@@ -59,7 +67,7 @@ struct TrophiesView: View {
         Trophy(milestone: 5, isAchieved: true),
         Trophy(milestone: 10, isAchieved: false),
         Trophy(milestone: 15, isAchieved: false),
-        Trophy(milestone: 20, isAchieved: false)
+        Trophy(milestone: 20, isAchieved: false),
     ])
     .padding()
 }

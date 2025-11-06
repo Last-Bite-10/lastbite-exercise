@@ -7,38 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		39E2BC592EAF7A3300714C26 /* ExaWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 39E2BC392EAF7A3200714C26 /* ExaWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		39E2BC592EAF7A3300714C26 /* Exa Move Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 39E2BC392EAF7A3200714C26 /* Exa Move Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		23D549212EB4623F000311C7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 23351FF62EA6168D0033FBF6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 23351FFD2EA6168D0033FBF6;
-			remoteInfo = Exa;
-		};
-		23D5494B2EB464A1000311C7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 23351FF62EA6168D0033FBF6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 23351FFD2EA6168D0033FBF6;
-			remoteInfo = Exa;
-		};
-		39E2BC462EAF7A3300714C26 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 23351FF62EA6168D0033FBF6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 39E2BC382EAF7A3200714C26;
-			remoteInfo = "ExaWatch Watch App";
-		};
-		39E2BC502EAF7A3300714C26 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 23351FF62EA6168D0033FBF6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 39E2BC382EAF7A3200714C26;
-			remoteInfo = "ExaWatch Watch App";
-		};
 		39E2BC572EAF7A3300714C26 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 23351FF62EA6168D0033FBF6 /* Project object */;
@@ -55,7 +27,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				39E2BC592EAF7A3300714C26 /* ExaWatch Watch App.app in Embed Watch Content */,
+				39E2BC592EAF7A3300714C26 /* Exa Move Watch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,21 +35,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		23351FFE2EA6168D0033FBF6 /* Exa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Exa.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		23D5491D2EB4623F000311C7 /* ExaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		23D549472EB464A1000311C7 /* ExaUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExaUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		39E2BC392EAF7A3200714C26 /* ExaWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ExaWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		39E2BC452EAF7A3300714C26 /* ExaWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ExaWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		39E2BC4F2EAF7A3300714C26 /* ExaWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ExaWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23351FFE2EA6168D0033FBF6 /* Exa Move.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Exa Move.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		39E2BC392EAF7A3200714C26 /* Exa Move Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Exa Move Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5F2013E2EB9E4B900E4A01E /* Exa MoveDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Exa MoveDebug.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "Exa" target */ = {
+		2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "Exa Move" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 23351FFD2EA6168D0033FBF6 /* Exa */;
+			target = 23351FFD2EA6168D0033FBF6 /* Exa Move */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -85,7 +54,7 @@
 		233520002EA6168D0033FBF6 /* lastbite-exercise */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "Exa" target */,
+				2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "Exa Move" target */,
 			);
 			path = "lastbite-exercise";
 			sourceTree = "<group>";
@@ -100,34 +69,10 @@
 			path = "ExaWatch Watch App";
 			sourceTree = "<group>";
 		};
-		39E2BC482EAF7A3300714C26 /* ExaWatch Watch AppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "ExaWatch Watch AppTests";
-			sourceTree = "<group>";
-		};
-		39E2BC522EAF7A3300714C26 /* ExaWatch Watch AppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "ExaWatch Watch AppUITests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		23351FFB2EA6168D0033FBF6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23D5491A2EB4623F000311C7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23D549442EB464A1000311C7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -141,31 +86,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		39E2BC422EAF7A3300714C26 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		39E2BC4C2EAF7A3300714C26 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		23351FF52EA6168D0033FBF6 = {
 			isa = PBXGroup;
 			children = (
+				E5F2013E2EB9E4B900E4A01E /* Exa MoveDebug.entitlements */,
 				233520002EA6168D0033FBF6 /* lastbite-exercise */,
 				39E2BC3A2EAF7A3200714C26 /* ExaWatch Watch App */,
-				39E2BC482EAF7A3300714C26 /* ExaWatch Watch AppTests */,
-				39E2BC522EAF7A3300714C26 /* ExaWatch Watch AppUITests */,
-				23D549482EB464A1000311C7 /* ExaUnitTests */,
 				23351FFF2EA6168D0033FBF6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -173,12 +102,8 @@
 		23351FFF2EA6168D0033FBF6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				23351FFE2EA6168D0033FBF6 /* Exa.app */,
-				39E2BC392EAF7A3200714C26 /* ExaWatch Watch App.app */,
-				39E2BC452EAF7A3300714C26 /* ExaWatch Watch AppTests.xctest */,
-				39E2BC4F2EAF7A3300714C26 /* ExaWatch Watch AppUITests.xctest */,
-				23D5491D2EB4623F000311C7 /* ExaTests.xctest */,
-				23D549472EB464A1000311C7 /* ExaUnitTests.xctest */,
+				23351FFE2EA6168D0033FBF6 /* Exa Move.app */,
+				39E2BC392EAF7A3200714C26 /* Exa Move Watch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,9 +111,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		23351FFD2EA6168D0033FBF6 /* Exa */ = {
+		23351FFD2EA6168D0033FBF6 /* Exa Move */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2335200C2EA6168E0033FBF6 /* Build configuration list for PBXNativeTarget "Exa" */;
+			buildConfigurationList = 2335200C2EA6168E0033FBF6 /* Build configuration list for PBXNativeTarget "Exa Move" */;
 			buildPhases = (
 				23351FFA2EA6168D0033FBF6 /* Sources */,
 				23351FFB2EA6168D0033FBF6 /* Frameworks */,
@@ -203,59 +128,16 @@
 			fileSystemSynchronizedGroups = (
 				233520002EA6168D0033FBF6 /* lastbite-exercise */,
 			);
-			name = Exa;
+			name = "Exa Move";
 			packageProductDependencies = (
 			);
 			productName = "lastbite-exercise";
-			productReference = 23351FFE2EA6168D0033FBF6 /* Exa.app */;
+			productReference = 23351FFE2EA6168D0033FBF6 /* Exa Move.app */;
 			productType = "com.apple.product-type.application";
 		};
-		23D5491C2EB4623F000311C7 /* ExaTests */ = {
+		39E2BC382EAF7A3200714C26 /* Exa Move Watch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 23D549232EB4623F000311C7 /* Build configuration list for PBXNativeTarget "ExaTests" */;
-			buildPhases = (
-				23D549192EB4623F000311C7 /* Sources */,
-				23D5491A2EB4623F000311C7 /* Frameworks */,
-				23D5491B2EB4623F000311C7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				23D549222EB4623F000311C7 /* PBXTargetDependency */,
-			);
-			name = ExaTests;
-			packageProductDependencies = (
-			);
-			productName = ExaTests;
-			productReference = 23D5491D2EB4623F000311C7 /* ExaTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		23D549462EB464A1000311C7 /* ExaUnitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 23D5494D2EB464A1000311C7 /* Build configuration list for PBXNativeTarget "ExaUnitTests" */;
-			buildPhases = (
-				23D549432EB464A1000311C7 /* Sources */,
-				23D549442EB464A1000311C7 /* Frameworks */,
-				23D549452EB464A1000311C7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				23D5494C2EB464A1000311C7 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				23D549482EB464A1000311C7 /* ExaUnitTests */,
-			);
-			name = ExaUnitTests;
-			packageProductDependencies = (
-			);
-			productName = ExaUnitTests;
-			productReference = 23D549472EB464A1000311C7 /* ExaUnitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		39E2BC382EAF7A3200714C26 /* ExaWatch Watch App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 39E2BC612EAF7A3300714C26 /* Build configuration list for PBXNativeTarget "ExaWatch Watch App" */;
+			buildConfigurationList = 39E2BC612EAF7A3300714C26 /* Build configuration list for PBXNativeTarget "Exa Move Watch" */;
 			buildPhases = (
 				39E2BC352EAF7A3200714C26 /* Sources */,
 				39E2BC362EAF7A3200714C26 /* Frameworks */,
@@ -268,58 +150,12 @@
 			fileSystemSynchronizedGroups = (
 				39E2BC3A2EAF7A3200714C26 /* ExaWatch Watch App */,
 			);
-			name = "ExaWatch Watch App";
+			name = "Exa Move Watch";
 			packageProductDependencies = (
 			);
 			productName = "ExaWatch Watch App";
-			productReference = 39E2BC392EAF7A3200714C26 /* ExaWatch Watch App.app */;
+			productReference = 39E2BC392EAF7A3200714C26 /* Exa Move Watch.app */;
 			productType = "com.apple.product-type.application";
-		};
-		39E2BC442EAF7A3300714C26 /* ExaWatch Watch AppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 39E2BC622EAF7A3300714C26 /* Build configuration list for PBXNativeTarget "ExaWatch Watch AppTests" */;
-			buildPhases = (
-				39E2BC412EAF7A3300714C26 /* Sources */,
-				39E2BC422EAF7A3300714C26 /* Frameworks */,
-				39E2BC432EAF7A3300714C26 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				39E2BC472EAF7A3300714C26 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				39E2BC482EAF7A3300714C26 /* ExaWatch Watch AppTests */,
-			);
-			name = "ExaWatch Watch AppTests";
-			packageProductDependencies = (
-			);
-			productName = "ExaWatch Watch AppTests";
-			productReference = 39E2BC452EAF7A3300714C26 /* ExaWatch Watch AppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		39E2BC4E2EAF7A3300714C26 /* ExaWatch Watch AppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 39E2BC632EAF7A3300714C26 /* Build configuration list for PBXNativeTarget "ExaWatch Watch AppUITests" */;
-			buildPhases = (
-				39E2BC4B2EAF7A3300714C26 /* Sources */,
-				39E2BC4C2EAF7A3300714C26 /* Frameworks */,
-				39E2BC4D2EAF7A3300714C26 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				39E2BC512EAF7A3300714C26 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				39E2BC522EAF7A3300714C26 /* ExaWatch Watch AppUITests */,
-			);
-			name = "ExaWatch Watch AppUITests";
-			packageProductDependencies = (
-			);
-			productName = "ExaWatch Watch AppUITests";
-			productReference = 39E2BC4F2EAF7A3300714C26 /* ExaWatch Watch AppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -334,24 +170,9 @@
 					23351FFD2EA6168D0033FBF6 = {
 						CreatedOnToolsVersion = 16.4;
 					};
-					23D5491C2EB4623F000311C7 = {
-						CreatedOnToolsVersion = 26.0.1;
-						TestTargetID = 23351FFD2EA6168D0033FBF6;
-					};
-					23D549462EB464A1000311C7 = {
-						CreatedOnToolsVersion = 26.0.1;
-						TestTargetID = 23351FFD2EA6168D0033FBF6;
-					};
 					39E2BC382EAF7A3200714C26 = {
 						CreatedOnToolsVersion = 26.0.1;
-					};
-					39E2BC442EAF7A3300714C26 = {
-						CreatedOnToolsVersion = 26.0.1;
-						TestTargetID = 39E2BC382EAF7A3200714C26;
-					};
-					39E2BC4E2EAF7A3300714C26 = {
-						CreatedOnToolsVersion = 26.0.1;
-						TestTargetID = 39E2BC382EAF7A3200714C26;
+						TestTargetID = 23351FFD2EA6168D0033FBF6;
 					};
 				};
 			};
@@ -371,12 +192,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				23351FFD2EA6168D0033FBF6 /* Exa */,
-				39E2BC382EAF7A3200714C26 /* ExaWatch Watch App */,
-				39E2BC442EAF7A3300714C26 /* ExaWatch Watch AppTests */,
-				39E2BC4E2EAF7A3300714C26 /* ExaWatch Watch AppUITests */,
-				23D5491C2EB4623F000311C7 /* ExaTests */,
-				23D549462EB464A1000311C7 /* ExaUnitTests */,
+				23351FFD2EA6168D0033FBF6 /* Exa Move */,
+				39E2BC382EAF7A3200714C26 /* Exa Move Watch */,
 			);
 		};
 /* End PBXProject section */
@@ -389,35 +206,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		23D5491B2EB4623F000311C7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23D549452EB464A1000311C7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		39E2BC372EAF7A3200714C26 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		39E2BC432EAF7A3300714C26 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		39E2BC4D2EAF7A3300714C26 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -434,35 +223,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		23D549192EB4623F000311C7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23D549432EB464A1000311C7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		39E2BC352EAF7A3200714C26 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		39E2BC412EAF7A3300714C26 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		39E2BC4B2EAF7A3300714C26 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -472,29 +233,9 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		23D549222EB4623F000311C7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 23351FFD2EA6168D0033FBF6 /* Exa */;
-			targetProxy = 23D549212EB4623F000311C7 /* PBXContainerItemProxy */;
-		};
-		23D5494C2EB464A1000311C7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 23351FFD2EA6168D0033FBF6 /* Exa */;
-			targetProxy = 23D5494B2EB464A1000311C7 /* PBXContainerItemProxy */;
-		};
-		39E2BC472EAF7A3300714C26 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 39E2BC382EAF7A3200714C26 /* ExaWatch Watch App */;
-			targetProxy = 39E2BC462EAF7A3300714C26 /* PBXContainerItemProxy */;
-		};
-		39E2BC512EAF7A3300714C26 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 39E2BC382EAF7A3200714C26 /* ExaWatch Watch App */;
-			targetProxy = 39E2BC502EAF7A3300714C26 /* PBXContainerItemProxy */;
-		};
 		39E2BC582EAF7A3300714C26 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 39E2BC382EAF7A3200714C26 /* ExaWatch Watch App */;
+			target = 39E2BC382EAF7A3200714C26 /* Exa Move Watch */;
 			targetProxy = 39E2BC572EAF7A3300714C26 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -505,10 +246,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "lastbite-exercise/lastbite_exercise.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Exa MoveDebug.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D65356M48A;
+				DEVELOPMENT_TEAM = PP2K97M73A;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -516,8 +257,8 @@
 				INFOPLIST_FILE = "lastbite-exercise/Info.plist";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "We would need this information to get the BPM for your training.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We would need this information to get the BPM for your training.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress, and age to calculate the correct BPM";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -529,7 +270,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.exa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -549,7 +290,7 @@
 				CODE_SIGN_ENTITLEMENTS = "lastbite-exercise/lastbite_exercise.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D65356M48A;
+				DEVELOPMENT_TEAM = PP2K97M73A;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -557,8 +298,8 @@
 				INFOPLIST_FILE = "lastbite-exercise/Info.plist";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "We would need this information to get the BPM for your training.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We would need this information to get the BPM for your training.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress, and age to calculate the correct BPM";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -801,20 +542,20 @@
 				CODE_SIGN_ENTITLEMENTS = "ExaWatch Watch App/ExaWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D65356M48A;
+				DEVELOPMENT_TEAM = PP2K97M73A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
+				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.niken.lastbite;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = cloud.rain.exa;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.exa.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -837,14 +578,14 @@
 				CODE_SIGN_ENTITLEMENTS = "ExaWatch Watch App/ExaWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D65356M48A;
+				DEVELOPMENT_TEAM = PP2K97M73A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
+				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.niken.lastbite;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = cloud.rain.exa;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -865,98 +606,6 @@
 			};
 			name = Release;
 		};
-		39E2BC5D2EAF7A3300714C26 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZBZPAZFH4S;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need this data to track your BPM.";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kerupuksambel.ExaWatch-Watch-AppTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExaWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ExaWatch Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 26.0;
-			};
-			name = Debug;
-		};
-		39E2BC5E2EAF7A3300714C26 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZBZPAZFH4S;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need this data to track your BPM.";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kerupuksambel.ExaWatch-Watch-AppTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExaWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ExaWatch Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 26.0;
-			};
-			name = Release;
-		};
-		39E2BC5F2EAF7A3300714C26 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZBZPAZFH4S;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kerupuksambel.ExaWatch-Watch-AppUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_TARGET_NAME = "ExaWatch Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 26.0;
-			};
-			name = Debug;
-		};
-		39E2BC602EAF7A3300714C26 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZBZPAZFH4S;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kerupuksambel.ExaWatch-Watch-AppUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_TARGET_NAME = "ExaWatch Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 26.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -969,7 +618,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2335200C2EA6168E0033FBF6 /* Build configuration list for PBXNativeTarget "Exa" */ = {
+		2335200C2EA6168E0033FBF6 /* Build configuration list for PBXNativeTarget "Exa Move" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2335200D2EA6168E0033FBF6 /* Debug */,
@@ -978,47 +627,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		23D549232EB4623F000311C7 /* Build configuration list for PBXNativeTarget "ExaTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				23D549242EB4623F000311C7 /* Debug */,
-				23D549252EB4623F000311C7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		23D5494D2EB464A1000311C7 /* Build configuration list for PBXNativeTarget "ExaUnitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				23D5494E2EB464A1000311C7 /* Debug */,
-				23D5494F2EB464A1000311C7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		39E2BC612EAF7A3300714C26 /* Build configuration list for PBXNativeTarget "ExaWatch Watch App" */ = {
+		39E2BC612EAF7A3300714C26 /* Build configuration list for PBXNativeTarget "Exa Move Watch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				39E2BC5B2EAF7A3300714C26 /* Debug */,
 				39E2BC5C2EAF7A3300714C26 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		39E2BC622EAF7A3300714C26 /* Build configuration list for PBXNativeTarget "ExaWatch Watch AppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				39E2BC5D2EAF7A3300714C26 /* Debug */,
-				39E2BC5E2EAF7A3300714C26 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		39E2BC632EAF7A3300714C26 /* Build configuration list for PBXNativeTarget "ExaWatch Watch AppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				39E2BC5F2EAF7A3300714C26 /* Debug */,
-				39E2BC602EAF7A3300714C26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

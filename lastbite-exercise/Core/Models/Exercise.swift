@@ -5,216 +5,242 @@
 //  Created by Ali Ahmad Fahrezy on 30/10/25.
 //
 
-struct Exercise {
+struct Exercise: Codable, Identifiable, Hashable {
     let id: Int
     let name: String
-    let location: LocationType     // DIUBAH
+    let imageName: String?
+    let location: LocationType
     let needsTutorial: Bool
-    let equipment: EquipmentType   // DIUBAH
-    let weather: String
+    let equipment: EquipmentType
+    let weather: WeatherType
 
     public static func loadExercises() -> [Exercise] {
         return [
             Exercise(
                 id: 1,
                 name: "Brisk walking",
-                location: .outdoor,        // Diperbarui
+                imageName: "brisk-walking",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 2,
                 name: "Push up",
-                location: .indoor,         // Diperbarui
+                imageName: "push-up",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 3,
                 name: "Invisible jump rope",
-                location: .indoor,         // Diperbarui
+                imageName: "invisible-jump-rope",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 4,
                 name: "Vertical jump",
-                location: .indoor,         // Diperbarui
+                imageName: "vertical-jump",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 5,
                 name: "Butt kicks",
-                location: .both,           // Diperbarui dari "Indoor/Outdoor"
+                imageName: "butt-kicks",
+                location: .both,
                 needsTutorial: true,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 6,
                 name: "Bodyweight squats",
-                location: .indoor,         // Diperbarui
+                imageName: "bodyweight-squats",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 7,
                 name: "March in place",
-                location: .indoor,         // Diperbarui
+                imageName: "march-in-place",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 8,
                 name: "Skipping",
-                location: .both,           // Diperbarui dari "Indoor/Outdoor"
+                imageName: "skipping",
+                location: .both,
                 needsTutorial: true,
-                equipment: .jumpRope,      // Diperbarui
-                weather: "Clear weather"
+                equipment: .jumpRope,
+                weather: .clear
             ),
             Exercise(
                 id: 9,
                 name: "Plank shoulder tap",
-                location: .indoor,         // Diperbarui
+                imageName: "plank-shoulder-tap",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .exerciseMat,   // Diperbarui (string "Exercise mat" dikonversi)
-                weather: "Not affected by weather"
+                equipment: .exerciseMat,
+                weather: .notAffected
             ),
             Exercise(
                 id: 10,
                 name: "Dumbbell deadlift",
-                location: .indoor,         // Diperbarui
+                imageName: "dumbbell-deadlift",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .dumbbell,      // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .dumbbell,
+                weather: .notAffected
             ),
             Exercise(
                 id: 11,
                 name: "Stair climbing",
-                location: .indoor,         // Diperbarui
+                imageName: "stair-climbing",
+                location: .indoor,
                 needsTutorial: false,
-                equipment: .stairs,        // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .stairs,
+                weather: .notAffected
             ),
             Exercise(
                 id: 12,
                 name: "Wall sit",
-                location: .indoor,         // Diperbarui
-                needsTutorial: false,
-                equipment: .wallSurface,   // Diperbarui (string "Wall surface" dikonversi)
-                weather: "Not affected by weather"
+                imageName: "wall-sit",
+                location: .indoor,
+                needsTutorial: true,
+                equipment: .wallSurface,
+                weather: .notAffected
             ),
             Exercise(
                 id: 13,
-                name: "Frog Jumps",
-                location: .indoor,         // Diperbarui
+                name: "Frog jumps",
+                imageName: "frog-jumps",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 14,
                 name: "Slow mountain climbers",
-                location: .indoor,         // Diperbarui
+                imageName: "slow-mountain-climbers",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .exerciseMat,   // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .exerciseMat,
+                weather: .notAffected
             ),
             Exercise(
                 id: 15,
                 name: "Squat jump",
-                location: .indoor,         // Diperbarui
+                imageName: "squat-jump",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 16,
                 name: "Jumping jacks",
-                location: .both,           // Diperbarui dari "Indoor/Outdoor"
+                imageName: "jumping-jacks",
+                location: .both,
                 needsTutorial: false,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Clear weather"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 17,
                 name: "Jog in place",
-                location: .indoor,         // Diperbarui
+                imageName: "jog-in-place",
+                location: .indoor,
                 needsTutorial: false,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .none,
+                weather: .notAffected
             ),
             Exercise(
                 id: 18,
                 name: "Bicep curl",
-                location: .indoor,         // Diperbarui
+                imageName: "bicep-curl",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .dumbbell,      // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .dumbbell,
+                weather: .notAffected
             ),
             Exercise(
                 id: 19,
                 name: "Dumbbell thruster",
-                location: .indoor,         // Diperbarui
+                imageName: "dumbbell-thruster",
+                location: .indoor,
                 needsTutorial: true,
-                equipment: .dumbbell,      // Diperbarui
-                weather: "Not affected by weather"
+                equipment: .dumbbell,
+                weather: .notAffected
             ),
             Exercise(
                 id: 20,
-                name: "Lunges",
-                location: .both,           // Diperbarui dari "Indoor/Outdoor"
-                needsTutorial: false,
-                equipment: .noEquipment,   // Diperbarui
-                weather: "Clear weather"
+                name: "Lunge",
+                imageName: "lunge",
+                location: .both,
+                needsTutorial: true,
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 21,
                 name: "Badminton",
-                location: .outdoor,        // Diperbarui
+                imageName: "badminton",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: .racket,        // Diperbarui
-                weather: "No strong wind"
+                equipment: .racket,
+                weather: .noStrongWind
             ),
             Exercise(
                 id: 22,
-                name: "Basketball",
-                location: .outdoor,        // Diperbarui
+                name: "Jogging",
+                imageName: "jogging",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: .ball,          // Diperbarui (menggunakan case .ball yang baru)
-                weather: "Avoid rain"
+                equipment: .none,
+                weather: .clear
             ),
             Exercise(
                 id: 23,
                 name: "Cycling",
-                location: .outdoor,        // Diperbarui
+                imageName: "cycling",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: .bicycle,       // Diperbarui
-                weather: "Clear weather"
+                equipment: .bicycle,
+                weather: .clear
             ),
             Exercise(
                 id: 24,
                 name: "Tennis",
-                location: .outdoor,        // Diperbarui
+                imageName: "tennis",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: .paddleTennis,  // Diperbarui (string "Paddle tennis" dikonversi)
-                weather: "Not affected by weather"
+                equipment: .paddleTennis,
+                weather: .notAffected
             ),
             Exercise(
                 id: 25,
                 name: "Volleyball",
-                location: .outdoor,        // Diperbarui
+                imageName: "volleyball",
+                location: .outdoor,
                 needsTutorial: false,
-                equipment: .volleyball,    // Diperbarui
-                weather: "Avoid strong wind"
-            )
+                equipment: .volleyball,
+                weather: .avoidStrongWind
+            ),
         ]
     }
 }
