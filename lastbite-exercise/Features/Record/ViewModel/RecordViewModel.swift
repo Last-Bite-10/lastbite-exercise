@@ -6,6 +6,8 @@
 //
 
 import Combine
+import SwiftData
+import UIKit
 import WatchConnectivity
 
 enum TimerStatus {
@@ -45,48 +47,63 @@ class RecordViewModel: ObservableObject {
         self.healthKitManager = healthKitManager
         self.context = modelContext
         self.bpmThreshold = Double(healthKitManager.bpmThreshold ?? 100)
-        
+
         // Start observing changes to send to Watch
         setupProgressSync()
     }
-    
+
     // MARK: - Watch Connectivity
     private func setupProgressSync() {
         // Send progress updates to Watch whenever they change
-        Publishers.CombineLatest4($progress, $isPaused, $activeTimeRemaining, $timeRecorded)
-            .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
-            .sink { [weak self] progress, isPaused, timeRemaining, timeRecorded in
-                self?.sendProgressToWatch(
-                    progress: progress,
-                    isPaused: isPaused,
-                    timeRemaining: timeRemaining,
-                    totalDuration: timeRecorded
-                )
-            }
-            .store(in: &cancellables)
+        Publishers.CombineLatest4(
+            $progress,
+            $isPaused,
+            $activeTimeRemaining,
+            $timeRecorded
+        )
+        .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
+        .sink { [weak self] progress, isPaused, timeRemaining, timeRecorded in
+            self?.sendProgressToWatch(
+                progress: progress,
+                isPaused: isPaused,
+                timeRemaining: timeRemaining,
+                totalDuration: timeRecorded
+            )
+        }
+        .store(in: &cancellables)
     }
-    
-    private func sendProgressToWatch(progress: CGFloat, isPaused: Bool, timeRemaining: Int, totalDuration: Int) {
+
+    private func sendProgressToWatch(
+        progress: CGFloat,
+        isPaused: Bool,
+        timeRemaining: Int,
+        totalDuration: Int
+    ) {
         guard WCSession.default.activationState == .activated else { return }
-        
+
         let progressData: [String: Any] = [
             "progress": Double(progress),
             "isPaused": isPaused,
             "timeRemaining": timeRemaining,
-            "totalDuration": totalDuration
+            "totalDuration": totalDuration,
         ]
-        
+
         // Use application context for state sync (most reliable)
         do {
             try WCSession.default.updateApplicationContext(progressData)
         } catch {
-            print("Failed to update application context: \(error.localizedDescription)")
+            print(
+                "Failed to update application context: \(error.localizedDescription)"
+            )
         }
-        
+
         // Also send as message if Watch is reachable (faster)
         if WCSession.default.isReachable {
-            WCSession.default.sendMessage(progressData, replyHandler: nil) { error in
-                print("Failed to send progress message: \(error.localizedDescription)")
+            WCSession.default.sendMessage(progressData, replyHandler: nil) {
+                error in
+                print(
+                    "Failed to send progress message: \(error.localizedDescription)"
+                )
             }
         }
     }
@@ -95,15 +112,17 @@ class RecordViewModel: ObservableObject {
     func startMonitoring() {
         // Start Watch heart rate monitoring
         healthKitManager.startWatchHeartRateMonitoring()
-        
+
         // CRITICAL FIX: Also start real-time monitoring on iPhone
         // This will populate latestBPM from both Watch AND iPhone's own sensors
         healthKitManager.startRealTimeHeartRateMonitoring()
-        
+
         // Subscribe to BPM updates
         subscribeToBPMUpdates()
-        
-        print("Started monitoring - Watch: \(healthKitManager.isReceivingFromWatch), iPhone HealthKit active")
+
+        print(
+            "Started monitoring - Watch: \(healthKitManager.isReceivingFromWatch), iPhone HealthKit active"
+        )
     }
 
     func stopMonitoring() {
@@ -118,7 +137,7 @@ class RecordViewModel: ObservableObject {
         } else {
             resumeTimer()
         }
-        
+
         handleTimerStatusChange()
     }
 
@@ -135,7 +154,7 @@ class RecordViewModel: ObservableObject {
 
         // Save the changes to the model context
         try? context.save()
-                
+
         if let exerciseName = record.exercise?.name {
             print(
                 "Exercise finished: \(exerciseName), recorded: \(recordedMinutes) minutes"
@@ -154,7 +173,7 @@ class RecordViewModel: ObservableObject {
             }
         timerStatus = .timerStarted
     }
-    
+
     private func handleTimerStatusChange() {
         if isPaused {
             timerStatus = .timerPaused
@@ -170,16 +189,19 @@ class RecordViewModel: ObservableObject {
             }
         }
     }
-    
+
     private func handleTimerTick() {
         if !isBPMUnder {
             activeTimeRemaining -= 1
         }
-        
+
         timeRecorded += 1
         handleTimerStatusChange()
-        
-        progress = min(CGFloat(activeTimeRemaining) / CGFloat(record.requiredMinutes * 60), 1)
+
+        progress = min(
+            CGFloat(activeTimeRemaining) / CGFloat(record.requiredMinutes * 60),
+            1
+        )
     }
 
     private func pauseTimer() {
@@ -231,7 +253,7 @@ class RecordViewModel: ObservableObject {
 
     var currentBPM: Int? {
         guard let bpm = healthKitManager.latestBPM else {
-            return nil 
+            return nil
         }
         return Int(bpm)
     }
