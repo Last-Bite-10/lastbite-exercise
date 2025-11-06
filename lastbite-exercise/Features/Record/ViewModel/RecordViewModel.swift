@@ -26,7 +26,7 @@ class RecordViewModel: ObservableObject {
     @Published var timeRecorded: Int = 0
     @Published var isPaused: Bool = true
     @Published var isBPMUnder: Bool = false
-    @Published var timerStatus: TimerStatus = .timerPaused
+    @Published var timerStatus: TimerStatus = .timerStopped
     
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
@@ -218,7 +218,7 @@ class RecordViewModel: ObservableObject {
     
     // MARK: - Computed Properties
     var activeTimeFormatted: String {
-        formatTime(duration: activeTimeRemaining)
+        formatTime(duration: abs(activeTimeRemaining))
     }
     
     var totalTimeFormatted: String {

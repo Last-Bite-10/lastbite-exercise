@@ -36,6 +36,21 @@ struct RecordView: View {
         }
     }
     
+    var timerMessage: String {
+        switch viewModel.timerStatus {
+        case .timerPaused:
+            return "The time is paused. Continue by increasing your BPM!"
+        case .timerStarted:
+            return "Your exercise is in progress, your heartbeat is being recorded!"
+        case .timerStopped:
+            return "Start now! Remember only your active time (BPM >= \(healthKitManager.bpmThreshold) will be recorded."
+        case .timerOverflown:
+            return "Your exercise is in progress, your heartbeat is being recorded!"
+        case .timerBelowBPM:
+            return "The time is paused. Continue by increasing your BPM!"
+        }
+    }
+    
     init(record: ExerciseRecord, modelContext: ModelContext) {
         let manager = HealthKitManager()
         _viewModel = StateObject(wrappedValue: RecordViewModel(
@@ -47,6 +62,10 @@ struct RecordView: View {
 
     var body: some View {
         VStack {
+            Text(timerMessage)
+                .frame(width: UIScreen.main.bounds.width * 0.6, alignment: .center)
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 32)
             ZStack {
                 // Background circle
                 Circle()
@@ -140,7 +159,37 @@ struct RecordView: View {
     }
 }
 
-//#Preview {
-//    @Environment(\.modelContext) private var modelContext
-//    RecordView()
-//}
+#Preview {
+    do {
+        // Create an in-memory model container for preview
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        
+        let container = try ModelContainer(
+            for: ExerciseRecord.self, Weekly.self,
+            configurations: config
+        )
+        
+        // Create a sample exercise
+        let exercise = Exercise(
+            id: 1,
+            name: "Brisk walking",
+            imageName: "brisk-walking",
+            location: .outdoor,
+            needsTutorial: false,
+            equipment: .none,
+            weather: .clear
+        )
+        
+        // Create a sample exercise record
+        let record = ExerciseRecord(
+            exercise: exercise,
+            requiredMinutes: 0
+        )
+        
+        return RecordView(record: record, modelContext: container.mainContext)
+            .modelContainer(container)
+        // use container safely here
+    } catch {
+        return Text("No")
+    }
+}
