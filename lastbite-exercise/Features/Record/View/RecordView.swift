@@ -16,6 +16,26 @@ struct RecordView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     
+    var bgCircleColor: Color {
+        switch viewModel.timerStatus {
+        case .timerBelowBPM: return Color.gray2.opacity(1)
+        case .timerPaused: return Color.gray2.opacity(1)
+        case .timerStarted: return Color.accentColor.opacity(0.2)
+        case .timerStopped: return Color.gray2.opacity(1)
+        case .timerOverflown: return Color.purple2.opacity(1)
+        }
+    }
+    
+    var progressCircleColor: Color {
+        switch viewModel.timerStatus {
+        case .timerBelowBPM: return Color.gray3.opacity(1)
+        case .timerPaused: return Color.gray3.opacity(1)
+        case .timerStarted: return Color.blue2.opacity(1)
+        case .timerStopped: return Color.gray3.opacity(1)
+        case .timerOverflown: return Color.purple2.opacity(1)
+        }
+    }
+    
     init(record: ExerciseRecord, modelContext: ModelContext) {
         let manager = HealthKitManager()
         _viewModel = StateObject(wrappedValue: RecordViewModel(
@@ -31,9 +51,10 @@ struct RecordView: View {
                 // Background circle
                 Circle()
                     .stroke(
-                        !viewModel.isPaused
-                        ? Color.accentColor.opacity(0.2)
-                        : Color.gray2.opacity(1),
+//                        !viewModel.isPaused
+//                        ? Color.accentColor.opacity(0.2)
+//                        : Color.gray2.opacity(1),
+                        bgCircleColor,
                         lineWidth: 30
                     )
 
@@ -41,9 +62,10 @@ struct RecordView: View {
                 Circle()
                     .trim(from: 0, to: viewModel.progress)
                     .stroke(
-                        !viewModel.isPaused
-                        ? Color.blue2
-                        : Color.gray3,
+//                        !viewModel.isPaused
+//                        ? Color.blue2
+//                        : Color.gray3,
+                        progressCircleColor,
                         style: StrokeStyle(lineWidth: 30, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
