@@ -179,18 +179,17 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
-    nonisolated func sessionDidBecomeInactive(_ session: WCSession) {
-        print("WCSession became inactive")
-    }
-    
-    nonisolated func sessionDidDeactivate(_ session: WCSession) {
-        print("WCSession deactivated")
-        session.activate()
-    }
-    
+//    nonisolated func sessionDidBecomeInactive(_ session: WCSession) {
+//        print("WCSession became inactive")
+//    }
+//    
+//    nonisolated func sessionDidDeactivate(_ session: WCSession) {
+//        print("WCSession deactivated")
+//        session.activate()
+//    }
+//    
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         if let bpm = message["bpm"] as? Double {
-            print("BPM received : \(bpm)")
             Task { @MainActor in
                 self.latestBPM = bpm
             }

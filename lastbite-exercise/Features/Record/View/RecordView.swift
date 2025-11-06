@@ -118,7 +118,7 @@ struct RecordView: View {
     }
 }
 
-#Preview {
-    @Environment(\.modelContext) private var modelContext
-    RecordView()
-}
+//#Preview {
+//    @Environment(\.modelContext) private var modelContext
+//    RecordView()
+//}

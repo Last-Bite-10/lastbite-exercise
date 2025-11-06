@@ -12,6 +12,8 @@ import Combine
 
 class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
     @Published var heartRate: Double = 0.0
+    @Published var receivedProgress: ProgressData?
+    
     private let healthStore = HKHealthStore()
     private var heartRateQuery: HKAnchoredObjectQuery?
     
@@ -60,27 +62,78 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
             self.heartRate = bpm
         }
         
-        // Send to iOS app if session is active and reachable
+        // Send to iOS app via multiple methods for reliability
+        sendBPMToiPhone(bpm)
+    }
+    
+    private func sendBPMToiPhone(_ bpm: Double) {
+        let message: [String: Any] = ["bpm": bpm, "timestamp": Date().timeIntervalSince1970]
+        
+        // Try interactive messaging first (fastest, requires reachability)
         if WCSession.default.isReachable {
-            WCSession.default.sendMessage(["bpm": bpm], replyHandler: nil) { error in
-                print("Failed to send BPM to iOS: \(error.localizedDescription)")
+            WCSession.default.sendMessage(message, replyHandler: nil) { error in
+                print("Failed to send BPM via message: \(error.localizedDescription)")
             }
         }
+        
+        // Also use transferUserInfo for guaranteed delivery (works in background)
+        WCSession.default.transferUserInfo(message)
     }
 
     // MARK: - WCSessionDelegate
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if let error = error {
             print("WCSession activation error:", error.localizedDescription)
+        } else {
+            print("Watch WCSession activated")
         }
     }
 
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        // Receive commands from iPhone
         if message["command"] as? String == "start" {
-            requestAuthorization()
-            startStreaming()
+            DispatchQueue.main.async {
+                self.requestAuthorization()
+                self.startStreaming()
+            }
         } else if message["command"] as? String == "stop" {
-            stopStreaming()
+            DispatchQueue.main.async {
+                self.stopStreaming()
+            }
+        }
+        
+        // Receive progress updates from iPhone
+        if let progressValue = message["progress"] as? Double,
+           let isPaused = message["isPaused"] as? Bool,
+           let timeRemaining = message["timeRemaining"] as? Int,
+           let totalDuration = message["totalDuration"] as? Int {
+            
+            DispatchQueue.main.async {
+                self.receivedProgress = ProgressData(
+                    progress: CGFloat(progressValue),
+                    isPaused: isPaused,
+                    timeRemaining: timeRemaining,
+                    totalDuration: totalDuration
+                )
+            }
+        }
+    }
+    
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        // Also handle application context for progress (more reliable for state sync)
+        if let progressValue = applicationContext["progress"] as? Double,
+           let isPaused = applicationContext["isPaused"] as? Bool,
+           let timeRemaining = applicationContext["timeRemaining"] as? Int,
+           let totalDuration = applicationContext["totalDuration"] as? Int {
+            
+            DispatchQueue.main.async {
+                self.receivedProgress = ProgressData(
+                    progress: CGFloat(progressValue),
+                    isPaused: isPaused,
+                    timeRemaining: timeRemaining,
+                    totalDuration: totalDuration
+                )
+            }
         }
     }
 }
