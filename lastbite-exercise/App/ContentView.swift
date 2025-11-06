@@ -9,26 +9,32 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
     @State private var selectedTab = 0
     @Query private var preferences: [Preference]
 
     var body: some View {
         Group {
             if preferences.isEmpty {
-                FrequencyView()
+                GetStartedView()
             } else {
                 TabView(selection: $selectedTab) {
                     MyExerciseView()
                         .tabItem {
-                            Label("My Exercise", systemImage: "person.circle")
+                            Label(
+                                "My Exercise",
+                                systemImage: "person.circle"
+                            )
                         }
 
                     MyProgressView()
                         .tabItem {
-                            Label("My Progress", systemImage: "person.circle")
+                            Label(
+                                "My Progress",
+                                systemImage: "person.circle"
+                            )
                         }
                 }
+
             }
         }
     }
