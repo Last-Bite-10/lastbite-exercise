@@ -53,6 +53,7 @@ struct RecordView: View {
     
     init(record: ExerciseRecord, modelContext: ModelContext) {
         let manager = HealthKitManager()
+        _healthKitManager = StateObject(wrappedValue: manager)
         _viewModel = StateObject(wrappedValue: RecordViewModel(
             record: record,
             healthKitManager: manager,

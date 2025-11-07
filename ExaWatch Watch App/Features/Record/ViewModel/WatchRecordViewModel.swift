@@ -19,7 +19,7 @@ class WatchRecordViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     var timeRemainingFormatted: String {
-        return formatTime(duration: timeRemaining)
+        return formatTime(duration: abs(timeRemaining))
     }
     
     var timeTotalFormatted: String {

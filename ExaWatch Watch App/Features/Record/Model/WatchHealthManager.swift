@@ -11,6 +11,19 @@ import WatchConnectivity
 import SwiftUI
 import Combine
 
+enum PayloadType {
+    case timerChange
+    case bpmChange
+}
+
+enum TimerStatus: String, Codable, Hashable, CaseIterable {
+    case timerPaused = "timer_paused"
+    case timerStarted = "timer_started"
+    case timerStopped = "timer_stopped"
+    case timerOverflown = "timer_overflown"
+    case timerBelowBPM = "timer_below_bpm"
+}
+
 class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
     @Published var heartRate: Double = 0.0
@@ -26,6 +39,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorko
         if WCSession.isSupported() {
             WCSession.default.delegate = self
             WCSession.default.activate()
+            print("[iOS] WCSession started from WatchHealthManager")
         }
     }
 
@@ -117,6 +131,17 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorko
 
         WCSession.default.transferUserInfo(message)
     }
+    
+    func sendSignalToiPhone(timerStatus: TimerStatus) {
+        let message: [String: Any] = ["status": timerStatus.rawValue]
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(message, replyHandler: nil) { error in
+                print("Failed to send BPM via message:", error.localizedDescription)
+            }
+            
+            print("[Watch] Transmitted \(message)")
+        }
+    }
 
     // MARK: - WCSession Delegate
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -127,13 +152,17 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorko
         }
     }
 
+
+    // MARK: Handle received data from iPhone
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         if message["command"] as? String == "start" {
+            print("[Watch] Start received.")
             DispatchQueue.main.async {
                 self.requestAuthorization()
                 self.startStreaming()
             }
         } else if message["command"] as? String == "stop" {
+            print("[Watch] Stop received.")
             DispatchQueue.main.async {
                 self.stopStreaming()
             }
@@ -155,6 +184,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorko
         }
     }
 
+    // MARK: Handle fallback in case of disconnect
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         if let progressValue = applicationContext["progress"] as? Double,
            let isPaused = applicationContext["isPaused"] as? Bool,

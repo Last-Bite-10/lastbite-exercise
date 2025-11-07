@@ -94,10 +94,6 @@ class RecordViewModel: ObservableObject {
         // Start Watch heart rate monitoring
         healthKitManager.startWatchHeartRateMonitoring()
         
-        // CRITICAL FIX: Also start real-time monitoring on iPhone
-        // This will populate latestBPM from both Watch AND iPhone's own sensors
-        healthKitManager.startRealTimeHeartRateMonitoring()
-        
         // Subscribe to BPM updates
         subscribeToBPMUpdates()
         
@@ -212,7 +208,6 @@ class RecordViewModel: ObservableObject {
         timerCancellable?.cancel()
         timerCancellable = nil
         healthKitManager.stopWatchHeartRateMonitoring()
-        healthKitManager.stopRealTimeHeartRateMonitoring()  // CRITICAL FIX: Stop iPhone monitoring too
         cancellables.removeAll()
     }
     

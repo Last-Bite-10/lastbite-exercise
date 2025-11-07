@@ -13,20 +13,6 @@ struct RecordView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            // Heart Rate Display
-//            VStack(spacing: 8) {
-//                Image(systemName: "heart.fill")
-//                    .imageScale(.large)
-//                    .foregroundStyle(.red)
-//                
-//                Text("\(Int(healthManager.heartRate))")
-//                    .font(.system(size: 48, weight: .bold, design: .rounded))
-//                
-//                Text("BPM")
-//                    .font(.caption)
-//                    .foregroundStyle(.secondary)
-//            }
-//            
             // Progress Circle
             ZStack {
                 Circle()
@@ -69,6 +55,19 @@ struct RecordView: View {
             VStack {
                 Text("Total Time: **\(viewModel.timeTotalFormatted)** ").font(.system(size: 12))
             }
+            Button(action: {}) {
+                Text("Play")
+                    .font(.system(size: 16))
+                    .padding(.all, 0)
+                    .foregroundStyle(Color.white)
+                    .accessibilityLabel("Play")
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.mini)
+//            .frame(width: .infinity, height: 25)
+//            .tint(Color.accent)
+            
+                
         }
         .onAppear {
             healthManager.requestAuthorization()

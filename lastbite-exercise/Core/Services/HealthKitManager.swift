@@ -34,20 +34,29 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
     // MARK: - Watch Connectivity Setup
     private func setupWatchConnectivity() {
         if WCSession.isSupported() {
-            WCSession.default.delegate = self
-            WCSession.default.activate()
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
+            print("[iPhone] WCSession setup - supported: true")
+        } else {
+            print("[iPhone] WCSession NOT supported")
         }
     }
     
     // MARK: - Watch Control
     func startWatchHeartRateMonitoring() {
-        guard WCSession.default.isReachable else {
-            print("Watch is not reachable")
+        let session = WCSession.default
+        print("[iPhone] Session state - activated: \(session.activationState.rawValue), paired: \(session.isPaired), installed: \(session.isWatchAppInstalled), reachable: \(session.isReachable)")
+        
+        guard session.isReachable else {
+            print("[iPhone] Watch is not reachable")
             return
         }
         
-        WCSession.default.sendMessage(["command": "start"], replyHandler: nil) { error in
-            print("Failed to start watch monitoring: \(error.localizedDescription)")
+        session.sendMessage(["command": "start"], replyHandler: { reply in
+            print("[iPhone] Received reply from watch: \(reply)")
+        }) { error in
+            print("[iPhone] Failed to start watch monitoring: \(error.localizedDescription)")
         }
         isReceivingFromWatch = true
     }
@@ -56,7 +65,7 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
         guard WCSession.default.isReachable else { return }
         
         WCSession.default.sendMessage(["command": "stop"], replyHandler: nil) { error in
-            print("Failed to stop watch monitoring: \(error.localizedDescription)")
+            print("[iPhone] Failed to stop watch monitoring: \(error.localizedDescription)")
         }
         isReceivingFromWatch = false
     }
@@ -88,10 +97,6 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
                         self.bpmThreshold = 100
                     }
                 }
-                
-                Task { @MainActor in
-                    self.fetchLatestHeartRate()
-                }
             } else {
                 print("HealthKit auth error: \(error?.localizedDescription ?? "unknown")")
             }
@@ -102,99 +107,67 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
         let idealBPM: Double = Double(220 - age) * Double(64 / 100)
         return Int(floor(idealBPM))
     }
-
-    func fetchLatestHeartRate() {
-        guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else { return }
-
-        let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
-        let query = HKSampleQuery(
-            sampleType: heartRateType,
-            predicate: nil,
-            limit: 1,
-            sortDescriptors: [sort]
-        ) { _, samples, _ in
-            guard let sample = samples?.first as? HKQuantitySample else { return }
-
-            Task { @MainActor in
-                self.latestBPM = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-            }
-        }
-
-        healthStore.execute(query)
-    }
-
-    func startRealTimeHeartRateMonitoring() {
-        guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else { return }
-
-        // Stop any existing query
-        if let existingQuery = heartRateQuery {
-            healthStore.stop(existingQuery)
-        }
-
-        // Create anchored query for real-time updates
-        heartRateQuery = HKAnchoredObjectQuery(
-            type: heartRateType,
-            predicate: nil,
-            anchor: nil,
-            limit: HKObjectQueryNoLimit
-        ) { [weak self] _, samples, _, _, _ in
-            guard let self = self,
-                  let samples = samples,
-                  let latestSample = samples.last as? HKQuantitySample else { return }
-
-            Task { @MainActor in
-                self.latestBPM = latestSample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-            }
-        }
-
-        // Set update handler for real-time updates
-        heartRateQuery?.updateHandler = { [weak self] _, samples, _, _, _ in
-            guard let self = self,
-                  let samples = samples,
-                  let latestSample = samples.last as? HKQuantitySample else { return }
-
-            Task { @MainActor in
-                self.latestBPM = latestSample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-            }
-        }
-
-        if let query = heartRateQuery {
-            healthStore.execute(query)
-        }
-    }
-
-    func stopRealTimeHeartRateMonitoring() {
-        if let query = heartRateQuery {
-            healthStore.stop(query)
-            heartRateQuery = nil
-        }
-    }
     
     // MARK: - WCSessionDelegate
-    nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    nonisolated func session(
+        _ session: WCSession,
+        activationDidCompleteWith activationState: WCSessionActivationState,
+        error: Error?
+    ) {
+        print("[iPhone] ========================================")
+        print("[iPhone] WCSession activation completed")
+        print("[iPhone] State: \(activationState.rawValue)")
+        print("[iPhone] Paired: \(session.isPaired)")
+        print("[iPhone] Watch app installed: \(session.isWatchAppInstalled)")
+        print("[iPhone] Reachable: \(session.isReachable)")
         if let error = error {
-            print("WCSession activation error:", error.localizedDescription)
-        } else {
-            print("WCSession activated with state: \(activationState.rawValue)")
+            print("[iPhone] Error: \(error.localizedDescription)")
         }
+        print("[iPhone] ========================================")
     }
     
     nonisolated func sessionDidBecomeInactive(_ session: WCSession) {
-        print("WCSession became inactive")
+        print("[iPhone] WCSession became inactive")
     }
     
     nonisolated func sessionDidDeactivate(_ session: WCSession) {
-        print("WCSession deactivated")
+        print("[iPhone] WCSession deactivated")
         session.activate()
     }
     
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        print("Received by phone: \(message)")
+        print("[iPhone] ========================================")
+        print("[iPhone] didReceiveMessage called!")
+        print("[iPhone] Message: \(message)")
+        print("[iPhone] ========================================")
+        
         if let bpm = message["bpm"] as? Double {
-            print("BPM received : \(bpm)")
+            print("[iPhone] BPM extracted: \(bpm)")
             Task { @MainActor in
                 self.latestBPM = bpm
+                print("[iPhone] latestBPM updated to: \(bpm)")
             }
         }
+    }
+    
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        print("[iPhone] ========================================")
+        print("[iPhone] didReceiveUserInfo called!")
+        print("[iPhone] UserInfo: \(userInfo)")
+        print("[iPhone] ========================================")
+        
+        if let bpm = userInfo["bpm"] as? Double {
+            print("[iPhone] BPM from userInfo: \(bpm)")
+            Task { @MainActor in
+                self.latestBPM = bpm
+                print("[iPhone] latestBPM updated to: \(bpm)")
+            }
+        }
+    }
+    
+    nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
+        print("[iPhone] ========================================")
+        print("[iPhone] Reachability changed: \(session.isReachable)")
+        print("[iPhone] ========================================")
     }
 }
