@@ -18,6 +18,8 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
     var bpmThreshold: Int?
     private var heartRateQuery: HKAnchoredObjectQuery?
 
+    let notification = PassthroughSubject<[String: Any], Never>()
+
     static let shared = HealthKitManager()
 
     // Publisher for BPM updates from Watch
@@ -243,6 +245,11 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
             print("BPM received : \(bpm)")
             Task { @MainActor in
                 self.latestBPM = bpm
+            }
+        }
+        if let exerciseId = message["exerciseId"] as? String {
+            DispatchQueue.main.async {
+                self.notification.send(message)
             }
         }
     }
