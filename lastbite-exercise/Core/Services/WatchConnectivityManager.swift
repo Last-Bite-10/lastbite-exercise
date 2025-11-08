@@ -98,11 +98,25 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
         print("[iPhone] Message: \(message)")
         print("[iPhone] ========================================")
         
-        if let bpm = message["bpm"] as? Double {
-            print("[iPhone] BPM extracted: \(bpm)")
-            Task { @MainActor in
-                self.latestBPM = bpm
-                print("[iPhone] latestBPM updated to: \(bpm)")
+        if let type = message["type"] as? String, let msgType = PayloadType(rawValue: type) {
+            switch msgType {
+            case .bpmChange:
+                // The BPM is nested inside the "data" dictionary
+                if let data = message["data"] as? [String: Any],
+                   let bpm = data["bpm"] as? Double {
+                    print("[iPhone] BPM extracted: \(bpm)")
+                    Task { @MainActor in
+                        self.latestBPM = bpm
+                        print("[iPhone] latestBPM updated to: \(bpm)")
+                    }
+                } else {
+                    print("[iPhone] Failed to extract BPM from data")
+                }
+            case .timerChange:
+                // Handle timer changes if needed
+                if let data = message["data"] as? [String: Any] {
+                    print("[iPhone] Timer change data: \(data)")
+                }
             }
         }
     }
@@ -113,11 +127,22 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
         print("[iPhone] UserInfo: \(userInfo)")
         print("[iPhone] ========================================")
         
-        if let bpm = userInfo["bpm"] as? Double {
-            print("[iPhone] BPM from userInfo: \(bpm)")
-            Task { @MainActor in
-                self.latestBPM = bpm
-                print("[iPhone] latestBPM updated to: \(bpm)")
+        // Handle the same nested structure for userInfo
+        if let type = userInfo["type"] as? String, let msgType = PayloadType(rawValue: type) {
+            switch msgType {
+            case .bpmChange:
+                if let data = userInfo["data"] as? [String: Any],
+                   let bpm = data["bpm"] as? Double {
+                    print("[iPhone] BPM from userInfo: \(bpm)")
+                    Task { @MainActor in
+                        self.latestBPM = bpm
+                        print("[iPhone] latestBPM updated to: \(bpm)")
+                    }
+                }
+            case .timerChange:
+                if let data = userInfo["data"] as? [String: Any] {
+                    print("[iPhone] Timer change data from userInfo: \(data)")
+                }
             }
         }
     }

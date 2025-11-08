@@ -11,19 +11,6 @@ import WatchConnectivity
 import SwiftUI
 import Combine
 
-enum PayloadType: String, CaseIterable, Hashable {
-    case timerChange = "timer_change"
-    case bpmChange = "bpm_change"
-}
-
-enum TimerStatus: String, Codable, Hashable, CaseIterable {
-    case timerPaused = "timer_paused"
-    case timerStarted = "timer_started"
-    case timerStopped = "timer_stopped"
-    case timerOverflown = "timer_overflown"
-    case timerBelowBPM = "timer_below_bpm"
-}
-
 class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
     @Published var heartRate: Double = 0.0
@@ -119,7 +106,13 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorko
 
     // MARK: - iPhone Communication
     private func sendBPMToiPhone(_ bpm: Double) {
-        let message: [String: Any] = ["bpm": bpm, "timestamp": Date().timeIntervalSince1970]
+//        let message: [String: Any] = ["bpm": bpm, "timestamp": Date().timeIntervalSince1970]
+        let message: [String: Any] = [
+            "type": PayloadType.bpmChange.rawValue,
+            "data": [
+                "bpm": bpm
+            ]
+        ]
 
         if WCSession.default.isReachable {
             WCSession.default.sendMessage(message, replyHandler: nil) { error in
@@ -132,7 +125,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorko
         WCSession.default.transferUserInfo(message)
     }
     
-    func sendSignalToiPhone(timerStatus: TimerStatus) {
+    func sendSignalToiPhone(timerStatus: TimerStatusType) {
         let message: [String: Any] = ["status": timerStatus.rawValue]
         if WCSession.default.isReachable {
             WCSession.default.sendMessage(message, replyHandler: nil) { error in

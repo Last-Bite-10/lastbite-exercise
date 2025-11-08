@@ -63,6 +63,13 @@
 			);
 			target = 23351FFD2EA6168D0033FBF6 /* Exa */;
 		};
+		394B43902EBF7D3600ACE357 /* Exceptions for "lastbite-exercise" folder in "ExaWatch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Enums/PayloadType.swift,
+			);
+			target = 39E2BC382EAF7A3200714C26 /* ExaWatch Watch App */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -70,6 +77,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				2335200B2EA6168E0033FBF6 /* Exceptions for "lastbite-exercise" folder in "Exa" target */,
+				394B43902EBF7D3600ACE357 /* Exceptions for "lastbite-exercise" folder in "ExaWatch Watch App" target */,
 			);
 			path = "lastbite-exercise";
 			sourceTree = "<group>";
