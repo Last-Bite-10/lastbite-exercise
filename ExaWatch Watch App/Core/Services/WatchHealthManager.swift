@@ -11,9 +11,9 @@ import WatchConnectivity
 import SwiftUI
 import Combine
 
-enum PayloadType {
-    case timerChange
-    case bpmChange
+enum PayloadType: String, CaseIterable, Hashable {
+    case timerChange = "timer_change"
+    case bpmChange = "bpm_change"
 }
 
 enum TimerStatus: String, Codable, Hashable, CaseIterable {
@@ -126,7 +126,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorko
                 print("Failed to send BPM via message:", error.localizedDescription)
             }
             
-            print("Transmitted \(message)")
+            print("[Watch] Transmitted \(message)")
         }
 
         WCSession.default.transferUserInfo(message)
