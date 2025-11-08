@@ -12,6 +12,7 @@ import SwiftData
 
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
+    @EnvironmentObject private var watchConnectivityManager: WatchConnectivityManager
     @StateObject private var viewModel: RecordViewModel
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -152,6 +153,7 @@ struct RecordView: View {
             }
         }
         .onAppear {
+            viewModel.attachWatchConnectivityManager(watchConnectivityManager)
             viewModel.startMonitoring()
         }
         .onDisappear {
@@ -189,6 +191,7 @@ struct RecordView: View {
         
         return RecordView(record: record, modelContext: container.mainContext)
             .modelContainer(container)
+            .environmentObject(WatchConnectivityManager())
         // use container safely here
     } catch {
         return Text("No")

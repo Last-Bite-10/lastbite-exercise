@@ -164,7 +164,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate, HKWorko
         } else if message["command"] as? String == "stop" {
             print("[Watch] Stop received.")
             DispatchQueue.main.async {
-                self.stopStreaming()
+//                self.stopStreaming()
             }
         }
 

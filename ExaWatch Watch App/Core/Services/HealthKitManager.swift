@@ -33,10 +33,7 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
     
     // MARK: - Watch Connectivity Setup
     private func setupWatchConnectivity() {
-        if WCSession.isSupported() {
-            WCSession.default.delegate = self
-            WCSession.default.activate()
-        }
+        // Intentionally left blank: WCSession delegate is managed centrally elsewhere to avoid conflicts.
     }
     
     // MARK: - Watch Control
