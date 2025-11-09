@@ -12,6 +12,9 @@ struct ExerciseRow: View {
     let duration: Int
     let isCompleted: Bool
     var action: () -> Void
+    var exercise: Exercise
+
+    @State private var showTutorial = false
 
     var body: some View {
         HStack(spacing: 0) {
@@ -27,6 +30,12 @@ struct ExerciseRow: View {
                         isCompleted ? Color(.secondaryLabel) : Color(.label)
                     )
                     .strikethrough(isCompleted)
+                
+                Image(systemName: "info.circle.fill")
+                    .foregroundColor(Color("Blue2"))
+                    .onTapGesture {
+                        showTutorial = true
+                    }
             }
 
             Spacer()
@@ -50,14 +59,7 @@ struct ExerciseRow: View {
                     .background(
                         Capsule(style: .continuous)
                             .fill(
-                                Color(
-                                    #colorLiteral(
-                                        red: 0.113,
-                                        green: 0.356,
-                                        blue: 0.617,
-                                        alpha: 1
-                                    )
-                                )
+                                Color("Blue2")
                             )
                     )
                 }
@@ -76,6 +78,10 @@ struct ExerciseRow: View {
                         .fill(Color.green)
                 )
             }
+        }
+        .sheet(isPresented: $showTutorial) {
+            ExerciseTutorial(exercise: exercise)
+                .presentationDragIndicator(.visible)
         }
     }
 }

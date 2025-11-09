@@ -56,7 +56,8 @@ struct TodaysPlan: View {
                             action: {
                                 selectedRecord = record
                                 showRecording = true
-                            }
+                            },
+                            exercise: record.exercise!
                         )
                     }
                 }

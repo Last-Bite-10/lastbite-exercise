@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TutorialView: View {
+struct ExerciseTutorial: View {
     let exercise: Exercise
     
     @State private var steps: [TutorialStep] = []
@@ -18,9 +18,9 @@ struct TutorialView: View {
         VStack(spacing: 20) {
             
             Text(exercise.name)
-                .font(.largeTitle)
+                .font(.title)
                 .fontWeight(.bold)
-                .padding(.top)
+                .padding(.top, 50)
 
             if !steps.isEmpty {
                 
@@ -84,5 +84,5 @@ struct TutorialView: View {
     
     let mockExercise = Exercise.loadExercises().first(where: { $0.id == 2 })
     
-    return TutorialView(exercise: mockExercise!)
+    return ExerciseTutorial(exercise: mockExercise!)
 }

@@ -21,12 +21,12 @@ struct ContentView: View {
                 TabView(selection: $selectedTab) {
                     MyExerciseView()
                         .tabItem {
-                            Label("My Exercise", systemImage: "person.circle")
+                            Label("My Exercise", systemImage: "figure.yoga")
                         }
 
                     MyProgressView()
                         .tabItem {
-                            Label("My Progress", systemImage: "person.circle")
+                            Label("My Progress", systemImage: "graph.2d")
                         }
                 }
             }

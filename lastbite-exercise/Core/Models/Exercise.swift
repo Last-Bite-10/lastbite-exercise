@@ -37,7 +37,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 3,
                 name: "Invisible jump rope",
-                imageName: "InvisibleJumpRope",
+                imageName: "InvisibleJumpRope1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .none,
@@ -100,7 +100,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 10,
                 name: "Dumbbell deadlift",
-                imageName: "DumbbellDeadlift1",
+                imageName: "DumbbellDeadLift1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .dumbbell,
@@ -135,7 +135,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             ),
             Exercise(
                 id: 14,
-                name: "Slow mountain climbers",
+                name: "Mountain climbers",
                 imageName: "SlowMountainClimbers1",
                 location: .indoor,
                 needsTutorial: true,
@@ -154,7 +154,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 16,
                 name: "Jumping jacks",
-                imageName: "jumping-jacks",
+                imageName: "JumpingJacks1",
                 location: .both,
                 needsTutorial: false,
                 equipment: .none,
@@ -163,7 +163,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 17,
                 name: "Jog in place",
-                imageName: "JogInPlace",
+                imageName: "JogInPlace1",
                 location: .indoor,
                 needsTutorial: false,
                 equipment: .none,
@@ -235,7 +235,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 25,
                 name: "Volleyball",
-                imageName: "volleyball",
+                imageName: "Volleyball",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .volleyball,

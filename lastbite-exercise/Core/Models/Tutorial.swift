@@ -20,7 +20,7 @@ struct TutorialData {
         1: [
             TutorialStep(
                 imageName: "BriskWalking",
-                description: "..."
+                description: " "
             ),
         ],
         // Push up
@@ -48,8 +48,12 @@ struct TutorialData {
         // Vertical jump
         4: [
             TutorialStep(
-                imageName: "InvisibleJumpRope1",
-                description: "Stand tall with feet hip-width apart, arms bent, and elbows close to your sides."
+                imageName: "VerticalJump1",
+                description: "Stand with feet shoulder-width apart, chest up, and core tight. Bend your knees and reach your hands toward the floor."
+            ),
+            TutorialStep(
+                imageName: "VerticalJump2",
+                description: "Push through your heels and jump high, swinging your arms up. Land softly and bend your knees to absorb impact."
             )
         ],
         // Butt kicks
@@ -126,7 +130,7 @@ struct TutorialData {
         11: [
             TutorialStep(
                 imageName: "StairClimbing",
-                description: "..."
+                description: " "
             )
         ],
         // Wall sit
@@ -188,8 +192,12 @@ struct TutorialData {
         17: [
             TutorialStep(
                 imageName: "JogInPlace1",
-                description: "..."
+                description: "Stand with feet shoulder-width apart, toes slightly out. Keep chest up, core tight, and hands behind head or forward. Lift one knee while swinging the opposite arm, then switch sides."
             ),
+            TutorialStep(
+                imageName: "JogInPlace2",
+                description: "Keep your chest up, back straight, and breathe steadily."
+            )
         ],
         // Bicep curl
         18: [
@@ -232,35 +240,35 @@ struct TutorialData {
         21: [
             TutorialStep(
                 imageName: "Badminton",
-                description: "..."
+                description: " "
             )
         ],
         // Jogging
         22: [
             TutorialStep(
                 imageName: "Jogging",
-                description: "..."
+                description: " "
             )
         ],
         // Cycling
         23: [
             TutorialStep(
                 imageName: "Cycling",
-                description: "..."
+                description: " "
             )
         ],
         // Tennis
         24: [
             TutorialStep(
                 imageName: "Tennis",
-                description: "..."
+                description: " "
             )
         ],
         // Volleyball
         25: [
             TutorialStep(
                 imageName: "Volleyball",
-                description: "..."
+                description: " "
             )
         ]
     ]
