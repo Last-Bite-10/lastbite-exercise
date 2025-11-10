@@ -75,10 +75,8 @@ struct TodaysPlan: View {
                 .strokeBorder(Color(.systemGray4).opacity(0.4), lineWidth: 0.5)
         )
         .padding()
-        .sheet(isPresented: $showRecording) {
-            if selectedRecord != nil {
-                RecordView(record: selectedRecord!, modelContext: modelContext)
-            }
+        .sheet(item: $selectedRecord) { record in
+            RecordView(record: record, modelContext: modelContext)
         }
         .onAppear {
             viewModel.setup(modelContext: modelContext)
