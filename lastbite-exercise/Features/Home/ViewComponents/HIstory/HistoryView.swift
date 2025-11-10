@@ -55,11 +55,12 @@ struct RecentHistoryView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack {
             Text("Recent History")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(Color("Blue2"))
+                .foregroundColor(Color.blueTwo)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .onTapGesture {
                     #if DEBUG
                         debugPressCount += 1
@@ -131,7 +132,7 @@ struct RecentHistoryView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
-                        .background(Color("Gray2"))
+                        .background(Color.cardGray)
                         .cornerRadius(30)
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -140,8 +141,8 @@ struct RecentHistoryView: View {
         }
         .padding()
         .sheet(item: $selectedItem) { item in
-            HistoryDetailView(historyItem: item) {
-                
+            HistoryDetailCard(historyItem: item) {
+
                 var newEntries: [ExerciseRecord] = []
                 for entry in item.entries {
                     let newEntry = ExerciseRecord(
@@ -164,83 +165,6 @@ struct RecentHistoryView: View {
     }
 }
 
-struct HistoryDetailView: View {
-    let historyItem: HistoryItem
-    let onSetAsPlan: () -> Void
-
-    var totalTime: String {
-        let total = historyItem.entries.reduce(0) { $0 + $1.recordedMinutes }
-
-        return "\(total) mins"
-    }
-
-    @Environment(\.dismiss) private var dismiss
-
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                VStack {
-                    Text("Total Time: \(totalTime)")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .padding(.top, 10)
-
-                    VStack(spacing: 0) {
-                        ForEach(historyItem.entries) { entry in
-                            VStack {
-                                HStack {
-                                    Text(
-                                        entry.exercise?.name
-                                            ?? "Unnamed Exercise"
-                                    )
-                                    .font(.headline)
-                                    Spacer()
-                                    Text(
-                                        "\(entry.recordedMinutes)/\(entry.requiredMinutes) mins"
-                                    )
-                                    .font(.headline)
-                                }
-                            }
-                            .padding(10)
-                            .padding(.bottom, 16)
-
-                            if entry.id != historyItem.entries.last?.id {
-                                Divider()
-                            }
-                        }
-                    }
-                }
-                .background(Color(.white))
-                .cornerRadius(30)
-
-                GeometryReader { geometry in
-                    Button(action: onSetAsPlan) {
-                        Text("Set as today's plan")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding(.vertical, 12)
-                            .frame(width: geometry.size.width * 0.5)
-                            .background(Color("Blue2"))
-                            .cornerRadius(50)
-                            .position(x: geometry.size.width / 2, y: 30)
-                    }
-                }
-            }
-            .padding()
-            .navigationTitle(historyItem.date)
-            .navigationBarTitleDisplayMode(.inline)
-            .ignoresSafeArea(edges: .bottom)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", systemImage: "xmark") {
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-}
-
 #Preview {
-    RecentHistoryView()
+    RecentHistoryView().environment(RecommendationViewModel())
 }

@@ -5,9 +5,8 @@
 //  Created by Ammar Alifian Fahdan on 20/10/25.
 //
 
-import SwiftUI
-import HealthKit
 import Combine
+import HealthKit
 import SwiftData
 
 struct RecordView: View {
@@ -90,7 +89,10 @@ struct RecordView: View {
                         style: StrokeStyle(lineWidth: 30, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
-                    .animation(.easeInOut(duration: 0.5), value: viewModel.progress)
+                    .animation(
+                        .easeInOut(duration: 0.5),
+                        value: viewModel.progress
+                    )
 
                 VStack {
                     VStack {
@@ -108,10 +110,11 @@ struct RecordView: View {
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .foregroundStyle(
-                                    viewModel.isBPMUnder ? Color.red : Color.black
+                                    viewModel.isBPMUnder
+                                        ? Color.red : Color.black
                                 )
                         } else {
-                            
+
                             if !viewModel.isReceivingFromWatch {
                                 Text("Apple Watch not connected")
                             }
@@ -119,7 +122,7 @@ struct RecordView: View {
                                 .font(.title)
                                 .fontWeight(.bold)
                         }
-                        
+
                         if viewModel.isReceivingFromWatch {
                             Image(systemName: "applewatch")
                                 .foregroundStyle(.blue)
@@ -137,12 +140,15 @@ struct RecordView: View {
             VStack {
                 Text("Total Time").font(.title2).padding(.bottom, 4)
 
-                Text(viewModel.totalTimeFormatted).font(.title).fontWeight(.bold)
+                Text(viewModel.totalTimeFormatted).font(.title).fontWeight(
+                    .bold
+                )
             }
             .padding(.vertical, 36)
 
             VStack {
-                RecordPlayButton(title: viewModel.isPaused ? "Start" : "Pause") {
+                RecordPlayButton(title: viewModel.isPaused ? "Start" : "Pause")
+                {
                     viewModel.togglePause()
                 }
 
