@@ -84,14 +84,7 @@ struct TodaysPlan: View {
             if let preference = preferences.first {
                 viewModel.initializeWeeklyExercises(preference: preference)
             }
-        }.onReceive(
-            healthManager.notification,
-            perform: { message in
-                selectedRecord = currentRecords.first {
-                    $0.id.uuidString == message["exerciseId"] as? String
-                }
-            }
-        )
+        }
     }
 
     private var header: some View {

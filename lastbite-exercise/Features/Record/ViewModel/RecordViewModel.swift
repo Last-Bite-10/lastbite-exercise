@@ -27,7 +27,7 @@ class RecordViewModel: ObservableObject {
     @Published var isPaused: Bool = true
     @Published var isBPMUnder: Bool = false
     @Published var timerStatus: TimerStatus = .timerStopped
-    
+
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
     private var timerCancellable: AnyCancellable?
@@ -51,6 +51,11 @@ class RecordViewModel: ObservableObject {
 
         // Start observing changes to send to Watch
         setupProgressSync()
+    }
+
+    func attachWatchConnectivityManager(_ manager: WatchConnectivityManager) {
+        self.watchConnectivityManager = manager
+        subscribeToBPMUpdates(manager)
     }
 
     // MARK: - Watch Connectivity
@@ -112,17 +117,10 @@ class RecordViewModel: ObservableObject {
     // MARK: - Public Methods
     func startMonitoring() {
         // Start Watch heart rate monitoring
-        healthKitManager.startWatchHeartRateMonitoring()
-
-        // CRITICAL FIX: Also start real-time monitoring on iPhone
-        // This will populate latestBPM from both Watch AND iPhone's own sensors
-        healthKitManager.startRealTimeHeartRateMonitoring()
-
-        // Subscribe to BPM updates
-        subscribeToBPMUpdates()
+        watchConnectivityManager?.startWatchHeartRateMonitoring()
 
         print(
-            "Started monitoring - Watch: \(healthKitManager.isReceivingFromWatch), iPhone HealthKit active"
+            "Started monitoring - Watch: \(watchConnectivityManager?.isReceivingFromWatch ?? false), iPhone HealthKit active"
         )
     }
 
@@ -215,7 +213,7 @@ class RecordViewModel: ObservableObject {
         startTimer()
         timerStatus = .timerStarted
     }
-    
+
     private func subscribeToBPMUpdates(_ manager: WatchConnectivityManager) {
         manager.bpmPublisher
             .sink { [weak self] bpm in
@@ -238,8 +236,7 @@ class RecordViewModel: ObservableObject {
     private func cleanup() {
         timerCancellable?.cancel()
         timerCancellable = nil
-        healthKitManager.stopWatchHeartRateMonitoring()
-        healthKitManager.stopRealTimeHeartRateMonitoring()  // CRITICAL FIX: Stop iPhone monitoring too
+        watchConnectivityManager?.stopWatchHeartRateMonitoring()
         cancellables.removeAll()
     }
 
@@ -253,7 +250,7 @@ class RecordViewModel: ObservableObject {
     }
 
     var currentBPM: Int? {
-        guard let bpm = healthKitManager.latestBPM else {
+        guard let bpm = watchConnectivityManager?.latestBPM else {
             return nil
         }
         return Int(bpm)
