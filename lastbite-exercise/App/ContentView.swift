@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  ContentView.swift
 //  Exa
 //
 //  Created by Ali Ahmad Fahrezy on 27/10/25.
@@ -20,21 +20,14 @@ struct ContentView: View {
                 TabView(selection: $selectedTab) {
                     MyExerciseView()
                         .tabItem {
-                            Label(
-                                "My Exercise",
-                                systemImage: "person.circle"
-                            )
+                            Label("My Exercise", systemImage: "figure.yoga")
                         }
 
                     MyProgressView()
                         .tabItem {
-                            Label(
-                                "My Progress",
-                                systemImage: "person.circle"
-                            )
+                            Label("My Progress", systemImage: "graph.2d")
                         }
                 }
-
             }
         }
     }

@@ -15,8 +15,9 @@ struct TodaysPlanHeader: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.title2.bold())
-                .foregroundColor(Color.blueTwo)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(Color("Blue2"))
 
             Spacer()
 
@@ -27,7 +28,7 @@ struct TodaysPlanHeader: View {
                     Text(actionTitle)
                         .font(.subheadline)
                 }
-                .foregroundColor(Color.blueTwo)
+                .foregroundColor(Color.blue)
             }
             .buttonStyle(.plain)
         }
