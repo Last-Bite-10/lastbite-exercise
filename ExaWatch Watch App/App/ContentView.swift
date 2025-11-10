@@ -13,11 +13,7 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-            if preferences.isEmpty {
-                EmptyView()
-            } else {
-                TodayPlanView()
-            }
+            RecordView()
         }
     }
 }
