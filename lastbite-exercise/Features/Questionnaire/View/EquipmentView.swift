@@ -10,6 +10,9 @@ import SwiftUI
 
 struct EquipmentView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
+    
+    @Environment(\.dismissFlow) private var dismissFlow
+    
     let onDone: () -> Void
 
     var body: some View {
@@ -62,8 +65,7 @@ struct EquipmentView: View {
             ).padding(.top, 48)
 
             NavigationLink(
-                destination: LocationView(onDone: onDone)
-                    .environment(viewModel),
+                destination: LocationView(onDone: onDone),
                 label: {
                     CoreButtonLabel(
                         title: "Next"
@@ -77,7 +79,7 @@ struct EquipmentView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        onDone()
+                        dismissFlow()
                     },
                     label: {
                         Text("Cancel")
@@ -90,6 +92,8 @@ struct EquipmentView: View {
 }
 
 #Preview {
-    EquipmentView(onDone: {})
-        .environment(QuestionnaireViewModel())
+    NavigationStack {
+        EquipmentView(onDone: {})
+            .environment(QuestionnaireViewModel())
+    }
 }

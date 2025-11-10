@@ -10,6 +10,8 @@ import SwiftUI
 
 struct MyExerciseView: View {
     @State private var viewModel = RecommendationViewModel()
+    @State private var questionnaireViewModel = QuestionnaireViewModel()
+    
     @State private var showQuestionnaire: Bool = false
     @State private var showPlan: Bool = false
     @State private var showPlanModifySheet = false
@@ -60,21 +62,30 @@ struct MyExerciseView: View {
         }.fullScreenCover(isPresented: $showPlanModifySheet) {
             ExerciseSelectionSheet().environment(viewModel)
         }.fullScreenCover(isPresented: $showQuestionnaire) {
-            if preferences.first?.planChosen == .beginner {
-                NavigationStack {
-                    BeginnerPlanView(onDone: {
-                        showQuestionnaire = false
-                        showPlan = true
-                    })
-                }
-            } else {
-                NavigationStack {
-                    FrequencyView(onDone: {
-                        showQuestionnaire = false
-                        showPlan = true
-                    })
+            
+            let onDoneAction = {
+                showQuestionnaire = false
+                showPlan = true
+            }
+            
+            let onCancelAction = {
+                showQuestionnaire = false
+                preferences.first?.planChosen = nil
+            }
+            
+            NavigationStack {
+                if preferences.first?.planChosen == .beginner {
+                    // Mulai dari BeginnerPlanView, teruskan 'onDone'
+                    BeginnerPlanView(onDone: onDoneAction)
+                } else {
+                    // Mulai dari FrequencyView, teruskan 'onDone'
+                    FrequencyView(onDone: onDoneAction)
                 }
             }
+            // 4. Inject Questionnaire VM agar datanya konsisten
+            .environment(questionnaireViewModel)
+            // 5. Inject aksi "Cancel" kustom kita
+            .environment(\.dismissFlow, onCancelAction)
         }
     }
 }

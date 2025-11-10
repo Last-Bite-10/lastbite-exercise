@@ -11,6 +11,9 @@ import SwiftUI
 struct LocationView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
     @Query private var preferences: [Preference]
+    
+    @Environment(\.dismissFlow) private var dismissFlow
+    
     let onDone: () -> Void
 
     var body: some View {
@@ -46,6 +49,7 @@ struct LocationView: View {
                     preferences.first?.equipmentAvailable =
                         Array(viewModel.selectedEquipment)
                     preferences.first?.location = viewModel.selectedLocation
+                    
                     onDone()
                 },
                 label: { CoreButtonLabel(title: "Done") }
@@ -57,7 +61,7 @@ struct LocationView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        onDone()
+                        dismissFlow()
                     },
                     label: {
                         Text("Cancel")
@@ -70,6 +74,8 @@ struct LocationView: View {
 }
 
 #Preview {
-    LocationView(onDone: {})
-        .environment(QuestionnaireViewModel())
+    NavigationStack {
+        LocationView(onDone: {})
+            .environment(QuestionnaireViewModel())
+    }
 }
