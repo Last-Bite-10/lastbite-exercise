@@ -8,25 +8,11 @@
 import SwiftUI
 
 struct RecordView: View {
-    @StateObject private var healthManager = WatchHealthManager.shared
+    @StateObject private var healthManager = WatchHealthManager()
     @StateObject private var viewModel = WatchRecordViewModel()
 
     var body: some View {
         VStack(spacing: 20) {
-            // Heart Rate Display
-            //            VStack(spacing: 8) {
-            //                Image(systemName: "heart.fill")
-            //                    .imageScale(.large)
-            //                    .foregroundStyle(.red)
-            //
-            //                Text("\(Int(healthManager.heartRate))")
-            //                    .font(.system(size: 48, weight: .bold, design: .rounded))
-            //
-            //                Text("BPM")
-            //                    .font(.caption)
-            //                    .foregroundStyle(.secondary)
-            //            }
-            //
             // Progress Circle
             ZStack {
                 Circle()
@@ -34,7 +20,7 @@ struct RecordView: View {
                         !viewModel.isPaused
                             ? Color.accentColor.opacity(0.2)
                             : Color.gray.opacity(0.3),
-                        lineWidth: 20
+                        lineWidth: 12
                     )
 
                 Circle()
@@ -43,7 +29,7 @@ struct RecordView: View {
                         !viewModel.isPaused
                             ? Color.blue
                             : Color.gray,
-                        style: StrokeStyle(lineWidth: 20, lineCap: .round)
+                        style: StrokeStyle(lineWidth: 12, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(
@@ -52,22 +38,52 @@ struct RecordView: View {
                     )
 
                 VStack(spacing: 4) {
+                    Text("Active Time").font(.system(size: 10))
                     Text(viewModel.timeRemainingFormatted)
                         .font(
                             .system(
-                                size: 24,
+                                size: 20,
                                 weight: .semibold,
                                 design: .rounded
                             )
                         )
 
-                    Text(viewModel.isPaused ? "Paused" : "Active")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
+                    Text("BPM").font(.system(size: 10))
+
+                    Text("\(Int(healthManager.heartRate))")
+                        .font(
+                            .system(
+                                size: 20,
+                                weight: .semibold,
+                                design: .rounded
+                            )
+                        )
+
+                    //                    Text(viewModel.isPaused ? "Paused" : "Active")
+                    //                        .font(.caption2)
+                    //                        .foregroundStyle(.secondary)
                 }
             }
             .frame(height: 120)
             .padding()
+
+            VStack {
+                Text("Total Time: **\(viewModel.timeTotalFormatted)** ").font(
+                    .system(size: 12)
+                )
+            }
+            Button(action: {}) {
+                Text("Play")
+                    .font(.system(size: 16))
+                    .padding(.all, 0)
+                    .foregroundStyle(Color.white)
+                    .accessibilityLabel("Play")
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.mini)
+            //            .frame(width: .infinity, height: 25)
+            //            .tint(Color.accent)
+
         }
         .onAppear {
             healthManager.requestAuthorization()
