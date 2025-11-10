@@ -11,6 +11,7 @@ import HealthKit
 
 @MainActor
 class HealthKitManager: ObservableObject {
+    // static let shared = HealthKitManager()
     private let healthStore = HKHealthStore()
     @Published var bpmThreshold: Int?
     

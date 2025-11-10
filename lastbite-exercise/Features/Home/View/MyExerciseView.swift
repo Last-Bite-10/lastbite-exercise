@@ -22,7 +22,7 @@ struct MyExerciseView: View {
     @Query private var preferences: [Preference]
     @Query private var records: [ExerciseRecord]
 
-    private let healthKitManager = HealthKitManager.shared
+    private let healthKitManager = HealthKitManager()
 
     init() {
         healthKitManager.requestAuthorization()

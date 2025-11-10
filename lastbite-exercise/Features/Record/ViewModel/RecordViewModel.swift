@@ -43,6 +43,7 @@ class RecordViewModel: ObservableObject {
         
         // Start observing changes to send to Watch
         setupProgressSync()
+        print("[iPhone] RecordViewModel Initializated")
     }
     
     func attachWatchConnectivityManager(_ manager: WatchConnectivityManager) {
@@ -67,8 +68,9 @@ class RecordViewModel: ObservableObject {
     }
     
     private func sendProgressToWatch(progress: CGFloat, isPaused: Bool, timeRemaining: Int, totalDuration: Int) {
+        print("[iPhone] Called sendProgressToWatch")
         guard WCSession.default.activationState == .activated else { return }
-        
+        print("[iPhone] Activation State === activated")
         let progressData: [String: Any] = [
             "progress": Double(progress),
             "isPaused": isPaused,
