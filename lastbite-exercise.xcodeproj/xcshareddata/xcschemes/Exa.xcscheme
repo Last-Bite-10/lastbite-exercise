@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "23351FFD2EA6168D0033FBF6"
-               BuildableName = "Exa Move.app"
-               BlueprintName = "Exa Move"
+               BuildableName = "Exa.app"
+               BlueprintName = "Exa"
                ReferencedContainer = "container:lastbite-exercise.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "23351FFD2EA6168D0033FBF6"
-            BuildableName = "Exa Move.app"
-            BlueprintName = "Exa Move"
+            BuildableName = "Exa.app"
+            BlueprintName = "Exa"
             ReferencedContainer = "container:lastbite-exercise.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "23351FFD2EA6168D0033FBF6"
-            BuildableName = "Exa Move.app"
-            BlueprintName = "Exa Move"
+            BuildableName = "Exa.app"
+            BlueprintName = "Exa"
             ReferencedContainer = "container:lastbite-exercise.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
