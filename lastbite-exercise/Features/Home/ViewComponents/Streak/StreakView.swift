@@ -8,45 +8,54 @@
 import SwiftUI
 
 struct StreakView: View {
-    var weeklyStreaks: [Bool]
+    var allWeeks: [Weekly]
 
-    // Computed property untuk mengecek apakah ada streak
+    private var sortedWeeks: [Weekly] {
+        allWeeks.sorted { $0.weekNumber < $1.weekNumber }
+    }
+    
     var hasAnyStreak: Bool {
-        weeklyStreaks.contains(true)
+        sortedWeeks.contains(where: { $0.isStreakAchieved == true })
+    }
+    
+    private var weeksByNumber: [Int: Weekly] {
+        Dictionary(uniqueKeysWithValues: allWeeks.map { ($0.weekNumber, $0) })
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Weekly Streak
-            HStack(spacing: 20) {
-                ForEach(0..<weeklyStreaks.count, id: \.self) { index in
-                    VStack(spacing: 8) {
-                        ZStack {
-                            Circle()
-                                .fill(Color(.systemGray6))
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(1...10, id: \.self) { weekNumber in
+                        let weekData = weeksByNumber[weekNumber]
+                        let (iconName, iconColor) = getIconStyle(
+                            for: weekNumber,
+                            data: weekData
+                        )
+                        
+                        VStack(spacing: 8) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color(.systemGray6))
 
-                            Image(
-                                systemName: weeklyStreaks[index]
-                                    ? "flame.fill" : "flame"
-                            )
-                            .foregroundColor(
-                                weeklyStreaks[index]
-                                    ? .orange : .gray.opacity(0.8)
-                            )
-                            .font(.system(size: 24))
+                                Image(systemName: iconName)
+                                    .foregroundColor(iconColor)
+                                    .font(.system(size: 24))
+                            }
+                            .frame(width: 50, height: 50)
+                            
+                            Text("W\(weekNumber)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
-                        Text("W\(index + 1)")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                     }
                 }
+                .padding(.horizontal, 4)
             }
-            .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.vertical)
             .background(Color(.white))
             .cornerRadius(12)
 
-            // No Streaks Message - hanya muncul jika tidak ada streak
             if !hasAnyStreak {
                 HStack(spacing: 16) {
                     Image(systemName: "figure.strengthtraining.traditional")
@@ -68,6 +77,7 @@ struct StreakView: View {
                 .padding()
                 .background(Color.pink.opacity(0.1))
                 .cornerRadius(12)
+                .frame(maxWidth: .infinity)
             }
 
             if hasAnyStreak {
@@ -90,6 +100,7 @@ struct StreakView: View {
                 .padding()
                 .background(Color.pink.opacity(0.1))
                 .cornerRadius(12)
+                .frame(maxWidth: .infinity)
             }
         }
         .padding()
@@ -102,19 +113,25 @@ struct StreakView: View {
                 .strokeBorder(Color(.systemGray4).opacity(0.4), lineWidth: 0.5)
         )
     }
-}
-
-#Preview("No Streaks") {
-    StreakView(weeklyStreaks: [false, false, false, false, false])
-        .padding()
-}
-
-#Preview("Some Streaks") {
-    StreakView(weeklyStreaks: [true, true, false, true, false])
-        .padding()
-}
-
-#Preview("All Streaks") {
-    StreakView(weeklyStreaks: [true, true, true, true, true])
-        .padding()
+    
+    private func getIconStyle(for weekNumber: Int, data: Weekly?) -> (String, Color) {
+            let grayColor = Color.gray.opacity(0.8)
+            
+            if let week = data {
+                if week.isStreakAchieved {
+                    return ("flame.fill", .orange)
+                } else {
+                    return ("flame", grayColor)
+                }
+            }
+            if weekNumber == 1 {
+                return ("flame", grayColor)
+            }
+            
+            if let previousWeek = weeksByNumber[weekNumber - 1], previousWeek.isStreakAchieved {
+                return ("flame", grayColor)
+            } else {
+                return ("lock.fill", grayColor)
+            }
+        }
 }

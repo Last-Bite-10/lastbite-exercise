@@ -39,7 +39,7 @@ struct TodaysPlan: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading) {
             header
             progressSection
             Divider().padding(.horizontal, 8)
@@ -91,10 +91,10 @@ struct TodaysPlan: View {
             ZStack {
                 Circle().fill(Color.blue.opacity(0.12))
                 Image(systemName: "figure.cooldown")
-                    .font(.system(size: 36, weight: .semibold))
+                    .font(.system(size: 28, weight: .semibold))
                     .foregroundStyle(Color.blue)
             }
-            .frame(width: 72, height: 72)
+            .frame(width: 60, height: 60)
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(
@@ -102,7 +102,7 @@ struct TodaysPlan: View {
                         .dateTime.weekday(.wide).day().month(.wide).year()
                     )
                 )
-                .font(.system(.title2, weight: .bold))
+                .font(.system(.headline, weight: .bold))
                 .foregroundStyle(Color(.label))
 
                 if let week = viewModel.currentWeek {
@@ -112,6 +112,7 @@ struct TodaysPlan: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 10)
         }
     }
 

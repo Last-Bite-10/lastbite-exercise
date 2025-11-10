@@ -17,7 +17,7 @@ struct TodaysPlanHeader: View {
             Text(title)
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(Color("Blue2"))
+                .foregroundColor(Color("BlueTwo"))
 
             Spacer()
 

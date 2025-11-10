@@ -23,6 +23,7 @@ struct MyExerciseView: View {
 
     @Query private var preferences: [Preference]
     @Query private var records: [ExerciseRecord]
+    @Query private var allWeeks: [Weekly]
 
     private let healthKitManager = HealthKitManager.shared
 
@@ -35,8 +36,9 @@ struct MyExerciseView: View {
             ScrollView {
                 VStack {
                     // Streak Section
-                    StreakView(weeklyStreaks: weeklyStreaks)
+                    StreakView(allWeeks: allWeeks)
                         .padding(.horizontal)
+                        .padding(.bottom, 20)
 
                     if preferences.first?.planChosen == nil {
                         PlanSelectionView(

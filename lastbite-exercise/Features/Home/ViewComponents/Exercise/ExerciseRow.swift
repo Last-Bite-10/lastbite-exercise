@@ -25,14 +25,14 @@ struct ExerciseRow: View {
                         .foregroundStyle(Color.green)
                 }
                 Text(title)
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(.system(.headline, weight: .bold))
                     .foregroundStyle(
                         isCompleted ? Color(.secondaryLabel) : Color(.label)
                     )
                     .strikethrough(isCompleted)
                 
                 Image(systemName: "info.circle.fill")
-                    .foregroundColor(Color("Blue2"))
+                    .foregroundColor(Color("BlueTwo"))
                     .onTapGesture {
                         showTutorial = true
                     }
@@ -59,7 +59,7 @@ struct ExerciseRow: View {
                     .background(
                         Capsule(style: .continuous)
                             .fill(
-                                Color("Blue2")
+                                Color("BlueTwo")
                             )
                     )
                 }
