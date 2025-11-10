@@ -8,7 +8,6 @@
 import Combine
 import HealthKit
 import SwiftData
-import SwiftUI
 
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()

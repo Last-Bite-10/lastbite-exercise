@@ -49,10 +49,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
 		23351FFE2EA6168D0033FBF6 /* Exa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Exa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39E2BC392EAF7A3200714C26 /* ExaWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ExaWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39E2BC452EAF7A3300714C26 /* ExaWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ExaWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39E2BC4F2EAF7A3300714C26 /* ExaWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ExaWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		23351FFE2EA6168D0033FBF6 /* Exa Move.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Exa Move.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		39E2BC392EAF7A3200714C26 /* Exa Move Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Exa Move Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5F2013E2EB9E4B900E4A01E /* Exa MoveDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Exa MoveDebug.entitlements"; sourceTree = "<group>"; };
+>>>>>>> origin/SMS-78-UI-Exercise-Record-di-Apple-Watch
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -393,7 +399,11 @@
 				CODE_SIGN_ENTITLEMENTS = "lastbite-exercise/lastbite_exercise.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = ZBZPAZFH4S;
+=======
+				DEVELOPMENT_TEAM = PP2K97M73A;
+>>>>>>> origin/SMS-78-UI-Exercise-Record-di-Apple-Watch
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
