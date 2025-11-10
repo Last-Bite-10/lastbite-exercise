@@ -10,14 +10,6 @@ import SwiftData
 import Combine
 import WatchConnectivity
 
-enum TimerStatus {
-    case timerPaused
-    case timerStarted
-    case timerStopped
-    case timerOverflown
-    case timerBelowBPM
-}
-
 @MainActor
 class RecordViewModel: ObservableObject {
     // MARK: - Published Properties
@@ -26,7 +18,7 @@ class RecordViewModel: ObservableObject {
     @Published var timeRecorded: Int = 0
     @Published var isPaused: Bool = true
     @Published var isBPMUnder: Bool = false
-    @Published var timerStatus: TimerStatus = .timerStopped
+    @Published var timerStatus: TimerStatusType = .timerStopped
     
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
@@ -80,16 +72,21 @@ class RecordViewModel: ObservableObject {
             "totalDuration": totalDuration
         ]
         
+        let payload: [String: Any] = [
+            "type": PayloadType.timerChange.rawValue,
+            "data": progressData
+        ]
+        
         // Use application context for state sync (most reliable)
         do {
-            try WCSession.default.updateApplicationContext(progressData)
+            try WCSession.default.updateApplicationContext(payload)
         } catch {
             print("Failed to update application context: \(error.localizedDescription)")
         }
         
         // Also send as message if Watch is reachable (faster)
         if WCSession.default.isReachable {
-            WCSession.default.sendMessage(progressData, replyHandler: nil) { error in
+            WCSession.default.sendMessage(payload, replyHandler: nil) { error in
                 print("Failed to send progress message: \(error.localizedDescription)")
             }
         }
