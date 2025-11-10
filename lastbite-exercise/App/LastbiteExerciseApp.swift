@@ -14,7 +14,7 @@ struct LastbiteExerciseApp: App {
         let schema = Schema([
             Preference.self,
             Weekly.self,
-            ExerciseRecord.self
+            ExerciseRecord.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,

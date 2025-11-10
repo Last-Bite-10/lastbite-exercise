@@ -9,12 +9,12 @@ import SwiftUI
 
 struct StreakView: View {
     var weeklyStreaks: [Bool]
-    
+
     // Computed property untuk mengecek apakah ada streak
     var hasAnyStreak: Bool {
         weeklyStreaks.contains(true)
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Weekly Streak
@@ -24,10 +24,16 @@ struct StreakView: View {
                         ZStack {
                             Circle()
                                 .fill(Color(.systemGray6))
-                            
-                            Image(systemName: weeklyStreaks[index] ? "flame.fill" : "flame")
-                                .foregroundColor(weeklyStreaks[index] ? .orange : .gray.opacity(0.8))
-                                .font(.system(size: 24))
+
+                            Image(
+                                systemName: weeklyStreaks[index]
+                                    ? "flame.fill" : "flame"
+                            )
+                            .foregroundColor(
+                                weeklyStreaks[index]
+                                    ? .orange : .gray.opacity(0.8)
+                            )
+                            .font(.system(size: 24))
                         }
                         Text("W\(index + 1)")
                             .font(.caption)
@@ -39,14 +45,14 @@ struct StreakView: View {
             .padding()
             .background(Color(.white))
             .cornerRadius(12)
-            
+
             // No Streaks Message - hanya muncul jika tidak ada streak
             if !hasAnyStreak {
                 HStack(spacing: 16) {
                     Image(systemName: "figure.strengthtraining.traditional")
                         .font(.system(size: 50))
                         .foregroundColor(.pink.opacity(0.7))
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Image(systemName: "flame")
@@ -63,13 +69,13 @@ struct StreakView: View {
                 .background(Color.pink.opacity(0.1))
                 .cornerRadius(12)
             }
-            
+
             if hasAnyStreak {
                 HStack(spacing: 16) {
                     Image(systemName: "figure.strengthtraining.traditional")
                         .font(.system(size: 50))
                         .foregroundColor(.pink.opacity(0.7))
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Image(systemName: "flame")

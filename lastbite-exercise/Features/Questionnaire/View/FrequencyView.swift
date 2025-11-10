@@ -5,59 +5,64 @@
 //  Created by Ali Ahmad Fahrezy on 23/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct FrequencyView: View {
-    @State private var viewModel = QuestionnaireViewModel()
-    @Environment(\.modelContext) private var modelContext
+    @Environment(QuestionnaireViewModel.self) private var viewModel
+    
+    @Environment(\.dismissFlow) private var dismissFlow
+    
+    let onDone: () -> Void
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 10) {
-                Text("Choose your preferred frequency")
-                    .font(Font.headline)
+        VStack(spacing: 10) {
+            Text("1/3")
+                .font(.headline)
+            Text("Choose your preferred frequency")
+                .font(.headline)
 
-                Image(systemName: "clock")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150, height: 210)
-                    .foregroundStyle(Color.accentColor)
+            Image("FrequencyQuestion")
+                .resizable()
+                .scaledToFit()
 
-                ForEach(FrequencyType.allCases, id: \.self) { type in
-                    QuestionnaireSelectionButton(
-                        title: type.rawValue,
-                        isSelected: viewModel.selectedFrequency == type,
-                        action: { viewModel.selectedFrequency = type }
-                    )
-                }
-
-                NavigationLink(
-                    destination:
-                        EquipmentView()
-                        .environment(viewModel),
-                    label: { QuestionnaireNavButtonLabel(title: "Next") }
-                ).padding(.top, 64)
-
-                Spacer()
+            ForEach(FrequencyType.allCases, id: \.self) { type in
+                QuestionnaireSelectionButton(
+                    title: type.rawValue,
+                    isSelected: viewModel.selectedFrequency == type,
+                    widthReduction: 200,
+                    action: { viewModel.selectedFrequency = type }
+                )
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(
-                        action: {
-                            let preference = Preference()
-                            modelContext.insert(preference)
-                        },
-                        label: {
-                            Text("Skip")
-                                .foregroundColor(.red)
-                        }
-                    ).buttonStyle(.borderless)
-                }
+
+            NavigationLink(
+                destination:
+                    EquipmentView(onDone: onDone),
+                label: { CoreButtonLabel(title: "Next") }
+            ).padding(.top, 64)
+
+            Spacer()
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(
+                    action: {
+                        dismissFlow()
+                    },
+                    label: {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                )
+                .buttonStyle(.glass)
             }
         }
     }
 }
 
 #Preview {
-    FrequencyView()
+    NavigationStack {
+        FrequencyView(onDone: {})
+            .environment(QuestionnaireViewModel())
+    }
 }

@@ -10,20 +10,25 @@ import SwiftUI
 
 struct LocationView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
-    @Environment(\.modelContext) private var modelContext
+    @Query private var preferences: [Preference]
+    
+    @Environment(\.dismissFlow) private var dismissFlow
+    
+    let onDone: () -> Void
 
     var body: some View {
         VStack(spacing: 10) {
+            Text("3/3")
+                .font(.headline)
+
             Text("Help us determined what exercise plan is perfect for you!")
-                .font(Font.headline)
+                .font(.headline)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 300)
 
-            Image(systemName: "house.fill")
+            Image("LocationQuestion")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 150, height: 210)
-                .foregroundStyle(Color.accentColor)
 
             Text("Where do you prefer to do your exercise?")
                 .font(.body)
@@ -40,15 +45,14 @@ struct LocationView: View {
 
             Button(
                 action: {
-                    let preference = Preference(
-                        isUsingPlan: true,
-                        frequency: viewModel.selectedFrequency,
-                        equipmentAvailable: Array(viewModel.selectedEquipment),
-                        location: viewModel.selectedLocation
-                    )
-                    modelContext.insert(preference)
+                    preferences.first?.frequency = viewModel.selectedFrequency
+                    preferences.first?.equipmentAvailable =
+                        Array(viewModel.selectedEquipment)
+                    preferences.first?.location = viewModel.selectedLocation
+                    
+                    onDone()
                 },
-                label: { QuestionnaireNavButtonLabel(title: "Done") }
+                label: { CoreButtonLabel(title: "Done") }
             ).padding(.top, 64)
 
             Spacer()
@@ -57,11 +61,10 @@ struct LocationView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        let preference = Preference()
-                        modelContext.insert(preference)
+                        dismissFlow()
                     },
                     label: {
-                        Text("Skip")
+                        Text("Cancel")
                             .foregroundColor(.red)
                     }
                 ).buttonStyle(.borderless)
@@ -71,6 +74,8 @@ struct LocationView: View {
 }
 
 #Preview {
-    LocationView()
-        .environment(QuestionnaireViewModel())
+    NavigationStack {
+        LocationView(onDone: {})
+            .environment(QuestionnaireViewModel())
+    }
 }

@@ -5,26 +5,31 @@
 //  Created by Ali Ahmad Fahrezy on 23/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct EquipmentView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
-    @Environment(\.modelContext) private var modelContext
+    
+    @Environment(\.dismissFlow) private var dismissFlow
+    
+    let onDone: () -> Void
 
     var body: some View {
         VStack(spacing: 10) {
+            Text("2/3")
+                .font(.headline)
+
             Text(
                 "Help us determined what exercise plan is perfect for you!"
             )
-            .font(Font.headline)
+            .font(.headline)
             .multilineTextAlignment(.center)
             .frame(maxWidth: 300)
 
-            Image(systemName: "dumbbell.fill")
+            Image("EquipmentQuestion")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 150, height: 210)
-                .foregroundStyle(Color.accentColor)
 
             Text("What tools do you have in your home?")
                 .font(.body)
@@ -36,7 +41,7 @@ struct EquipmentView: View {
             LazyVGrid(
                 columns: [
                     GridItem(.flexible(), spacing: -24),
-                    GridItem(.flexible())
+                    GridItem(.flexible()),
                 ],
                 spacing: 5,
                 content: {
@@ -60,10 +65,9 @@ struct EquipmentView: View {
             ).padding(.top, 48)
 
             NavigationLink(
-                destination: LocationView()
-                    .environment(viewModel),
+                destination: LocationView(onDone: onDone),
                 label: {
-                    QuestionnaireNavButtonLabel(
+                    CoreButtonLabel(
                         title: "Next"
                     )
                 }
@@ -75,11 +79,10 @@ struct EquipmentView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        let preference = Preference()
-                        modelContext.insert(preference)
+                        dismissFlow()
                     },
                     label: {
-                        Text("Skip")
+                        Text("Cancel")
                             .foregroundColor(.red)
                     }
                 ).buttonStyle(.borderless)
@@ -89,6 +92,8 @@ struct EquipmentView: View {
 }
 
 #Preview {
-    EquipmentView()
-        .environment(QuestionnaireViewModel())
+    NavigationStack {
+        EquipmentView(onDone: {})
+            .environment(QuestionnaireViewModel())
+    }
 }
