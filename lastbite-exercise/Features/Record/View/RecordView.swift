@@ -8,6 +8,7 @@
 import Combine
 import HealthKit
 import SwiftData
+import SwiftUI
 
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
@@ -15,42 +16,27 @@ struct RecordView: View {
     @StateObject private var viewModel: RecordViewModel
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    
+
     var bgCircleColor: Color {
         switch viewModel.timerStatus {
-        case .timerBelowBPM: return Color.gray2.opacity(1)
-        case .timerPaused: return Color.gray2.opacity(1)
+        case .timerBelowBPM: return Color.cardGray.opacity(1)
+        case .timerPaused: return Color.cardGray.opacity(1)
         case .timerStarted: return Color.accentColor.opacity(0.2)
-        case .timerStopped: return Color.gray2.opacity(1)
+        case .timerStopped: return Color.cardGray.opacity(1)
         case .timerOverflown: return Color.purple2.opacity(1)
         }
     }
-    
+
     var progressCircleColor: Color {
         switch viewModel.timerStatus {
-        case .timerBelowBPM: return Color.gray3.opacity(1)
-        case .timerPaused: return Color.gray3.opacity(1)
-        case .timerStarted: return Color.blue2.opacity(1)
-        case .timerStopped: return Color.gray3.opacity(1)
+        case .timerBelowBPM: return Color.pausedGray.opacity(1)
+        case .timerPaused: return Color.pausedGray.opacity(1)
+        case .timerStarted: return Color.blueTwo.opacity(1)
+        case .timerStopped: return Color.pausedGray.opacity(1)
         case .timerOverflown: return Color.purple2.opacity(1)
         }
     }
-    
-    var timerMessage: String {
-        switch viewModel.timerStatus {
-        case .timerPaused:
-            return "The time is paused. Continue by increasing your BPM!"
-        case .timerStarted:
-            return "Your exercise is in progress, your heartbeat is being recorded!"
-        case .timerStopped:
-            return "Start now! Remember only your active time (BPM >= \(healthKitManager.bpmThreshold) will be recorded."
-        case .timerOverflown:
-            return "Your exercise is in progress, your heartbeat is being recorded!"
-        case .timerBelowBPM:
-            return "The time is paused. Continue by increasing your BPM!"
-        }
-    }
-    
+
     init(record: ExerciseRecord, modelContext: ModelContext) {
         let manager = HealthKitManager()
         _healthKitManager = StateObject(wrappedValue: manager)
@@ -71,9 +57,9 @@ struct RecordView: View {
                 // Background circle
                 Circle()
                     .stroke(
-//                        !viewModel.isPaused
-//                        ? Color.accentColor.opacity(0.2)
-//                        : Color.gray2.opacity(1),
+                        //                        !viewModel.isPaused
+                        //                        ? Color.accentColor.opacity(0.2)
+                        //                        : Color.gray2.opacity(1),
                         bgCircleColor,
                         lineWidth: 30
                     )
@@ -82,9 +68,9 @@ struct RecordView: View {
                 Circle()
                     .trim(from: 0, to: viewModel.progress)
                     .stroke(
-//                        !viewModel.isPaused
-//                        ? Color.blue2
-//                        : Color.gray3,
+                        //                        !viewModel.isPaused
+                        //                        ? Color.blue2
+                        //                        : Color.gray3,
                         progressCircleColor,
                         style: StrokeStyle(lineWidth: 30, lineCap: .round)
                     )
@@ -168,38 +154,7 @@ struct RecordView: View {
     }
 }
 
-#Preview {
-    do {
-        // Create an in-memory model container for preview
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        
-        let container = try ModelContainer(
-            for: ExerciseRecord.self, Weekly.self,
-            configurations: config
-        )
-        
-        // Create a sample exercise
-        let exercise = Exercise(
-            id: 1,
-            name: "Brisk walking",
-            imageName: "brisk-walking",
-            location: .outdoor,
-            needsTutorial: false,
-            equipment: .none,
-            weather: .clear
-        )
-        
-        // Create a sample exercise record
-        let record = ExerciseRecord(
-            exercise: exercise,
-            requiredMinutes: 0
-        )
-        
-        return RecordView(record: record, modelContext: container.mainContext)
-            .modelContainer(container)
-            .environmentObject(WatchConnectivityManager())
-        // use container safely here
-    } catch {
-        return Text("No")
-    }
-}
+//#Preview {
+//    @Environment(\.modelContext) private var modelContext
+//    RecordView()
+//}

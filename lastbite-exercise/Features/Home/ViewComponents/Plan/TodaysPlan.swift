@@ -11,12 +11,14 @@ import SwiftUI
 struct TodaysPlan: View {
     @Environment(RecommendationViewModel.self) private var viewModel
     @Environment(\.modelContext) private var modelContext
-    
+
     @Query private var preferences: [Preference]
     @Query private var weeklies: [Weekly]
 
     @State private var showRecording = false
     @State private var selectedRecord: ExerciseRecord?
+
+    @StateObject private var healthManager = HealthKitManager.shared
 
     private let date: Date = .now
 
@@ -72,15 +74,24 @@ struct TodaysPlan: View {
                 .strokeBorder(Color(.systemGray4).opacity(0.4), lineWidth: 0.5)
         )
         .padding()
-        .sheet(item: $selectedRecord) { record in
-            RecordView(record: record, modelContext: modelContext)
+        .sheet(isPresented: $showRecording) {
+            if selectedRecord != nil {
+                RecordView(record: selectedRecord!, modelContext: modelContext)
+            }
         }
         .onAppear {
             viewModel.setup(modelContext: modelContext)
             if let preference = preferences.first {
                 viewModel.initializeWeeklyExercises(preference: preference)
             }
-        }
+        }.onReceive(
+            healthManager.notification,
+            perform: { message in
+                selectedRecord = currentRecords.first {
+                    $0.id.uuidString == message["exerciseId"] as? String
+                }
+            }
+        )
     }
 
     private var header: some View {

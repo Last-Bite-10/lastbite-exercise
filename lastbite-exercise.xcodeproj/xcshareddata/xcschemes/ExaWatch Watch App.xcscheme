@@ -50,7 +50,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "39E2BC442EAF7A3300714C26"
-               BuildableName = "ExaWatch Watch AppTests.xctest"
+               BuildableName = "ExaWatch Watch AppTests"
                BlueprintName = "ExaWatch Watch AppTests"
                ReferencedContainer = "container:lastbite-exercise.xcodeproj">
             </BuildableReference>
@@ -61,7 +61,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "39E2BC4E2EAF7A3300714C26"
-               BuildableName = "ExaWatch Watch AppUITests.xctest"
+               BuildableName = "ExaWatch Watch AppUITests"
                BlueprintName = "ExaWatch Watch AppUITests"
                ReferencedContainer = "container:lastbite-exercise.xcodeproj">
             </BuildableReference>
