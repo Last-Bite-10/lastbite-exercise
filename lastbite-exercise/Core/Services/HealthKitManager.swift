@@ -1,5 +1,5 @@
 //
-//  Health.swift
+//  HealthKitManager.swift
 //  Exa
 //
 //  Created by Ammar Alifian Fahdan on 21/10/25.
@@ -8,10 +8,9 @@
 import Combine
 import Foundation
 import HealthKit
-import WatchConnectivity
 
 @MainActor
-class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
+class HealthKitManager: ObservableObject {
     private let healthStore = HKHealthStore()
     @Published var latestBPM: Double?
     @Published var isReceivingFromWatch: Bool = false
@@ -69,7 +68,7 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
         }
         isReceivingFromWatch = false
     }
-
+    
     // MARK: - HealthKit Authorization
     func requestAuthorization() {
         guard HKHealthStore.isHealthDataAvailable(),
@@ -109,10 +108,6 @@ class HealthKitManager: NSObject, ObservableObject, WCSessionDelegate {
                     Task { @MainActor in
                         self.bpmThreshold = 100
                     }
-                }
-
-                Task { @MainActor in
-                    self.fetchLatestHeartRate()
                 }
             } else {
                 print(

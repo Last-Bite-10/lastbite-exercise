@@ -11,7 +11,8 @@ import SwiftData
 import SwiftUI
 
 struct RecordView: View {
-    @StateObject private var healthKitManager: HealthKitManager
+    @StateObject private var healthKitManager = HealthKitManager()
+    @EnvironmentObject private var watchConnectivityManager: WatchConnectivityManager
     @StateObject private var viewModel: RecordViewModel
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -37,19 +38,21 @@ struct RecordView: View {
     }
 
     init(record: ExerciseRecord, modelContext: ModelContext) {
-        let manager = HealthKitManager.shared
-        _viewModel = StateObject(
-            wrappedValue: RecordViewModel(
-                record: record,
-                healthKitManager: manager,
-                modelContext: modelContext
-            )
-        )
+        let manager = HealthKitManager()
         _healthKitManager = StateObject(wrappedValue: manager)
+        _viewModel = StateObject(wrappedValue: RecordViewModel(
+            record: record,
+            healthKitManager: manager,
+            modelContext: modelContext
+        ))
     }
 
     var body: some View {
         VStack {
+            Text(timerMessage)
+                .frame(width: UIScreen.main.bounds.width * 0.6, alignment: .center)
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 32)
             ZStack {
                 // Background circle
                 Circle()
@@ -142,6 +145,7 @@ struct RecordView: View {
             }
         }
         .onAppear {
+            viewModel.attachWatchConnectivityManager(watchConnectivityManager)
             viewModel.startMonitoring()
         }
         .onDisappear {

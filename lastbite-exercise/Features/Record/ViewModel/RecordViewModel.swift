@@ -26,12 +26,13 @@ class RecordViewModel: ObservableObject {
     @Published var timeRecorded: Int = 0
     @Published var isPaused: Bool = true
     @Published var isBPMUnder: Bool = false
-    @Published var timerStatus: TimerStatus = .timerPaused
-
+    @Published var timerStatus: TimerStatus = .timerStopped
+    
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
     private var timerCancellable: AnyCancellable?
     private let healthKitManager: HealthKitManager
+    private var watchConnectivityManager: WatchConnectivityManager?
     private let record: ExerciseRecord
     private var context: ModelContext
     private let bpmThreshold: Double
@@ -214,9 +215,9 @@ class RecordViewModel: ObservableObject {
         startTimer()
         timerStatus = .timerStarted
     }
-
-    private func subscribeToBPMUpdates() {
-        healthKitManager.bpmPublisher
+    
+    private func subscribeToBPMUpdates(_ manager: WatchConnectivityManager) {
+        manager.bpmPublisher
             .sink { [weak self] bpm in
                 self?.handleBPMUpdate(bpm)
             }
@@ -244,7 +245,7 @@ class RecordViewModel: ObservableObject {
 
     // MARK: - Computed Properties
     var activeTimeFormatted: String {
-        formatTime(duration: activeTimeRemaining)
+        formatTime(duration: abs(activeTimeRemaining))
     }
 
     var totalTimeFormatted: String {
@@ -259,7 +260,7 @@ class RecordViewModel: ObservableObject {
     }
 
     var isReceivingFromWatch: Bool {
-        healthKitManager.isReceivingFromWatch
+        watchConnectivityManager?.isReceivingFromWatch ?? false
     }
 }
 
