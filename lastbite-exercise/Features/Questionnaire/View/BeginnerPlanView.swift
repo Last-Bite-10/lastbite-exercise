@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BeginnerPlanView: View {
+    @Environment(\.dismissFlow) private var dismissFlow
+    
     let onDone: () -> Void
 
     var body: some View {
@@ -78,7 +80,7 @@ struct BeginnerPlanView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        onDone()
+                        dismissFlow()
                     },
                     label: {
                         Text("Cancel")
@@ -91,5 +93,7 @@ struct BeginnerPlanView: View {
 }
 
 #Preview {
-    BeginnerPlanView {}
+    NavigationStack {
+        BeginnerPlanView(onDone: {})
+    }
 }

@@ -43,14 +43,10 @@ struct ExerciseSelectionSheet: View {
                                     .fill(Color(.systemGray6))
                                     .frame(height: 120)
                                     .overlay(
-                                        Image(
-                                            systemName: exercise.imageName
-                                                ?? "default_figure"
-                                        )
+                                        exerciseImage(for: exercise)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 60, height: 60)
-                                        .foregroundColor(.pink)
+//                                        .frame(width: 60, height: 60)
                                     )
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 16)
@@ -137,6 +133,15 @@ struct ExerciseSelectionSheet: View {
                 // Dismiss by clearing the item (optional; SwiftUI will dismiss automatically when you set it to nil)
                 currentExercise = nil
             }
+        }
+    }
+    
+    private func exerciseImage(for exercise: Exercise) -> Image {
+        if let name = exercise.imageName,
+           UIImage(named: name) != nil {
+            return Image(name).renderingMode(.original)
+        } else {
+            return Image(systemName: "figure.strengthtraining.traditional")
         }
     }
 

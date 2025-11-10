@@ -9,7 +9,10 @@ import SwiftData
 import SwiftUI
 
 struct FrequencyView: View {
-    @State private var viewModel = QuestionnaireViewModel()
+    @Environment(QuestionnaireViewModel.self) private var viewModel
+    
+    @Environment(\.dismissFlow) private var dismissFlow
+    
     let onDone: () -> Void
 
     var body: some View {
@@ -34,8 +37,7 @@ struct FrequencyView: View {
 
             NavigationLink(
                 destination:
-                    EquipmentView(onDone: onDone)
-                    .environment(viewModel),
+                    EquipmentView(onDone: onDone),
                 label: { CoreButtonLabel(title: "Next") }
             ).padding(.top, 64)
 
@@ -45,7 +47,7 @@ struct FrequencyView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        onDone()
+                        dismissFlow()
                     },
                     label: {
                         Text("Cancel")
@@ -59,5 +61,8 @@ struct FrequencyView: View {
 }
 
 #Preview {
-    FrequencyView(onDone: {})
+    NavigationStack {
+        FrequencyView(onDone: {})
+            .environment(QuestionnaireViewModel())
+    }
 }

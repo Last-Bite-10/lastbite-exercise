@@ -19,7 +19,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 1,
                 name: "Brisk walking",
-                imageName: "brisk-walking",
+                imageName: "BriskWalking",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .none,
@@ -28,7 +28,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 2,
                 name: "Push up",
-                imageName: "push-up",
+                imageName: "PushUp1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .none,
@@ -37,7 +37,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 3,
                 name: "Invisible jump rope",
-                imageName: "invisible-jump-rope",
+                imageName: "InvisibleJumpRope1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .none,
@@ -46,7 +46,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 4,
                 name: "Vertical jump",
-                imageName: "vertical-jump",
+                imageName: "VerticalJump1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .none,
@@ -55,7 +55,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 5,
                 name: "Butt kicks",
-                imageName: "butt-kicks",
+                imageName: "ButtKicks1",
                 location: .both,
                 needsTutorial: true,
                 equipment: .none,
@@ -64,7 +64,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 6,
                 name: "Bodyweight squats",
-                imageName: "bodyweight-squats",
+                imageName: "BodyweightSquats1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .none,
@@ -73,7 +73,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 7,
                 name: "March in place",
-                imageName: "march-in-place",
+                imageName: "JogInPlace1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .none,
@@ -82,7 +82,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 8,
                 name: "Skipping",
-                imageName: "skipping",
+                imageName: "Skipping1",
                 location: .both,
                 needsTutorial: true,
                 equipment: .jumpRope,
@@ -91,7 +91,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 9,
                 name: "Plank shoulder tap",
-                imageName: "plank-shoulder-tap",
+                imageName: "PlankShoulderTap1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .exerciseMat,
@@ -100,7 +100,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 10,
                 name: "Dumbbell deadlift",
-                imageName: "dumbbell-deadlift",
+                imageName: "DumbbellDeadLift1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .dumbbell,
@@ -109,7 +109,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 11,
                 name: "Stair climbing",
-                imageName: "stair-climbing",
+                imageName: "StairClimbing",
                 location: .indoor,
                 needsTutorial: false,
                 equipment: .stairs,
@@ -118,7 +118,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 12,
                 name: "Wall sit",
-                imageName: "wall-sit",
+                imageName: "WallSit",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .wallSurface,
@@ -127,7 +127,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 13,
                 name: "Frog jumps",
-                imageName: "frog-jumps",
+                imageName: "FrogJump1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .none,
@@ -135,8 +135,8 @@ struct Exercise: Codable, Identifiable, Hashable {
             ),
             Exercise(
                 id: 14,
-                name: "Slow mountain climbers",
-                imageName: "slow-mountain-climbers",
+                name: "Mountain climbers",
+                imageName: "SlowMountainClimbers1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .exerciseMat,
@@ -145,7 +145,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 15,
                 name: "Squat jump",
-                imageName: "squat-jump",
+                imageName: "SquatJump1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .none,
@@ -154,7 +154,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 16,
                 name: "Jumping jacks",
-                imageName: "jumping-jacks",
+                imageName: "JumpingJacks1",
                 location: .both,
                 needsTutorial: false,
                 equipment: .none,
@@ -163,7 +163,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 17,
                 name: "Jog in place",
-                imageName: "jog-in-place",
+                imageName: "JogInPlace1",
                 location: .indoor,
                 needsTutorial: false,
                 equipment: .none,
@@ -172,7 +172,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 18,
                 name: "Bicep curl",
-                imageName: "bicep-curl",
+                imageName: "BicepCurl1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .dumbbell,
@@ -181,7 +181,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 19,
                 name: "Dumbbell thruster",
-                imageName: "dumbbell-thruster",
+                imageName: "DumbbellThruster1",
                 location: .indoor,
                 needsTutorial: true,
                 equipment: .dumbbell,
@@ -190,7 +190,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 20,
                 name: "Lunge",
-                imageName: "lunge",
+                imageName: "Lunge1",
                 location: .both,
                 needsTutorial: true,
                 equipment: .none,
@@ -199,7 +199,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 21,
                 name: "Badminton",
-                imageName: "badminton",
+                imageName: "Badminton",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .racket,
@@ -208,7 +208,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 22,
                 name: "Jogging",
-                imageName: "jogging",
+                imageName: "Jogging1",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .none,
@@ -217,7 +217,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 23,
                 name: "Cycling",
-                imageName: "cycling",
+                imageName: "Cycling",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .bicycle,
@@ -226,7 +226,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 24,
                 name: "Tennis",
-                imageName: "tennis",
+                imageName: "Tennis",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .paddleTennis,
@@ -235,7 +235,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 25,
                 name: "Volleyball",
-                imageName: "volleyball",
+                imageName: "Volleyball",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .volleyball,
