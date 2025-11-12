@@ -61,7 +61,7 @@ struct MyExerciseView: View {
             }
             .navigationTitle("My Exercise")
             .navigationBarTitleDisplayMode(.large)
-        }.fullScreenCover(isPresented: $showPlanModifySheet) {
+        }.sheet(isPresented: $showPlanModifySheet) {
             ExerciseSelectionSheet().environment(viewModel)
         }.fullScreenCover(isPresented: $showQuestionnaire) {
             
@@ -77,16 +77,14 @@ struct MyExerciseView: View {
             
             NavigationStack {
                 if preferences.first?.planChosen == .beginner {
-                    // Mulai dari BeginnerPlanView, teruskan 'onDone'
+                   
                     BeginnerPlanView(onDone: onDoneAction)
                 } else {
-                    // Mulai dari FrequencyView, teruskan 'onDone'
+                   
                     FrequencyView(onDone: onDoneAction)
                 }
             }
-            // 4. Inject Questionnaire VM agar datanya konsisten
             .environment(questionnaireViewModel)
-            // 5. Inject aksi "Cancel" kustom kita
             .environment(\.dismissFlow, onCancelAction)
         }
     }
