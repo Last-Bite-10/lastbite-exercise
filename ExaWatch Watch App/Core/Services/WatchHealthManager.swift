@@ -108,19 +108,14 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
 
     private func sendBPMToiPhone(_ bpm: Double) {
         let message: [String: Any] = [
-            "bpm": bpm, "timestamp": Date().timeIntervalSince1970,
+            "type": PayloadType.bpmChange.rawValue,
+            "data": [
+                "bpm": bpm,
+                "timestamp": Date().timeIntervalSince1970
+            ]
         ]
 
-        // Try interactive messaging first (fastest, requires reachability)
-        if WCSession.default.isReachable {
-            WCSession.default.sendMessage(message, replyHandler: nil) { error in
-                print(
-                    "Failed to send BPM via message: \(error.localizedDescription)"
-                )
-            }
-        }
-
-        // Also use transferUserInfo for guaranteed delivery (works in background)
+        // Use transferUserInfo for guaranteed delivery (works in background)
         WCSession.default.transferUserInfo(message)
     }
 
@@ -137,31 +132,89 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any])
-    {
-        // Receive commands from iPhone
-        if message["command"] as? String == "start" {
-            DispatchQueue.main.async {
-                self.requestAuthorization()
-                self.startStreaming()
+    // ✅ This is the OLD method without replyHandler - REMOVE IT
+    // func session(_ session: WCSession, didReceiveMessage message: [String: Any]) { ... }
+
+    // ✅ NEW: Implement the method WITH replyHandler to send acknowledgments back
+    nonisolated func session(
+        _ session: WCSession,
+        didReceiveMessage message: [String: Any],
+        replyHandler: @escaping ([String: Any]) -> Void
+    ) {
+        print("[Watch] ========================================")
+        print("[Watch] didReceiveMessage (with reply) called!")
+        print("[Watch] Message: \(message)")
+        print("[Watch] ========================================")
+
+        // Always send a reply to acknowledge receipt
+        let reply: [String: Any] = ["status": "received"]
+
+        // Handle commands from iPhone
+        if let command = message["command"] as? String {
+            Task { @MainActor in
+                switch command {
+                case "start":
+                    self.requestAuthorization()
+                    self.startStreaming()
+                    print("[Watch] Started heart rate monitoring")
+                case "stop":
+                    self.stopStreaming()
+                    print("[Watch] Stopped heart rate monitoring")
+                default:
+                    print("[Watch] Unknown command: \(command)")
+                }
             }
-        } else if message["command"] as? String == "stop" {
-            DispatchQueue.main.async {
-                self.stopStreaming()
-            }
+            replyHandler(reply)
+            return
         }
 
         // Receive progress updates from iPhone
         if let progressValue = message["progress"] as? Double,
-            let isPaused = message["isPaused"] as? Bool,
+            let timerStatus = message["timerStatus"] as? String,
             let timeRemaining = message["timeRemaining"] as? Int,
-            let totalDuration = message["totalDuration"] as? Int
+            let totalDuration = message["totalDuration"] as? Int,
+            let timerStatusType = TimerStatusType(rawValue: timerStatus)
         {
-
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 self.receivedProgress = ProgressData(
                     progress: CGFloat(progressValue),
-                    isPaused: isPaused,
+                    timerStatus: timerStatusType,
+                    timeRemaining: timeRemaining,
+                    totalDuration: totalDuration
+                )
+            }
+            replyHandler(reply)
+            return
+        }
+
+        // If we get here, send reply anyway
+        replyHandler(reply)
+    }
+
+    func session(
+        _ session: WCSession,
+        didReceiveApplicationContext applicationContext: [String: Any]
+    ) {
+        print("[Watch] ========================================")
+        print("[Watch] didReceiveApplicationContext called!")
+        print("[Watch] Context: \(applicationContext)")
+        print("[Watch] ========================================")
+
+        // Handle progress updates from application context
+        if let type = applicationContext["type"] as? String,
+            let msgType = PayloadType(rawValue: type),
+            msgType == .timerChange,
+            let data = applicationContext["data"] as? [String: Any],
+            let progressValue = data["progress"] as? Double,
+            let timerStatus = data["timerStatus"] as? String,
+            let timeRemaining = data["timeRemaining"] as? Int,
+            let totalDuration = data["totalDuration"] as? Int,
+            let timerStatusType = TimerStatusType(rawValue: timerStatus)
+        {
+            Task { @MainActor in
+                self.receivedProgress = ProgressData(
+                    progress: CGFloat(progressValue),
+                    timerStatus: timerStatusType,
                     timeRemaining: timeRemaining,
                     totalDuration: totalDuration
                 )
@@ -169,24 +222,40 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
-    func session(
+    nonisolated func session(
         _ session: WCSession,
-        didReceiveApplicationContext applicationContext: [String: Any]
+        didReceiveUserInfo userInfo: [String: Any] = [:]
     ) {
-        // Also handle application context for progress (more reliable for state sync)
-        if let progressValue = applicationContext["progress"] as? Double,
-            let isPaused = applicationContext["isPaused"] as? Bool,
-            let timeRemaining = applicationContext["timeRemaining"] as? Int,
-            let totalDuration = applicationContext["totalDuration"] as? Int
-        {
+        print("[Watch] ========================================")
+        print("[Watch] didReceiveUserInfo called!")
+        print("[Watch] UserInfo: \(userInfo)")
+        print("[Watch] ========================================")
 
-            DispatchQueue.main.async {
-                self.receivedProgress = ProgressData(
-                    progress: CGFloat(progressValue),
-                    isPaused: isPaused,
-                    timeRemaining: timeRemaining,
-                    totalDuration: totalDuration
-                )
+        // Handle the nested structure for userInfo
+        if let type = userInfo["type"] as? String,
+            let msgType = PayloadType(rawValue: type)
+        {
+            switch msgType {
+            case .bpmChange:
+                // BPM updates shouldn't come to Watch, but handle just in case
+                break
+            case .timerChange:
+                if let data = userInfo["data"] as? [String: Any],
+                    let progressValue = data["progress"] as? Double,
+                    let timerStatus = data["timerStatus"] as? String,
+                    let timeRemaining = data["timeRemaining"] as? Int,
+                    let totalDuration = data["totalDuration"] as? Int,
+                    let timerStatusType = TimerStatusType(rawValue: timerStatus)
+                {
+                    Task { @MainActor in
+                        self.receivedProgress = ProgressData(
+                            progress: CGFloat(progressValue),
+                            timerStatus: timerStatusType,
+                            timeRemaining: timeRemaining,
+                            totalDuration: totalDuration
+                        )
+                    }
+                }
             }
         }
     }
