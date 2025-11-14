@@ -462,6 +462,7 @@
 				DEVELOPMENT_TEAM = PP2K97M73A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Exa-Move-Watch-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
@@ -498,6 +499,7 @@
 				DEVELOPMENT_TEAM = PP2K97M73A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Exa-Move-Watch-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
