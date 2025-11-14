@@ -27,6 +27,21 @@ struct MyExerciseView: View {
 
     private let healthKitManager = HealthKitManager.shared
 
+    init() {
+        healthKitManager.requestAuthorization()
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor(Color("BlueTwo"))
+        ]
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor(Color("BlueTwo"))
+        ]
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+
     var body: some View {
         NavigationView {
             ScrollView {
