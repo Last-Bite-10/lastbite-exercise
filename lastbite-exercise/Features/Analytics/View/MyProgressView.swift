@@ -18,24 +18,39 @@ struct MyProgressView: View {
         Trophy(milestone: 20, isAchieved: false),
         Trophy(milestone: 25, isAchieved: false),
     ]
+    
+    init() {
+        let appearance = UINavigationBarAppearance()
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor(Color("BlueTwo"))
+        ]
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor(Color("BlueTwo"))
+        ]
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
-                // Weekly Progress Section
-                WeeklyProgressView(
-                    currentMinutes: currentWeeklyMinutes,
-                    totalMinutes: totalWeeklyMinutes
-                )
-
-                // Trophies Section
-                TrophiesView(trophies: trophies)
-
-                Spacer()
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 24) {
+                    // Weekly Progress Section
+                    WeeklyProgressView(
+                        currentMinutes: currentWeeklyMinutes,
+                        totalMinutes: totalWeeklyMinutes
+                    )
+                    
+                    // Trophies Section
+                    TrophiesView(trophies: trophies)
+                    
+                    Spacer()
+                }
+                .padding()
             }
-            .padding()
+            .navigationTitle(Text("My Progress"))
         }
-        .navigationTitle(Text("My Progress"))
     }
 }
 

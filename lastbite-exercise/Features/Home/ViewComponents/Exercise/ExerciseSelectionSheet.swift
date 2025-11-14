@@ -118,7 +118,7 @@ struct ExerciseSelectionSheet: View {
 
             Spacer()
         }
-        .presentationDetents([.medium, .large])
+//        .presentationDetents([.medium, .large])
         .padding(.bottom, 20)
         .sheet(item: $currentExercise) { exercise in
             DurationSelectionSheet(

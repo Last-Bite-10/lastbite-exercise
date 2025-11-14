@@ -1,9 +1,9 @@
 //
-//  TrophyView.swift
-//  lastbite-exercise
+// TrophyView.swift
+// lastbite-exercise
 //
-//  Created by Niken Larasati on 23/10/25.
-//
+// Created by Niken Larasati on 23/10/25.
+// swiftlint:disable line_length
 
 import SwiftUI
 
@@ -28,24 +28,19 @@ struct TrophiesView: View {
                     ForEach(trophies) { trophy in
                         VStack(spacing: 8) {
                             ZStack {
-                                Circle()
-                                    .strokeBorder(
-                                        trophy.isAchieved
-                                            ? Color.blue
-                                            : Color.gray.opacity(0.3),
-                                        lineWidth: 3
-                                    )
-                                    .frame(width: 60, height: 60)
-
-                                Image(systemName: "medal.fill")
-                                    .font(.system(size: 30))
+                                let trophyImage = trophy.isAchieved ? "\(trophy.milestone)WeekTrophy" : "LockedWeekTrophy"
+                                
+                                Image(trophyImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
                                     .foregroundColor(
                                         trophy.isAchieved
                                             ? .blue : .gray.opacity(0.3)
                                     )
                             }
 
-                            Text("\(trophy.milestone)")
+                            Text("\(trophy.milestone) Weeks")
                                 .font(.headline)
                                 .foregroundColor(
                                     trophy.isAchieved
@@ -64,9 +59,11 @@ struct TrophiesView: View {
     TrophiesView(trophies: [
         Trophy(milestone: 3, isAchieved: true),
         Trophy(milestone: 5, isAchieved: true),
-        Trophy(milestone: 10, isAchieved: false),
-        Trophy(milestone: 15, isAchieved: false),
-        Trophy(milestone: 20, isAchieved: false),
+        Trophy(milestone: 7, isAchieved: true),
+        Trophy(milestone: 10, isAchieved: true),
+        Trophy(milestone: 15, isAchieved: true),
+        Trophy(milestone: 25, isAchieved: true),
+        Trophy(milestone: 50, isAchieved: true),
     ])
     .padding()
 }

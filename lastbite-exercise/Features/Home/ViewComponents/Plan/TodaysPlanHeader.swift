@@ -26,9 +26,9 @@ struct TodaysPlanHeader: View {
                     Image(systemName: "pencil")
                         .font(.system(size: 14, weight: .semibold))
                     Text(actionTitle)
-                        .font(.subheadline)
+                        .font(.headline)
                 }
-                .foregroundColor(Color.blue)
+                .foregroundColor(Color("BlueTwo"))
             }
             .buttonStyle(.plain)
         }

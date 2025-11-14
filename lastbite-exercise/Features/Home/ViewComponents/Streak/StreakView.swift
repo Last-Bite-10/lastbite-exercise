@@ -36,13 +36,13 @@ struct StreakView: View {
                         VStack(spacing: 8) {
                             ZStack {
                                 Circle()
-                                    .fill(Color(.systemGray6))
+                                    .fill(Color("CardGray"))
 
                                 Image(systemName: iconName)
                                     .foregroundColor(iconColor)
                                     .font(.system(size: 24))
                             }
-                            .frame(width: 50, height: 50)
+                            .frame(width: 40, height: 40)
                             
                             Text("W\(weekNumber)")
                                 .font(.caption)
@@ -50,21 +50,24 @@ struct StreakView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 4)
+                .padding(.horizontal, 30)
             }
-            .padding(.vertical)
+            .padding(.vertical, 25)
             .background(Color(.white))
-            .cornerRadius(12)
+            .cornerRadius(20)
 
             if !hasAnyStreak {
                 HStack(spacing: 16) {
-                    Image(systemName: "figure.strengthtraining.traditional")
+                    Image("WeakStreak")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 150, height: 150)
                         .font(.system(size: 50))
                         .foregroundColor(.pink.opacity(0.7))
 
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            Image(systemName: "flame")
+                            Image(systemName: "flame.fill")
                                 .foregroundColor(.gray)
                             Text("No streaks yet!")
                                 .font(.subheadline)
@@ -75,7 +78,6 @@ struct StreakView: View {
                     }
                 }
                 .padding()
-                .background(Color.pink.opacity(0.1))
                 .cornerRadius(12)
                 .frame(maxWidth: .infinity)
             }
@@ -106,7 +108,7 @@ struct StreakView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .fill(Color(.systemGray6))
+                .fill(Color("CardGray"))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 28, style: .continuous)
@@ -121,15 +123,15 @@ struct StreakView: View {
                 if week.isStreakAchieved {
                     return ("flame.fill", .orange)
                 } else {
-                    return ("flame", grayColor)
+                    return ("flame.fill", grayColor)
                 }
             }
             if weekNumber == 1 {
-                return ("flame", grayColor)
+                return ("flame.fill", grayColor)
             }
             
             if let previousWeek = weeksByNumber[weekNumber - 1], previousWeek.isStreakAchieved {
-                return ("flame", grayColor)
+                return ("flame.fill", grayColor)
             } else {
                 return ("lock.fill", grayColor)
             }
