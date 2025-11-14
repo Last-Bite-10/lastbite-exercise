@@ -46,8 +46,7 @@ struct RecordView: View {
             return
                 "Your exercise is in progress, your heartbeat is being recorded!"
         case .timerStopped:
-            return
-                "Start now! Remember only your active time (BPM >= \(healthKitManager.bpmThreshold) will be recorded."
+            return "Start now! Remember only your active time **(BPM >= \(healthKitManager.bpmThreshold ?? -1))** will be recorded."
         case .timerOverflown:
             return
                 "Your exercise is in progress, your heartbeat is being recorded!"
@@ -81,9 +80,6 @@ struct RecordView: View {
                 // Background circle
                 Circle()
                     .stroke(
-                        //                        !viewModel.isPaused
-                        //                        ? Color.accentColor.opacity(0.2)
-                        //                        : Color.gray2.opacity(1),
                         bgCircleColor,
                         lineWidth: 30
                     )
