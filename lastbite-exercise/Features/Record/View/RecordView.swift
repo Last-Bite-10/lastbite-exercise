@@ -38,7 +38,7 @@ struct RecordView: View {
         }
     }
 
-    var timerMessage: String {
+    var timerMessage: LocalizedStringKey {
         switch viewModel.timerStatus {
         case .timerPaused:
             return "The time is paused. Continue by increasing your BPM!"
@@ -46,7 +46,7 @@ struct RecordView: View {
             return
                 "Your exercise is in progress, your heartbeat is being recorded!"
         case .timerStopped:
-            return "Start now! Remember only your active time **(BPM >= \(healthKitManager.bpmThreshold ?? -1))** will be recorded."
+            return "Start now! Remember only your active time **(BPM >= \(healthKitManager.bpmThreshold))** will be recorded."
         case .timerOverflown:
             return
                 "Your exercise is in progress, your heartbeat is being recorded!"
@@ -129,7 +129,7 @@ struct RecordView: View {
                                 .fontWeight(.bold)
                         }
 
-                        if viewModel.isReceivingFromWatch {
+                        if viewModel.currentBPM != nil {
                             Image(systemName: "applewatch")
                                 .foregroundStyle(.blue)
                                 .font(.caption)

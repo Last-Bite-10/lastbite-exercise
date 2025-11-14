@@ -12,11 +12,12 @@ import HealthKit
 @MainActor
 final class HealthKitManager: ObservableObject {
     private let healthStore = HKHealthStore()
-    @Published var bpmThreshold: Int?
+    @Published var bpmThreshold: Int = 100
 
     static let shared = HealthKitManager()
 
     init() {
+        self.requestAuthorization()
         print("HealthKitManager initialized, BPM Threshold: \(bpmThreshold)")
     }
 
@@ -52,6 +53,7 @@ final class HealthKitManager: ObservableObject {
 
                         Task { @MainActor in
                             self.bpmThreshold = self.getBPMThreshold(age)
+                            print("BPM threshold : \(self.bpmThreshold)")
                         }
                         
                         print("Threshold: \(self.bpmThreshold)")
@@ -73,7 +75,7 @@ final class HealthKitManager: ObservableObject {
     }
 
     func getBPMThreshold(_ age: Int) -> Int {
-        let idealBPM: Double = Double(220 - age) * Double(64 / 100)
+        let idealBPM: Double = Double(220 - age) * 0.64
         return Int(floor(idealBPM))
     }
 }
