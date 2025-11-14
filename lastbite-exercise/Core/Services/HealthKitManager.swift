@@ -17,14 +17,11 @@ final class HealthKitManager: ObservableObject {
     static let shared = HealthKitManager()
 
     init() {
-        Task {[weak self] in
-            await self?.requestAuthorization()
-        }
         print("HealthKitManager initialized, BPM Threshold: \(bpmThreshold)")
     }
 
     // MARK: - HealthKit Authorization
-    func requestAuthorization() async {
+    func requestAuthorization() {
         guard HKHealthStore.isHealthDataAvailable(),
             let heartRateType = HKObjectType.quantityType(
                 forIdentifier: .heartRate
