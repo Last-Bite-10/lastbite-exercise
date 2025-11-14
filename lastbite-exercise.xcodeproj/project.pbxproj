@@ -51,6 +51,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Core/Enums/PayloadType.swift,
+				Core/Services/TimerService.swift,
 			);
 			target = 39E2BC382EAF7A3200714C26 /* Exa Move Watch */;
 		};

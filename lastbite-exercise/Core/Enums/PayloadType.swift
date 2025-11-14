@@ -10,6 +10,8 @@
 enum PayloadType: String, CaseIterable, Hashable {
     case timerChange = "timer_change"
     case bpmChange = "bpm_change"
+    case timerAck = "timer_ack"
+    case bpmAck = "bpm_ack"
 //    case timerAck = "timer_ack"
 //    case bpmAck = "bpm_ack"
 }

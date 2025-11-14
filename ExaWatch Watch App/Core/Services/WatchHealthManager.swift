@@ -147,7 +147,10 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
         print("[Watch] ========================================")
 
         // Always send a reply to acknowledge receipt
-        let reply: [String: Any] = ["status": "received"]
+        let reply: [String: Any] = [
+            "type": PayloadType.timerAck.rawValue,
+            "data": "received"
+        ]
 
         // Handle commands from iPhone
         if let command = message["command"] as? String {
@@ -236,16 +239,13 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
             let msgType = PayloadType(rawValue: type)
         {
             switch msgType {
-            case .bpmChange:
-                // BPM updates shouldn't come to Watch, but handle just in case
-                break
             case .timerChange:
                 if let data = userInfo["data"] as? [String: Any],
-                    let progressValue = data["progress"] as? Double,
-                    let timerStatus = data["timerStatus"] as? String,
-                    let timeRemaining = data["timeRemaining"] as? Int,
-                    let totalDuration = data["totalDuration"] as? Int,
-                    let timerStatusType = TimerStatusType(rawValue: timerStatus)
+                   let progressValue = data["progress"] as? Double,
+                   let timerStatus = data["timerStatus"] as? String,
+                   let timeRemaining = data["timeRemaining"] as? Int,
+                   let totalDuration = data["totalDuration"] as? Int,
+                   let timerStatusType = TimerStatusType(rawValue: timerStatus)
                 {
                     Task { @MainActor in
                         self.receivedProgress = ProgressData(
@@ -256,7 +256,11 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
                         )
                     }
                 }
+            default:
+                print("[Watch] Non-timer change message, no need to handle")
             }
+            
+            
         }
     }
 }
