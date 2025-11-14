@@ -55,6 +55,13 @@
 			);
 			target = 39E2BC382EAF7A3200714C26 /* Exa Move Watch */;
 		};
+		E5E87CFC2EC71600009ECD3D /* Exceptions for "ExaWatch Watch App" folder in "Exa Move Watch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Exa-Move-Watch-Info.plist",
+			);
+			target = 39E2BC382EAF7A3200714C26 /* Exa Move Watch */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -69,6 +76,9 @@
 		};
 		39E2BC3A2EAF7A3200714C26 /* ExaWatch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E5E87CFC2EC71600009ECD3D /* Exceptions for "ExaWatch Watch App" folder in "Exa Move Watch" target */,
+			);
 			path = "ExaWatch Watch App";
 			sourceTree = "<group>";
 		};
@@ -462,7 +472,7 @@
 				DEVELOPMENT_TEAM = PP2K97M73A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Exa-Move-Watch-Info.plist";
+				INFOPLIST_FILE = "ExaWatch Watch App/Exa-Move-Watch-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
@@ -499,7 +509,7 @@
 				DEVELOPMENT_TEAM = PP2K97M73A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Exa-Move-Watch-Info.plist";
+				INFOPLIST_FILE = "ExaWatch Watch App/Exa-Move-Watch-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
