@@ -72,6 +72,9 @@ struct MyExerciseView: View {
             }
             .navigationTitle("My Exercise")
             .navigationBarTitleDisplayMode(.large)
+            .task {
+                await healthKitManager.requestAuthorization()
+            }
         }.sheet(isPresented: $showPlanModifySheet) {
             ExerciseSelectionSheet().environment(viewModel)
         }.fullScreenCover(isPresented: $showQuestionnaire) {

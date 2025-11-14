@@ -12,6 +12,7 @@ import WatchConnectivity
 @MainActor
 class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
     @Published var latestBPM: Double?
+//    @Published var latestTimerState:
     @Published var isReceivingFromWatch: Bool = false
 
     // Publisher for BPM updates from Watch
@@ -133,6 +134,9 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
                 if let data = message["data"] as? [String: Any] {
                     print("[iPhone] Timer change data: \(data)")
                 }
+            default:
+                // Rest of messages is ack, for now just ignore
+                print("[iPhone] ACK message")
             }
         }
     }
@@ -164,7 +168,12 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
             case .timerChange:
                 if let data = userInfo["data"] as? [String: Any] {
                     print("[iPhone] Timer change data from userInfo: \(data)")
+                    
+                    
                 }
+                
+            default:
+                print("[iPhone] ACK message")
             }
         }
     }

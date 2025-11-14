@@ -10,14 +10,6 @@ import SwiftData
 import UIKit
 import WatchConnectivity
 
-enum TimerStatus {
-    case timerPaused
-    case timerStarted
-    case timerStopped
-    case timerOverflown
-    case timerBelowBPM
-}
-
 @MainActor
 class RecordViewModel: ObservableObject {
     // MARK: - Published Properties
@@ -26,7 +18,7 @@ class RecordViewModel: ObservableObject {
     @Published var timeRecorded: Int = 0
     @Published var isPaused: Bool = true
     @Published var isBPMUnder: Bool = false
-    @Published var timerStatus: TimerStatus = .timerStopped
+    @Published var timerStatus: TimerStatusType = .timerStopped
 
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
@@ -63,17 +55,17 @@ class RecordViewModel: ObservableObject {
         // Send progress updates to Watch whenever they change
         Publishers.CombineLatest4(
             $progress,
-            $isPaused,
+            $timeRecorded,
             $activeTimeRemaining,
-            $timeRecorded
+            $timerStatus,
         )
         .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
-        .sink { [weak self] progress, isPaused, timeRemaining, timeRecorded in
+        .sink { [weak self] progress, timeRemaining, timeRecorded, timerStatus in
             self?.sendProgressToWatch(
                 progress: progress,
-                isPaused: isPaused,
                 timeRemaining: timeRemaining,
-                totalDuration: timeRecorded
+                totalDuration: timeRecorded,
+                timerStatus: timerStatus
             )
         }
         .store(in: &cancellables)
@@ -81,17 +73,17 @@ class RecordViewModel: ObservableObject {
 
     private func sendProgressToWatch(
         progress: CGFloat,
-        isPaused: Bool,
         timeRemaining: Int,
-        totalDuration: Int
+        totalDuration: Int,
+        timerStatus: TimerStatusType
     ) {
         guard WCSession.default.activationState == .activated else { return }
 
         let progressData: [String: Any] = [
             "progress": Double(progress),
-            "isPaused": isPaused,
             "timeRemaining": timeRemaining,
             "totalDuration": totalDuration,
+            "timerStatus": timerStatus.rawValue
         ]
 
         // Use application context for state sync (most reliable)
