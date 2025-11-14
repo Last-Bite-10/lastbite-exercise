@@ -10,18 +10,21 @@ import Foundation
 import HealthKit
 
 @MainActor
-class HealthKitManager: ObservableObject {
+final class HealthKitManager: ObservableObject {
     private let healthStore = HKHealthStore()
     @Published var bpmThreshold: Int?
 
     static let shared = HealthKitManager()
 
     init() {
-        requestAuthorization()
+        Task {[weak self] in
+            await self?.requestAuthorization()
+        }
+        print("HealthKitManager initialized, BPM Threshold: \(bpmThreshold)")
     }
 
     // MARK: - HealthKit Authorization
-    func requestAuthorization() {
+    func requestAuthorization() async {
         guard HKHealthStore.isHealthDataAvailable(),
             let heartRateType = HKObjectType.quantityType(
                 forIdentifier: .heartRate
@@ -47,10 +50,14 @@ class HealthKitManager: ObservableObject {
                             to: Date()
                         )
                         let age = ageComponent.year ?? 0
+                        
+                        print("DoB = \(birthDate)")
 
                         Task { @MainActor in
                             self.bpmThreshold = self.getBPMThreshold(age)
                         }
+                        
+                        print("Threshold: \(self.bpmThreshold)")
                     }
                 } catch {
                     print(

@@ -10,6 +10,26 @@ import SwiftUI
 struct RecordView: View {
     @StateObject private var healthManager = WatchHealthManager()
     @StateObject private var viewModel = WatchRecordViewModel()
+    
+    var bgCircleColor: Color {
+        switch viewModel.timerStatus {
+        case .timerBelowBPM: return Color.cardGray.opacity(1)
+        case .timerPaused: return Color.cardGray.opacity(1)
+        case .timerStarted: return Color.accentColor.opacity(0.2)
+        case .timerStopped: return Color.cardGray.opacity(1)
+        case .timerOverflown: return Color.purple2.opacity(1)
+        }
+    }
+
+    var progressCircleColor: Color {
+        switch viewModel.timerStatus {
+        case .timerBelowBPM: return Color.pausedGray.opacity(1)
+        case .timerPaused: return Color.pausedGray.opacity(1)
+        case .timerStarted: return Color.blueTwo.opacity(1)
+        case .timerStopped: return Color.pausedGray.opacity(1)
+        case .timerOverflown: return Color.purple2.opacity(1)
+        }
+    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -17,18 +37,14 @@ struct RecordView: View {
             ZStack {
                 Circle()
                     .stroke(
-                        !viewModel.isPaused
-                            ? Color.accentColor.opacity(0.2)
-                            : Color.gray.opacity(0.3),
+                        bgCircleColor,
                         lineWidth: 12
                     )
 
                 Circle()
                     .trim(from: 0, to: viewModel.progress)
                     .stroke(
-                        !viewModel.isPaused
-                            ? Color.blue
-                            : Color.gray,
+                        progressCircleColor,
                         style: StrokeStyle(lineWidth: 12, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
@@ -72,7 +88,14 @@ struct RecordView: View {
                     .system(size: 12)
                 )
             }
-            Button(action: {}) {
+            Button(action: {
+                viewModel.sendProgressToiPhone(data: ProgressData(
+                    progress: viewModel.progress,
+                    timerStatus: viewModel.timerStatus != .timerPaused ? .timerPaused : .timerStarted,
+                    timeRemaining: viewModel.timeRemaining,
+                    totalDuration: viewModel.totalDuration)
+                )
+            }) {
                 Text("Play")
                     .font(.system(size: 16))
                     .padding(.all, 0)

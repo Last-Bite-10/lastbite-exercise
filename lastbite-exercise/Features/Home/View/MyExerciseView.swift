@@ -27,10 +27,6 @@ struct MyExerciseView: View {
 
     private let healthKitManager = HealthKitManager.shared
 
-    init() {
-        healthKitManager.requestAuthorization()
-    }
-
     var body: some View {
         NavigationView {
             ScrollView {
@@ -61,6 +57,9 @@ struct MyExerciseView: View {
             }
             .navigationTitle("My Exercise")
             .navigationBarTitleDisplayMode(.large)
+            .task {
+                await healthKitManager.requestAuthorization()
+            }
         }.sheet(isPresented: $showPlanModifySheet) {
             ExerciseSelectionSheet().environment(viewModel)
         }.fullScreenCover(isPresented: $showQuestionnaire) {
