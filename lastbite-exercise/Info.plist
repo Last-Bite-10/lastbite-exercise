@@ -7,5 +7,9 @@
 		<string>remote-notification</string>
 		<string>processing</string>
 	</array>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.lastbite.ExaMove.refresh</string> <string>com.lastbite.ExaMove.cleanup</string>
+    </array>
 </dict>
 </plist>
