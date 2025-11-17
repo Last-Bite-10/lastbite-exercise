@@ -23,7 +23,7 @@ struct StreakView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading) {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach(1...10, id: \.self) { weekNumber in
@@ -52,57 +52,59 @@ struct StreakView: View {
                 }
                 .padding(.horizontal, 30)
             }
-            .padding(.vertical, 25)
+            .padding(.vertical, 20)
             .background(Color(.white))
             .cornerRadius(20)
 
             if !hasAnyStreak {
-                HStack(spacing: 16) {
-                    Image("WeakStreak")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 150, height: 150)
-                        .font(.system(size: 50))
-                        .foregroundColor(.pink.opacity(0.7))
-
-                    VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 8) {
+                    ZStack {
+                        Image("WeakStreak")
+                            .resizable()
+                            .scaledToFill()
+                    }
+                    .frame(width: 150, height: 100)
+                    
+                    VStack(alignment: .leading) {
                         HStack {
                             Image(systemName: "flame.fill")
+                                .font(.system(size: 24))
                                 .foregroundColor(.gray)
                             Text("No streaks yet!")
-                                .font(.subheadline)
+                                .font(.headline)
                         }
-                        Text("Start exercising to get the fire going!")
-                            .font(.caption)
+                        Text("Start exercising to get \nthe fire going!")
+                            .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
                 }
-                .padding()
                 .cornerRadius(12)
-                .frame(maxWidth: .infinity)
             }
 
             if hasAnyStreak {
-                HStack(spacing: 16) {
-                    Image(systemName: "figure.strengthtraining.traditional")
-                        .font(.system(size: 50))
-                        .foregroundColor(.pink.opacity(0.7))
+                HStack(spacing: 8) {
+                    ZStack {
+                        Image("CommonStreak")
+                            .resizable()
+                            .scaledToFill()
+                    }
+                    .frame(width: 150, height: 100)
 
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading) {
                         HStack {
-                            Image(systemName: "flame")
-                            Text("Keep the Streak Going!")
-                                .font(.subheadline)
+                            Image(systemName: "flame.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(.orange)
+                            
+                            Text("1 Streak")
+                                .font(.headline)
                         }
-                        Text("Start exercising to get the fire going!")
-                            .font(.caption)
+                        Text("Keep the Streak Going!")
+                            .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
                 }
-                .padding()
-                .background(Color.pink.opacity(0.1))
                 .cornerRadius(12)
-                .frame(maxWidth: .infinity)
             }
         }
         .padding()

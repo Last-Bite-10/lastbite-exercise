@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct MyProgressView: View {
-    @State private var currentWeeklyMinutes = 15
-    @State private var totalWeeklyMinutes = 30
+    @State private var currentWeeklyMinutes = 30
+    @State private var totalWeeklyMinutes = 60
+    
     @State private var trophies = [
         Trophy(milestone: 3, isAchieved: true),
         Trophy(milestone: 5, isAchieved: true),
-        Trophy(milestone: 10, isAchieved: false),
-        Trophy(milestone: 15, isAchieved: false),
-        Trophy(milestone: 20, isAchieved: false),
-        Trophy(milestone: 25, isAchieved: false),
+        Trophy(milestone: 7, isAchieved: true),
+        Trophy(milestone: 10, isAchieved: true),
+        Trophy(milestone: 15, isAchieved: true),
+        Trophy(milestone: 25, isAchieved: true),
+        Trophy(milestone: 50, isAchieved: true),
     ]
     
     init() {
@@ -50,6 +52,7 @@ struct MyProgressView: View {
                 .padding()
             }
             .navigationTitle(Text("My Progress"))
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }

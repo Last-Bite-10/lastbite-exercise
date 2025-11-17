@@ -39,7 +39,8 @@ struct FrequencyView: View {
                 destination:
                     EquipmentView(onDone: onDone),
                 label: { CoreButtonLabel(title: "Next") }
-            ).padding(.top, 64)
+            )
+            .padding(.top, 40)
 
             Spacer()
         }
@@ -53,8 +54,7 @@ struct FrequencyView: View {
                         Text("Cancel")
                             .foregroundColor(.red)
                     }
-                )
-                .buttonStyle(.glass)
+                ).buttonStyle(.borderless)
             }
         }
     }

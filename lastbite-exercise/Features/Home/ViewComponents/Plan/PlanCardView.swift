@@ -39,6 +39,7 @@ struct PlanCardView: View {
             }
         }
         .padding(.vertical, 20)
+        .frame(maxWidth: .infinity)
         .background(Color.cardGray)
         .cornerRadius(28)
     }

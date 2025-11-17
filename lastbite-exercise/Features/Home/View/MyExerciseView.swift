@@ -67,7 +67,7 @@ struct MyExerciseView: View {
 
                     // Recent History Section
                     RecentHistoryView().environment(viewModel)
-                        .padding(.top, -20)
+//                        .padding(.top, -20)
                 }
             }
             .navigationTitle("My Exercise")

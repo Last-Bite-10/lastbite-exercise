@@ -71,7 +71,8 @@ struct EquipmentView: View {
                         title: "Next"
                     )
                 }
-            ).padding(.top, 64)
+            )
+            .padding(.top, 40)
 
             Spacer()
         }

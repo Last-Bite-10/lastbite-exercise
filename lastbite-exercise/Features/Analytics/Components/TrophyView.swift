@@ -15,16 +15,20 @@ struct Trophy: Identifiable {
 
 struct TrophiesView: View {
     var trophies: [Trophy]
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("My Trophies")
-                .font(.title3)
+                .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundColor(Color(red: 0.2, green: 0.5, blue: 0.8))
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
+            LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(trophies) { trophy in
                         VStack(spacing: 8) {
                             ZStack {
@@ -33,23 +37,20 @@ struct TrophiesView: View {
                                 Image(trophyImage)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                    .foregroundColor(
-                                        trophy.isAchieved
-                                            ? .blue : .gray.opacity(0.3)
-                                    )
+                                    .frame(width: 150, height: 150)
+                                    .background(Color("CardGray"))
+                                    .cornerRadius(20)
                             }
 
-                            Text("\(trophy.milestone) Weeks")
-                                .font(.headline)
+                            Text("\(trophy.milestone) Weeks Streak Trophy")
+                                .font(.caption)
                                 .foregroundColor(
                                     trophy.isAchieved
-                                        ? .blue : .gray.opacity(0.5)
+                                        ? .black : .gray.opacity(0.5)
                                 )
                         }
                     }
-                }
-                .padding(.horizontal, 4)
+                    .frame(maxWidth: .infinity)
             }
         }
     }

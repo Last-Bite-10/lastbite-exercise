@@ -10,41 +10,55 @@ import SwiftUI
 struct WeeklyProgressView: View {
     var currentMinutes: Int
     var totalMinutes: Int
+    
+    var startDate: Date = Calendar.current.date(byAdding: .day, value: -4, to: Date())!
+    var endDate: Date = Calendar.current.date(byAdding: .day, value: 3, to: Date())!
+
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMMM yyyy"
+        return formatter
+    }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 8) {
+            
             Text("Weekly Progress")
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundColor(Color(red: 0.2, green: 0.5, blue: 0.8))
-
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(Color("BlueTwo"))
+            
+            Text("\(dateFormatter.string(from: startDate)) - \(dateFormatter.string(from: endDate))")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+            
             HStack(spacing: 20) {
-                // Exercise illustration
-                Image(systemName: "figure.step.training")
-                    .font(.system(size: 80))
-                    .foregroundColor(.pink)
+                ZStack {
+                    Image("WeeklyProgress")
+                        .resizable()
+                        .scaledToFill()
+                }
+                .frame(width: 120, height: 120)
 
-                Spacer()
-
-                // Minutes display
                 HStack(alignment: .lastTextBaseline, spacing: 4) {
                     Text("\(currentMinutes)")
-                        .font(.system(size: 60, weight: .bold))
-                        .foregroundColor(Color(red: 0.2, green: 0.5, blue: 0.8))
-
+                        .font(.system(size: 36, weight: .bold))
+                        .foregroundColor(Color("BlueTwo"))
+                        
                     Text("/\(totalMinutes) min")
-                        .font(.title3)
-                        .foregroundColor(Color(red: 0.2, green: 0.5, blue: 0.8))
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundColor(Color("BlueTwo"))
                 }
+                .frame(maxWidth: .infinity)
+                
             }
             .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(12)
+            .background(Color("CardGray"))
+            .cornerRadius(20)
         }
     }
 }
 
 #Preview {
-    WeeklyProgressView(currentMinutes: 15, totalMinutes: 30)
-        .padding()
+    WeeklyProgressView(currentMinutes: 30, totalMinutes: 60)
 }
