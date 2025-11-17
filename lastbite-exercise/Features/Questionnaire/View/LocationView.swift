@@ -53,8 +53,9 @@ struct LocationView: View {
                     onDone()
                 },
                 label: { CoreButtonLabel(title: "Done") }
-            ).padding(.top, 64)
-
+            )
+            .padding(.top, 40)
+            
             Spacer()
         }
         .toolbar {
