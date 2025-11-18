@@ -57,7 +57,7 @@ struct HistoryDetailCard: View {
                 .cornerRadius(30)
 
                 GeometryReader { geometry in
-                    Button(action: onSetAsPlan) {
+                    ButtonWSound(action: onSetAsPlan) {
                         Text("Set as today's plan")
                             .font(.headline)
                             .foregroundColor(.white)

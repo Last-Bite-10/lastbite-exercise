@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CoreButtonLabel: View {
-    var title: String
+    let title: String
+
+    private let soundPlayer = SoundPlayer.shared
 
     var body: some View {
         Text(title)

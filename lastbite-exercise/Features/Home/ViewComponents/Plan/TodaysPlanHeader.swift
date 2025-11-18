@@ -17,18 +17,18 @@ struct TodaysPlanHeader: View {
             Text(title)
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(Color("BlueTwo"))
+                .foregroundColor(Color.blueTwo)
 
             Spacer()
 
-            Button(action: onModifyTapped) {
+            ButtonWSound(action: onModifyTapped) {
                 HStack(spacing: 4) {
                     Image(systemName: "pencil")
                         .font(.system(size: 14, weight: .semibold))
                     Text(actionTitle)
                         .font(.headline)
                 }
-                .foregroundColor(Color("BlueTwo"))
+                .foregroundColor(Color.blueTwo)
             }
             .buttonStyle(.plain)
         }

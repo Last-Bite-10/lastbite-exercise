@@ -9,7 +9,9 @@ import SwiftUI
 
 struct BeginnerPlanView: View {
     @Environment(\.dismissFlow) private var dismissFlow
-    
+
+    private let soundPlayer = SoundPlayer.shared
+
     let onDone: () -> Void
 
     var body: some View {
@@ -66,27 +68,15 @@ struct BeginnerPlanView: View {
             .cornerRadius(32)
 
             // --- Next Button ---
-            NavigationLink(
+            NavLinkWSound(
+                title: "Next",
                 destination: FrequencyView(onDone: onDone),
-                label: {
-                    CoreButtonLabel(
-                        title: "Next"
-                    )
-                }
             )
         }
         .padding(.horizontal)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(
-                    action: {
-                        dismissFlow()
-                    },
-                    label: {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                ).buttonStyle(.borderless)
+                Button("Cancel", systemImage: "xmark") { dismissFlow() }
             }
         }
     }

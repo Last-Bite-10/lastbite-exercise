@@ -10,10 +10,20 @@ import SwiftUI
 
 struct EquipmentView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
-    
+
     @Environment(\.dismissFlow) private var dismissFlow
-    
+
     let onDone: () -> Void
+
+    private func disableButtonCondition(currentEquipment: EquipmentType) -> Bool
+    {
+        if currentEquipment == .none {
+            return !viewModel.selectedEquipment.isEmpty
+                && !viewModel.selectedEquipment.contains(.none)
+        } else {
+            return viewModel.selectedEquipment.contains(.none)
+        }
+    }
 
     var body: some View {
         VStack(spacing: 10) {
@@ -59,34 +69,22 @@ struct EquipmentView: View {
                                     viewModel.selectedEquipment.insert(type)
                                 }
                             }
+                        ).disabled(
+                            disableButtonCondition(currentEquipment: type)
                         )
                     }
                 }
             ).padding(.top, 48)
 
-            NavigationLink(
+            NavLinkWSound(
+                title: "Next",
                 destination: LocationView(onDone: onDone),
-                label: {
-                    CoreButtonLabel(
-                        title: "Next"
-                    )
-                }
             )
             .padding(.top, 40)
-
-            Spacer()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(
-                    action: {
-                        dismissFlow()
-                    },
-                    label: {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                ).buttonStyle(.borderless)
+                Button("Cancel", systemImage: "xmark") { dismissFlow() }
             }
         }
     }

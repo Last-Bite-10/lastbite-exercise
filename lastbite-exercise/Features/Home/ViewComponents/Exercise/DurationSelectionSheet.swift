@@ -56,7 +56,7 @@ struct DurationSelectionSheet: View {
 
                     // Remove option if already selected
                     if existingRecord != nil {
-                        Button(role: .destructive) {
+                        ButtonWSound(role: .destructive) {
                             onComplete(nil)
                             dismiss()
                         } label: {
@@ -74,13 +74,13 @@ struct DurationSelectionSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
+                    Button("Cancel", systemImage: "xmark") {
                         dismiss()
                     }
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
+                    Button("Done", systemImage: "checkmark") {
                         let record = ExerciseRecord(
                             exercise: exercise,
                             requiredMinutes: selectedMinutes
@@ -88,7 +88,8 @@ struct DurationSelectionSheet: View {
                         onComplete(record)
                         dismiss()
                     }
-                    .fontWeight(.semibold)
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color.interactiveBlue)
                 }
             }
         }

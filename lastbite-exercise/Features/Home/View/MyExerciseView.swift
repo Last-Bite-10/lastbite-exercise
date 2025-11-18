@@ -11,33 +11,38 @@ import SwiftUI
 struct MyExerciseView: View {
     @State private var viewModel = RecommendationViewModel()
     @State private var questionnaireViewModel = QuestionnaireViewModel()
-    
-    @State private var showQuestionnaire: Bool = false
-    @State private var showPlan: Bool = false
+
     @State private var showPlanModifySheet = false
-    @State private var weeklyStreaks = [true, true, false, true, false]
-    @State private var currentDate = Date()
-    @State private var progress: Double = 0.2
-    @State private var completedMinutes = 2
-    @State private var totalMinutes = 10
 
     @Query private var preferences: [Preference]
     @Query private var records: [ExerciseRecord]
     @Query private var allWeeks: [Weekly]
 
+    @Environment(\.modelContext) private var modelContext
+
     private let healthKitManager = HealthKitManager.shared
 
+    private var questionnaireBinding: Binding<Bool> {
+        Binding(
+            get: {
+                guard let pref = preferences.first else { return false }
+                return pref.planChosen != nil
+                    && !(pref.questionnaireCompleted)
+            },
+            set: { _ in
+            }
+        )
+    }
+
     init() {
-        healthKitManager.requestAuthorization()
-        
         let appearance = UINavigationBarAppearance()
         appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor(Color("BlueTwo"))
+            .foregroundColor: UIColor(Color.blueTwo)
         ]
         appearance.titleTextAttributes = [
-            .foregroundColor: UIColor(Color("BlueTwo"))
+            .foregroundColor: UIColor(Color.blueTwo)
         ]
-        
+
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
@@ -51,50 +56,51 @@ struct MyExerciseView: View {
                         .padding(.horizontal)
                         .padding(.bottom, 20)
 
-                    if preferences.first?.planChosen == nil {
-                        PlanSelectionView(
-                            showQuestionnaire: $showQuestionnaire
-                        )
-                    } else if showPlan || !records.isEmpty {
-                        // Today's Plan Header
+                    if preferences.first?.planChosen == nil
+                        || !(preferences.first?.questionnaireCompleted
+                            ?? false)
+                    {
+                        PlanSelectionView()
+                    } else {
                         TodaysPlanHeader(onModifyTapped: {
                             showPlanModifySheet = true
                         })
-
-                        // Today's Plan Section
                         TodaysPlan().environment(viewModel)
                     }
 
                     // Recent History Section
                     RecentHistoryView().environment(viewModel)
-//                        .padding(.top, -20)
+                    //    .padding(.top, -20)
                 }
             }
             .navigationTitle("My Exercise")
             .navigationBarTitleDisplayMode(.large)
-            .task {
-                await healthKitManager.requestAuthorization()
+            .onAppear {
+                healthKitManager.requestAuthorization()
             }
         }.sheet(isPresented: $showPlanModifySheet) {
             ExerciseSelectionSheet().environment(viewModel)
-        }.fullScreenCover(isPresented: $showQuestionnaire) {
-            
+        }.fullScreenCover(isPresented: questionnaireBinding) {
+
             let onDoneAction = {
-                showQuestionnaire = false
-                showPlan = true
+                if preferences.first != nil {
+                    preferences.first?.questionnaireCompleted = true
+                    try? modelContext.save()
+                }
             }
-            
+
             let onCancelAction = {
-                showQuestionnaire = false
-                preferences.first?.planChosen = nil
+                if preferences.first != nil {
+                    preferences.first?.planChosen = nil
+                    preferences.first?.questionnaireCompleted = false
+                    try? modelContext.save()
+                }
             }
-            
+
             NavigationStack {
                 if preferences.first?.planChosen == .beginner {
-                   
                     BeginnerPlanView(onDone: onDoneAction)
                 } else {
-                   
                     FrequencyView(onDone: onDoneAction)
                 }
             }

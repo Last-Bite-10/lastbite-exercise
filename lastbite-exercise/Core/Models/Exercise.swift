@@ -94,7 +94,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 imageName: "PlankShoulderTap1",
                 location: .indoor,
                 needsTutorial: true,
-                equipment: .exerciseMat,
+                equipment: .matress,
                 weather: .notAffected
             ),
             Exercise(
@@ -121,7 +121,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 imageName: "WallSit",
                 location: .indoor,
                 needsTutorial: true,
-                equipment: .wallSurface,
+                equipment: .none,
                 weather: .notAffected
             ),
             Exercise(
@@ -139,7 +139,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 imageName: "SlowMountainClimbers1",
                 location: .indoor,
                 needsTutorial: true,
-                equipment: .exerciseMat,
+                equipment: .matress,
                 weather: .notAffected
             ),
             Exercise(
@@ -202,7 +202,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 imageName: "Badminton",
                 location: .outdoor,
                 needsTutorial: false,
-                equipment: .racket,
+                equipment: .badminton,
                 weather: .noStrongWind
             ),
             Exercise(
@@ -220,7 +220,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 imageName: "Cycling",
                 location: .outdoor,
                 needsTutorial: false,
-                equipment: .bicycle,
+                equipment: .bike,
                 weather: .clear
             ),
             Exercise(
@@ -229,7 +229,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 imageName: "Tennis",
                 location: .outdoor,
                 needsTutorial: false,
-                equipment: .paddleTennis,
+                equipment: .tennisRacket,
                 weather: .notAffected
             ),
             Exercise(

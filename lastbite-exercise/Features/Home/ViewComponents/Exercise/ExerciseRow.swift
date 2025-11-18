@@ -30,9 +30,9 @@ struct ExerciseRow: View {
                         isCompleted ? Color(.secondaryLabel) : Color(.label)
                     )
                     .strikethrough(isCompleted)
-                
+
                 Image(systemName: "info.circle.fill")
-                    .foregroundColor(Color("BlueTwo"))
+                    .foregroundColor(Color.blueTwo)
                     .onTapGesture {
                         showTutorial = true
                     }
@@ -46,7 +46,7 @@ struct ExerciseRow: View {
                 .padding(.trailing, 16)
 
             if !isCompleted {
-                Button(action: action) {
+                ButtonWSound(action: action) {
                     HStack(spacing: 8) {
                         Image(systemName: "play.fill")
                             .font(.headline)
@@ -59,7 +59,7 @@ struct ExerciseRow: View {
                     .background(
                         Capsule(style: .continuous)
                             .fill(
-                                Color("BlueTwo")
+                                Color.blueTwo
                             )
                     )
                 }

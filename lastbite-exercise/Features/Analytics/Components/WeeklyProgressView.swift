@@ -26,7 +26,7 @@ struct WeeklyProgressView: View {
             Text("Weekly Progress")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(Color("BlueTwo"))
+                .foregroundColor(Color.blueTwo)
             
             Text("\(dateFormatter.string(from: startDate)) - \(dateFormatter.string(from: endDate))")
                 .font(.subheadline)
@@ -43,11 +43,11 @@ struct WeeklyProgressView: View {
                 HStack(alignment: .lastTextBaseline, spacing: 4) {
                     Text("\(currentMinutes)")
                         .font(.system(size: 36, weight: .bold))
-                        .foregroundColor(Color("BlueTwo"))
+                        .foregroundColor(Color.blueTwo)
                         
                     Text("/\(totalMinutes) min")
                         .font(.system(size: 24, weight: .semibold))
-                        .foregroundColor(Color("BlueTwo"))
+                        .foregroundColor(Color.blueTwo)
                 }
                 .frame(maxWidth: .infinity)
                 

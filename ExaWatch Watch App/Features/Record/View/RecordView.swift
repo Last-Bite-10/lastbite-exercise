@@ -10,7 +10,7 @@ import SwiftUI
 struct RecordView: View {
     @StateObject private var healthManager = WatchHealthManager()
     @StateObject private var viewModel = WatchRecordViewModel()
-    
+
     var bgCircleColor: Color {
         switch viewModel.timerStatus {
         case .timerBelowBPM: return Color.cardGray.opacity(1)
@@ -89,11 +89,14 @@ struct RecordView: View {
                 )
             }
             Button(action: {
-                viewModel.sendProgressToiPhone(data: ProgressData(
-                    progress: viewModel.progress,
-                    timerStatus: viewModel.timerStatus != .timerPaused ? .timerPaused : .timerStarted,
-                    timeRemaining: viewModel.timeRemaining,
-                    totalDuration: viewModel.totalDuration)
+                viewModel.sendProgressToiPhone(
+                    data: ProgressData(
+                        progress: viewModel.progress,
+                        timerStatus: viewModel.timerStatus != .timerPaused
+                            ? .timerPaused : .timerStarted,
+                        timeRemaining: viewModel.timeRemaining,
+                        totalDuration: viewModel.totalDuration
+                    )
                 )
             }) {
                 Text("Play")

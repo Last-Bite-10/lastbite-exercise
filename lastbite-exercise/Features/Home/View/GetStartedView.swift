@@ -12,15 +12,23 @@ struct GetStartedView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var preferences: [Preference]
 
+    private let soundPlayer = SoundPlayer.shared
+
     var body: some View {
         VStack(
             alignment: .center
         ) {
-            Image("icon_display")
-            Text("Welcome to AppName, where blabla balabal kbgczbka ablablab!")
+            HStack {
+                Image("icon_display")
+
+                Text(
+                    "Welcome to ExaMove, where your small moves make a big impact."
+                )
                 .font(.headline)
                 .multilineTextAlignment(.center)
-            Button(
+            }
+
+            ButtonWSound(
                 action: {
                     if preferences.isEmpty {
                         let preference = Preference()

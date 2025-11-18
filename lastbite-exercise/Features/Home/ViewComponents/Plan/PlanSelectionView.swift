@@ -9,7 +9,6 @@ import SwiftData
 import SwiftUI
 
 struct PlanSelectionView: View {
-    @Binding var showQuestionnaire: Bool
     @Query private var preferences: [Preference]
 
     var body: some View {
@@ -25,7 +24,6 @@ struct PlanSelectionView: View {
                 subtitle: "Start with the WHO recommended 150 mins per week!",
                 image: "StartStrong",
                 action: {
-                    showQuestionnaire = true
                     preferences.first?.planChosen = .expert
                 }
             )
@@ -36,7 +34,6 @@ struct PlanSelectionView: View {
                     "Start small with our gradual habit building beginner-friendly plan!",
                 image: "StartSmall",
                 action: {
-                    showQuestionnaire = true
                     preferences.first?.planChosen = .beginner
                 }
             )
@@ -46,5 +43,5 @@ struct PlanSelectionView: View {
 }
 
 #Preview {
-    PlanSelectionView(showQuestionnaire: .constant(false))
+    PlanSelectionView()
 }

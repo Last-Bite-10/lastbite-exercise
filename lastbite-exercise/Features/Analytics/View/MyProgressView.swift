@@ -24,10 +24,10 @@ struct MyProgressView: View {
     init() {
         let appearance = UINavigationBarAppearance()
         appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor(Color("BlueTwo"))
+            .foregroundColor: UIColor(Color.blueTwo)
         ]
         appearance.titleTextAttributes = [
-            .foregroundColor: UIColor(Color("BlueTwo"))
+            .foregroundColor: UIColor(Color.blueTwo)
         ]
         
         UINavigationBar.appearance().standardAppearance = appearance

@@ -15,6 +15,7 @@ final class Preference {
     var frequency: FrequencyType?
     var equipmentAvailable: [EquipmentType] = []
     var location: LocationType?
+    var questionnaireCompleted: Bool = false
     var lastUpdated: Date = Date()
 
     init(
