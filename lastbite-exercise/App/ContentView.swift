@@ -12,6 +12,8 @@ struct ContentView: View {
     @State private var selectedTab = 0
     @Query private var preferences: [Preference]
 
+    private let haptic = HapticManager.shared
+
     var body: some View {
         Group {
             if preferences.isEmpty {
@@ -19,15 +21,18 @@ struct ContentView: View {
             } else {
                 TabView(selection: $selectedTab) {
                     MyExerciseView()
+                        .tag(0)
                         .tabItem {
                             Label("My Exercise", systemImage: "figure.yoga")
                         }
 
                     MyProgressView()
+                        .tag(1)
                         .tabItem {
                             Label("My Progress", systemImage: "graph.2d")
                         }
                 }
+                .sensoryFeedback(.impact(weight: .light), trigger: selectedTab)
             }
         }
     }
