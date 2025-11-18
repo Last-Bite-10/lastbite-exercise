@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import HealthKit
 
-@MainActor
+//@MainActor
 final class HealthKitManager: ObservableObject {
     private let healthStore = HKHealthStore()
     @Published var bpmThreshold: Int = 100

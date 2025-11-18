@@ -18,7 +18,7 @@ class WatchRecordViewModel: ObservableObject {
     @Published var totalDuration: Int = 0
 
     private var cancellables = Set<AnyCancellable>()
-    private var watchConnectivityManager: WatchConnectivityManager?
+    private var watchConnectivityManager: WatchConnectivityWatchManager?
 
     var timeRemainingFormatted: String {
         return formatTime(duration: abs(timeRemaining))
@@ -37,7 +37,7 @@ class WatchRecordViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func attachWatchConnectivityManager(_ manager: WatchConnectivityManager) {
+    func attachWatchConnectivityManager(_ manager: WatchConnectivityWatchManager) {
         self.watchConnectivityManager = manager
     }
 
@@ -48,6 +48,8 @@ class WatchRecordViewModel: ObservableObject {
         self.timerStatus = data.timerStatus
         self.timeRemaining = data.timeRemaining
         self.totalDuration = data.totalDuration
+        
+        print("[Watch] Progress updated! Now timerStatus = \(timerStatus), timeRemaining = \(timeRemaining)")
     }
     
     func sendProgressToiPhone(data: ProgressData) {

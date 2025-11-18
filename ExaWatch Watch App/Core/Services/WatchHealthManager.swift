@@ -194,7 +194,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
         replyHandler(reply)
     }
 
-    func session(
+    nonisolated func session(
         _ session: WCSession,
         didReceiveApplicationContext applicationContext: [String: Any]
     ) {
@@ -221,6 +221,8 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
                     timeRemaining: timeRemaining,
                     totalDuration: totalDuration
                 )
+                
+                print("[Watch] receivedProgress in WatchHealthManager")
             }
         }
     }

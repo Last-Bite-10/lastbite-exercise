@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import WatchConnectivity
 
-@MainActor
+//@MainActor
 class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
     @Published var latestBPM: Double?
 //    @Published var latestTimerState:

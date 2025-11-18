@@ -10,7 +10,7 @@ import Foundation
 import WatchConnectivity
 
 @MainActor
-class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
+class WatchConnectivityWatchManager: NSObject, ObservableObject, WCSessionDelegate {
     @Published var isReachable: Bool = false
 
     override init() {

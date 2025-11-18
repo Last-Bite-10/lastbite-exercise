@@ -51,7 +51,14 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Core/Enums/PayloadType.swift,
-				Core/Services/TimerService.swift,
+				Core/Services/HealthKitManager.swift,
+			);
+			target = 39E2BC382EAF7A3200714C26 /* Exa Move Watch */;
+		};
+		E5E87CFC2EC71600009ECD3D /* Exceptions for "ExaWatch Watch App" folder in "Exa Move Watch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Exa-Move-Watch-Info.plist",
 			);
 			target = 39E2BC382EAF7A3200714C26 /* Exa Move Watch */;
 		};
@@ -69,6 +76,9 @@
 		};
 		39E2BC3A2EAF7A3200714C26 /* ExaWatch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E5E87CFC2EC71600009ECD3D /* Exceptions for "ExaWatch Watch App" folder in "Exa Move Watch" target */,
+			);
 			path = "ExaWatch Watch App";
 			sourceTree = "<group>";
 		};
@@ -316,7 +326,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerupuksambel.lastbite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -462,7 +472,7 @@
 				DEVELOPMENT_TEAM = ZBZPAZFH4S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Exa-Move-Watch-Info.plist";
+				INFOPLIST_FILE = "ExaWatch Watch App/Exa-Move-Watch-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
@@ -473,7 +483,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kerupuksambel.lastbite.watch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerupuksambel.lastbite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -499,7 +509,7 @@
 				DEVELOPMENT_TEAM = D65356M48A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Exa-Move-Watch-Info.plist";
+				INFOPLIST_FILE = "ExaWatch Watch App/Exa-Move-Watch-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ExaWatch;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app would need your BPM to track your progress.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app would need your BPM to track your progress.";
@@ -510,7 +520,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerupuksambel.lastbite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;

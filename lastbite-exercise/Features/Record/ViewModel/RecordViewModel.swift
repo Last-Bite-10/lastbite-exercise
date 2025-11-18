@@ -13,36 +13,34 @@ import WatchConnectivity
 @MainActor
 class RecordViewModel: ObservableObject {
     // MARK: - Published Properties
-    @Published var progress: CGFloat = 1.0
-    @Published var activeTimeRemaining: Int
-    @Published var timeRecorded: Int = 0
-    @Published var isPaused: Bool = true
-    @Published var isBPMUnder: Bool = false
-    @Published var timerStatus: TimerStatusType = .timerStopped
+    @Published var timer: TimerService
 
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
-    private var timerCancellable: AnyCancellable?
     private let healthKitManager: HealthKitManager
-    private var watchConnectivityManager: WatchConnectivityManager?
+    var watchConnectivityManager: WatchConnectivityManager?
     private let record: ExerciseRecord
     private var context: ModelContext
     private let bpmThreshold: Double
+    
+//    private let timerCancellable: TimerService
 
     // MARK: - Initialization
     init(
         record: ExerciseRecord,
         healthKitManager: HealthKitManager,
-        modelContext: ModelContext
+        modelContext: ModelContext,
+        watchConnectivityManager: WatchConnectivityManager
     ) {
         self.record = record
-        self.activeTimeRemaining = record.requiredMinutes * 60
         self.healthKitManager = healthKitManager
         self.context = modelContext
-        self.bpmThreshold = Double(healthKitManager.bpmThreshold ?? 100)
-
+        self.bpmThreshold = Double(healthKitManager.bpmThreshold)
+        
+        self.timer = TimerService(activeTime: record.requiredMinutes * 60, totalTime: 0, exerciseRecord: record, healthKitManager: healthKitManager, watchConnectivityManager: watchConnectivityManager)
+        
+        self.setupProgressSync()
         // Start observing changes to send to Watch
-        setupProgressSync()
     }
 
     func attachWatchConnectivityManager(_ manager: WatchConnectivityManager) {
@@ -54,10 +52,10 @@ class RecordViewModel: ObservableObject {
     private func setupProgressSync() {
         // Send progress updates to Watch whenever they change
         Publishers.CombineLatest4(
-            $progress,
-            $timeRecorded,
-            $activeTimeRemaining,
-            $timerStatus,
+            timer.$progress,
+            timer.$totalTime,
+            timer.$remainingTime,
+            timer.$timerStatus,
         )
         .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
         .sink { [weak self] progress, timeRemaining, timeRecorded, timerStatus in
@@ -89,6 +87,7 @@ class RecordViewModel: ObservableObject {
         // Use application context for state sync (most reliable)
         do {
             try WCSession.default.updateApplicationContext(progressData)
+            print("[iPhone] Sending application context to Watch.")
         } catch {
             print(
                 "Failed to update application context: \(error.localizedDescription)"
@@ -103,6 +102,8 @@ class RecordViewModel: ObservableObject {
                     "Failed to send progress message: \(error.localizedDescription)"
                 )
             }
+            
+            print("[iPhone] Sending payload to Watch.")
         }
     }
 
@@ -121,22 +122,20 @@ class RecordViewModel: ObservableObject {
     }
 
     func togglePause() {
-        isPaused.toggle()
-
-        if isPaused {
+        if timer.timerStatus != .timerPaused {
             pauseTimer()
         } else {
-            resumeTimer()
+            startTimer()
         }
 
-        handleTimerStatusChange()
+        self.timer.handleTimerStatusChange()
     }
 
     func finishExercise() {
         cleanup()
 
         // Update the record with recorded time
-        let recordedMinutes = timeRecorded / 60
+        let recordedMinutes = timer.activeTime / 60
         record.recordedMinutes += recordedMinutes
         record.isCompleted = recordedMinutes >= record.requiredMinutes
         if record.isCompleted {
@@ -156,97 +155,66 @@ class RecordViewModel: ObservableObject {
     }
 
     // MARK: - Private Methods
-    private func startTimer() {
-        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
-                self?.handleTimerTick()
-            }
-        timerStatus = .timerStarted
+    func startTimer() {
+        print("Start Timer initiated")
+        self.setupProgressSync()
+        self.watchConnectivityManager?.startWatchHeartRateMonitoring()
+        self.timer.startTimer()
+    }
+    
+    func pauseTimer() {
+        self.timer.pauseTimer()
     }
 
-    private func handleTimerStatusChange() {
-        if isPaused {
-            timerStatus = .timerPaused
-        } else {
-            if isBPMUnder {
-                timerStatus = .timerBelowBPM
-            } else {
-                if activeTimeRemaining < 0 {
-                    timerStatus = .timerOverflown
-                } else {
-                    timerStatus = .timerStarted
-                }
-            }
-        }
-    }
-
-    private func handleTimerTick() {
-        if !isBPMUnder {
-            activeTimeRemaining -= 1
-        }
-
-        timeRecorded += 1
-        handleTimerStatusChange()
-
-        progress = min(
-            CGFloat(activeTimeRemaining) / CGFloat(record.requiredMinutes * 60),
-            1
-        )
-    }
-
-    private func pauseTimer() {
-        timerCancellable?.cancel()
-        timerCancellable = nil
-        timerStatus = .timerPaused
-    }
-
-    private func resumeTimer() {
-        startTimer()
-        timerStatus = .timerStarted
-    }
+//    private func handleTimerStatusChange() {
+//        self.timer.
+//    }
+//
+//    private func handleTimerTick() {
+//        self.timer.
+//    }
 
     private func subscribeToBPMUpdates(_ manager: WatchConnectivityManager) {
         manager.bpmPublisher
             .sink { [weak self] bpm in
+                print("[iPhone] BPM updated! Subscribed function triggered.")
                 self?.handleBPMUpdate(bpm)
             }
             .store(in: &cancellables)
     }
 
     private func handleBPMUpdate(_ bpm: Double) {
-        let wasUnder = isBPMUnder
-        isBPMUnder = bpm < bpmThreshold
+//        let wasUnder: Bool = timer.timerStatus == .timerBelowBPM
+        timer.handleTimerStatusChange()
 
         // Trigger haptic feedback when BPM drops below threshold
-        if isBPMUnder && !wasUnder {
+        if timer.timerStatus == .timerBelowBPM {
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
         }
     }
 
     private func cleanup() {
-        timerCancellable?.cancel()
-        timerCancellable = nil
+        timer.stopTimer()
         watchConnectivityManager?.stopWatchHeartRateMonitoring()
         cancellables.removeAll()
     }
 
     // MARK: - Computed Properties
     var activeTimeFormatted: String {
-        formatTime(duration: abs(activeTimeRemaining))
+        formatTime(duration: abs(timer.remainingTime))
     }
 
     var totalTimeFormatted: String {
-        formatTime(duration: timeRecorded)
+        formatTime(duration: timer.activeTime)
     }
 
-    var currentBPM: Int? {
-        guard let bpm = watchConnectivityManager?.latestBPM else {
-            return nil
-        }
-        return Int(bpm)
-    }
+//    var currentBPM: Int? {
+//        guard let bpm = watchConnectivityManager?.latestBPM else {
+//            return nil
+//        }
+//        return Int(bpm)
+//    }
 
     var isReceivingFromWatch: Bool {
         watchConnectivityManager?.isReceivingFromWatch ?? false
