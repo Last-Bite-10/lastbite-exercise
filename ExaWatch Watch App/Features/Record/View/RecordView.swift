@@ -55,7 +55,7 @@ struct RecordView: View {
 
                 VStack(spacing: 4) {
                     Text("Active Time").font(.system(size: 10))
-                    Text(viewModel.timeRemainingFormatted)
+                    Text(viewModel.timeTotalFormatted)
                         .font(
                             .system(
                                 size: 20,
@@ -84,7 +84,7 @@ struct RecordView: View {
             .padding()
 
             VStack {
-                Text("Total Time: **\(viewModel.timeTotalFormatted)** ").font(
+                Text("Total Time: **\(viewModel.timeRemainingFormatted)** ").font(
                     .system(size: 12)
                 )
             }

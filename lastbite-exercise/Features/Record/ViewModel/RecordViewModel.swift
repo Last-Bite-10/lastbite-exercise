@@ -78,10 +78,13 @@ class RecordViewModel: ObservableObject {
         guard WCSession.default.activationState == .activated else { return }
 
         let progressData: [String: Any] = [
-            "progress": Double(progress),
-            "timeRemaining": timeRemaining,
-            "totalDuration": totalDuration,
-            "timerStatus": timerStatus.rawValue
+            "type": PayloadType.timerChange.rawValue,
+            "data": [
+                "progress": Double(progress),
+                "timeRemaining": timeRemaining,
+                "totalDuration": totalDuration,
+                "timerStatus": timerStatus.rawValue
+            ]
         ]
 
         // Use application context for state sync (most reliable)
