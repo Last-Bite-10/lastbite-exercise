@@ -75,9 +75,16 @@ struct HistoryDetailCard: View {
             .ignoresSafeArea(edges: .bottom)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", systemImage: "xmark") {
-                        dismiss()
-                    }
+                    Button(
+                        action: {
+                            dismiss()
+                        },
+                        label: {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.secondary)
+                        }
+                    )
+                    .buttonStyle(.borderless)
                 }
             }
         }
