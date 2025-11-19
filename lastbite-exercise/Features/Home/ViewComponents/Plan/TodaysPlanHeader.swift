@@ -21,7 +21,7 @@ struct TodaysPlanHeader: View {
 
             Spacer()
 
-            Button(action: onModifyTapped) {
+            ButtonWSound(action: onModifyTapped) {
                 HStack(spacing: 4) {
                     Image(systemName: "pencil")
                         .font(.system(size: 14, weight: .semibold))

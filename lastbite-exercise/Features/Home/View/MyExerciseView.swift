@@ -93,7 +93,7 @@ struct MyExerciseView: View {
                 if preferences.first?.planChosen == .beginner {
                     StartSmallView(onDone: onDoneAction)
                 } else {
-                    FrequencyView(onDone: onDoneAction)
+                    StartStrongView(onDone: onDoneAction)
                 }
             }
             .environment(questionnaireViewModel)

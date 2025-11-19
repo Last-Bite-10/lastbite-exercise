@@ -59,13 +59,9 @@ struct StartSmallView: View {
             .background(Color.cardGray)
             .cornerRadius(30)
            
-            NavigationLink(
+            NavLinkWSound(
+                title: "Next",
                 destination: FrequencyView(onDone: onDone),
-                label: {
-                    CoreButtonLabel(
-                        title: "Next"
-                    )
-                }
             )
         }
         .padding(.horizontal)

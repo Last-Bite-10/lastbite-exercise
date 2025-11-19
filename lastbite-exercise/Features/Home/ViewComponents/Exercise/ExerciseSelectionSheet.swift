@@ -96,7 +96,7 @@ struct ExerciseSelectionSheet: View {
             VStack {
                 Spacer()
                 
-                Button(
+                ButtonWSound(
                     action: {
                         viewModel.modifyExerciseRecords(
                             records: selectedExerciseRecords
