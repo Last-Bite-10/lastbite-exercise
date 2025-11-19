@@ -15,14 +15,13 @@ struct StartStrongView: View {
     var body: some View {
         VStack(spacing: 24) {
 
-            Text("Start Small")
+            Text("Start Strong!")
                 .font(.title2.bold())
                 .foregroundColor(Color("BlueTwo"))
 
             Image("StartSmall")
                 .resizable()
                 .scaledToFit()
-                .frame(maxHeight: 150)
             
             VStack(spacing: 24) {
                 Text(
@@ -42,7 +41,7 @@ struct StartStrongView: View {
                 }
                 .font(.subheadline)
                 .foregroundColor(.primary)
-                .padding(20)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color.white)
                 .cornerRadius(16)
 

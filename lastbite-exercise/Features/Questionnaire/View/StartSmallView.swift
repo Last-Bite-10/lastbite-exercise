@@ -15,7 +15,7 @@ struct StartSmallView: View {
     var body: some View {
         VStack(spacing: 24) {
 
-            Text("Start Small")
+            Text("Start Small!")
                 .font(.title2.bold())
                 .foregroundColor(Color("BlueTwo"))
 

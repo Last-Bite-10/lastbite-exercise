@@ -108,34 +108,48 @@ struct RecentHistoryView: View {
                     #endif
                 }
 
-            VStack(spacing: 12) {
-                ForEach(sortedHistoryItems) { item in
-                    Button {
-                        selectedItem = item
-                    } label: {
-                        VStack(alignment: .leading, spacing: 8) {
-                            let totalRecorded = item.entries.reduce(0) {
-                                $0 + $1.recordedMinutes
+            if completedExercises.isEmpty {
+                VStack {
+                    Text("Start exercising to see your\nrecent histories here!")
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.primary)
+                }
+                .frame(maxWidth: .infinity, minHeight: 180)
+                .padding(20)
+                .background(Color("CardGray"))
+                .cornerRadius(30)
+            } else {
+                VStack(spacing: 12) {
+                    ForEach(sortedHistoryItems) { item in
+                        Button {
+                            selectedItem = item
+                        } label: {
+                            VStack(alignment: .leading, spacing: 8) {
+                                let totalRecorded = item.entries.reduce(0) {
+                                    $0 + $1.recordedMinutes
+                                }
+                                let totalRequired = item.entries.reduce(0) {
+                                    $0 + $1.requiredMinutes
+                                }
+                                
+                                Text("\(totalRecorded)/\(totalRequired) mins")
+                                    .font(.headline)
+                                    .padding(.top, 8)
+                                
+                                Text(item.date)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .padding(.bottom, 8)
                             }
-                            let totalRequired = item.entries.reduce(0) {
-                                $0 + $1.requiredMinutes
-                            }
-
-                            Text("\(totalRecorded)/\(totalRequired) mins")
-                                .font(.headline)
-                                .padding(.top, 8)
-
-                            Text(item.date)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .padding(.bottom, 8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                            .background(Color.cardGray)
+                            .cornerRadius(30)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                        .background(Color.cardGray)
-                        .cornerRadius(30)
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
             }
         }
