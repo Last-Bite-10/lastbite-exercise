@@ -40,6 +40,7 @@ class RecordViewModel: ObservableObject {
         self.timer = TimerService(activeTime: record.requiredMinutes * 60, totalTime: 0, exerciseRecord: record, healthKitManager: healthKitManager, watchConnectivityManager: watchConnectivityManager)
         
         self.setupProgressSync()
+        self.setupTimerObservation()
         // Start observing changes to send to Watch
     }
 
@@ -49,6 +50,15 @@ class RecordViewModel: ObservableObject {
     }
 
     // MARK: - Watch Connectivity
+    private func setupTimerObservation() {
+        // Forward timer changes to this ViewModel's objectWillChange
+        // This ensures SwiftUI views observing this ViewModel update when timer properties change
+        timer.objectWillChange.sink { [weak self] _ in
+            self?.objectWillChange.send()
+        }
+        .store(in: &cancellables)
+    }
+    
     private func setupProgressSync() {
         // Send progress updates to Watch whenever they change
         Publishers.CombineLatest4(

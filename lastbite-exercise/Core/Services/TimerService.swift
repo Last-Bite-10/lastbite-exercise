@@ -72,15 +72,14 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
             self.activeTime += 1
             self.remainingTime -= 1
         }
-        print("Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)")
-
+        
         self.totalTime += 1
         handleTimerStatusChange()
-
-//        progress = min(
-//            CGFloat(activeTime) / CGFloat(record.requiredMinutes * 60),
-//            1
-//        )
+        
+        // Update progress based on active time
+        progress = getProgressPercentage(remainingTime: remainingTime, exerciseRecord: exerciseRecord)
+        
+        print("Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)")
     }
     
     func handleTimerStatusChange() {
@@ -101,11 +100,9 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
     
     // MARK: - Utility Functions
     func getProgressPercentage(remainingTime: Int, exerciseRecord: ExerciseRecord) -> Double {
-        // Implement your progress calculation here
-        return min(
-            Double(remainingTime) / Double(exerciseRecord.requiredMinutes * 60),
-            1.0
-        )
-
+        // Calculate progress based on active time (fills up as time progresses)
+        let requiredSeconds = Double(exerciseRecord.requiredMinutes * 60)
+        let elapsedSeconds = Double(activeTime)
+        return min(elapsedSeconds / requiredSeconds, 1.0)
     }
 }

@@ -10,19 +10,18 @@ import HealthKit
 import SwiftData
 import SwiftUI
 
-struct RecordView: View {
-    @StateObject private var healthKitManager = HealthKitManager()
-    @EnvironmentObject private var watchConnectivityManager:
-        WatchConnectivityManager
-    @State private var viewModel: RecordViewModel?
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var modelContext
-    
-    private let record: ExerciseRecord
-    private let context: ModelContext
+@MainActor
+class ViewModelWrapper: ObservableObject {
+    @Published var viewModel: RecordViewModel?
+}
 
+struct RecordContentView: View {
+    @ObservedObject var viewModel: RecordViewModel
+    @ObservedObject var watchConnectivityManager: WatchConnectivityManager
+    let healthKitManager: HealthKitManager
+    let dismiss: DismissAction
+    
     var bgCircleColor: Color {
-        guard let viewModel = viewModel else { return Color.cardGray.opacity(1) }
         switch viewModel.timer.timerStatus {
         case .timerBelowBPM: return Color.cardGray.opacity(1)
         case .timerPaused: return Color.cardGray.opacity(1)
@@ -33,7 +32,6 @@ struct RecordView: View {
     }
 
     var progressCircleColor: Color {
-        guard let viewModel = viewModel else { return Color.pausedGray.opacity(1) }
         switch viewModel.timer.timerStatus {
         case .timerBelowBPM: return Color.pausedGray.opacity(1)
         case .timerPaused: return Color.pausedGray.opacity(1)
@@ -44,7 +42,7 @@ struct RecordView: View {
     }
 
     var timerMessage: LocalizedStringKey {
-        switch viewModel?.timer.timerStatus {
+        switch viewModel.timer.timerStatus {
         case .timerPaused:
             return "The time is paused. Continue by increasing your BPM!"
         case .timerStarted:
@@ -57,10 +55,113 @@ struct RecordView: View {
                 "Your exercise is in progress, your heartbeat is being recorded!"
         case .timerBelowBPM:
             return "The time is paused. Continue by increasing your BPM!"
-        default:
-            return "ViewModel not initialized yet."
         }
     }
+    
+    var body: some View {
+        VStack {
+            Text(timerMessage)
+                .frame(
+                    width: UIScreen.main.bounds.width * 0.6,
+                    alignment: .center
+                )
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 32)
+            ZStack {
+                // Background circle
+                Circle()
+                    .stroke(
+                        bgCircleColor,
+                        lineWidth: 30
+                    )
+
+                // Progress circle
+                Circle()
+                    .trim(from: 0, to: viewModel.timer.progress)
+                    .stroke(
+                        progressCircleColor,
+                        style: StrokeStyle(lineWidth: 30, lineCap: .round)
+                    )
+                    .rotationEffect(.degrees(-90))
+                    .animation(
+                        .easeInOut(duration: 0.5),
+                        value: viewModel.timer.progress
+                    )
+
+                VStack {
+                    VStack {
+                        Text("Active Time")
+                        Text(viewModel.remainingTimeFormatted)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                    }.padding(.bottom, 12)
+
+                    VStack {
+                        Text("BPM")
+
+                        if let bpm = watchConnectivityManager.latestBPM {
+                            Text("\(Int(bpm))")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundStyle(
+                                    viewModel.timer.timerStatus == .timerBelowBPM
+                                        ? Color.red : Color.black
+                                )
+                        } else {
+                            Text("--")
+                                .font(.title)
+                                .fontWeight(.bold)
+                        }
+
+                        if watchConnectivityManager.latestBPM != nil {
+                            Image(systemName: "applewatch")
+                                .foregroundStyle(.blue)
+                                .font(.caption)
+                        } else {
+                            Image(systemName: "applewatch.slash")
+                                .foregroundStyle(.red)
+                                .font(.caption)
+                        }
+                    }
+                }
+            }
+            .frame(width: 260, height: 260)
+
+            VStack {
+                Text("Total Time").font(.title2).padding(.bottom, 4)
+
+                Text("\(viewModel.timer.remainingTime > 0 ? "" : "+")\(viewModel.totalTimeFormatted)").font(.title).fontWeight(
+                    .bold
+                )
+            }
+            .padding(.vertical, 36)
+
+            VStack {
+                RecordPlayButton(title: viewModel.timer.timerStatus != .timerPaused ? "Start" : "Pause")
+                {
+                    viewModel.togglePause()
+                }
+
+                Button("End") {
+                    viewModel.finishExercise()
+                    dismiss()
+                }
+            }
+        }
+    }
+}
+
+struct RecordView: View {
+    @StateObject private var healthKitManager = HealthKitManager()
+    @EnvironmentObject private var watchConnectivityManager:
+        WatchConnectivityManager
+    @StateObject private var viewModelWrapper = ViewModelWrapper()
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    
+    private let record: ExerciseRecord
+    private let context: ModelContext
+    
 
     init(record: ExerciseRecord, modelContext: ModelContext) {
         self.record = record
@@ -69,110 +170,29 @@ struct RecordView: View {
 
     var body: some View {
         Group {
-            if let viewModel = viewModel {
-                VStack {
-                    Text(timerMessage)
-                        .frame(
-                            width: UIScreen.main.bounds.width * 0.6,
-                            alignment: .center
-                        )
-                        .multilineTextAlignment(.center)
-                        .padding(.bottom, 32)
-                    ZStack {
-                        // Background circle
-                        Circle()
-                            .stroke(
-                                bgCircleColor,
-                                lineWidth: 30
-                            )
-
-                        // Progress circle
-                        Circle()
-                            .trim(from: 0, to: viewModel.timer.progress)
-                            .stroke(
-                                progressCircleColor,
-                                style: StrokeStyle(lineWidth: 30, lineCap: .round)
-                            )
-                            .rotationEffect(.degrees(-90))
-                            .animation(
-                                .easeInOut(duration: 0.5),
-                                value: viewModel.timer.progress
-                            )
-
-                        VStack {
-                            VStack {
-                                Text("Active Time")
-                                Text(viewModel.remainingTimeFormatted)
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                            }.padding(.bottom, 12)
-
-                            VStack {
-                                Text("BPM")
-
-                                if let bpm = watchConnectivityManager.latestBPM {
-                                    Text("\(Int(bpm))")
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                        .foregroundStyle(
-                                            viewModel.timer.timerStatus == .timerBelowBPM
-                                                ? Color.red : Color.black
-                                        )
-                                } else {
-                                    Text("--")
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                }
-
-                                if watchConnectivityManager.latestBPM != nil {
-                                    Image(systemName: "applewatch")
-                                        .foregroundStyle(.blue)
-                                        .font(.caption)
-                                } else {
-                                    Image(systemName: "applewatch.slash")
-                                        .foregroundStyle(.red)
-                                        .font(.caption)
-                                }
-                            }
-                        }
-                    }
-                    .frame(width: 260, height: 260)
-
-                    VStack {
-                        Text("Total Time").font(.title2).padding(.bottom, 4)
-
-                        Text("\(viewModel.timer.remainingTime > 0 ? "" : "+")\(viewModel.totalTimeFormatted)").font(.title).fontWeight(
-                            .bold
-                        )
-                    }
-                    .padding(.vertical, 36)
-
-                    VStack {
-                        RecordPlayButton(title: viewModel.timer.timerStatus != .timerPaused ? "Start" : "Pause")
-                        {
-                            viewModel.togglePause()
-                        }
-
-                        Button("End") {
-                            viewModel.finishExercise()
-                            dismiss()
-                        }
-                    }
+            if let viewModel = viewModelWrapper.viewModel {
+                RecordContentView(
+                    viewModel: viewModel,
+                    watchConnectivityManager: watchConnectivityManager,
+                    healthKitManager: healthKitManager,
+                    dismiss: dismiss
+                )
+                .onAppear {
+                    viewModel.startMonitoring()
                 }
             } else {
                 ProgressView()
             }
         }
         .onAppear {
-            if viewModel == nil {
-                viewModel = RecordViewModel(
+            if viewModelWrapper.viewModel == nil {
+                viewModelWrapper.viewModel = RecordViewModel(
                     record: record,
                     healthKitManager: healthKitManager,
                     modelContext: context,
                     watchConnectivityManager: watchConnectivityManager
                 )
             }
-            viewModel?.startMonitoring()
         }
         .onDisappear {
 //            viewModel?.stopMonitoring()
