@@ -27,7 +27,7 @@ struct PlanCardView: View {
                 Text(subtitle)
                     .font(.footnote)
 
-                Button(action: action) {
+                ButtonWSound(action: action) {
                     Text("Choose")
                         .font(.subheadline)
                         .padding(.horizontal, 20)

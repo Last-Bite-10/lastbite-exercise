@@ -10,29 +10,40 @@ import SwiftUI
 struct Trophy: Identifiable {
     let id = UUID()
     let milestone: Int
-    let isAchieved: Bool
+    var isAchieved: Bool
 }
 
 struct TrophiesView: View {
-    var trophies: [Trophy]
+    @Binding var trophies: [Trophy]
     
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    
+    private func toggleAllTrophies() {
+        let shouldAchieve = !(trophies.first?.isAchieved ?? false)
+        
+        for index in trophies.indices {
+            trophies[index].isAchieved = shouldAchieve
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("My Trophies")
                 .font(.title2)
-                .fontWeight(.semibold)
-                .foregroundColor(Color(red: 0.2, green: 0.5, blue: 0.8))
+                .fontWeight(.bold)
+                .foregroundColor(Color.blueTwo)
+                .onTapGesture {
+                    toggleAllTrophies()
+                }
 
             LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(trophies) { trophy in
                         VStack(spacing: 8) {
                             ZStack {
-                                let trophyImage = trophy.isAchieved ? "\(trophy.milestone)WeekTrophy" : "LockedWeekTrophy"
+                                let trophyImage = trophy.isAchieved ? "\(trophy.milestone)WeekTrophy" : "Locked\(trophy.milestone)WeekTrophy"
                                 
                                 Image(trophyImage)
                                     .resizable()
@@ -54,17 +65,4 @@ struct TrophiesView: View {
             }
         }
     }
-}
-
-#Preview {
-    TrophiesView(trophies: [
-        Trophy(milestone: 3, isAchieved: true),
-        Trophy(milestone: 5, isAchieved: true),
-        Trophy(milestone: 7, isAchieved: true),
-        Trophy(milestone: 10, isAchieved: true),
-        Trophy(milestone: 15, isAchieved: true),
-        Trophy(milestone: 25, isAchieved: true),
-        Trophy(milestone: 50, isAchieved: true),
-    ])
-    .padding()
 }

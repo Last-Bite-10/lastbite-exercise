@@ -83,10 +83,11 @@ struct EquipmentView: View {
                         dismissFlow()
                     },
                     label: {
-                        Text("Cancel")
-                            .foregroundColor(.red)
+                        Image(systemName: "xmark")
+                            .foregroundColor(.secondary)
                     }
-                ).buttonStyle(.borderless)
+                )
+                .buttonStyle(.borderless)
             }
         }
     }

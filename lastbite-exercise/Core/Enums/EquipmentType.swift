@@ -6,14 +6,14 @@
 //
 
 enum EquipmentType: String, Codable, Hashable, CaseIterable {
-    case none = "None"
-    case jumpRope = "Jump Rope"
-    case exerciseMat = "Exercise Mat"
+    case matress = "Matress"
+    case yogaMat = "Yoga Mat"
     case dumbbell = "Dumbbell"
+    case jumpRope = "Jump Rope"
+    case bike = "Bike"
     case stairs = "Stairs"
-    case wallSurface = "Wall Surface"
-    case racket = "Racket"
-    case bicycle = "Bicycle"
-    case paddleTennis = "Paddle Tennis"
+    case tennisRacket = "Tennis Racket"
+    case badminton = "Badminton"
     case volleyball = "Volleyball"
+    case none = "None"
 }

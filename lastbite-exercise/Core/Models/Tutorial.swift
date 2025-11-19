@@ -20,7 +20,7 @@ struct TutorialData {
         1: [
             TutorialStep(
                 imageName: "BriskWalking",
-                description: " "
+                description: "Walk at a pace of around 100 steps per minute. Keep your body upright, relax your shoulders, engage your core, and swing your arms naturally."
             ),
         ],
         // Push up
@@ -130,7 +130,7 @@ struct TutorialData {
         11: [
             TutorialStep(
                 imageName: "StairClimbing",
-                description: " "
+                description: "Start with a few stairs and increase gradually. Rest if you feel pain and stay consistent."
             )
         ],
         // Wall sit
@@ -240,35 +240,35 @@ struct TutorialData {
         21: [
             TutorialStep(
                 imageName: "Badminton",
-                description: " "
+                description: "Play badminton by moving actively, hitting the shuttle with control, and keeping a steady rhythm throughout the game"
             )
         ],
         // Jogging
         22: [
             TutorialStep(
                 imageName: "Jogging",
-                description: " "
+                description: "Jog at a comfortable pace while keeping your posture upright, breathing steadily, and maintaining consistency to build endurance and strength"
             )
         ],
         // Cycling
         23: [
             TutorialStep(
                 imageName: "Cycling",
-                description: " "
+                description: "Ride at a steady rhythm, keep your core engaged, and focus on smooth pedaling to strengthen your legs and improve cardiovascular health"
             )
         ],
         // Tennis
         24: [
             TutorialStep(
                 imageName: "Tennis",
-                description: " "
+                description: "Move quickly across the court, control your swings, and stay alert to build coordination, agility, and overall body strength"
             )
         ],
         // Volleyball
         25: [
             TutorialStep(
                 imageName: "Volleyball",
-                description: " "
+                description: "Stay light on your feet, communicate with teammates, and react fast to improve teamwork, coordination, and upper body power"
             )
         ]
     ]
