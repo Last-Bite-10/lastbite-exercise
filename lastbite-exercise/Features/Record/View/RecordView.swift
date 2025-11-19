@@ -137,14 +137,20 @@ struct RecordContentView: View {
             .padding(.vertical, 36)
 
             VStack {
-                RecordPlayButton(title: viewModel.timer.timerStatus != .timerPaused ? "Start" : "Pause")
+                RecordPlayButton(
+                    title: viewModel.timer.timerStatus == .timerPaused || viewModel.timer.timerStatus == .timerStopped
+                        ? "Start"
+                        : "Pause"
+                )
                 {
                     viewModel.togglePause()
                 }
 
-                Button("End") {
+                Button(action: {
                     viewModel.finishExercise()
                     dismiss()
+                }) {
+                    Text("End").foregroundStyle(.red)
                 }
             }
         }

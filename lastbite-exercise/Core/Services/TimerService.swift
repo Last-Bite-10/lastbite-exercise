@@ -100,9 +100,10 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
     
     // MARK: - Utility Functions
     func getProgressPercentage(remainingTime: Int, exerciseRecord: ExerciseRecord) -> Double {
-        // Calculate progress based on active time (fills up as time progresses)
-        let requiredSeconds = Double(exerciseRecord.requiredMinutes * 60)
-        let elapsedSeconds = Double(activeTime)
-        return min(elapsedSeconds / requiredSeconds, 1.0)
+        // Implement your progress calculation here
+        return min(
+            Double(remainingTime) / Double(exerciseRecord.requiredMinutes * 60),
+            1.0
+        )
     }
 }
