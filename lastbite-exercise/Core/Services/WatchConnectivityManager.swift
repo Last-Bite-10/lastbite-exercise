@@ -168,8 +168,6 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
             case .timerChange:
                 if let data = userInfo["data"] as? [String: Any] {
                     print("[iPhone] Timer change data from userInfo: \(data)")
-                    
-                    
                 }
                 
             default:

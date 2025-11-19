@@ -102,7 +102,7 @@ struct RecordView: View {
                         VStack {
                             VStack {
                                 Text("Active Time")
-                                Text(viewModel.activeTimeFormatted)
+                                Text(viewModel.remainingTimeFormatted)
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
                             }.padding(.bottom, 12)
@@ -175,7 +175,7 @@ struct RecordView: View {
             viewModel?.startMonitoring()
         }
         .onDisappear {
-            viewModel?.stopMonitoring()
+//            viewModel?.stopMonitoring()
         }
     }
 }

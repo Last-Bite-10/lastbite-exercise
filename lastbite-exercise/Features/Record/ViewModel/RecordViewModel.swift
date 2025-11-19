@@ -53,8 +53,8 @@ class RecordViewModel: ObservableObject {
         // Send progress updates to Watch whenever they change
         Publishers.CombineLatest4(
             timer.$progress,
-            timer.$totalTime,
             timer.$remainingTime,
+            timer.$totalTime,
             timer.$timerStatus,
         )
         .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
@@ -70,7 +70,7 @@ class RecordViewModel: ObservableObject {
     }
 
     private func sendProgressToWatch(
-        progress: CGFloat,
+        progress: Double,
         timeRemaining: Int,
         totalDuration: Int,
         timerStatus: TimerStatusType
@@ -90,7 +90,7 @@ class RecordViewModel: ObservableObject {
         // Use application context for state sync (most reliable)
         do {
             try WCSession.default.updateApplicationContext(progressData)
-            print("[iPhone] Sending application context to Watch.")
+            print("[iPhone] Sending application context to Watch. Payload : \(progressData)")
         } catch {
             print(
                 "Failed to update application context: \(error.localizedDescription)"
@@ -106,7 +106,7 @@ class RecordViewModel: ObservableObject {
                 )
             }
             
-            print("[iPhone] Sending payload to Watch.")
+            print("[iPhone] Sending payload to Watch. Payload : \(progressData)")
         }
     }
 
@@ -125,7 +125,9 @@ class RecordViewModel: ObservableObject {
     }
 
     func togglePause() {
-        if timer.timerStatus != .timerPaused {
+        print("Toggle trigger")
+        if timer.timerStatus != .timerPaused && timer.timerStatus != .timerStopped {
+            print("Elig for pause. State now : \(timer.timerStatus)")
             pauseTimer()
         } else {
             startTimer()
@@ -204,12 +206,13 @@ class RecordViewModel: ObservableObject {
     }
 
     // MARK: - Computed Properties
-    var activeTimeFormatted: String {
-        formatTime(duration: abs(timer.remainingTime))
+    var remainingTimeFormatted: String {
+        return formatTime(duration: abs(timer.remainingTime))
     }
 
     var totalTimeFormatted: String {
-        formatTime(duration: timer.activeTime)
+        print("Total time : \(timer.totalTime)")
+        return formatTime(duration: timer.totalTime)
     }
 
 //    var currentBPM: Int? {

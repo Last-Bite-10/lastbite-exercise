@@ -7,7 +7,8 @@
 import Foundation
 import Combine
 
-class TimerService {
+@MainActor
+class TimerService: ObservableObject {  // ← Add ObservableObject conformance
     // Properties
     @Published var progress: Double
     @Published var activeTime: Int
@@ -43,6 +44,7 @@ class TimerService {
     
     // MARK: - Core Functions
     func startTimer() {
+        print("Timer started.")
         guard timer == nil else { return }
         timer = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
@@ -66,12 +68,11 @@ class TimerService {
     
     // MARK: - Internal Functions
     private func handleTimerTick() {
-//        print("Timer ticked!! Active time before \(self.activeTime)")
         if timerStatus != .timerBelowBPM {
             self.activeTime += 1
             self.remainingTime -= 1
         }
-        print("Timer ticked!! Active time : \(self.activeTime)")
+        print("Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)")
 
         self.totalTime += 1
         handleTimerStatusChange()
