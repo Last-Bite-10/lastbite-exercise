@@ -75,7 +75,7 @@ final class HealthKitManager: ObservableObject {
     }
 
     func getBPMThreshold(_ age: Int) -> Int {
-        let idealBPM: Double = Double(220 - age) * 0.64
+        let idealBPM: Double = Double(220 - age) * 0.54
         return Int(floor(idealBPM))
     }
 }
