@@ -12,6 +12,8 @@ struct LocationView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
     @Query private var preferences: [Preference]
     
+    @Environment(LocationManager.self) private var locationManager
+    
     @Environment(\.dismissFlow) private var dismissFlow
     
     let onDone: () -> Void
@@ -49,6 +51,8 @@ struct LocationView: View {
                     preferences.first?.equipmentAvailable =
                         Array(viewModel.selectedEquipment)
                     preferences.first?.location = viewModel.selectedLocation
+                    
+                    locationManager.startUpdatingLocation()
                     
                     onDone()
                 },

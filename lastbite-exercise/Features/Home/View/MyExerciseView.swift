@@ -12,6 +12,8 @@ struct MyExerciseView: View {
     @State private var viewModel = RecommendationViewModel()
     @State private var questionnaireViewModel = QuestionnaireViewModel()
     
+    @State private var locationManager = LocationManager()
+    
     @State private var showQuestionnaire: Bool = false
     @State private var showPlan: Bool = false
     @State private var showPlanModifySheet = false
@@ -97,6 +99,7 @@ struct MyExerciseView: View {
                 }
             }
             .environment(questionnaireViewModel)
+            .environment(locationManager)
             .environment(\.dismissFlow, onCancelAction)
         }
     }
