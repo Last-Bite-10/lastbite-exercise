@@ -96,7 +96,7 @@ struct RecordView: View {
                     totalDuration: viewModel.totalDuration)
                 )
             }) {
-                Text(viewModel.timerStatus != .timerPaused || viewModel.timerStatus != .timerStopped ? "Play" : "Pause")
+                Text(viewModel.timerStatus == .timerPaused || viewModel.timerStatus == .timerStopped ? "Play" : "Pause")
                     .font(.system(size: 16))
                     .padding(.all, 0)
                     .foregroundStyle(Color.white)
