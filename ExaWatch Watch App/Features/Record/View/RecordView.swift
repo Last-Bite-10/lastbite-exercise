@@ -91,12 +91,12 @@ struct RecordView: View {
             Button(action: {
                 viewModel.sendProgressToiPhone(data: ProgressData(
                     progress: viewModel.progress,
-                    timerStatus: viewModel.timerStatus != .timerPaused ? .timerPaused : .timerStarted,
+                    timerStatus: viewModel.timerStatus != .timerPaused || viewModel.timerStatus != .timerStopped ? .timerStarted : .timerPaused,
                     timeRemaining: viewModel.timeRemaining,
                     totalDuration: viewModel.totalDuration)
                 )
             }) {
-                Text("Play")
+                Text(viewModel.timerStatus == .timerPaused || viewModel.timerStatus == .timerStopped ? "Play" : "Pause")
                     .font(.system(size: 16))
                     .padding(.all, 0)
                     .foregroundStyle(Color.white)

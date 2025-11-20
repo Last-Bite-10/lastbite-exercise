@@ -10,7 +10,8 @@ import SwiftUI
 
 @main
 struct ExaWatchApp: App {
-    @StateObject private var manager = WatchHealthManager()
+    @StateObject private var healthManager = WatchHealthManager()
+    
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([

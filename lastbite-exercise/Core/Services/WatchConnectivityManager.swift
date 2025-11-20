@@ -9,15 +9,26 @@ import Combine
 import Foundation
 import WatchConnectivity
 
-@MainActor
+// MARK: - Data Transfer Protocol
+// - timerStatus CAN be emitted from either Watch and iOS
+// - progress, timeRemaining, totalDuration MUST be emitted from iOS
+// - Watch MUST ONLY emit timerStopped, timerStarted OR timerPaused status
+// - In conflict, the latest timerStatus MUST be considered as the truth
+
 class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
     @Published var latestBPM: Double?
-//    @Published var latestTimerState:
+    @Published var latestWatchTimerState: TimerStatusType?
     @Published var isReceivingFromWatch: Bool = false
 
     // Publisher for BPM updates from Watch
     var bpmPublisher: AnyPublisher<Double, Never> {
         $latestBPM
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+    }
+
+    var watchTimerStatusPublisher: AnyPublisher<TimerStatusType, Never> {
+        $latestWatchTimerState
             .compactMap { $0 }
             .eraseToAnyPublisher()
     }
@@ -133,6 +144,7 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
                 // Handle timer changes if needed
                 if let data = message["data"] as? [String: Any] {
                     print("[iPhone] Timer change data: \(data)")
+                    
                 }
             default:
                 // Rest of messages is ack, for now just ignore
@@ -169,7 +181,15 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
                 if let data = userInfo["data"] as? [String: Any] {
                     print("[iPhone] Timer change data from userInfo: \(data)")
                     
+                    if let retrievedTimerStatusString = data["timerStatus"] as? String,
+                       let retrievedTimerStatus = TimerStatusType(rawValue: retrievedTimerStatusString) {
+                        Task { @MainActor in
+                            self.latestWatchTimerState = retrievedTimerStatus
+                            print("[iPhone] Valid state, timerStatus updated to: \(retrievedTimerStatus)")
+                        }
+                    }
                     
+                    // Only take timerStatus
                 }
                 
             default:
