@@ -37,16 +37,24 @@ class RecordViewModel: ObservableObject {
         self.context = modelContext
         self.bpmThreshold = Double(healthKitManager.bpmThreshold)
         
-        self.timer = TimerService(activeTime: record.requiredMinutes * 60, totalTime: 0, exerciseRecord: record, healthKitManager: healthKitManager, watchConnectivityManager: watchConnectivityManager)
+        self.timer = TimerService(
+            activeTime: record.requiredMinutes * 60, 
+            totalTime: 0, 
+            exerciseRecord: record, 
+            healthKitManager: healthKitManager, 
+            watchConnectivityManager: watchConnectivityManager
+        )
         
         self.setupProgressSync()
         self.setupTimerObservation()
+        self.attachWatchConnectivityManager(watchConnectivityManager)
         // Start observing changes to send to Watch
     }
 
     func attachWatchConnectivityManager(_ manager: WatchConnectivityManager) {
-        self.watchConnectivityManager = manager
-        subscribeToBPMUpdates(manager)
+        // self.watchConnectivityManager = manager
+        // subscribeToBPMUpdates(manager)
+        subscribeToWatchTimerStatusUpdates(manager)
     }
 
     // MARK: - Watch Connectivity
@@ -197,6 +205,15 @@ class RecordViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
+    
+    private func subscribeToWatchTimerStatusUpdates(_ manager: WatchConnectivityManager) {
+        manager.watchTimerStatusPublisher
+            .sink { [weak self] timerStatus in
+                print("[iPhone] Watch timer status updated! New status: \(timerStatus)")
+                self?.handleWatchTimerStatusUpdate(timerStatus)
+            }
+            .store(in: &cancellables)
+    }
 
     private func handleBPMUpdate(_ bpm: Double) {
 //        let wasUnder: Bool = timer.timerStatus == .timerBelowBPM
@@ -206,6 +223,25 @@ class RecordViewModel: ObservableObject {
         if timer.timerStatus == .timerBelowBPM {
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
+        }
+    }
+    
+    private func handleWatchTimerStatusUpdate(_ watchTimerStatus: TimerStatusType) {
+        // Synchronize the timer status with the watch
+        // Only consider timerStopped, timerStarted, and timerPaused from the watch
+        switch watchTimerStatus {
+        case .timerStopped:
+            print("[iPhone] Watch requested stop, pausing timer")
+            pauseTimer()
+        case .timerStarted:
+            print("[iPhone] Watch requested start, starting timer")
+            startTimer()
+        case .timerPaused:
+            print("[iPhone] Watch requested pause, pausing timer")
+            pauseTimer()
+        default:
+            // Ignore other states like timerBelowBPM, timerAboveBPM as they are iPhone-driven
+            print("[iPhone] Watch sent \(watchTimerStatus), ignoring as it's not a control state")
         }
     }
 
