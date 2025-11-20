@@ -29,30 +29,45 @@ class RecommendationViewModel {
         let weeklies = try? context.fetch(descriptor)
 
         let calendar = Calendar.current
-        let today = Date()
+        let today = calendar.startOfDay(for: Date())
 
-        // Check if we have a current week
-        if let latestWeek = weeklies?.first,
-            calendar.isDate(
-                today,
-                equalTo: latestWeek.startDate,
-                toGranularity: .weekOfYear
+        // If we have a previous week
+        if let latestWeek = weeklies?.first {
+            let start = calendar.startOfDay(for: latestWeek.startDate)
+            let end = calendar.startOfDay(
+                for: latestWeek.endDate ?? start.addingTimeInterval(6 * 86400)
             )
-        {
-            currentWeek = latestWeek
-        } else {
-            // Create new week
-            let weekNumber = (weeklies?.first?.weekNumber ?? 0) + 1
-            let startOfWeek = calendar.startOfDay(for: today)
+
+            // Check if today is inside custom week range
+            if today >= start && today <= end {
+                currentWeek = latestWeek
+                return
+            }
+
+            // Otherwise create a new week starting the next day after the last ends
+            let newStart = calendar.date(byAdding: .day, value: 1, to: end)!
 
             let newWeek = Weekly(
-                weekNumber: weekNumber,
-                startDate: startOfWeek,
+                weekNumber: latestWeek.weekNumber + 1,
+                startDate: newStart
             )
             context.insert(newWeek)
             try? context.save()
             currentWeek = newWeek
+            return
         }
+
+        // No previous week → first launch
+        let start = today
+
+        let firstWeek = Weekly(
+            weekNumber: 1,
+            startDate: start,
+        )
+
+        context.insert(firstWeek)
+        try? context.save()
+        currentWeek = firstWeek
     }
 
     func initializeWeeklyExercises(preference: Preference) {
