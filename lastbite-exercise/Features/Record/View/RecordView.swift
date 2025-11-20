@@ -91,7 +91,7 @@ struct RecordContentView: View {
                 VStack {
                     VStack {
                         Text("Active Time")
-                        Text(viewModel.remainingTimeFormatted)
+                        Text("\(viewModel.timer.remainingTime < 0 ? "+" : "")\(viewModel.remainingTimeFormatted)")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                     }.padding(.bottom, 12)
@@ -130,7 +130,7 @@ struct RecordContentView: View {
             VStack {
                 Text("Total Time").font(.title2).padding(.bottom, 4)
 
-                Text("\(viewModel.timer.remainingTime > 0 ? "" : "+")\(viewModel.totalTimeFormatted)").font(.title).fontWeight(
+                Text("\(viewModel.totalTimeFormatted)").font(.title).fontWeight(
                     .bold
                 )
             }
