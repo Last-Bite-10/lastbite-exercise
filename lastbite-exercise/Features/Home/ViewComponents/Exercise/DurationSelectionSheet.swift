@@ -56,7 +56,7 @@ struct DurationSelectionSheet: View {
 
                     // Remove option if already selected
                     if existingRecord != nil {
-                        Button(role: .destructive) {
+                        ButtonWSound(role: .destructive) {
                             onComplete(nil)
                             dismiss()
                         } label: {

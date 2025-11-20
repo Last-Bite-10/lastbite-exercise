@@ -13,7 +13,7 @@ struct PlanSelectionView: View {
     @Query private var preferences: [Preference]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 16) {
 
             Text("Choose Your Plan")
                 .font(.title2)
@@ -21,7 +21,7 @@ struct PlanSelectionView: View {
                 .foregroundColor(Color.blueTwo)
 
             PlanCardView(
-                title: "Start Strong !",
+                title: "Start Strong!",
                 subtitle: "Start with the WHO recommended 150 mins per week!",
                 image: "StartStrong",
                 action: {
@@ -31,7 +31,7 @@ struct PlanSelectionView: View {
             )
 
             PlanCardView(
-                title: "Start Small !",
+                title: "Start Small!",
                 subtitle:
                     "Start small with our gradual habit building beginner-friendly plan!",
                 image: "StartSmall",
@@ -40,8 +40,6 @@ struct PlanSelectionView: View {
                     preferences.first?.planChosen = .beginner
                 }
             )
-
-            Spacer()
         }
         .padding()
     }

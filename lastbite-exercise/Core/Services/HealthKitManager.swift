@@ -48,14 +48,14 @@ final class HealthKitManager: ObservableObject {
                             to: Date()
                         )
                         let age = ageComponent.year ?? 0
-                        
+
                         print("DoB = \(birthDate)")
 
                         Task { @MainActor in
                             self.bpmThreshold = self.getBPMThreshold(age)
                             print("BPM threshold : \(self.bpmThreshold)")
                         }
-                        
+
                         print("Threshold: \(self.bpmThreshold)")
                     }
                 } catch {

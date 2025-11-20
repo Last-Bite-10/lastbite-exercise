@@ -27,7 +27,7 @@ struct PlanCardView: View {
                 Text(subtitle)
                     .font(.footnote)
 
-                Button(action: action) {
+                ButtonWSound(action: action) {
                     Text("Choose")
                         .font(.subheadline)
                         .padding(.horizontal, 20)
@@ -39,6 +39,7 @@ struct PlanCardView: View {
             }
         }
         .padding(.vertical, 20)
+        .frame(maxWidth: .infinity)
         .background(Color.cardGray)
         .cornerRadius(28)
     }

@@ -65,7 +65,7 @@ struct TodaysPlan: View {
                 }
             }
         }
-//        .padding(20)
+        .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 28, style: .continuous)
                 .fill(Color(.systemGray6))

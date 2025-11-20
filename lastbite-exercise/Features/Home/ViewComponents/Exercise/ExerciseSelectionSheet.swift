@@ -16,110 +16,112 @@ struct ExerciseSelectionSheet: View {
     private let exercises = Exercise.loadExercises()
 
     var body: some View {
-        VStack(spacing: 24) {
-            // MARK: - Header
-            VStack(spacing: 8) {
-                Text("Choose your\nexercise for today")
-                    .font(.title2.bold())
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.primary)
-
-                Text("Recommended exercise duration: 30 mins")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-            }
-            .padding(.top, 32)
-
-            // MARK: - Grid
-            ScrollView(showsIndicators: false) {
-                LazyVGrid(
-                    columns: [GridItem(.flexible()), GridItem(.flexible())],
-                    spacing: 24
-                ) {
-                    ForEach(exercises) { exercise in
-                        VStack(spacing: 12) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color(.systemGray6))
-                                    .frame(height: 120)
-                                    .overlay(
-                                        exerciseImage(for: exercise)
-                                        .resizable()
-                                        .scaledToFit()
-//                                        .frame(width: 60, height: 60)
-                                    )
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 16)
-                                            .stroke(
-                                                isExerciseSelected(exercise)
-                                                    ? Color.blue : Color.clear,
-                                                lineWidth: 2
-                                            )
-                                    )
-
-                                // Show duration badge if selected
-                                if let record = getExerciseRecord(for: exercise)
-                                {
-                                    VStack {
-                                        HStack {
+        ZStack {
+            VStack(spacing: 24) {
+                VStack(spacing: 8) {
+                    Text("Choose your\nexercise for today")
+                        .font(.title.bold())
+                        .multilineTextAlignment(.leading)
+                        .foregroundColor(.blueTwo)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text("Recommended exercise duration: 30 mins")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.horizontal)
+                .padding(.top, 32)
+                
+                ScrollView(showsIndicators: false) {
+                    LazyVGrid(
+                        columns: [GridItem(.flexible()), GridItem(.flexible())],
+                        spacing: 24
+                    ) {
+                        ForEach(exercises) { exercise in
+                            VStack(spacing: 12) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(Color(.systemGray6))
+                                        .frame(height: 150)
+                                        .overlay(
+                                            exerciseImage(for: exercise)
+                                                .resizable()
+                                                .scaledToFit()
+                                        )
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(
+                                                    isExerciseSelected(exercise)
+                                                    ? Color.blueTwo : Color.clear,
+                                                    lineWidth: 2
+                                                )
+                                        )
+                                    
+                                    // Show duration badge if selected
+                                    if let record = getExerciseRecord(for: exercise)
+                                    {
+                                        VStack {
+                                            HStack {
+                                                Spacer()
+                                                Text(
+                                                    "\(record.requiredMinutes) min"
+                                                )
+                                                .font(.caption.bold())
+                                                .foregroundColor(.white)
+                                                .padding(.horizontal, 8)
+                                                .padding(.vertical, 4)
+                                                .background(Color.blueTwo)
+                                                .cornerRadius(8)
+                                                .padding(8)
+                                            }
                                             Spacer()
-                                            Text(
-                                                "\(record.requiredMinutes) min"
-                                            )
-                                            .font(.caption.bold())
-                                            .foregroundColor(.white)
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 4)
-                                            .background(Color.blue)
-                                            .cornerRadius(8)
-                                            .padding(8)
                                         }
-                                        Spacer()
                                     }
                                 }
+                                
+                                Text(exercise.name)
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
                             }
-
-                            Text(exercise.name)
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                        }
-                        .onTapGesture {
-                            currentExercise = exercise
+                            .onTapGesture {
+                                currentExercise = exercise
+                            }
                         }
                     }
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-
-            // MARK: - Done Button
-            Button(
-                action: {
-                    // Pass selected records to view model
-                    viewModel.modifyExerciseRecords(
-                        records: selectedExerciseRecords
-                    )
-                    dismiss()
-                },
-                label: {
-                    Text("Done")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            !selectedExerciseRecords.isEmpty
-                                ? Color.blue : Color.gray.opacity(0.4)
+            
+            VStack {
+                Spacer()
+                
+                ButtonWSound(
+                    action: {
+                        viewModel.modifyExerciseRecords(
+                            records: selectedExerciseRecords
                         )
-                        .foregroundColor(.white)
-                        .cornerRadius(16)
-                        .padding(.horizontal, 40)
-                }
-            )
-            .disabled(selectedExerciseRecords.isEmpty)
-
-            Spacer()
+                        dismiss()
+                    },
+                    label: {
+                        Text("Done")
+                            .font(.headline)
+                            .frame(width: 150)
+                            .padding()
+                            .background(
+                                !selectedExerciseRecords.isEmpty
+                                    ? Color.blueTwo : Color.gray.opacity(0.4)
+                            )
+                            .foregroundColor(.white)
+                            .cornerRadius(30)
+                            .padding(.horizontal, 40)
+                    }
+                )
+                .disabled(selectedExerciseRecords.isEmpty)
+                .edgesIgnoringSafeArea(.bottom)
+                .padding(.bottom, 20)
+            }
         }
-//        .presentationDetents([.medium, .large])
-        .padding(.bottom, 20)
         .sheet(item: $currentExercise) { exercise in
             DurationSelectionSheet(
                 exercise: exercise,
@@ -130,7 +132,6 @@ struct ExerciseSelectionSheet: View {
                 } else {
                     removeExerciseRecord(for: exercise)
                 }
-                // Dismiss by clearing the item (optional; SwiftUI will dismiss automatically when you set it to nil)
                 currentExercise = nil
             }
         }
@@ -145,7 +146,6 @@ struct ExerciseSelectionSheet: View {
         }
     }
 
-    // MARK: - Helper Methods
     private func isExerciseSelected(_ exercise: Exercise) -> Bool {
         selectedExerciseRecords.contains(where: {
             $0.exercise == exercise
@@ -172,7 +172,6 @@ struct ExerciseSelectionSheet: View {
     }
 }
 
-// MARK: - Preview
 #Preview {
     ExerciseSelectionSheet()
         .environment(RecommendationViewModel())

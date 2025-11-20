@@ -14,8 +14,10 @@ struct QuestionnaireSelectionButton: View {
     var action: () -> Void
 
     var body: some View {
-        Button(
-            action: action,
+        ButtonWSound(
+            action: {
+                action()
+            },
             label: {
                 Text(title)
                     .font(.body)

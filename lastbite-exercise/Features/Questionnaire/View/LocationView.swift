@@ -53,8 +53,9 @@ struct LocationView: View {
                     onDone()
                 },
                 label: { CoreButtonLabel(title: "Done") }
-            ).padding(.top, 64)
-
+            )
+            .padding(.top, 40)
+            
             Spacer()
         }
         .toolbar {
@@ -64,10 +65,11 @@ struct LocationView: View {
                         dismissFlow()
                     },
                     label: {
-                        Text("Cancel")
-                            .foregroundColor(.red)
+                        Image(systemName: "xmark")
+                            .foregroundColor(.secondary)
                     }
-                ).buttonStyle(.borderless)
+                )
+                .buttonStyle(.borderless)
             }
         }
     }

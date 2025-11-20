@@ -43,7 +43,7 @@ struct MyExerciseView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack {
                     // Streak Section
@@ -67,15 +67,15 @@ struct MyExerciseView: View {
 
                     // Recent History Section
                     RecentHistoryView().environment(viewModel)
-                        .padding(.top, -20)
                 }
             }
             .navigationTitle("My Exercise")
-            .navigationBarTitleDisplayMode(.large)
             .task {
                 await healthKitManager.requestAuthorization()
             }
-        }.sheet(isPresented: $showPlanModifySheet) {
+            .toolbarTitleDisplayMode(.large)
+        }
+        .sheet(isPresented: $showPlanModifySheet) {
             ExerciseSelectionSheet().environment(viewModel)
         }.fullScreenCover(isPresented: $showQuestionnaire) {
             
@@ -91,11 +91,9 @@ struct MyExerciseView: View {
             
             NavigationStack {
                 if preferences.first?.planChosen == .beginner {
-                   
-                    BeginnerPlanView(onDone: onDoneAction)
+                    StartSmallView(onDone: onDoneAction)
                 } else {
-                   
-                    FrequencyView(onDone: onDoneAction)
+                    StartStrongView(onDone: onDoneAction)
                 }
             }
             .environment(questionnaireViewModel)

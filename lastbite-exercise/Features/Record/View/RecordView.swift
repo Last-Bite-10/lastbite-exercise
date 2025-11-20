@@ -146,12 +146,12 @@ struct RecordContentView: View {
                     viewModel.togglePause()
                 }
 
-                Button(action: {
+                ButtonWSound(role: nil, action: {
                     viewModel.finishExercise()
                     dismiss()
-                }) {
+                }, label: {
                     Text("End").foregroundStyle(.red)
-                }
+                })
             }
         }
     }
