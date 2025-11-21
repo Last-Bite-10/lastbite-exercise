@@ -9,7 +9,8 @@ import SwiftData
 import SwiftUI
 
 struct WeeklyPlanPager: View {
-    @Environment(RecommendationViewModel.self) private var viewModel
+    @Environment(RecommendationViewModel.self) private var recommendationVM
+    @Environment(HomeViewModel.self) private var homeVM
     @Environment(\.modelContext) private var modelContext
     @Query private var preferences: [Preference]
     @State private var selectedRecord: ExerciseRecord?
@@ -21,7 +22,7 @@ struct WeeklyPlanPager: View {
     private var frequency: FrequencyType { preference?.frequency ?? .oneDay }
 
     private var startDate: Date {
-        viewModel.currentWeek?.startDate ?? Date()
+        recommendationVM.currentWeek?.startDate ?? Date()
     }
 
     private func dateForPage(_ index: Int) -> Date {
@@ -30,7 +31,7 @@ struct WeeklyPlanPager: View {
     }
 
     private func exercisesFor(date: Date) -> [ExerciseRecord] {
-        guard let week = viewModel.currentWeek else { return [] }
+        guard let week = recommendationVM.currentWeek else { return [] }
 
         let result =
             week.records?.filter { record in
@@ -58,6 +59,9 @@ struct WeeklyPlanPager: View {
 
     // MARK: - Body
     var body: some View {
+        // Today's Plan Header
+        WeeklyPlanHeader()
+
         TabView(selection: $selection) {
             ForEach(0..<frequencyTypeToInt(), id: \.self) { index in
                 let dayDate = dateForPage(index)
@@ -82,9 +86,9 @@ struct WeeklyPlanPager: View {
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         .animation(.easeInOut, value: pagerHeight)
         .onAppear {
-            viewModel.setup(modelContext: modelContext)
+            recommendationVM.setup(modelContext: modelContext)
             if let preference = preference {
-                viewModel.initializeWeeklyExercises(
+                recommendationVM.initializeWeeklyExercises(
                     preference: preference
                 )
             }

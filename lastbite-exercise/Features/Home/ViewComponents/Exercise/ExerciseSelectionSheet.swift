@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ExerciseSelectionSheet: View {
-    @Environment(RecommendationViewModel.self) private var viewModel
+    @Environment(RecommendationViewModel.self) private var recommendationVM
+    @Environment(HomeViewModel.self) private var homeVM
     @Environment(\.dismiss) var dismiss
     @State private var selectedExerciseRecords: [ExerciseRecord] = []
     @State private var currentExercise: Exercise?
@@ -24,7 +25,7 @@ struct ExerciseSelectionSheet: View {
                         .multilineTextAlignment(.leading)
                         .foregroundColor(.blueTwo)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     Text("Recommended exercise duration: 30 mins")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
@@ -32,10 +33,12 @@ struct ExerciseSelectionSheet: View {
                 }
                 .padding(.horizontal)
                 .padding(.top, 32)
-                
+
                 ScrollView(showsIndicators: false) {
                     LazyVGrid(
-                        columns: [GridItem(.flexible()), GridItem(.flexible())],
+                        columns: [
+                            GridItem(.flexible()), GridItem(.flexible()),
+                        ],
                         spacing: 24
                     ) {
                         ForEach(exercises) { exercise in
@@ -53,14 +56,16 @@ struct ExerciseSelectionSheet: View {
                                             RoundedRectangle(cornerRadius: 16)
                                                 .stroke(
                                                     isExerciseSelected(exercise)
-                                                    ? Color.blueTwo : Color.clear,
+                                                        ? Color.blueTwo
+                                                        : Color.clear,
                                                     lineWidth: 2
                                                 )
                                         )
-                                    
+
                                     // Show duration badge if selected
-                                    if let record = getExerciseRecord(for: exercise)
-                                    {
+                                    if let record = getExerciseRecord(
+                                        for: exercise
+                                    ) {
                                         VStack {
                                             HStack {
                                                 Spacer()
@@ -79,7 +84,7 @@ struct ExerciseSelectionSheet: View {
                                         }
                                     }
                                 }
-                                
+
                                 Text(exercise.name)
                                     .font(.headline)
                                     .foregroundColor(.primary)
@@ -92,14 +97,15 @@ struct ExerciseSelectionSheet: View {
                 }
                 .padding(.horizontal)
             }
-            
+
             VStack {
                 Spacer()
-                
+
                 ButtonWSound(
                     action: {
-                        viewModel.modifyExerciseRecords(
-                            records: selectedExerciseRecords
+                        recommendationVM.modifyExerciseRecords(
+                            records: selectedExerciseRecords,
+                            usedAt: homeVM.currentlyViewedDate
                         )
                         dismiss()
                     },
@@ -122,6 +128,9 @@ struct ExerciseSelectionSheet: View {
                 .padding(.bottom, 20)
             }
         }
+        .onAppear {
+            selectedExerciseRecords = homeVM.currentlyViewedPlan
+        }
         .sheet(item: $currentExercise) { exercise in
             DurationSelectionSheet(
                 exercise: exercise,
@@ -136,10 +145,11 @@ struct ExerciseSelectionSheet: View {
             }
         }
     }
-    
+
     private func exerciseImage(for exercise: Exercise) -> Image {
         if let name = exercise.imageName,
-           UIImage(named: name) != nil {
+            UIImage(named: name) != nil
+        {
             return Image(name).renderingMode(.original)
         } else {
             return Image(systemName: "figure.strengthtraining.traditional")

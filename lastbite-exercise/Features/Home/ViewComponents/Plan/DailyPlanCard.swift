@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DailyPlanCard: View {
+    @Environment(HomeViewModel.self) private var viewModel
+
     let date: Date
     let records: [ExerciseRecord]
     let isCurrentDay: Bool
@@ -72,6 +74,10 @@ struct DailyPlanCard: View {
                 }
             }
 
+        }
+        .onAppear {
+            viewModel.currentlyViewedDate = date
+            viewModel.currentlyViewedPlan = records
         }
         .frame(maxWidth: .infinity, alignment: .leading)  // allow horizontal expansion
         .padding(20)

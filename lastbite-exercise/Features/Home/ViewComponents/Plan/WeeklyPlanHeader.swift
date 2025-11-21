@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct WeeklyPlanHeader: View {
+    @Environment(HomeViewModel.self) private var viewModel
+
     var title: String = "This Week's Plan"
     var actionTitle: String = "Modify"
-    var onModifyTapped: () -> Void
 
     var body: some View {
         HStack {
@@ -21,15 +22,20 @@ struct WeeklyPlanHeader: View {
 
             Spacer()
 
-            ButtonWSound(action: onModifyTapped) {
-                HStack(spacing: 4) {
-                    Image(systemName: "pencil")
-                        .font(.system(size: 14, weight: .semibold))
-                    Text(actionTitle)
-                        .font(.headline)
+            ButtonWSound(
+                action: {
+                    viewModel.showPlanModifySheet = true
+                },
+                label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "pencil")
+                            .font(.system(size: 14, weight: .semibold))
+                        Text(actionTitle)
+                            .font(.headline)
+                    }
+                    .foregroundColor(Color("BlueTwo"))
                 }
-                .foregroundColor(Color("BlueTwo"))
-            }
+            )
             .buttonStyle(.plain)
         }
         .padding(.horizontal)
@@ -38,7 +44,6 @@ struct WeeklyPlanHeader: View {
 
 // MARK: - Preview
 #Preview {
-    WeeklyPlanHeader {
-        print("Modify tapped")
-    }
+    WeeklyPlanHeader()
+        .environment(HomeViewModel())
 }

@@ -5,12 +5,14 @@
 //  Created by Ali Ahmad Fahrezy on 05/11/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct StartSmallView: View {
-    @Environment(\.dismissFlow) private var dismissFlow
+    @Environment(HomeViewModel.self) private var viewModel
+    @Query private var preferences: [Preference]
 
-    let onDone: () -> Void
+    var preference: Preference? { preferences.first }
 
     var body: some View {
         VStack(spacing: 24) {
@@ -61,7 +63,7 @@ struct StartSmallView: View {
 
             NavLinkWSound(
                 title: "Next",
-                destination: FrequencyView(onDone: onDone),
+                destination: FrequencyView(),
             )
             .padding(.horizontal, 48)
         }
@@ -70,7 +72,9 @@ struct StartSmallView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        dismissFlow()
+                        if let preference = preference {
+                            viewModel.onCancelAction(preference: preference)
+                        }
                     },
                     label: {
                         Image(systemName: "xmark")
@@ -85,6 +89,7 @@ struct StartSmallView: View {
 
 #Preview {
     NavigationStack {
-        StartSmallView(onDone: {})
+        StartSmallView()
+            .environment(HomeViewModel())
     }
 }

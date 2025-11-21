@@ -9,11 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct EquipmentView: View {
-    @Environment(QuestionnaireViewModel.self) private var viewModel
+    @Environment(QuestionnaireViewModel.self) private var questionnaireVM
+    @Environment(HomeViewModel.self) private var homeVM
+    @Query private var preferences: [Preference]
 
-    @Environment(\.dismissFlow) private var dismissFlow
-
-    let onDone: () -> Void
+    var preference: Preference? { preferences.first }
 
     var body: some View {
         VStack(spacing: 10) {
@@ -48,14 +48,21 @@ struct EquipmentView: View {
                     ForEach(EquipmentType.allCases, id: \.self) { type in
                         QuestionnaireSelectionButton(
                             title: type.rawValue,
-                            isSelected: viewModel.selectedEquipment.contains(
-                                type
-                            ),
+                            isSelected: questionnaireVM.selectedEquipment
+                                .contains(
+                                    type
+                                ),
                             action: {
-                                if viewModel.selectedEquipment.contains(type) {
-                                    viewModel.selectedEquipment.remove(type)
+                                if questionnaireVM.selectedEquipment.contains(
+                                    type
+                                ) {
+                                    questionnaireVM.selectedEquipment.remove(
+                                        type
+                                    )
                                 } else {
-                                    viewModel.selectedEquipment.insert(type)
+                                    questionnaireVM.selectedEquipment.insert(
+                                        type
+                                    )
                                 }
                             }
                         )
@@ -65,13 +72,9 @@ struct EquipmentView: View {
             .padding(.top, 24)
             .padding(.horizontal)
 
-            NavigationLink(
-                destination: LocationView(onDone: onDone),
-                label: {
-                    CoreButtonLabel(
-                        title: "Next"
-                    )
-                }
+            NavLinkWSound(
+                title: "Next",
+                destination: LocationView(),
             )
             .padding(.horizontal, 48)
             .padding(.top, 40)
@@ -80,7 +83,9 @@ struct EquipmentView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        dismissFlow()
+                        if let preference = preference {
+                            homeVM.onCancelAction(preference: preference)
+                        }
                     },
                     label: {
                         Image(systemName: "xmark")
@@ -95,7 +100,8 @@ struct EquipmentView: View {
 
 #Preview {
     NavigationStack {
-        EquipmentView(onDone: {})
+        EquipmentView()
             .environment(QuestionnaireViewModel())
+            .environment(HomeViewModel())
     }
 }

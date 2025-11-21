@@ -11,17 +11,9 @@ import SwiftUI
 struct MyExerciseView: View {
     @State private var recommendationVM = RecommendationViewModel()
     @State private var questionnaireVM = QuestionnaireViewModel()
+    @State private var homeVM = HomeViewModel()
 
     @Environment(\.modelContext) private var modelContext
-
-    @State private var showQuestionnaire: Bool = false
-    @State private var showPlan: Bool = false
-    @State private var showPlanModifySheet = false
-    @State private var weeklyStreaks = [true, true, false, true, false]
-    @State private var currentDate = Date()
-    @State private var progress: Double = 0.2
-    @State private var completedMinutes = 2
-    @State private var totalMinutes = 10
 
     @Query private var preferences: [Preference]
     @Query private var records: [ExerciseRecord]
@@ -56,17 +48,14 @@ struct MyExerciseView: View {
 
                     if preference?.planChosen == nil {
                         PlanSelectionView(
-                            showQuestionnaire: $showQuestionnaire
+                            showQuestionnaire: $homeVM.showQuestionnaire
                         )
-                    } else if showPlan || !records.isEmpty {
-                        // Today's Plan Header
-                        WeeklyPlanHeader(onModifyTapped: {
-                            showPlanModifySheet = true
-                        })
+                    } else if homeVM.showPlan || !records.isEmpty {
 
-                        // Today's Plan Section
+                        // Weekly Plan Section
                         WeeklyPlanPager()
                             .environment(recommendationVM)
+                            .environment(homeVM)
                     }
 
                     // Recent History Section
@@ -76,29 +65,21 @@ struct MyExerciseView: View {
             .navigationTitle("My Exercise")
             .toolbarTitleDisplayMode(.large)
         }
-        .sheet(isPresented: $showPlanModifySheet) {
-            ExerciseSelectionSheet().environment(recommendationVM)
-        }.fullScreenCover(isPresented: $showQuestionnaire) {
-
-            let onDoneAction = {
-                showQuestionnaire = false
-                showPlan = true
-            }
-
-            let onCancelAction = {
-                showQuestionnaire = false
-                preference?.planChosen = nil
-            }
-
+        .sheet(isPresented: $homeVM.showPlanModifySheet) {
+            ExerciseSelectionSheet()
+                .environment(recommendationVM)
+                .environment(homeVM)
+        }
+        .fullScreenCover(isPresented: $homeVM.showQuestionnaire) {
             NavigationStack {
                 if preference?.planChosen == .beginner {
-                    StartSmallView(onDone: onDoneAction)
+                    StartSmallView()
                 } else {
-                    StartStrongView(onDone: onDoneAction)
+                    StartStrongView()
                 }
             }
             .environment(questionnaireVM)
-            .environment(\.dismissFlow, onCancelAction)
+            .environment(homeVM)
         }
     }
 }

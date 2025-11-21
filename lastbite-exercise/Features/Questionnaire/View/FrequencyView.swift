@@ -9,11 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct FrequencyView: View {
-    @Environment(QuestionnaireViewModel.self) private var viewModel
+    @Environment(QuestionnaireViewModel.self) private var questionnaireVM
+    @Environment(HomeViewModel.self) private var homeVM
+    @Query private var preferences: [Preference]
 
-    @Environment(\.dismissFlow) private var dismissFlow
-
-    let onDone: () -> Void
+    var preference: Preference? { preferences.first }
 
     var body: some View {
         VStack(spacing: 10) {
@@ -31,16 +31,15 @@ struct FrequencyView: View {
             ForEach(FrequencyType.allCases, id: \.self) { type in
                 QuestionnaireSelectionButton(
                     title: type.rawValue,
-                    isSelected: viewModel.selectedFrequency == type,
-                    action: { viewModel.selectedFrequency = type }
+                    isSelected: questionnaireVM.selectedFrequency == type,
+                    action: { questionnaireVM.selectedFrequency = type }
                 )
             }
             .padding(.horizontal, 48)
 
-            NavigationLink(
-                destination:
-                    EquipmentView(onDone: onDone),
-                label: { CoreButtonLabel(title: "Next") }
+            NavLinkWSound(
+                title: "Next",
+                destination: EquipmentView(),
             )
             .padding(.horizontal, 48)
             .padding(.top, 40)
@@ -49,7 +48,9 @@ struct FrequencyView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        dismissFlow()
+                        if let preference = preference {
+                            homeVM.onCancelAction(preference: preference)
+                        }
                     },
                     label: {
                         Image(systemName: "xmark")
@@ -64,7 +65,8 @@ struct FrequencyView: View {
 
 #Preview {
     NavigationStack {
-        FrequencyView(onDone: {})
+        FrequencyView()
             .environment(QuestionnaireViewModel())
+            .environment(HomeViewModel())
     }
 }

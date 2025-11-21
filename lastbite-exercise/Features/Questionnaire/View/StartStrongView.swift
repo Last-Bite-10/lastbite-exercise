@@ -5,12 +5,14 @@
 //  Created by Niken Larasati on 18/11/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct StartStrongView: View {
-    @Environment(\.dismissFlow) private var dismissFlow
+    @Environment(HomeViewModel.self) private var viewModel
+    @Query private var preferences: [Preference]
 
-    let onDone: () -> Void
+    var preference: Preference? { preferences.first }
 
     var body: some View {
         VStack(spacing: 24) {
@@ -59,7 +61,7 @@ struct StartStrongView: View {
 
             NavLinkWSound(
                 title: "Next",
-                destination: FrequencyView(onDone: onDone),
+                destination: FrequencyView(),
             )
             .padding(.horizontal, 48)
         }
@@ -68,7 +70,9 @@ struct StartStrongView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        dismissFlow()
+                        if let preference = preference {
+                            viewModel.onCancelAction(preference: preference)
+                        }
                     },
                     label: {
                         Image(systemName: "xmark")
@@ -83,6 +87,7 @@ struct StartStrongView: View {
 
 #Preview {
     NavigationStack {
-        StartStrongView(onDone: {})
+        StartStrongView()
+            .environment(HomeViewModel())
     }
 }

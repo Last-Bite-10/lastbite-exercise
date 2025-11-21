@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 @Observable
-class RecommendationViewModel {
+final class RecommendationViewModel {
     var currentWeek: Weekly?
 
     private var modelContext: ModelContext?
@@ -128,9 +128,17 @@ class RecommendationViewModel {
         try? context.save()
     }
 
-    func modifyExerciseRecords(records: [ExerciseRecord]) {
+    func modifyExerciseRecords(records: [ExerciseRecord], usedAt: Date = Date())
+    {
         guard let context = modelContext else { return }
-        currentWeek?.records = records
+
+        currentWeek?.records?.removeAll(
+            where: {
+                $0.usedAt == usedAt
+            }
+        )
+
+        currentWeek?.records?.append(contentsOf: records)
         try? context.save()
     }
 
