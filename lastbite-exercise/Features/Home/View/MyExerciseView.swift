@@ -67,7 +67,6 @@ struct MyExerciseView: View {
                         // Today's Plan Section
                         WeeklyPlanPager()
                             .environment(recommendationVM)
-                            .frame(height: 200)
                     }
 
                     // Recent History Section
@@ -83,14 +82,6 @@ struct MyExerciseView: View {
 
             let onDoneAction = {
                 showQuestionnaire = false
-
-                recommendationVM.setup(modelContext: modelContext)
-                if let preference = preference {
-                    recommendationVM.initializeWeeklyExercises(
-                        preference: preference
-                    )
-                }
-
                 showPlan = true
             }
 

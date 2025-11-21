@@ -13,6 +13,8 @@ struct WeeklyPlanPager: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var preferences: [Preference]
     @State private var selectedRecord: ExerciseRecord?
+    @State private var pagerHeight: CGFloat = .zero
+    @State private var selection = 0
 
     // MARK: - Derived Properties
     private var preference: Preference? { preferences.first }
@@ -56,7 +58,7 @@ struct WeeklyPlanPager: View {
 
     // MARK: - Body
     var body: some View {
-        TabView {
+        TabView(selection: $selection) {
             ForEach(0..<frequencyTypeToInt(), id: \.self) { index in
                 let dayDate = dateForPage(index)
                 let dailyRecords = exercisesFor(date: dayDate)
@@ -65,20 +67,46 @@ struct WeeklyPlanPager: View {
                     date: dayDate,
                     records: dailyRecords,
                     isCurrentDay: isToday(dayDate),
-                    onStart: { record in
-                        selectedRecord = record
-                    }
+                    onStart: { record in selectedRecord = record }
                 )
                 .padding(.horizontal)
+                .tag(index)
+                .measureHeight { height in
+                    if selection == index {
+                        pagerHeight = height
+                    }
+                }
             }
         }
+        .frame(height: pagerHeight)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-        .sheet(item: $selectedRecord) { record in
-            RecordView(record: record, modelContext: modelContext)
+        .animation(.easeInOut, value: pagerHeight)
+        .onAppear {
+            viewModel.setup(modelContext: modelContext)
+            if let preference = preference {
+                viewModel.initializeWeeklyExercises(
+                    preference: preference
+                )
+            }
+
         }
     }
 }
 
 #Preview {
     WeeklyPlanPager().environment(RecommendationViewModel())
+}
+
+extension View {
+    func measureHeight(_ callback: @escaping (CGFloat) -> Void) -> some View {
+        background(
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear { callback(geo.size.height) }
+                    .onChange(of: geo.size.height) { _, new in
+                        callback(new)
+                    }
+            }
+        )
+    }
 }
