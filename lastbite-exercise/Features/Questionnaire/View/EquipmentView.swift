@@ -10,9 +10,9 @@ import SwiftUI
 
 struct EquipmentView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
-    
+
     @Environment(\.dismissFlow) private var dismissFlow
-    
+
     let onDone: () -> Void
 
     var body: some View {
@@ -40,10 +40,10 @@ struct EquipmentView: View {
 
             LazyVGrid(
                 columns: [
-                    GridItem(.flexible(), spacing: -24),
+                    GridItem(.flexible()),
                     GridItem(.flexible()),
                 ],
-                spacing: 5,
+                spacing: 12,
                 content: {
                     ForEach(EquipmentType.allCases, id: \.self) { type in
                         QuestionnaireSelectionButton(
@@ -51,7 +51,6 @@ struct EquipmentView: View {
                             isSelected: viewModel.selectedEquipment.contains(
                                 type
                             ),
-                            widthReduction: 240,
                             action: {
                                 if viewModel.selectedEquipment.contains(type) {
                                     viewModel.selectedEquipment.remove(type)
@@ -62,7 +61,9 @@ struct EquipmentView: View {
                         )
                     }
                 }
-            ).padding(.top, 48)
+            )
+            .padding(.top, 24)
+            .padding(.horizontal)
 
             NavigationLink(
                 destination: LocationView(onDone: onDone),
@@ -72,9 +73,8 @@ struct EquipmentView: View {
                     )
                 }
             )
+            .padding(.horizontal, 48)
             .padding(.top, 40)
-
-            Spacer()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

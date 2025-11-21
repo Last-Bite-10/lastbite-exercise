@@ -11,7 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedTab = 0
     @Query private var preferences: [Preference]
-    
+
     private let haptic = HapticManager.shared
 
     var body: some View {

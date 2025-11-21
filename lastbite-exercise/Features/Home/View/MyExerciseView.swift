@@ -9,9 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct MyExerciseView: View {
-    @State private var viewModel = RecommendationViewModel()
-    @State private var questionnaireViewModel = QuestionnaireViewModel()
-    
+    @State private var recommendationVM = RecommendationViewModel()
+    @State private var questionnaireVM = QuestionnaireViewModel()
+
+    @Environment(\.modelContext) private var modelContext
+
     @State private var showQuestionnaire: Bool = false
     @State private var showPlan: Bool = false
     @State private var showPlanModifySheet = false
@@ -25,11 +27,12 @@ struct MyExerciseView: View {
     @Query private var records: [ExerciseRecord]
     @Query private var allWeeks: [Weekly]
 
+    private var preference: Preference? { preferences.first }
     private let healthKitManager = HealthKitManager.shared
 
     init() {
         healthKitManager.requestAuthorization()
-        
+
         let appearance = UINavigationBarAppearance()
         appearance.largeTitleTextAttributes = [
             .foregroundColor: UIColor(Color("BlueTwo"))
@@ -37,7 +40,7 @@ struct MyExerciseView: View {
         appearance.titleTextAttributes = [
             .foregroundColor: UIColor(Color("BlueTwo"))
         ]
-        
+
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
@@ -51,52 +54,59 @@ struct MyExerciseView: View {
                         .padding(.horizontal)
                         .padding(.bottom, 20)
 
-                    if preferences.first?.planChosen == nil {
+                    if preference?.planChosen == nil {
                         PlanSelectionView(
                             showQuestionnaire: $showQuestionnaire
                         )
                     } else if showPlan || !records.isEmpty {
                         // Today's Plan Header
-                        TodaysPlanHeader(onModifyTapped: {
+                        WeeklyPlanHeader(onModifyTapped: {
                             showPlanModifySheet = true
                         })
 
                         // Today's Plan Section
-                        TodaysPlan().environment(viewModel)
+                        WeeklyPlanPager()
+                            .environment(recommendationVM)
+                            .frame(height: 200)
                     }
 
                     // Recent History Section
-                    RecentHistoryView().environment(viewModel)
+                    RecentHistoryView().environment(recommendationVM)
                 }
             }
             .navigationTitle("My Exercise")
-            .task {
-                await healthKitManager.requestAuthorization()
-            }
             .toolbarTitleDisplayMode(.large)
         }
         .sheet(isPresented: $showPlanModifySheet) {
-            ExerciseSelectionSheet().environment(viewModel)
+            ExerciseSelectionSheet().environment(recommendationVM)
         }.fullScreenCover(isPresented: $showQuestionnaire) {
-            
+
             let onDoneAction = {
                 showQuestionnaire = false
+
+                recommendationVM.setup(modelContext: modelContext)
+                if let preference = preference {
+                    recommendationVM.initializeWeeklyExercises(
+                        preference: preference
+                    )
+                }
+
                 showPlan = true
             }
-            
+
             let onCancelAction = {
                 showQuestionnaire = false
-                preferences.first?.planChosen = nil
+                preference?.planChosen = nil
             }
-            
+
             NavigationStack {
-                if preferences.first?.planChosen == .beginner {
+                if preference?.planChosen == .beginner {
                     StartSmallView(onDone: onDoneAction)
                 } else {
                     StartStrongView(onDone: onDoneAction)
                 }
             }
-            .environment(questionnaireViewModel)
+            .environment(questionnaireVM)
             .environment(\.dismissFlow, onCancelAction)
         }
     }

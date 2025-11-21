@@ -13,6 +13,7 @@ struct ExerciseRow: View {
     let isCompleted: Bool
     var action: () -> Void
     var exercise: Exercise
+    var disableStartButton: Bool = false
 
     @State private var showTutorial = false
 
@@ -30,7 +31,7 @@ struct ExerciseRow: View {
                         isCompleted ? Color(.secondaryLabel) : Color(.label)
                     )
                     .strikethrough(isCompleted)
-                
+
                 Image(systemName: "info.circle.fill")
                     .foregroundColor(Color("BlueTwo"))
                     .onTapGesture {
@@ -62,6 +63,7 @@ struct ExerciseRow: View {
                                 Color.blueTwo
                             )
                     )
+                    .disabled(disableStartButton)
                 }
             } else {
                 HStack(spacing: 8) {

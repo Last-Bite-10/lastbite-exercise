@@ -64,3 +64,7 @@ extension ButtonWSound where Label == Text {
         self.label = { Text(String(title)) }
     }
 }
+
+#Preview {
+    ButtonWSound("Hello, World!") {}
+}

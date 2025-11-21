@@ -10,9 +10,9 @@ import SwiftUI
 
 struct FrequencyView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
-    
+
     @Environment(\.dismissFlow) private var dismissFlow
-    
+
     let onDone: () -> Void
 
     var body: some View {
@@ -26,23 +26,24 @@ struct FrequencyView: View {
                 .resizable()
                 .scaledToFit()
 
+            Spacer()
+
             ForEach(FrequencyType.allCases, id: \.self) { type in
                 QuestionnaireSelectionButton(
                     title: type.rawValue,
                     isSelected: viewModel.selectedFrequency == type,
-                    widthReduction: 200,
                     action: { viewModel.selectedFrequency = type }
                 )
             }
+            .padding(.horizontal, 48)
 
             NavigationLink(
                 destination:
                     EquipmentView(onDone: onDone),
                 label: { CoreButtonLabel(title: "Next") }
             )
+            .padding(.horizontal, 48)
             .padding(.top, 40)
-
-            Spacer()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

@@ -91,22 +91,38 @@ class RecommendationViewModel {
         )
 
         // Create 2 exercise records for this week
-        let topExercises = recommendations.prefix(2)
+        let topExercises = recommendations.prefix(
+            getRecommendedPrefix(frequency: preference.frequency ?? .oneDay)
+        )
+
         let minutes = extractMinutes(
             from: preference.frequency ?? .oneDay,
             isUsingBeginnerPlan: preference.planChosen == .beginner
         )
 
-        for (exercise, _) in topExercises {
+        // Insert exercise records into the context
+        var dayOffset = 0
+
+        for (index, (exercise, _)) in topExercises.enumerated() {
+            if index % 2 == 0 && index != 0 {
+                dayOffset += 1
+            }
+
+            let usedAtDate = Calendar.current.date(
+                byAdding: .day,
+                value: dayOffset,
+                to: Date()
+            )!
+
             let record = ExerciseRecord(
                 exercise: exercise,
                 requiredMinutes: minutes,
+                usedAt: usedAtDate,
                 week: week
             )
+
             context.insert(record)
             week.records!.append(record)
-
-            print("Inserted exercise: \(exercise.name) with \(minutes) minutes")
         }
 
         try? context.save()
@@ -129,6 +145,16 @@ class RecommendationViewModel {
         }
 
         try? context.save()
+    }
+
+    private func getRecommendedPrefix(frequency: FrequencyType) -> Int {
+        switch frequency {
+        case .oneDay: return 2
+        case .twoDays: return 4
+        case .threeDays: return 6
+        case .fourDays: return 8
+        case .fiveDays: return 10
+        }
     }
 
     private func beginnerPlanMinutes() -> Int {

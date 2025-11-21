@@ -10,10 +10,12 @@ import SwiftUI
 
 struct LocationView: View {
     @Environment(QuestionnaireViewModel.self) private var viewModel
-    @Query private var preferences: [Preference]
-    
     @Environment(\.dismissFlow) private var dismissFlow
-    
+
+    @Query private var preferences: [Preference]
+
+    private var preference: Preference? { preferences.first }
+
     let onDone: () -> Void
 
     var body: some View {
@@ -32,31 +34,32 @@ struct LocationView: View {
 
             Text("Where do you prefer to do your exercise?")
                 .font(.body)
-                .padding(.bottom, 48)
+
+            Spacer()
 
             ForEach(LocationType.allCases, id: \.self) { type in
                 QuestionnaireSelectionButton(
                     title: type.rawValue,
                     isSelected: viewModel.selectedLocation == type,
-                    widthReduction: 160,
                     action: { viewModel.selectedLocation = type }
                 )
             }
+            .padding(.horizontal, 64)
 
-            Button(
+            Spacer()
+
+            ButtonWSound(
                 action: {
-                    preferences.first?.frequency = viewModel.selectedFrequency
-                    preferences.first?.equipmentAvailable =
+                    preference?.frequency = viewModel.selectedFrequency
+                    preference?.equipmentAvailable =
                         Array(viewModel.selectedEquipment)
-                    preferences.first?.location = viewModel.selectedLocation
-                    
+                    preference?.location = viewModel.selectedLocation
+
                     onDone()
                 },
                 label: { CoreButtonLabel(title: "Done") }
             )
-            .padding(.top, 40)
-            
-            Spacer()
+            .padding(.horizontal, 48)
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

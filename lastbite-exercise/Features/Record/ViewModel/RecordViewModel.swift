@@ -60,7 +60,8 @@ class RecordViewModel: ObservableObject {
             $timerStatus,
         )
         .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
-        .sink { [weak self] progress, timeRemaining, timeRecorded, timerStatus in
+        .sink {
+            [weak self] progress, timeRemaining, timeRecorded, timerStatus in
             self?.sendProgressToWatch(
                 progress: progress,
                 timeRemaining: timeRemaining,
@@ -83,7 +84,7 @@ class RecordViewModel: ObservableObject {
             "progress": Double(progress),
             "timeRemaining": timeRemaining,
             "totalDuration": totalDuration,
-            "timerStatus": timerStatus.rawValue
+            "timerStatus": timerStatus.rawValue,
         ]
 
         // Use application context for state sync (most reliable)

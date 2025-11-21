@@ -12,16 +12,16 @@
 //    @Published var totalTime: Int
 //    @Published var timerStatus: TimerStatusType
 //    @Published var exerciseRecord: ExerciseRecord
-//    
+//
 //    init(activeTime: Int, totalTime: Int, exerciseRecord: ExerciseRecord) {
 //        self.activeTime = activeTime
 //        self.totalTime = totalTime
 //        self.timerStatus = .timerStopped
 //        self.exerciseRecord = exerciseRecord
 //    }
-//    
+//
 //    public func startTimer(){
-//        
+//
 //    }
-//    
+//
 //}

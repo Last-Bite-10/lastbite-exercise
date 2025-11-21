@@ -16,7 +16,7 @@ struct RecordPlayButton: View {
                 .font(.body)
                 .padding(.vertical, 12)
                 .padding(.horizontal, 28)
-                .frame(width: UIScreen.main.bounds.width - 128)
+                .frame(maxWidth: .infinity)
                 .foregroundStyle(Color.white)
                 .background(
                     Capsule()
@@ -24,6 +24,7 @@ struct RecordPlayButton: View {
                 )
                 .accessibilityLabel(title)
         }
+        .padding(.horizontal, 48)
     }
 }
 

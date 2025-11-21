@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct TodaysPlanHeader: View {
-    var title: String = "Today's Plan"
+struct WeeklyPlanHeader: View {
+    var title: String = "This Week's Plan"
     var actionTitle: String = "Modify"
     var onModifyTapped: () -> Void
 
@@ -38,7 +38,7 @@ struct TodaysPlanHeader: View {
 
 // MARK: - Preview
 #Preview {
-    TodaysPlanHeader {
+    WeeklyPlanHeader {
         print("Modify tapped")
     }
 }

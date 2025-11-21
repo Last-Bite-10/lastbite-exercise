@@ -3,7 +3,7 @@
 // lastbite-exercise
 //
 // Created by Niken Larasati on 23/10/25.
-// swiftlint:disable line_length
+//
 
 import SwiftUI
 
@@ -15,15 +15,15 @@ struct Trophy: Identifiable {
 
 struct TrophiesView: View {
     @Binding var trophies: [Trophy]
-    
+
     let columns = [
         GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible()),
     ]
-    
+
     private func toggleAllTrophies() {
         let shouldAchieve = !(trophies.first?.isAchieved ?? false)
-        
+
         for index in trophies.indices {
             trophies[index].isAchieved = shouldAchieve
         }
@@ -40,28 +40,31 @@ struct TrophiesView: View {
                 }
 
             LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(trophies) { trophy in
-                        VStack(spacing: 8) {
-                            ZStack {
-                                let trophyImage = trophy.isAchieved ? "\(trophy.milestone)WeekTrophy" : "Locked\(trophy.milestone)WeekTrophy"
-                                
-                                Image(trophyImage)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 150, height: 150)
-                                    .background(Color("CardGray"))
-                                    .cornerRadius(20)
-                            }
+                ForEach(trophies) { trophy in
+                    VStack(spacing: 8) {
+                        ZStack {
+                            let trophyImage =
+                                trophy.isAchieved
+                                ? "\(trophy.milestone)WeekTrophy"
+                                : "Locked\(trophy.milestone)WeekTrophy"
 
-                            Text("\(trophy.milestone) Weeks Streak Trophy")
-                                .font(.caption)
-                                .foregroundColor(
-                                    trophy.isAchieved
-                                        ? .black : .gray.opacity(0.5)
-                                )
+                            Image(trophyImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 150, height: 150)
+                                .background(Color("CardGray"))
+                                .cornerRadius(20)
                         }
+
+                        Text("\(trophy.milestone) Weeks Streak Trophy")
+                            .font(.caption)
+                            .foregroundColor(
+                                trophy.isAchieved
+                                    ? .black : .gray.opacity(0.5)
+                            )
                     }
-                    .frame(maxWidth: .infinity)
+                }
+                .frame(maxWidth: .infinity)
             }
         }
     }

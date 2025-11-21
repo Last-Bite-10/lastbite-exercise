@@ -10,21 +10,18 @@ import SwiftUI
 struct QuestionnaireSelectionButton: View {
     var title: String
     var isSelected: Bool = false
-    var widthReduction: CGFloat = 64
     var action: () -> Void
 
     var body: some View {
         ButtonWSound(
-            action: {
-                action()
-            },
+            action: action,
             label: {
                 Text(title)
                     .font(.body)
                     .padding(.vertical, 12)
-                    .padding(.horizontal, 28)
-                    .frame(width: UIScreen.main.bounds.width - widthReduction)
-                    .foregroundStyle(isSelected ? Color.white : Color.black)
+                    .padding(.horizontal, 12)
+                    .frame(maxWidth: .infinity)  // expand to grid column
+                    .foregroundStyle(isSelected ? .white : .black)
                     .background(
                         Capsule()
                             .fill(isSelected ? Color.blueTwo : Color.cardGray)

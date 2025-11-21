@@ -83,7 +83,8 @@ struct DurationSelectionSheet: View {
                     Button("Done") {
                         let record = ExerciseRecord(
                             exercise: exercise,
-                            requiredMinutes: selectedMinutes
+                            requiredMinutes: selectedMinutes,
+                            usedAt: Date()
                         )
                         onComplete(record)
                         dismiss()

@@ -12,7 +12,7 @@ import WatchConnectivity
 @MainActor
 class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
     @Published var latestBPM: Double?
-//    @Published var latestTimerState:
+    //    @Published var latestTimerState:
     @Published var isReceivingFromWatch: Bool = false
 
     // Publisher for BPM updates from Watch
@@ -55,12 +55,13 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
             ["command": "start"],
             replyHandler: { reply in
                 print("[iPhone] Received reply from watch: \(reply)")
+            },
+            errorHandler: { error in
+                print(
+                    "[iPhone] Failed to start watch monitoring: \(error.localizedDescription)"
+                )
             }
-        ) { error in
-            print(
-                "[iPhone] Failed to start watch monitoring: \(error.localizedDescription)"
-            )
-        }
+        )
         isReceivingFromWatch = true
     }
 
@@ -168,10 +169,8 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
             case .timerChange:
                 if let data = userInfo["data"] as? [String: Any] {
                     print("[iPhone] Timer change data from userInfo: \(data)")
-                    
-                    
                 }
-                
+
             default:
                 print("[iPhone] ACK message")
             }

@@ -18,7 +18,7 @@ final class HealthKitManager: ObservableObject {
 
     init() {
         print(
-            "HealthKitManager initialized, BPM Threshold: \(bpmThreshold)"
+            "HealthKitManager initialized, BPM Threshold: \(String(describing: bpmThreshold))"
         )
     }
 
@@ -54,9 +54,10 @@ final class HealthKitManager: ObservableObject {
 
                         Task { @MainActor in
                             self.bpmThreshold = self.getBPMThreshold(age)
+                            print(
+                                "Threshold: \(String(describing: self.bpmThreshold))"
+                            )
                         }
-
-                        print("Threshold: \(self.bpmThreshold)")
                     }
                 } catch {
                     print(

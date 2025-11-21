@@ -3,13 +3,13 @@
 //  lastbite-exercise
 //
 //  Created by Niken Larasati on 18/11/25.
-// swiftlint:disable line_length
+//
 
 import SwiftUI
 
 struct StartStrongView: View {
     @Environment(\.dismissFlow) private var dismissFlow
-    
+
     let onDone: () -> Void
 
     var body: some View {
@@ -22,7 +22,7 @@ struct StartStrongView: View {
             Image("StartSmall")
                 .resizable()
                 .scaledToFit()
-            
+
             VStack(spacing: 24) {
                 Text(
                     "Build a consistent exercise routine by directly meeting the WHO recommended **150 minutes of exercise per week**."
@@ -31,7 +31,7 @@ struct StartStrongView: View {
                 .multilineTextAlignment(.center)
                 .foregroundColor(.primary)
                 .fixedSize(horizontal: false, vertical: true)
-        
+
                 VStack(alignment: .leading, spacing: 16) {
                     Text("1 day / Week: 150 minutes per day")
                     Text("2 day / Week: 75 minutes per day")
@@ -56,11 +56,12 @@ struct StartStrongView: View {
             .padding(30)
             .background(Color.cardGray)
             .cornerRadius(30)
-           
+
             NavLinkWSound(
                 title: "Next",
                 destination: FrequencyView(onDone: onDone),
             )
+            .padding(.horizontal, 48)
         }
         .padding(.horizontal)
         .toolbar {
