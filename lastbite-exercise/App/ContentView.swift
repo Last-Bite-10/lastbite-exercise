@@ -20,7 +20,7 @@ struct ContentView: View {
                 GetStartedView()
             } else {
                 TabView(selection: $selectedTab) {
-                    MyExerciseView()
+                    HomeView()
                         .tag(0)
                         .tabItem {
                             Label("My Exercise", systemImage: "figure.yoga")

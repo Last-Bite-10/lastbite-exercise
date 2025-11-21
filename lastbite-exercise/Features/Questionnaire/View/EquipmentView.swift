@@ -15,6 +15,16 @@ struct EquipmentView: View {
 
     var preference: Preference? { preferences.first }
 
+    private func disableButtonCondition(currentEquipment: EquipmentType) -> Bool
+    {
+        if currentEquipment == .none {
+            return !questionnaireVM.selectedEquipment.isEmpty
+                && !questionnaireVM.selectedEquipment.contains(.none)
+        } else {
+            return questionnaireVM.selectedEquipment.contains(.none)
+        }
+    }
+
     var body: some View {
         VStack(spacing: 10) {
             Text("2/3")
@@ -65,6 +75,9 @@ struct EquipmentView: View {
                                     )
                                 }
                             }
+                        )
+                        .disabled(
+                            disableButtonCondition(currentEquipment: type)
                         )
                     }
                 }

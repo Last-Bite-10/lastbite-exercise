@@ -12,6 +12,7 @@ final class HomeViewModel {
     var showQuestionnaire: Bool = false
     var showPlan: Bool = false
     var showPlanModifySheet = false
+    var showTutorial: Bool = false
 
     var currentlyViewedPlan: [ExerciseRecord] = []
     var currentlyViewedDate: Date = Date()
@@ -19,6 +20,7 @@ final class HomeViewModel {
     func onDoneAction() {
         showQuestionnaire = false
         showPlan = true
+        showTutorial = true
     }
 
     func onCancelAction(preference: Preference) {

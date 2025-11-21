@@ -11,8 +11,8 @@ import SwiftUI
 struct MyExerciseView: View {
     @State private var recommendationVM = RecommendationViewModel()
     @State private var questionnaireVM = QuestionnaireViewModel()
-    @State private var homeVM = HomeViewModel()
 
+    @Environment(HomeViewModel.self) private var homeVM
     @Environment(\.modelContext) private var modelContext
 
     @Query private var preferences: [Preference]
@@ -37,40 +37,53 @@ struct MyExerciseView: View {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 
+    private var bindingForPlanModifySheet: Binding<Bool> {
+        Binding(
+            get: { homeVM.showPlanModifySheet },
+            set: { homeVM.showPlanModifySheet = $0 }
+        )
+    }
+
+    private var bindingForShowQuestionnaire: Binding<Bool> {
+        Binding(
+            get: { homeVM.showQuestionnaire },
+            set: { homeVM.showQuestionnaire = $0 }
+        )
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    // Streak Section
                     StreakView(allWeeks: allWeeks)
                         .padding(.horizontal)
                         .padding(.bottom, 20)
 
                     if preference?.planChosen == nil {
                         PlanSelectionView(
-                            showQuestionnaire: $homeVM.showQuestionnaire
+                            showQuestionnaire: bindingForShowQuestionnaire
                         )
                     } else if homeVM.showPlan || !records.isEmpty {
-
-                        // Weekly Plan Section
                         WeeklyPlanPager()
                             .environment(recommendationVM)
                             .environment(homeVM)
                     }
 
-                    // Recent History Section
-                    RecentHistoryView().environment(recommendationVM)
+                    RecentHistoryView()
+                        .environment(recommendationVM)
                 }
             }
             .navigationTitle("My Exercise")
             .toolbarTitleDisplayMode(.large)
         }
-        .sheet(isPresented: $homeVM.showPlanModifySheet) {
+
+        // ✅ Move the environment-based bindings here (AFTER body starts)
+        .sheet(isPresented: bindingForPlanModifySheet) {
             ExerciseSelectionSheet()
                 .environment(recommendationVM)
                 .environment(homeVM)
         }
-        .fullScreenCover(isPresented: $homeVM.showQuestionnaire) {
+        .fullScreenCover(isPresented: bindingForShowQuestionnaire) {
             NavigationStack {
                 if preference?.planChosen == .beginner {
                     StartSmallView()
@@ -81,6 +94,7 @@ struct MyExerciseView: View {
             .environment(questionnaireVM)
             .environment(homeVM)
         }
+
     }
 }
 
