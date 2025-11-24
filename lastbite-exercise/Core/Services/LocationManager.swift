@@ -5,7 +5,6 @@
 //  Created by Niken Larasati on 20/11/25.
 //
 
-
 import CoreLocation
 import Foundation
 
@@ -72,5 +71,12 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         self.locationError = error
         print("Location update failed: \(error.localizedDescription)")
+    }
+}
+
+extension CLLocationCoordinate2D: Equatable {
+    public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+        // Lokasi dianggap sama jika Latitude DAN Longitude-nya sama
+        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
     }
 }

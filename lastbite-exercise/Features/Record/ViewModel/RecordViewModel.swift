@@ -98,7 +98,7 @@ class RecordViewModel: ObservableObject {
         // Also send as message if Watch is reachable (faster)
         if WCSession.default.isReachable {
             WCSession.default.sendMessage(progressData, replyHandler: nil) {
-                error in
+                error in 
                 print(
                     "Failed to send progress message: \(error.localizedDescription)"
                 )
@@ -112,7 +112,7 @@ class RecordViewModel: ObservableObject {
         watchConnectivityManager?.startWatchHeartRateMonitoring()
 
         print(
-            "Started monitoring - Watch: \(watchConnectivityManager?.isReceivingFromWatch ?? false), iPhone HealthKit active"
+            "Started monitoring - Watch: \(watchConnectivityManager?.isReceivingFromWatch ?? false), iPhone HealthKit active" // swiftlint:disable:this line_length
         )
     }
 

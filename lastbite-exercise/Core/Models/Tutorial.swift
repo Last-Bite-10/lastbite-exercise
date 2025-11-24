@@ -1,7 +1,6 @@
 //
 //  Tutorial.swift
 //  lastbite-exercise
-// swiftlint:disable line_length
 //
 //  Created by Niken Larasati on 05/11/25.
 //
@@ -20,14 +19,14 @@ struct TutorialData {
         1: [
             TutorialStep(
                 imageName: "BriskWalking",
-                description: "Walk at a pace of around 100 steps per minute. Keep your body upright, relax your shoulders, engage your core, and swing your arms naturally."
+                description: "Walk at a pace of around 100 steps per minute. Keep your body upright, relax your shoulders, engage your core, and swing your arms naturally." // swiftlint:disable:this line_length
             ),
         ],
         // Push up
         2: [
             TutorialStep(
                 imageName: "PushUp1",
-                description: "Start in a plank with hands under shoulders and body straight. Keep core tight, balancing on your toes."
+                description: "Start in a plank with hands under shoulders and body straight. Keep core tight, balancing on your toes." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "PushUp2",
@@ -42,18 +41,18 @@ struct TutorialData {
             ),
             TutorialStep(
                 imageName: "InvisibleJumpRope2",
-                description: "Rotate your wrists like turning a rope and hop lightly on your toes. Keep a steady rhythm."
+                description: "Rotate your wrists like turning a rope and hop lightly on your toes. Keep a steady rhythm." // swiftlint:disable:this line_length
             )
         ],
         // Vertical jump
         4: [
             TutorialStep(
                 imageName: "VerticalJump1",
-                description: "Stand with feet shoulder-width apart, chest up, and core tight. Bend your knees and reach your hands toward the floor."
+                description: "Stand with feet shoulder-width apart, chest up, and core tight. Bend your knees and reach your hands toward the floor." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "VerticalJump2",
-                description: "Push through your heels and jump high, swinging your arms up. Land softly and bend your knees to absorb impact."
+                description: "Push through your heels and jump high, swinging your arms up. Land softly and bend your knees to absorb impact." // swiftlint:disable:this line_length
             )
         ],
         // Butt kicks
@@ -64,25 +63,25 @@ struct TutorialData {
             ),
             TutorialStep(
                 imageName: "ButtKicks2",
-                description: "Kick your heels toward your glutes, switching legs quickly. Keep a steady rhythm and land softly."
+                description: "Kick your heels toward your glutes, switching legs quickly. Keep a steady rhythm and land softly." // swiftlint:disable:this line_length
             )
         ],
         // Bodyweight squats
         6: [
             TutorialStep(
                 imageName: "BodyweightSquats1",
-                description: "Stand with feet shoulder-width apart, toes slightly out. Keep chest up, core tight, and hands behind head or forward."
+                description: "Stand with feet shoulder-width apart, toes slightly out. Keep chest up, core tight, and hands behind head or forward." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "BodyweightSquats2",
-                description: "Bend knees and push hips back like sitting on a chair. Lower down, then push through heels to stand back up."
+                description: "Bend knees and push hips back like sitting on a chair. Lower down, then push through heels to stand back up." // swiftlint:disable:this line_length
             )
         ],
         // March in place
         7: [
             TutorialStep(
                 imageName: "JogInPlace1",
-                description: "Stand with feet shoulder-width apart, toes slightly out. Keep chest up, core tight, and hands behind head or forward. Lift one knee while swinging the opposite arm, then switch sides."
+                description: "Stand with feet shoulder-width apart, toes slightly out. Keep chest up, core tight, and hands behind head or forward. Lift one knee while swinging the opposite arm, then switch sides." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "JogInPlace2",
@@ -104,7 +103,7 @@ struct TutorialData {
         9: [
             TutorialStep(
                 imageName: "PlankShoulderTap1",
-                description: "Start in a plank with wrists under shoulders and feet hip-width apart. Tap your left shoulder with your right hand."
+                description: "Start in a plank with wrists under shoulders and feet hip-width apart. Tap your left shoulder with your right hand." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "PlankShoulderTap2",
@@ -115,7 +114,7 @@ struct TutorialData {
         10: [
             TutorialStep(
                 imageName: "DumbbellDeadLift1",
-                description: "Stand with feet shoulder-width apart, knees slightly bent, holding dumbbells by your thighs. Hinge at the hips and keep your back flat."
+                description: "Stand with feet shoulder-width apart, knees slightly bent, holding dumbbells by your thighs. Hinge at the hips and keep your back flat." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "DumbbellDeadLift2",
@@ -123,21 +122,21 @@ struct TutorialData {
             ),
             TutorialStep(
                 imageName: "DumbbellDeadLift3",
-                description: "Push through your heels to stand tall, keeping weights close. Squeeze your glutes at the top."
+                description: "Push through your heels to stand tall, keeping weights close. Squeeze your glutes at the top." // swiftlint:disable:this line_length
             )
         ],
         // Stair climbing
         11: [
             TutorialStep(
                 imageName: "StairClimbing",
-                description: "Start with a few stairs and increase gradually. Rest if you feel pain and stay consistent."
+                description: "Start with a few stairs and increase gradually. Rest if you feel pain and stay consistent." // swiftlint:disable:this line_length
             )
         ],
         // Wall sit
         12: [
             TutorialStep(
                 imageName: "WallSit",
-                description: "Slide down the wall until your thighs are parallel to the floor. Keep your back flat and hold the position."
+                description: "Slide down the wall until your thighs are parallel to the floor. Keep your back flat and hold the position." // swiftlint:disable:this line_length
             )
         ],
         // Frog jumps
@@ -170,7 +169,7 @@ struct TutorialData {
         15: [
             TutorialStep(
                 imageName: "SquatJump1",
-                description: "Stand with feet shoulder-width apart, toes slightly out. Lower into a squat as if sitting back."
+                description: "Stand with feet shoulder-width apart, toes slightly out. Lower into a squat as if sitting back." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "SquatJump2",
@@ -181,7 +180,7 @@ struct TutorialData {
         16: [
             TutorialStep(
                 imageName: "JumpingJacks1",
-                description: "Stand with feet shoulder-width apart, toes slightly out. Lower into a squat as if sitting back."
+                description: "Stand with feet shoulder-width apart, toes slightly out. Lower into a squat as if sitting back." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "JumpingJacks2",
@@ -192,7 +191,7 @@ struct TutorialData {
         17: [
             TutorialStep(
                 imageName: "JogInPlace1",
-                description: "Stand with feet shoulder-width apart, toes slightly out. Keep chest up, core tight, and hands behind head or forward. Lift one knee while swinging the opposite arm, then switch sides."
+                description: "Stand with feet shoulder-width apart, toes slightly out. Keep chest up, core tight, and hands behind head or forward. Lift one knee while swinging the opposite arm, then switch sides." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "JogInPlace2",
@@ -214,7 +213,7 @@ struct TutorialData {
         19: [
             TutorialStep(
                 imageName: "DumbbellThruster1",
-                description: "Stand with feet shoulder-width apart, holding dumbbells at shoulder level. Squat until your thighs are parallel to the floor."
+                description: "Stand with feet shoulder-width apart, holding dumbbells at shoulder level. Squat until your thighs are parallel to the floor." // swiftlint:disable:this line_length
             ),
             TutorialStep(
                 imageName: "DumbbellThruster2",
@@ -233,42 +232,42 @@ struct TutorialData {
             ),
             TutorialStep(
                 imageName: "Lunge2",
-                description: "Step forward, bend both knees until the back knee is near the floor. Push back up and switch legs."
+                description: "Step forward, bend both knees until the back knee is near the floor. Push back up and switch legs." // swiftlint:disable:this line_length
             )
         ],
         // Badminton
         21: [
             TutorialStep(
                 imageName: "Badminton",
-                description: "Play badminton by moving actively, hitting the shuttle with control, and keeping a steady rhythm throughout the game"
+                description: "Play badminton by moving actively, hitting the shuttle with control, and keeping a steady rhythm throughout the game" // swiftlint:disable:this line_length
             )
         ],
         // Jogging
         22: [
             TutorialStep(
                 imageName: "Jogging",
-                description: "Jog at a comfortable pace while keeping your posture upright, breathing steadily, and maintaining consistency to build endurance and strength"
+                description: "Jog at a comfortable pace while keeping your posture upright, breathing steadily, and maintaining consistency to build endurance and strength" // swiftlint:disable:this line_length
             )
         ],
         // Cycling
         23: [
             TutorialStep(
                 imageName: "Cycling",
-                description: "Ride at a steady rhythm, keep your core engaged, and focus on smooth pedaling to strengthen your legs and improve cardiovascular health"
+                description: "Ride at a steady rhythm, keep your core engaged, and focus on smooth pedaling to strengthen your legs and improve cardiovascular health" // swiftlint:disable:this line_length
             )
         ],
         // Tennis
         24: [
             TutorialStep(
                 imageName: "Tennis",
-                description: "Move quickly across the court, control your swings, and stay alert to build coordination, agility, and overall body strength"
+                description: "Move quickly across the court, control your swings, and stay alert to build coordination, agility, and overall body strength" // swiftlint:disable:this line_length
             )
         ],
         // Volleyball
         25: [
             TutorialStep(
                 imageName: "Volleyball",
-                description: "Stay light on your feet, communicate with teammates, and react fast to improve teamwork, coordination, and upper body power"
+                description: "Stay light on your feet, communicate with teammates, and react fast to improve teamwork, coordination, and upper body power" // swiftlint:disable:this line_length
             )
         ]
     ]

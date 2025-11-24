@@ -9,6 +9,7 @@ import SwiftData
 import SwiftUI
 
 @Observable
+@MainActor
 class RecommendationViewModel {
     var currentWeek: Weekly?
 
@@ -68,11 +69,14 @@ class RecommendationViewModel {
         if let feedbacks = feedbackRecords {
             recommender.loadFeedback(feedbacks)
         }
+        
+        let currentWeather = WeatherManager.shared.currentWeatherType
 
         // Get recommendations
         let recommendations = recommender.recommend(
             equipments: preference.equipmentAvailable,
             location: preference.location ?? .indoor,
+            currentWeather: currentWeather
         )
 
         // Create 2 exercise records for this week

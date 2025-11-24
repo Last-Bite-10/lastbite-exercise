@@ -5,9 +5,9 @@
 //  Created by Ammar Alifian Fahdan on 13/11/25.
 //
 //
-//import Foundation
+// import Foundation
 //
-//class TimerService {
+// class TimerService {
 //    @Published var activeTime: Int
 //    @Published var totalTime: Int
 //    @Published var timerStatus: TimerStatusType
@@ -24,4 +24,4 @@
 //        
 //    }
 //    
-//}
+// }

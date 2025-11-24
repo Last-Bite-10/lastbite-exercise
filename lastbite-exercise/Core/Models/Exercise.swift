@@ -8,7 +8,7 @@
 import Foundation
 
 struct Exercise: Codable, Identifiable, Hashable {
-    let id: UUID
+    let id: Int
     let name: String
     let imageName: String?
     let location: LocationType
@@ -19,7 +19,7 @@ struct Exercise: Codable, Identifiable, Hashable {
     public static func loadExercises() -> [Exercise] {
         return [
             Exercise(
-                id: UUID(),
+                id: 1,
                 name: "Brisk walking",
                 imageName: "BriskWalking",
                 location: .outdoor,
@@ -28,7 +28,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 2,
                 name: "Push up",
                 imageName: "PushUp1",
                 location: .indoor,
@@ -37,7 +37,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 3,
                 name: "Invisible jump rope",
                 imageName: "InvisibleJumpRope1",
                 location: .indoor,
@@ -46,7 +46,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 4,
                 name: "Vertical jump",
                 imageName: "VerticalJump1",
                 location: .indoor,
@@ -55,7 +55,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 5,
                 name: "Butt kicks",
                 imageName: "ButtKicks1",
                 location: .both,
@@ -64,7 +64,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 6,
                 name: "Bodyweight squats",
                 imageName: "BodyweightSquats1",
                 location: .indoor,
@@ -73,7 +73,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 7,
                 name: "March in place",
                 imageName: "JogInPlace1",
                 location: .indoor,
@@ -82,7 +82,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 8,
                 name: "Skipping",
                 imageName: "Skipping1",
                 location: .both,
@@ -91,7 +91,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 9,
                 name: "Plank shoulder tap",
                 imageName: "PlankShoulderTap1",
                 location: .indoor,
@@ -100,7 +100,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 10,
                 name: "Dumbbell deadlift",
                 imageName: "DumbbellDeadLift1",
                 location: .indoor,
@@ -109,7 +109,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 11,
                 name: "Stair climbing",
                 imageName: "StairClimbing",
                 location: .indoor,
@@ -118,7 +118,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 12,
                 name: "Wall sit",
                 imageName: "WallSit",
                 location: .indoor,
@@ -127,7 +127,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 13,
                 name: "Frog jumps",
                 imageName: "FrogJump1",
                 location: .indoor,
@@ -136,7 +136,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 14,
                 name: "Mountain climbers",
                 imageName: "SlowMountainClimbers1",
                 location: .indoor,
@@ -145,7 +145,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 15,
                 name: "Squat jump",
                 imageName: "SquatJump1",
                 location: .indoor,
@@ -154,7 +154,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 16,
                 name: "Jumping jacks",
                 imageName: "JumpingJacks1",
                 location: .both,
@@ -163,7 +163,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 17,
                 name: "Jog in place",
                 imageName: "JogInPlace1",
                 location: .indoor,
@@ -172,7 +172,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 18,
                 name: "Bicep curl",
                 imageName: "BicepCurl1",
                 location: .indoor,
@@ -181,7 +181,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 19,
                 name: "Dumbbell thruster",
                 imageName: "DumbbellThruster1",
                 location: .indoor,
@@ -190,7 +190,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .notAffected
             ),
             Exercise(
-                id: UUID(),
+                id: 20,
                 name: "Lunge",
                 imageName: "Lunge1",
                 location: .both,
@@ -199,7 +199,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 21,
                 name: "Badminton",
                 imageName: "Badminton",
                 location: .outdoor,
@@ -208,7 +208,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .noStrongWind
             ),
             Exercise(
-                id: UUID(),
+                id: 22,
                 name: "Jogging",
                 imageName: "Jogging1",
                 location: .outdoor,
@@ -217,7 +217,7 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 23,
                 name: "Cycling",
                 imageName: "Cycling",
                 location: .outdoor,
@@ -226,16 +226,16 @@ struct Exercise: Codable, Identifiable, Hashable {
                 weather: .clear
             ),
             Exercise(
-                id: UUID(),
+                id: 24,
                 name: "Tennis",
                 imageName: "Tennis",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .tennisRacket,
-                weather: .notAffected
+                weather: .avoidStrongWind
             ),
             Exercise(
-                id: UUID(),
+                id: 25,
                 name: "Volleyball",
                 imageName: "Volleyball",
                 location: .outdoor,

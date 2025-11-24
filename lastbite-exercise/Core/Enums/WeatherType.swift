@@ -6,8 +6,14 @@
 //
 
 enum WeatherType: String, Codable, Hashable, CaseIterable {
+    // ideal
     case clear
     case notAffected
     case noStrongWind
     case avoidStrongWind
+    
+    // blockers
+    case rainy
+    case extremeHeat
+    case strongWind
 }

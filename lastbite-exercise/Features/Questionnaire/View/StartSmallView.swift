@@ -3,7 +3,6 @@
 //  lastbite-exercise
 //
 //  Created by Ali Ahmad Fahrezy on 05/11/25.
-// swiftlint:disable line_length
 
 import SwiftUI
 
@@ -26,7 +25,7 @@ struct StartSmallView: View {
             
             VStack(spacing: 24) {
                 Text(
-                    "Build up your exercising habit by **starting small and gradually increasing** the duration of your exercise weekly."
+                    "Build up your exercising habit by **starting small and gradually increasing** the duration of your exercise weekly." // swiftlint:disable:this line_length
                 )
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
@@ -48,7 +47,7 @@ struct StartSmallView: View {
                 .cornerRadius(16)
 
                 Text(
-                    "By the end of Week 6, you’ll just be 1–2 more short sessions away from reaching the 150-minute minimum weekly goal recommended for optimal health."
+                    "By the end of Week 6, you’ll just be 1–2 more short sessions away from reaching the 150-minute minimum weekly goal recommended for optimal health." // swiftlint:disable:this line_length
                 )
                 .font(.subheadline)
                 .multilineTextAlignment(.center)

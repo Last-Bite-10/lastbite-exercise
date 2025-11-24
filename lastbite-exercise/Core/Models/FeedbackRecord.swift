@@ -16,7 +16,7 @@ final class FeedbackRecord {
     var location: LocationType
     var weather: WeatherType
     var needsTutorial: Bool
-    var wasGood: Bool
+    var isCompleted: Bool
     var timestamp: Date
 
     init(
@@ -25,7 +25,7 @@ final class FeedbackRecord {
         location: LocationType,
         weather: WeatherType,
         needsTutorial: Bool,
-        wasGood: Bool
+        isCompleted: Bool
     ) {
         self.id = UUID()
         self.exercise = exercise
@@ -33,7 +33,7 @@ final class FeedbackRecord {
         self.location = location
         self.weather = weather
         self.needsTutorial = needsTutorial
-        self.wasGood = wasGood
+        self.isCompleted = isCompleted
         self.timestamp = Date()
     }
 }

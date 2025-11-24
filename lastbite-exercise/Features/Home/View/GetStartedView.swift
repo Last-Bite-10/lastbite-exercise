@@ -19,7 +19,7 @@ struct GetStartedView: View {
             alignment: .center
         ) {
             HStack {
-                Image("icon_display")
+                Image("AppIcon")
 
                 Text(
                     "Welcome to ExaMove, where your small moves make a big impact."

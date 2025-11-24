@@ -5,10 +5,10 @@
 //  Created by Ali Ahmad Fahrezy on 22/10/25.
 //
 
-//import SwiftUI
+// import SwiftUI
 //
-//@Observable
-//class TrophyViewModel {
+// @Observable
+// class TrophyViewModel {
 //    @Published var currentStreak: Int = 0
 //    
 //    @Published var trophies: [Trophy]
@@ -35,4 +35,4 @@
 //            }
 //        }
 //    }
-//}
+// }

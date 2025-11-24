@@ -3,7 +3,6 @@
 //  lastbite-exercise
 //
 //  Created by Niken Larasati on 18/11/25.
-// swiftlint:disable line_length
 
 import SwiftUI
 
@@ -25,7 +24,7 @@ struct StartStrongView: View {
             
             VStack(spacing: 24) {
                 Text(
-                    "Build a consistent exercise routine by directly meeting the WHO recommended **150 minutes of exercise per week**."
+                    "Build a consistent exercise routine by directly meeting the WHO recommended **150 minutes of exercise per week**." // swiftlint:disable:this line_length
                 )
                 .font(.subheadline)
                 .multilineTextAlignment(.center)

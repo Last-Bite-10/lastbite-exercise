@@ -13,6 +13,7 @@ struct MyExerciseView: View {
     @State private var questionnaireViewModel = QuestionnaireViewModel()
     
     @State private var locationManager = LocationManager()
+    @State private var weatherManager = WeatherManager.shared
     
     @State private var showQuestionnaire: Bool = false
     @State private var showPlan: Bool = false
@@ -74,6 +75,18 @@ struct MyExerciseView: View {
             .navigationTitle("My Exercise")
             .task {
                 await healthKitManager.requestAuthorization()
+                
+                locationManager.requestLocationAuthorization()
+            }
+            .onChange(of: locationManager.currentLocation) { oldLocation, newLocation in
+                if let location = newLocation {
+                    print("📍 View mendeteksi lokasi baru: \(location.latitude), \(location.longitude)")
+                    
+                    Task {
+                        print("☁️ Meminta data cuaca ke WeatherManager...")
+                        await weatherManager.fetchWeather(for: location)
+                    }
+                }
             }
             .toolbarTitleDisplayMode(.large)
         }

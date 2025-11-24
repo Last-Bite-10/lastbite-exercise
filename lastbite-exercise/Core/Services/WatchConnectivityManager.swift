@@ -43,7 +43,7 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
     func startWatchHeartRateMonitoring() {
         let session = WCSession.default
         print(
-            "[iPhone] Session state - activated: \(session.activationState.rawValue), paired: \(session.isPaired), installed: \(session.isWatchAppInstalled), reachable: \(session.isReachable)"
+            "[iPhone] Session state - activated: \(session.activationState.rawValue), paired: \(session.isPaired), installed:  \(session.isWatchAppInstalled), reachable: \(session.isReachable)" // swiftlint:disable:this line_length
         )
 
         guard session.isReachable else {
@@ -168,7 +168,6 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
             case .timerChange:
                 if let data = userInfo["data"] as? [String: Any] {
                     print("[iPhone] Timer change data from userInfo: \(data)")
-                    
                     
                 }
                 

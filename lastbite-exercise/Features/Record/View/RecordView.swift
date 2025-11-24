@@ -47,7 +47,7 @@ struct RecordView: View {
                 "Your exercise is in progress, your heartbeat is being recorded!"
         case .timerStopped:
             return
-                "Start now! Remember only your active time **(BPM >= \(healthKitManager.bpmThreshold ?? -1))** will be recorded."
+                "Start now! Remember only your active time **(BPM >= \(healthKitManager.bpmThreshold ?? -1))** will be recorded." // swiftlint:disable:this line_length
         case .timerOverflown:
             return
                 "Your exercise is in progress, your heartbeat is being recorded!"

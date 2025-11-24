@@ -3,7 +3,6 @@
 // lastbite-exercise
 //
 // Created by Niken Larasati on 23/10/25.
-// swiftlint:disable line_length
 
 import SwiftUI
 
@@ -43,7 +42,7 @@ struct TrophiesView: View {
                     ForEach(trophies) { trophy in
                         VStack(spacing: 8) {
                             ZStack {
-                                let trophyImage = trophy.isAchieved ? "\(trophy.milestone)WeekTrophy" : "Locked\(trophy.milestone)WeekTrophy"
+                                let trophyImage = trophy.isAchieved ? "\(trophy.milestone)WeekTrophy" : "Locked\(trophy.milestone)WeekTrophy" // swiftlint:disable:this line_length
                                 
                                 Image(trophyImage)
                                     .resizable()
