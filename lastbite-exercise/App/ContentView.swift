@@ -16,7 +16,7 @@ struct ContentView: View {
     private let haptic = HapticManager.shared
 
     var body: some View {
-        Group {
+        ZStack {
             if preferences.isEmpty {
                 GetStartedView()
             } else {
