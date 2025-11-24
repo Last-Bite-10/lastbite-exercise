@@ -19,11 +19,9 @@ class RecordViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let healthKitManager: HealthKitManager
     var watchConnectivityManager: WatchConnectivityManager?
-    private let record: ExerciseRecord
+    let record: ExerciseRecord  // Changed to internal for session manager access
     private var context: ModelContext
     private let bpmThreshold: Double
-    
-//    private let timerCancellable: TimerService
 
     // MARK: - Initialization
     init(
@@ -132,6 +130,9 @@ class RecordViewModel: ObservableObject {
     func startMonitoring() {
         // Start Watch heart rate monitoring
         watchConnectivityManager?.startWatchHeartRateMonitoring()
+        
+        // Start HealthKit workout session for background tracking
+        healthKitManager.startWorkoutSession()
 
         print(
             "Started monitoring - Watch: \(watchConnectivityManager?.isReceivingFromWatch ?? false), iPhone HealthKit active"
@@ -182,11 +183,13 @@ class RecordViewModel: ObservableObject {
         print("Start Timer initiated")
         self.setupProgressSync()
         self.watchConnectivityManager?.startWatchHeartRateMonitoring()
+        self.healthKitManager.resumeWorkoutSession()
         self.timer.startTimer()
     }
     
     func pauseTimer() {
         self.timer.pauseTimer()
+        self.healthKitManager.pauseWorkoutSession()
     }
 
 //    private func handleTimerStatusChange() {
@@ -248,6 +251,7 @@ class RecordViewModel: ObservableObject {
     private func cleanup() {
         timer.stopTimer()
         watchConnectivityManager?.stopWatchHeartRateMonitoring()
+        healthKitManager.endWorkoutSession()
         cancellables.removeAll()
     }
 

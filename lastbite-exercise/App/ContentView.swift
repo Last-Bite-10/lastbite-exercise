@@ -11,26 +11,32 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedTab = 0
     @Query private var preferences: [Preference]
+    @StateObject private var sessionManager = RecordSessionManager.shared
     
     private let haptic = HapticManager.shared
 
     var body: some View {
-        Group {
-            if preferences.isEmpty {
-                GetStartedView()
-            } else {
-                TabView(selection: $selectedTab) {
-                    MyExerciseView()
-                        .tabItem {
-                            Label("My Exercise", systemImage: "figure.yoga")
-                        }
+        ZStack {
+            Group {
+                if preferences.isEmpty {
+                    GetStartedView()
+                } else {
+                    TabView(selection: $selectedTab) {
+                        MyExerciseView()
+                            .tabItem {
+                                Label("My Exercise", systemImage: "figure.yoga")
+                            }
 
-                    MyProgressView()
-                        .tabItem {
-                            Label("My Progress", systemImage: "graph.2d")
-                        }
+                        MyProgressView()
+                            .tabItem {
+                                Label("My Progress", systemImage: "graph.2d")
+                            }
+                    }
                 }
             }
+            
+            // Active session indicator overlay
+            ActiveSessionIndicator(sessionManager: sessionManager)
         }
     }
 }

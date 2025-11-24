@@ -10,11 +10,6 @@ import HealthKit
 import SwiftData
 import SwiftUI
 
-@MainActor
-class ViewModelWrapper: ObservableObject {
-    @Published var viewModel: RecordViewModel?
-}
-
 struct RecordContentView: View {
     @ObservedObject var viewModel: RecordViewModel
     @ObservedObject var watchConnectivityManager: WatchConnectivityManager
@@ -147,7 +142,7 @@ struct RecordContentView: View {
                 }
 
                 ButtonWSound(role: nil, action: {
-                    viewModel.finishExercise()
+                    RecordSessionManager.shared.finishSession()
                     dismiss()
                 }, label: {
                     Text("End").foregroundStyle(.red)
@@ -159,24 +154,22 @@ struct RecordContentView: View {
 
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
-    @EnvironmentObject private var watchConnectivityManager:
-        WatchConnectivityManager
-    @StateObject private var viewModelWrapper = ViewModelWrapper()
+    @EnvironmentObject private var watchConnectivityManager: WatchConnectivityManager
+    @StateObject private var sessionManager = RecordSessionManager.shared
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     
     private let record: ExerciseRecord
-    private let context: ModelContext
     
 
     init(record: ExerciseRecord, modelContext: ModelContext) {
         self.record = record
-        self.context = modelContext
+        self._sessionManager = StateObject(wrappedValue: RecordSessionManager.shared)
     }
 
     var body: some View {
         Group {
-            if let viewModel = viewModelWrapper.viewModel {
+            if let viewModel = sessionManager.activeSession {
                 RecordContentView(
                     viewModel: viewModel,
                     watchConnectivityManager: watchConnectivityManager,
@@ -188,21 +181,19 @@ struct RecordView: View {
                 }
             } else {
                 ProgressView()
+                    .onAppear {
+                        // Create session using the session manager
+                        let viewModel = sessionManager.startSession(
+                            record: record,
+                            healthKitManager: healthKitManager,
+                            modelContext: modelContext,
+                            watchConnectivityManager: watchConnectivityManager
+                        )
+                        viewModel.startMonitoring()
+                    }
             }
         }
-        .onAppear {
-            if viewModelWrapper.viewModel == nil {
-                viewModelWrapper.viewModel = RecordViewModel(
-                    record: record,
-                    healthKitManager: healthKitManager,
-                    modelContext: context,
-                    watchConnectivityManager: watchConnectivityManager
-                )
-            }
-        }
-        .onDisappear {
-//            viewModel?.stopMonitoring()
-        }
+        // Note: We don't clean up on disappear anymore - session persists!
     }
 }
 

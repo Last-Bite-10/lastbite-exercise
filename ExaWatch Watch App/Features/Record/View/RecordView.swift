@@ -32,7 +32,7 @@ struct RecordView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 12) {
             // Progress Circle
             ZStack {
                 Circle()
@@ -81,7 +81,7 @@ struct RecordView: View {
                 }
             }
             .frame(height: 120)
-            .padding()
+//            .padding()
 
             VStack {
                 Text("Total Time: **\(viewModel.timeTotalFormatted)** ").font(
@@ -96,14 +96,14 @@ struct RecordView: View {
                     totalDuration: viewModel.totalDuration)
                 )
             }) {
-                Text(viewModel.timerStatus == .timerPaused || viewModel.timerStatus == .timerStopped ? "Play" : "Pause")
-                    .font(.system(size: 16))
+                Text(viewModel.timerStatus == .timerPaused || viewModel.timerStatus == .timerStopped ? "Start" : "Pause")
+                    .font(.system(size: 24))
                     .padding(.all, 0)
                     .foregroundStyle(Color.white)
-                    .accessibilityLabel("Play")
+                    .accessibilityLabel("Start")
             }
             .buttonStyle(.borderedProminent)
-            .controlSize(.mini)
+            .controlSize(.small)
             //            .frame(width: .infinity, height: 25)
             //            .tint(Color.accent)
 
