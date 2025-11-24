@@ -16,23 +16,24 @@ struct ContentView: View {
     private let haptic = HapticManager.shared
 
     var body: some View {
-        ZStack {
-            Group {
-                if preferences.isEmpty {
-                    GetStartedView()
-                } else {
-                    TabView(selection: $selectedTab) {
-                        MyExerciseView()
-                            .tabItem {
-                                Label("My Exercise", systemImage: "figure.yoga")
-                            }
+        Group {
+            if preferences.isEmpty {
+                GetStartedView()
+            } else {
+                TabView(selection: $selectedTab) {
+                    HomeView()
+                        .tag(0)
+                        .tabItem {
+                            Label("My Exercise", systemImage: "figure.yoga")
+                        }
 
-                        MyProgressView()
-                            .tabItem {
-                                Label("My Progress", systemImage: "graph.2d")
-                            }
-                    }
+                    MyProgressView()
+                        .tag(1)
+                        .tabItem {
+                            Label("My Progress", systemImage: "graph.2d")
+                        }
                 }
+                .sensoryFeedback(.impact(weight: .light), trigger: selectedTab)
             }
             
             // Active session indicator overlay

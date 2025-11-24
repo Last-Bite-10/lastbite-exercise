@@ -37,6 +37,7 @@ struct GetStartedView: View {
                 },
                 label: { CoreButtonLabel(title: "Get Started") }
             )
+            .padding(.horizontal, 48)
         }
     }
 }

@@ -66,12 +66,13 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
             ["command": "start"],
             replyHandler: { reply in
                 print("[iPhone] Received reply from watch: \(reply)")
+            },
+            errorHandler: { error in
+                print(
+                    "[iPhone] Failed to start watch monitoring: \(error.localizedDescription)"
+                )
             }
-        ) { error in
-            print(
-                "[iPhone] Failed to start watch monitoring: \(error.localizedDescription)"
-            )
-        }
+        )
         isReceivingFromWatch = true
     }
 
@@ -191,7 +192,7 @@ class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
                     
                     // Only take timerStatus
                 }
-                
+
             default:
                 print("[iPhone] ACK message")
             }

@@ -9,12 +9,13 @@ import SwiftUI
 
 // MARK: - Duration Selection Sheet
 struct DurationSelectionSheet: View {
+    @Environment(HomeViewModel.self) private var viewModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var selectedMinutes: Int
+
     let exercise: Exercise
     let existingRecord: ExerciseRecord?
     let onComplete: (ExerciseRecord?) -> Void
-
-    @State private var selectedMinutes: Int
-    @Environment(\.dismiss) var dismiss
 
     let durationOptions = [5, 10, 15, 20, 25, 30, 45, 60]
 
@@ -83,7 +84,8 @@ struct DurationSelectionSheet: View {
                     Button("Done") {
                         let record = ExerciseRecord(
                             exercise: exercise,
-                            requiredMinutes: selectedMinutes
+                            requiredMinutes: selectedMinutes,
+                            usedAt: viewModel.currentlyViewedDate
                         )
                         onComplete(record)
                         dismiss()

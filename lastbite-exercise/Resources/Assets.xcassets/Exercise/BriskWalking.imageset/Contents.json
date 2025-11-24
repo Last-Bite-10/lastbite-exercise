@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Brisk Walking.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

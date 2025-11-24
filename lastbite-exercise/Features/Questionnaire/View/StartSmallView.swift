@@ -3,14 +3,16 @@
 //  lastbite-exercise
 //
 //  Created by Ali Ahmad Fahrezy on 05/11/25.
-// swiftlint:disable line_length
+//
 
+import SwiftData
 import SwiftUI
 
 struct StartSmallView: View {
-    @Environment(\.dismissFlow) private var dismissFlow
-    
-    let onDone: () -> Void
+    @Environment(HomeViewModel.self) private var viewModel
+    @Query private var preferences: [Preference]
+
+    var preference: Preference? { preferences.first }
 
     var body: some View {
         VStack(spacing: 24) {
@@ -23,7 +25,7 @@ struct StartSmallView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(maxHeight: 150)
-            
+
             VStack(spacing: 24) {
                 Text(
                     "Build up your exercising habit by **starting small and gradually increasing** the duration of your exercise weekly."
@@ -32,7 +34,7 @@ struct StartSmallView: View {
                 .multilineTextAlignment(.center)
                 .foregroundColor(.primary)
                 .fixedSize(horizontal: false, vertical: true)
-        
+
                 VStack(alignment: .leading, spacing: 16) {
                     Text("Week 1: 30 minutes total")
                     Text("Week 2: 36 minutes total")
@@ -58,18 +60,21 @@ struct StartSmallView: View {
             .padding(30)
             .background(Color.cardGray)
             .cornerRadius(30)
-           
+
             NavLinkWSound(
                 title: "Next",
-                destination: FrequencyView(onDone: onDone),
+                destination: FrequencyView(),
             )
+            .padding(.horizontal, 48)
         }
         .padding(.horizontal)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        dismissFlow()
+                        if let preference = preference {
+                            viewModel.onCancelAction(preference: preference)
+                        }
                     },
                     label: {
                         Image(systemName: "xmark")
@@ -84,6 +89,7 @@ struct StartSmallView: View {
 
 #Preview {
     NavigationStack {
-        StartSmallView(onDone: {})
+        StartSmallView()
+            .environment(HomeViewModel())
     }
 }

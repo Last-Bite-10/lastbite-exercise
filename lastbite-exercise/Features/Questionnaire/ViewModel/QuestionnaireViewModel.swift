@@ -8,20 +8,8 @@
 import SwiftUI
 
 @Observable
-class QuestionnaireViewModel {
+final class QuestionnaireViewModel {
     var selectedFrequency: FrequencyType = .oneDay
     var selectedEquipment: Set<EquipmentType> = []
     var selectedLocation: LocationType = .indoor
 }
-
-struct DismissFlowKey: EnvironmentKey {
-    static var defaultValue: () -> Void = {}
-}
-
-extension EnvironmentValues {
-    var dismissFlow: () -> Void {
-        get { self[DismissFlowKey.self] }
-        set { self[DismissFlowKey.self] = newValue }
-    }
-}
-

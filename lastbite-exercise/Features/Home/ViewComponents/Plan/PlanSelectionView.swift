@@ -12,6 +12,8 @@ struct PlanSelectionView: View {
     @Binding var showQuestionnaire: Bool
     @Query private var preferences: [Preference]
 
+    private var preference: Preference? { preferences.first }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
 
@@ -26,7 +28,7 @@ struct PlanSelectionView: View {
                 image: "StartStrong",
                 action: {
                     showQuestionnaire = true
-                    preferences.first?.planChosen = .expert
+                    preference?.planChosen = .expert
                 }
             )
 
@@ -37,7 +39,7 @@ struct PlanSelectionView: View {
                 image: "StartSmall",
                 action: {
                     showQuestionnaire = true
-                    preferences.first?.planChosen = .beginner
+                    preference?.planChosen = .beginner
                 }
             )
         }

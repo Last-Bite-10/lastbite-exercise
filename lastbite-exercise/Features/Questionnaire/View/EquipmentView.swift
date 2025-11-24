@@ -9,11 +9,21 @@ import SwiftData
 import SwiftUI
 
 struct EquipmentView: View {
-    @Environment(QuestionnaireViewModel.self) private var viewModel
-    
-    @Environment(\.dismissFlow) private var dismissFlow
-    
-    let onDone: () -> Void
+    @Environment(QuestionnaireViewModel.self) private var questionnaireVM
+    @Environment(HomeViewModel.self) private var homeVM
+    @Query private var preferences: [Preference]
+
+    var preference: Preference? { preferences.first }
+
+    private func disableButtonCondition(currentEquipment: EquipmentType) -> Bool
+    {
+        if currentEquipment == .none {
+            return !questionnaireVM.selectedEquipment.isEmpty
+                && !questionnaireVM.selectedEquipment.contains(.none)
+        } else {
+            return questionnaireVM.selectedEquipment.contains(.none)
+        }
+    }
 
     var body: some View {
         VStack(spacing: 10) {
@@ -40,47 +50,55 @@ struct EquipmentView: View {
 
             LazyVGrid(
                 columns: [
-                    GridItem(.flexible(), spacing: -24),
+                    GridItem(.flexible()),
                     GridItem(.flexible()),
                 ],
-                spacing: 5,
+                spacing: 12,
                 content: {
                     ForEach(EquipmentType.allCases, id: \.self) { type in
                         QuestionnaireSelectionButton(
                             title: type.rawValue,
-                            isSelected: viewModel.selectedEquipment.contains(
-                                type
-                            ),
-                            widthReduction: 240,
+                            isSelected: questionnaireVM.selectedEquipment
+                                .contains(
+                                    type
+                                ),
                             action: {
-                                if viewModel.selectedEquipment.contains(type) {
-                                    viewModel.selectedEquipment.remove(type)
+                                if questionnaireVM.selectedEquipment.contains(
+                                    type
+                                ) {
+                                    questionnaireVM.selectedEquipment.remove(
+                                        type
+                                    )
                                 } else {
-                                    viewModel.selectedEquipment.insert(type)
+                                    questionnaireVM.selectedEquipment.insert(
+                                        type
+                                    )
                                 }
                             }
                         )
+                        .disabled(
+                            disableButtonCondition(currentEquipment: type)
+                        )
                     }
                 }
-            ).padding(.top, 48)
-
-            NavigationLink(
-                destination: LocationView(onDone: onDone),
-                label: {
-                    CoreButtonLabel(
-                        title: "Next"
-                    )
-                }
             )
-            .padding(.top, 40)
+            .padding(.top, 24)
+            .padding(.horizontal)
 
-            Spacer()
+            NavLinkWSound(
+                title: "Next",
+                destination: LocationView(),
+            )
+            .padding(.horizontal, 48)
+            .padding(.top, 40)
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        dismissFlow()
+                        if let preference = preference {
+                            homeVM.onCancelAction(preference: preference)
+                        }
                     },
                     label: {
                         Image(systemName: "xmark")
@@ -95,7 +113,8 @@ struct EquipmentView: View {
 
 #Preview {
     NavigationStack {
-        EquipmentView(onDone: {})
+        EquipmentView()
             .environment(QuestionnaireViewModel())
+            .environment(HomeViewModel())
     }
 }

@@ -1,5 +1,8 @@
 disabled_rules:
+  - closure_parameter_position
   - function_body_length
+  - line_length
   - trailing_comma
   - trailing_whitespace
+  - type_body_length
   - opening_brace

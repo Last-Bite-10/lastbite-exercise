@@ -17,7 +17,7 @@ struct CoreButtonLabel: View {
             .font(.subheadline)
             .padding(.vertical, 12)
             .padding(.horizontal, 28)
-            .frame(width: UIScreen.main.bounds.width - 128)
+            .frame(maxWidth: .infinity)
             .foregroundStyle(Color.white)
             .background(
                 Capsule()
@@ -32,8 +32,7 @@ struct CoreButtonLabel: View {
         CoreButtonLabel(
             title: "1 Day (30 Minutes per Day)"
         )
-        .padding(.horizontal)
         CoreButtonLabel(title: "Get Recommendation")
-            .padding(.horizontal)
     }
+    .padding(.horizontal)
 }

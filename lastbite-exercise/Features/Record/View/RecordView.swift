@@ -57,7 +57,7 @@ struct RecordContentView: View {
         VStack {
             Text(timerMessage)
                 .frame(
-                    width: UIScreen.main.bounds.width * 0.6,
+                    width: 300,
                     alignment: .center
                 )
                 .multilineTextAlignment(.center)
@@ -194,42 +194,5 @@ struct RecordView: View {
             }
         }
         // Note: We don't clean up on disappear anymore - session persists!
-    }
-}
-
-#Preview {
-    do {
-        // Create an in-memory model container for preview
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-
-        let container = try ModelContainer(
-            for: ExerciseRecord.self,
-            Weekly.self,
-            configurations: config
-        )
-
-        // Create a sample exercise
-        let exercise = Exercise(
-            id: 1,
-            name: "Brisk walking",
-            imageName: "brisk-walking",
-            location: .outdoor,
-            needsTutorial: false,
-            equipment: .none,
-            weather: .clear
-        )
-
-        // Create a sample exercise record
-        let record = ExerciseRecord(
-            exercise: exercise,
-            requiredMinutes: 0
-        )
-
-        return RecordView(record: record, modelContext: container.mainContext)
-            .modelContainer(container)
-            .environmentObject(WatchConnectivityManager())
-        // use container safely here
-    } catch {
-        return Text("No")
     }
 }

@@ -9,12 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct LocationView: View {
-    @Environment(QuestionnaireViewModel.self) private var viewModel
+    @Environment(QuestionnaireViewModel.self) private var questionnaireVM
+    @Environment(HomeViewModel.self) private var homeVM
     @Query private var preferences: [Preference]
-    
-    @Environment(\.dismissFlow) private var dismissFlow
-    
-    let onDone: () -> Void
+
+    var preference: Preference? { preferences.first }
 
     var body: some View {
         VStack(spacing: 10) {
@@ -32,37 +31,42 @@ struct LocationView: View {
 
             Text("Where do you prefer to do your exercise?")
                 .font(.body)
-                .padding(.bottom, 48)
+
+            Spacer()
 
             ForEach(LocationType.allCases, id: \.self) { type in
                 QuestionnaireSelectionButton(
                     title: type.rawValue,
-                    isSelected: viewModel.selectedLocation == type,
-                    widthReduction: 160,
-                    action: { viewModel.selectedLocation = type }
+                    isSelected: questionnaireVM.selectedLocation == type,
+                    action: { questionnaireVM.selectedLocation = type }
                 )
             }
+            .padding(.horizontal, 64)
 
-            Button(
+            Spacer()
+
+            ButtonWSound(
                 action: {
-                    preferences.first?.frequency = viewModel.selectedFrequency
-                    preferences.first?.equipmentAvailable =
-                        Array(viewModel.selectedEquipment)
-                    preferences.first?.location = viewModel.selectedLocation
-                    
-                    onDone()
+                    if let preference = preference {
+                        preference.frequency = questionnaireVM.selectedFrequency
+                        preference.equipmentAvailable =
+                            Array(questionnaireVM.selectedEquipment)
+                        preference.location = questionnaireVM.selectedLocation
+
+                        homeVM.onDoneAction()
+                    }
                 },
                 label: { CoreButtonLabel(title: "Done") }
             )
-            .padding(.top, 40)
-            
-            Spacer()
+            .padding(.horizontal, 48)
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        dismissFlow()
+                        if let preference = preference {
+                            homeVM.onCancelAction(preference: preference)
+                        }
                     },
                     label: {
                         Image(systemName: "xmark")
@@ -77,7 +81,8 @@ struct LocationView: View {
 
 #Preview {
     NavigationStack {
-        LocationView(onDone: {})
+        LocationView()
             .environment(QuestionnaireViewModel())
+            .environment(HomeViewModel())
     }
 }

@@ -208,7 +208,7 @@ struct Exercise: Codable, Identifiable, Hashable {
             Exercise(
                 id: 22,
                 name: "Jogging",
-                imageName: "Jogging1",
+                imageName: "Jogging",
                 location: .outdoor,
                 needsTutorial: false,
                 equipment: .none,

@@ -74,7 +74,8 @@ class RecordViewModel: ObservableObject {
             timer.$timerStatus,
         )
         .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
-        .sink { [weak self] progress, timeRemaining, timeRecorded, timerStatus in
+        .sink {
+            [weak self] progress, timeRemaining, timeRecorded, timerStatus in
             self?.sendProgressToWatch(
                 progress: progress,
                 timeRemaining: timeRemaining,

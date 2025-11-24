@@ -9,27 +9,22 @@ import SwiftData
 import SwiftUI
 
 struct MyExerciseView: View {
-    @State private var viewModel = RecommendationViewModel()
-    @State private var questionnaireViewModel = QuestionnaireViewModel()
-    
-    @State private var showQuestionnaire: Bool = false
-    @State private var showPlan: Bool = false
-    @State private var showPlanModifySheet = false
-    @State private var weeklyStreaks = [true, true, false, true, false]
-    @State private var currentDate = Date()
-    @State private var progress: Double = 0.2
-    @State private var completedMinutes = 2
-    @State private var totalMinutes = 10
+    @State private var recommendationVM = RecommendationViewModel()
+    @State private var questionnaireVM = QuestionnaireViewModel()
+
+    @Environment(HomeViewModel.self) private var homeVM
+    @Environment(\.modelContext) private var modelContext
 
     @Query private var preferences: [Preference]
     @Query private var records: [ExerciseRecord]
     @Query private var allWeeks: [Weekly]
 
+    private var preference: Preference? { preferences.first }
     private let healthKitManager = HealthKitManager.shared
 
     init() {
         healthKitManager.requestAuthorization()
-        
+
         let appearance = UINavigationBarAppearance()
         appearance.largeTitleTextAttributes = [
             .foregroundColor: UIColor(Color("BlueTwo"))
@@ -37,68 +32,69 @@ struct MyExerciseView: View {
         appearance.titleTextAttributes = [
             .foregroundColor: UIColor(Color("BlueTwo"))
         ]
-        
+
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+
+    private var bindingForPlanModifySheet: Binding<Bool> {
+        Binding(
+            get: { homeVM.showPlanModifySheet },
+            set: { homeVM.showPlanModifySheet = $0 }
+        )
+    }
+
+    private var bindingForShowQuestionnaire: Binding<Bool> {
+        Binding(
+            get: { homeVM.showQuestionnaire },
+            set: { homeVM.showQuestionnaire = $0 }
+        )
     }
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    // Streak Section
                     StreakView(allWeeks: allWeeks)
                         .padding(.horizontal)
                         .padding(.bottom, 20)
 
-                    if preferences.first?.planChosen == nil {
+                    if preference?.planChosen == nil {
                         PlanSelectionView(
-                            showQuestionnaire: $showQuestionnaire
+                            showQuestionnaire: bindingForShowQuestionnaire
                         )
-                    } else if showPlan || !records.isEmpty {
-                        // Today's Plan Header
-                        TodaysPlanHeader(onModifyTapped: {
-                            showPlanModifySheet = true
-                        })
-
-                        // Today's Plan Section
-                        TodaysPlan().environment(viewModel)
+                    } else if homeVM.showPlan || !records.isEmpty {
+                        WeeklyPlanPager()
+                            .environment(recommendationVM)
+                            .environment(homeVM)
                     }
 
-                    // Recent History Section
-                    RecentHistoryView().environment(viewModel)
+                    RecentHistoryView()
+                        .environment(recommendationVM)
                 }
             }
             .navigationTitle("My Exercise")
-            .task {
-                await healthKitManager.requestAuthorization()
-            }
             .toolbarTitleDisplayMode(.large)
         }
-        .sheet(isPresented: $showPlanModifySheet) {
-            ExerciseSelectionSheet().environment(viewModel)
-        }.fullScreenCover(isPresented: $showQuestionnaire) {
-            
-            let onDoneAction = {
-                showQuestionnaire = false
-                showPlan = true
-            }
-            
-            let onCancelAction = {
-                showQuestionnaire = false
-                preferences.first?.planChosen = nil
-            }
-            
+
+        // ✅ Move the environment-based bindings here (AFTER body starts)
+        .sheet(isPresented: bindingForPlanModifySheet) {
+            ExerciseSelectionSheet()
+                .environment(recommendationVM)
+                .environment(homeVM)
+        }
+        .fullScreenCover(isPresented: bindingForShowQuestionnaire) {
             NavigationStack {
-                if preferences.first?.planChosen == .beginner {
-                    StartSmallView(onDone: onDoneAction)
+                if preference?.planChosen == .beginner {
+                    StartSmallView()
                 } else {
-                    StartStrongView(onDone: onDoneAction)
+                    StartStrongView()
                 }
             }
-            .environment(questionnaireViewModel)
-            .environment(\.dismissFlow, onCancelAction)
+            .environment(questionnaireVM)
+            .environment(homeVM)
         }
+
     }
 }
 

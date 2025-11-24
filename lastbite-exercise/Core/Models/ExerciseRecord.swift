@@ -15,6 +15,7 @@ final class ExerciseRecord: Identifiable {
     var requiredMinutes: Int = 0
     var recordedMinutes: Int = 0
     var isCompleted: Bool = false
+    var usedAt: Date?
     var createdAt: Date = Date()
     var completedAt: Date?
     var week: Weekly?
@@ -22,6 +23,7 @@ final class ExerciseRecord: Identifiable {
     init(
         exercise: Exercise,
         requiredMinutes: Int,
+        usedAt: Date,
         week: Weekly? = nil
     ) {
         self.id = UUID()
@@ -29,6 +31,7 @@ final class ExerciseRecord: Identifiable {
         self.requiredMinutes = requiredMinutes
         self.recordedMinutes = 0
         self.isCompleted = false
+        self.usedAt = usedAt
         self.createdAt = Date()
         self.week = week
     }

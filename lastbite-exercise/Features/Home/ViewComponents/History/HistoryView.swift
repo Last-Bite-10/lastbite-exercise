@@ -17,8 +17,7 @@ struct HistoryItem: Identifiable {
 struct RecentHistoryView: View {
     @Environment(RecommendationViewModel.self) private var viewModel
     @Environment(\.modelContext) private var modelContext
-    @State private var selectedItem: HistoryItem? = nil
-
+    @State private var selectedItem: HistoryItem?
     @Query(
         filter: #Predicate<ExerciseRecord> { $0.isCompleted == true },
         sort: \ExerciseRecord.completedAt,
@@ -84,11 +83,13 @@ struct RecentHistoryView: View {
 
                         let record1 = ExerciseRecord(
                             exercise: exercise1,
-                            requiredMinutes: 10
+                            requiredMinutes: 10,
+                            usedAt: Date()
                         )
                         let record2 = ExerciseRecord(
                             exercise: exercise2,
-                            requiredMinutes: 5
+                            requiredMinutes: 5,
+                            usedAt: Date()
                         )
 
                         record1.isCompleted = true
@@ -133,11 +134,11 @@ struct RecentHistoryView: View {
                                 let totalRequired = item.entries.reduce(0) {
                                     $0 + $1.requiredMinutes
                                 }
-                                
+
                                 Text("\(totalRecorded)/\(totalRequired) mins")
                                     .font(.headline)
                                     .padding(.top, 8)
-                                
+
                                 Text(item.date)
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
@@ -155,24 +156,27 @@ struct RecentHistoryView: View {
         }
         .padding()
         .sheet(item: $selectedItem) { item in
-            HistoryDetailCard(historyItem: item) {
+            HistoryDetailCard(
+                historyItem: item,
+                onSetAsPlan: {
+                    var newEntries: [ExerciseRecord] = []
+                    for entry in item.entries {
+                        let newEntry = ExerciseRecord(
+                            exercise: entry.exercise!,
+                            requiredMinutes: entry.requiredMinutes,
+                            usedAt: Date(),
+                            week: entry.week
+                        )
+                        newEntries.append(newEntry)
+                    }
 
-                var newEntries: [ExerciseRecord] = []
-                for entry in item.entries {
-                    let newEntry = ExerciseRecord(
-                        exercise: entry.exercise!,
-                        requiredMinutes: entry.requiredMinutes,
-                        week: entry.week
+                    viewModel.modifyExerciseRecords(
+                        records: newEntries
                     )
-                    newEntries.append(newEntry)
+
+                    selectedItem = nil
                 }
-
-                viewModel.modifyExerciseRecords(
-                    records: newEntries
-                )
-
-                selectedItem = nil
-            }
+            )
             .presentationDetents([.fraction(0.5)])
             .presentationDragIndicator(.visible)
         }
