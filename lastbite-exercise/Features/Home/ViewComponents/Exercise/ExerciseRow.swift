@@ -47,7 +47,7 @@ struct ExerciseRow: View {
                 .padding(.trailing, 16)
 
             if !isCompleted {
-                ButtonWSound(action: action) {
+                ButtonWSound(disabled: disableStartButton, action: action) {
                     HStack(spacing: 8) {
                         Image(systemName: "play.fill")
                             .font(.headline)
@@ -60,10 +60,10 @@ struct ExerciseRow: View {
                     .background(
                         Capsule(style: .continuous)
                             .fill(
-                                Color.blueTwo
+                                disableStartButton
+                                    ? Color.pausedGray : Color.blueTwo
                             )
                     )
-                    .disabled(disableStartButton)
                 }
             } else {
                 HStack(spacing: 8) {

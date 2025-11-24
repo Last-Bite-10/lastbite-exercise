@@ -64,9 +64,7 @@ struct DailyPlanCard: View {
                         duration: Int(record.requiredMinutes),
                         isCompleted: record.isCompleted,
                         action: {
-                            if isCurrentDay {
-                                onStart(record)
-                            }
+                            onStart(record)
                         },
                         exercise: record.exercise!,
                         disableStartButton: !isCurrentDay

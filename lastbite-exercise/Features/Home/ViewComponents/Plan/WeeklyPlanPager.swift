@@ -92,7 +92,9 @@ struct WeeklyPlanPager: View {
                     preference: preference
                 )
             }
-
+        }
+        .sheet(item: $selectedRecord) { record in
+            RecordView(record: record, modelContext: modelContext)
         }
     }
 }
