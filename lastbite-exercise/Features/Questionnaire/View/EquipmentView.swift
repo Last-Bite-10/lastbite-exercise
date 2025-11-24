@@ -94,17 +94,11 @@ struct EquipmentView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(
-                    action: {
-                        if let preference = preference {
-                            homeVM.onCancelAction(preference: preference)
-                        }
-                    },
-                    label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.secondary)
+                Button("Cancel", systemImage: "xmark") {
+                    if let preference = preference {
+                        homeVM.onCancelAction(preference: preference)
                     }
-                )
+                }
                 .buttonStyle(.borderless)
             }
         }

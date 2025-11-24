@@ -75,13 +75,13 @@ struct DurationSelectionSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
+                    Button("Cancel", systemImage: "xmark") {
                         dismiss()
                     }
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
+                    Button("Done", systemImage: "checkmark") {
                         let record = ExerciseRecord(
                             exercise: exercise,
                             requiredMinutes: selectedMinutes,
@@ -91,6 +91,8 @@ struct DurationSelectionSheet: View {
                         dismiss()
                     }
                     .fontWeight(.semibold)
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color.blueTwo)
                 }
             }
         }
