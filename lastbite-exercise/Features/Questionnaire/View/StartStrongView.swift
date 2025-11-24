@@ -24,6 +24,7 @@ struct StartStrongView: View {
             Image("StartSmall")
                 .resizable()
                 .scaledToFit()
+                .frame(maxHeight: 150)
 
             VStack(spacing: 24) {
                 Text(
@@ -43,7 +44,7 @@ struct StartStrongView: View {
                 }
                 .font(.subheadline)
                 .foregroundColor(.primary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(20)
                 .background(Color.white)
                 .cornerRadius(16)
 
