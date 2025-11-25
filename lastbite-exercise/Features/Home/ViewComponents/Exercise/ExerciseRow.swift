@@ -62,7 +62,7 @@ struct ExerciseRow: View {
                     .strikethrough(isCompleted)
 
                 Image(systemName: "info.circle.fill")
-                    .foregroundColor(Color.title)
+                    .foregroundColor(.title)
                     .onTapGesture {
                         showTutorial = true
                     }

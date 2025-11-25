@@ -28,24 +28,6 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
-    // MARK: - HealthKit Authorization
-    func requestAuthorization() {
-        guard HKHealthStore.isHealthDataAvailable() else { return }
-        let types = Set([
-            HKQuantityType.quantityType(forIdentifier: .heartRate)!
-        ])
-        healthStore.requestAuthorization(toShare: [], read: types) {
-            success,
-            error in
-            if !success {
-                print(
-                    "HealthKit auth failed:",
-                    error?.localizedDescription ?? ""
-                )
-            }
-        }
-    }
-
     // MARK: - Heart Rate Streaming
     func startStreaming() {
         guard let type = HKQuantityType.quantityType(forIdentifier: .heartRate)
@@ -111,8 +93,8 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
             "type": PayloadType.bpmChange.rawValue,
             "data": [
                 "bpm": bpm,
-                "timestamp": Date().timeIntervalSince1970
-            ]
+                "timestamp": Date().timeIntervalSince1970,
+            ],
         ]
 
         // Use transferUserInfo for guaranteed delivery (works in background)
@@ -149,7 +131,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
         // Always send a reply to acknowledge receipt
         let reply: [String: Any] = [
             "type": PayloadType.timerAck.rawValue,
-            "data": "received"
+            "data": "received",
         ]
 
         // Handle commands from iPhone
@@ -157,7 +139,6 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
             Task { @MainActor in
                 switch command {
                 case "start":
-                    self.requestAuthorization()
                     self.startStreaming()
                     print("[Watch] Started heart rate monitoring")
                 case "stop":
@@ -221,7 +202,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
                     timeRemaining: timeRemaining,
                     totalDuration: totalDuration
                 )
-                
+
                 print("[Watch] receivedProgress in WatchHealthManager")
             }
         }
@@ -243,11 +224,11 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
             switch msgType {
             case .timerChange:
                 if let data = userInfo["data"] as? [String: Any],
-                   let progressValue = data["progress"] as? Double,
-                   let timerStatus = data["timerStatus"] as? String,
-                   let timeRemaining = data["timeRemaining"] as? Int,
-                   let totalDuration = data["totalDuration"] as? Int,
-                   let timerStatusType = TimerStatusType(rawValue: timerStatus)
+                    let progressValue = data["progress"] as? Double,
+                    let timerStatus = data["timerStatus"] as? String,
+                    let timeRemaining = data["timeRemaining"] as? Int,
+                    let totalDuration = data["totalDuration"] as? Int,
+                    let timerStatusType = TimerStatusType(rawValue: timerStatus)
                 {
                     Task { @MainActor in
                         self.receivedProgress = ProgressData(
@@ -261,8 +242,7 @@ class WatchHealthManager: NSObject, ObservableObject, WCSessionDelegate {
             default:
                 print("[Watch] Non-timer change message, no need to handle")
             }
-            
-            
+
         }
     }
 }

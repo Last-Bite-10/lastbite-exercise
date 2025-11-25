@@ -29,13 +29,13 @@ struct ExerciseRow: View {
                     .font(.title3)
                     .foregroundColor(.white)
                     .padding(10)
-                    .background(Circle().fill(.blue))
+                    .background(Circle().fill(.button))
             }
         }
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.cardGray)
+                .fill(.card)
         )
     }
 }

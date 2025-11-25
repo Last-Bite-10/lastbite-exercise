@@ -18,7 +18,7 @@ struct WeeklyPlanHeader: View {
             Text(title)
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(Color.title)
+                .foregroundColor(.title)
 
             Spacer()
 
@@ -33,7 +33,7 @@ struct WeeklyPlanHeader: View {
                         Text(actionTitle)
                             .font(.headline)
                     }
-                    .foregroundColor(Color.button)
+                    .foregroundColor(.button)
                 }
             )
             .buttonStyle(.plain)
