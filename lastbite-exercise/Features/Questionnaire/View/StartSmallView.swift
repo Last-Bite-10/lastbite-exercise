@@ -19,7 +19,7 @@ struct StartSmallView: View {
 
             Text("Start Small!")
                 .font(.title2.bold())
-                .foregroundColor(Color.title)
+                .foregroundColor(.title)
 
             Image("StartSmall")
                 .resizable()

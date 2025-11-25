@@ -10,24 +10,24 @@ import SwiftUI
 struct RecordView: View {
     @StateObject private var healthManager = WatchHealthManager()
     @StateObject private var viewModel = WatchRecordViewModel()
-    
+
     var bgCircleColor: Color {
         switch viewModel.timerStatus {
-        case .timerBelowBPM: return Color.cardGray.opacity(1)
-        case .timerPaused: return Color.cardGray.opacity(1)
-        case .timerStarted: return Color.accentColor.opacity(0.2)
-        case .timerStopped: return Color.cardGray.opacity(1)
-        case .timerOverflown: return Color.purple2.opacity(1)
+        case .timerBelowBPM: return .disabled.opacity(1)
+        case .timerPaused: return .disabled.opacity(1)
+        case .timerStarted: return .ring1.opacity(0.2)
+        case .timerStopped: return .disabled.opacity(1)
+        case .timerOverflown: return .ringOverflow.opacity(1)
         }
     }
 
     var progressCircleColor: Color {
         switch viewModel.timerStatus {
-        case .timerBelowBPM: return Color.pausedGray.opacity(1)
-        case .timerPaused: return Color.pausedGray.opacity(1)
-        case .timerStarted: return Color.blueTwo.opacity(1)
-        case .timerStopped: return Color.pausedGray.opacity(1)
-        case .timerOverflown: return Color.purple2.opacity(1)
+        case .timerBelowBPM: return .disabled.opacity(1)
+        case .timerPaused: return .disabled.opacity(1)
+        case .timerStarted: return .ring2.opacity(1)
+        case .timerStopped: return .disabled.opacity(1)
+        case .timerOverflown: return .ringOverflow.opacity(1)
         }
     }
 
@@ -81,7 +81,7 @@ struct RecordView: View {
                 }
             }
             .frame(height: 120)
-//            .padding()
+            //            .padding()
 
             VStack {
                 Text("Total Time: **\(viewModel.timeTotalFormatted)** ").font(
@@ -89,27 +89,32 @@ struct RecordView: View {
                 )
             }
             Button(action: {
-                viewModel.sendProgressToiPhone(data: ProgressData(
-                    progress: viewModel.progress,
-                    timerStatus: viewModel.timerStatus != .timerPaused || viewModel.timerStatus != .timerStopped ? .timerStarted : .timerPaused,
-                    timeRemaining: viewModel.timeRemaining,
-                    totalDuration: viewModel.totalDuration)
+                viewModel.sendProgressToiPhone(
+                    data: ProgressData(
+                        progress: viewModel.progress,
+                        timerStatus: viewModel.timerStatus != .timerPaused
+                            || viewModel.timerStatus != .timerStopped
+                            ? .timerStarted : .timerPaused,
+                        timeRemaining: viewModel.timeRemaining,
+                        totalDuration: viewModel.totalDuration
+                    )
                 )
             }) {
-                Text(viewModel.timerStatus == .timerPaused || viewModel.timerStatus == .timerStopped ? "Start" : "Pause")
-                    .font(.system(size: 24))
-                    .padding(.all, 0)
-                    .foregroundStyle(Color.white)
-                    .accessibilityLabel("Start")
+                Text(
+                    viewModel.timerStatus == .timerPaused
+                        || viewModel.timerStatus == .timerStopped
+                        ? "Start" : "Pause"
+                )
+                .font(.system(size: 24))
+                .padding(.all, 0)
+                .foregroundStyle(.white)
+                .accessibilityLabel("Start")
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.small)
-            //            .frame(width: .infinity, height: 25)
-            //            .tint(Color.accent)
 
         }
         .onAppear {
-            healthManager.requestAuthorization()
             healthManager.startStreaming()
             viewModel.connectToHealthManager(healthManager)
         }

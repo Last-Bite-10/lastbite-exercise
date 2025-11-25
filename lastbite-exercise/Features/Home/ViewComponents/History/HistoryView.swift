@@ -119,7 +119,7 @@ struct RecentHistoryView: View {
                 }
                 .frame(maxWidth: .infinity, minHeight: 180)
                 .padding(20)
-                .background(Color.card)
+                .background(.card)
                 .cornerRadius(30)
             } else {
                 VStack(spacing: 12) {

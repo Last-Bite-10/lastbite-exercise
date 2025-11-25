@@ -62,29 +62,25 @@ struct WeeklyPlanPager: View {
         // Today's Plan Header
         WeeklyPlanHeader()
 
-        TabView(selection: $selection) {
-            ForEach(0..<frequencyTypeToInt(), id: \.self) { index in
-                let dayDate = dateForPage(index)
-                let dailyRecords = exercisesFor(date: dayDate)
+        ScrollView {
+            TabView(selection: $selection) {
+                ForEach(0..<frequencyTypeToInt(), id: \.self) { index in
+                    let dayDate = dateForPage(index)
+                    let dailyRecords = exercisesFor(date: dayDate)
 
-                DailyPlanCard(
-                    date: dayDate,
-                    records: dailyRecords,
-                    isCurrentDay: isToday(dayDate),
-                    onStart: { record in selectedRecord = record }
-                )
-                .padding(.horizontal)
-                .tag(index)
-                .measureHeight { height in
-                    if selection == index {
-                        pagerHeight = height
-                    }
+                    DailyPlanCard(
+                        date: dayDate,
+                        records: dailyRecords,
+                        isCurrentDay: isToday(dayDate),
+                        onStart: { record in selectedRecord = record }
+                    )
+                    .padding(.horizontal)
+                    .tag(index)
                 }
             }
         }
-        .frame(height: pagerHeight)
+        .frame(height: 236)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-        .animation(.easeInOut, value: pagerHeight)
         .onAppear {
             recommendationVM.setup(modelContext: modelContext)
             if let preference = preference {
@@ -100,19 +96,7 @@ struct WeeklyPlanPager: View {
 }
 
 #Preview {
-    WeeklyPlanPager().environment(RecommendationViewModel())
-}
-
-extension View {
-    func measureHeight(_ callback: @escaping (CGFloat) -> Void) -> some View {
-        background(
-            GeometryReader { geo in
-                Color.clear
-                    .onAppear { callback(geo.size.height) }
-                    .onChange(of: geo.size.height) { _, new in
-                        callback(new)
-                    }
-            }
-        )
-    }
+    WeeklyPlanPager()
+        .environment(RecommendationViewModel())
+        .environment(HomeViewModel())
 }

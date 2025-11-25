@@ -35,8 +35,7 @@ struct StreakView: View {
 
                         VStack(spacing: 8) {
                             ZStack {
-                                Circle()
-                                    .fill(Color.card)
+                                Circle().fill(.card)
 
                                 Image(systemName: iconName)
                                     .foregroundColor(iconColor)
@@ -110,7 +109,7 @@ struct StreakView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .fill(Color.card)
+                .fill(.card)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 28, style: .continuous)

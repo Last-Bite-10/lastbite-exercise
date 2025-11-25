@@ -19,7 +19,7 @@ struct StartStrongView: View {
 
             Text("Start Strong!")
                 .font(.title2.bold())
-                .foregroundColor(Color.title)
+                .foregroundColor(.title)
 
             Image("StartSmall")
                 .resizable()
