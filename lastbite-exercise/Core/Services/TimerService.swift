@@ -39,7 +39,7 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
             : 1.0
         self.activeTime = exerciseRecord.recordedSeconds
         self.totalTime = totalTime
-        self.remainingTime = activeTime
+        self.remainingTime = max(0, exerciseRecord.requiredSeconds - exerciseRecord.recordedSeconds)
         self.timerStatus = .timerStopped
         self.exerciseRecord = exerciseRecord
 
