@@ -58,7 +58,7 @@ struct RecentHistoryView: View {
             Text("Recent History")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(Color.blueTwo)
+                .foregroundColor(.title)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .onTapGesture {
                     #if DEBUG
@@ -119,7 +119,7 @@ struct RecentHistoryView: View {
                 }
                 .frame(maxWidth: .infinity, minHeight: 180)
                 .padding(20)
-                .background(Color("CardGray"))
+                .background(Color.card)
                 .cornerRadius(30)
             } else {
                 VStack(spacing: 12) {
@@ -146,7 +146,7 @@ struct RecentHistoryView: View {
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding()
-                            .background(Color.cardGray)
+                            .background(.card)
                             .cornerRadius(30)
                         }
                         .buttonStyle(PlainButtonStyle())

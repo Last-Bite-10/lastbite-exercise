@@ -92,7 +92,7 @@ struct DurationSelectionSheet: View {
                     }
                     .fontWeight(.semibold)
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.blueTwo)
+                    .tint(.button)
                 }
             }
         }

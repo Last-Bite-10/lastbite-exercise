@@ -34,7 +34,7 @@ struct TrophiesView: View {
             Text("My Trophies")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(Color.blueTwo)
+                .foregroundColor(.title)
                 .onTapGesture {
                     toggleAllTrophies()
                 }
@@ -52,7 +52,7 @@ struct TrophiesView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 150, height: 150)
-                                .background(Color("CardGray"))
+                                .background(.card)
                                 .cornerRadius(20)
                         }
 

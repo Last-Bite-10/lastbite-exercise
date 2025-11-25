@@ -27,10 +27,10 @@ struct MyExerciseView: View {
 
         let appearance = UINavigationBarAppearance()
         appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor(Color("BlueTwo"))
+            .foregroundColor: UIColor(Color.title)
         ]
         appearance.titleTextAttributes = [
-            .foregroundColor: UIColor(Color("BlueTwo"))
+            .foregroundColor: UIColor(Color.title)
         ]
 
         UINavigationBar.appearance().standardAppearance = appearance

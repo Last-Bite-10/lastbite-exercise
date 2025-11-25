@@ -29,7 +29,7 @@ struct ExerciseRow: View {
                     .font(.title3)
                     .foregroundColor(.white)
                     .padding(10)
-                    .background(Circle().fill(Color.blue))
+                    .background(Circle().fill(.blue))
             }
         }
         .padding()

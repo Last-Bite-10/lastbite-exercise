@@ -23,7 +23,7 @@ struct ExerciseRow: View {
                 if isCompleted {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.title3)
-                        .foregroundStyle(Color.green)
+                        .foregroundStyle(.green)
                 }
                 Text(title)
                     .font(.system(.headline, weight: .bold))
@@ -33,7 +33,7 @@ struct ExerciseRow: View {
                     .strikethrough(isCompleted)
 
                 Image(systemName: "info.circle.fill")
-                    .foregroundColor(Color("BlueTwo"))
+                    .foregroundColor(Color.title)
                     .onTapGesture {
                         showTutorial = true
                     }
@@ -61,7 +61,7 @@ struct ExerciseRow: View {
                         Capsule(style: .continuous)
                             .fill(
                                 disableStartButton
-                                    ? Color.pausedGray : Color.blueTwo
+                                    ? .disabled : .button
                             )
                     )
                 }
@@ -77,7 +77,7 @@ struct ExerciseRow: View {
                 .foregroundStyle(.white)
                 .background(
                     Capsule(style: .continuous)
-                        .fill(Color.green)
+                        .fill(.green)
                 )
             }
         }

@@ -32,7 +32,7 @@ struct PlanCardView: View {
                         .font(.subheadline)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 8)
-                        .background(Color.interactiveBlue)
+                        .background(.button)
                         .foregroundColor(.white)
                         .clipShape(Capsule())
                 }
@@ -40,7 +40,7 @@ struct PlanCardView: View {
         }
         .padding(.vertical, 20)
         .frame(maxWidth: .infinity)
-        .background(Color.cardGray)
+        .background(.card)
         .cornerRadius(28)
     }
 }
