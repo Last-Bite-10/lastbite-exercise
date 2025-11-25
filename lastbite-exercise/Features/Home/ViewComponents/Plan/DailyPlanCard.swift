@@ -38,19 +38,19 @@ struct DailyPlanCard: View {
         return Double(completedSeconds) / Double(totalSeconds)
     }
     
-    var btnState: ExerciseButtonState {
-        if(isCurrentDay) {
+    func btnState(_ record: ExerciseRecord) -> ExerciseButtonState {
+        if isCurrentDay {
             return .btnDisabled
         } else {
-            if(activeSessionRecord == nil) {
+            if activeSessionRecord == nil {
                 return .btnPlay
             } else {
-                if(
+                if
                     activeSessionRecord!.exercise != nil &&
                     activeSessionRecord!.exercise!.id != record.exercise?.id
-                ){
+                {
                     return .btnDisabled
-                }else{
+                } else {
                     return .btnRecording
                 }
             }
@@ -102,7 +102,7 @@ struct DailyPlanCard: View {
 //                            activeSessionRecord!.exercise != nil &&
 //                            activeSessionRecord!.exercise!.id != record.exercise?.id
 //                        )
-                        buttonState: btnState
+                        buttonState: btnState(record)
                     )
                 }
             }
