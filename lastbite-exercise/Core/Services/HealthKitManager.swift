@@ -21,9 +21,8 @@ final class HealthKitManager: ObservableObject {
     static let shared = HealthKitManager()
 
     init() {
-        print(
-            "HealthKitManager initialized, BPM Threshold: \(String(describing: bpmThreshold))"
-        )
+        self.requestAuthorization()
+        print("HealthKitManager initialized, BPM Threshold: \(bpmThreshold)")
     }
 
     // MARK: - HealthKit Authorization
@@ -58,10 +57,10 @@ final class HealthKitManager: ObservableObject {
 
                         Task { @MainActor in
                             self.bpmThreshold = self.getBPMThreshold(age)
-                            print(
-                                "Threshold: \(String(describing: self.bpmThreshold))"
-                            )
+                            print("BPM threshold : \(self.bpmThreshold)")
                         }
+
+                        print("Threshold: \(self.bpmThreshold)")
                     }
                 } catch {
                     print(

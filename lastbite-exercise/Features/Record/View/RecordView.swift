@@ -15,24 +15,24 @@ struct RecordContentView: View {
     @ObservedObject var watchConnectivityManager: WatchConnectivityManager
     let healthKitManager: HealthKitManager
     let dismiss: DismissAction
-    
+
     var bgCircleColor: Color {
         switch viewModel.timer.timerStatus {
-        case .timerBelowBPM: return Color.cardGray.opacity(1)
-        case .timerPaused: return Color.cardGray.opacity(1)
-        case .timerStarted: return Color.accentColor.opacity(0.2)
-        case .timerStopped: return Color.cardGray.opacity(1)
-        case .timerOverflown: return Color.purple2.opacity(1)
+        case .timerBelowBPM: return .disabled.opacity(1)
+        case .timerPaused: return .disabled.opacity(1)
+        case .timerStarted: return .ring1.opacity(0.2)
+        case .timerStopped: return .disabled.opacity(1)
+        case .timerOverflown: return .ringOverflow.opacity(1)
         }
     }
 
     var progressCircleColor: Color {
         switch viewModel.timer.timerStatus {
-        case .timerBelowBPM: return Color.pausedGray.opacity(1)
-        case .timerPaused: return Color.pausedGray.opacity(1)
-        case .timerStarted: return Color.blueTwo.opacity(1)
-        case .timerStopped: return Color.pausedGray.opacity(1)
-        case .timerOverflown: return Color.purple2.opacity(1)
+        case .timerBelowBPM: return .disabled.opacity(1)
+        case .timerPaused: return .disabled.opacity(1)
+        case .timerStarted: return .ring2.opacity(1)
+        case .timerStopped: return .disabled.opacity(1)
+        case .timerOverflown: return .ringOverflow.opacity(1)
         }
     }
 
@@ -44,7 +44,8 @@ struct RecordContentView: View {
             return
                 "Your exercise is in progress, your heartbeat is being recorded!"
         case .timerStopped:
-            return "Start now! Remember only your active time **(BPM >= \(healthKitManager.bpmThreshold))** will be recorded."
+            return
+                "Start now! Remember only your active time **(BPM >= \(healthKitManager.bpmThreshold))** will be recorded."
         case .timerOverflown:
             return
                 "Your exercise is in progress, your heartbeat is being recorded!"
@@ -52,7 +53,7 @@ struct RecordContentView: View {
             return "The time is paused. Continue by increasing your BPM!"
         }
     }
-    
+
     var body: some View {
         VStack {
             Text(timerMessage)
@@ -86,9 +87,11 @@ struct RecordContentView: View {
                 VStack {
                     VStack {
                         Text("Active Time")
-                        Text("\(viewModel.timer.remainingTime < 0 ? "+" : "")\(viewModel.remainingTimeFormatted)")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
+                        Text(
+                            "\(viewModel.timer.remainingTime < 0 ? "+" : "")\(viewModel.remainingTimeFormatted)"
+                        )
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                     }.padding(.bottom, 12)
 
                     VStack {
@@ -99,8 +102,9 @@ struct RecordContentView: View {
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .foregroundStyle(
-                                    viewModel.timer.timerStatus == .timerBelowBPM
-                                        ? Color.red : Color.black
+                                    viewModel.timer.timerStatus
+                                        == .timerBelowBPM
+                                        ? .red : .black
                                 )
                         } else {
                             Text("--")
@@ -133,20 +137,24 @@ struct RecordContentView: View {
 
             VStack {
                 RecordPlayButton(
-                    title: viewModel.timer.timerStatus == .timerPaused || viewModel.timer.timerStatus == .timerStopped
+                    title: viewModel.timer.timerStatus == .timerPaused
+                        || viewModel.timer.timerStatus == .timerStopped
                         ? "Start"
                         : "Pause"
-                )
-                {
+                ) {
                     viewModel.togglePause()
                 }
 
-                ButtonWSound(role: nil, action: {
-                    RecordSessionManager.shared.finishSession()
-                    dismiss()
-                }, label: {
-                    Text("End").foregroundStyle(.red)
-                })
+                ButtonWSound(
+                    role: nil,
+                    action: {
+                        RecordSessionManager.shared.finishSession()
+                        dismiss()
+                    },
+                    label: {
+                        Text("End").foregroundStyle(.red)
+                    }
+                )
             }
         }
     }
@@ -154,17 +162,19 @@ struct RecordContentView: View {
 
 struct RecordView: View {
     @StateObject private var healthKitManager = HealthKitManager()
-    @EnvironmentObject private var watchConnectivityManager: WatchConnectivityManager
+    @EnvironmentObject private var watchConnectivityManager:
+        WatchConnectivityManager
     @StateObject private var sessionManager = RecordSessionManager.shared
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    
+
     private let record: ExerciseRecord
-    
 
     init(record: ExerciseRecord, modelContext: ModelContext) {
         self.record = record
-        self._sessionManager = StateObject(wrappedValue: RecordSessionManager.shared)
+        self._sessionManager = StateObject(
+            wrappedValue: RecordSessionManager.shared
+        )
     }
 
     var body: some View {

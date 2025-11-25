@@ -17,10 +17,10 @@ struct RecordPlayButton: View {
                 .padding(.vertical, 12)
                 .padding(.horizontal, 28)
                 .frame(maxWidth: .infinity)
-                .foregroundStyle(Color.white)
+                .foregroundStyle(.white)
                 .background(
                     Capsule()
-                        .fill(Color.interactiveBlue)
+                        .fill(.button)
                 )
                 .accessibilityLabel(title)
         }

@@ -12,7 +12,7 @@ struct HistoryDetailCard: View {
     let onSetAsPlan: () -> Void
 
     var totalTime: String {
-        let total = historyItem.entries.reduce(0) { $0 + $1.recordedMinutes }
+        let total = historyItem.entries.reduce(0) { $0 + $1.recordedSeconds }
 
         return "\(total) mins"
     }
@@ -39,7 +39,7 @@ struct HistoryDetailCard: View {
                                     .font(.headline)
                                     Spacer()
                                     Text(
-                                        "\(entry.recordedMinutes)/\(entry.requiredMinutes) mins"
+                                        "\(Int(entry.recordedSeconds / 60))/\(Int(entry.requiredSeconds / 60)) mins"
                                     )
                                     .font(.headline)
                                 }
@@ -63,7 +63,7 @@ struct HistoryDetailCard: View {
                             .foregroundColor(.white)
                             .padding(.vertical, 12)
                             .frame(width: geometry.size.width * 0.5)
-                            .background(Color.blueTwo)
+                            .background(.button)
                             .cornerRadius(50)
                             .position(x: geometry.size.width / 2, y: 30)
                     }

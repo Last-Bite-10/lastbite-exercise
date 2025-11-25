@@ -23,7 +23,7 @@ struct ExerciseSelectionSheet: View {
                     Text("Choose your\nexercise for today")
                         .font(.title.bold())
                         .multilineTextAlignment(.leading)
-                        .foregroundColor(.blueTwo)
+                        .foregroundColor(.title)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Recommended exercise duration: 30 mins")
@@ -56,8 +56,8 @@ struct ExerciseSelectionSheet: View {
                                             RoundedRectangle(cornerRadius: 16)
                                                 .stroke(
                                                     isExerciseSelected(exercise)
-                                                        ? Color.blueTwo
-                                                        : Color.clear,
+                                                        ? .title
+                                                        : .clear,
                                                     lineWidth: 2
                                                 )
                                         )
@@ -70,13 +70,13 @@ struct ExerciseSelectionSheet: View {
                                             HStack {
                                                 Spacer()
                                                 Text(
-                                                    "\(record.requiredMinutes) min"
+                                                    "\(Int(record.requiredSeconds) / 60) min"
                                                 )
                                                 .font(.caption.bold())
                                                 .foregroundColor(.white)
                                                 .padding(.horizontal, 8)
                                                 .padding(.vertical, 4)
-                                                .background(Color.blueTwo)
+                                                .background(.title)
                                                 .cornerRadius(8)
                                                 .padding(8)
                                             }
@@ -116,7 +116,7 @@ struct ExerciseSelectionSheet: View {
                             .padding()
                             .background(
                                 !selectedExerciseRecords.isEmpty
-                                    ? Color.blueTwo : Color.gray.opacity(0.4)
+                                    ? .button : .disabled
                             )
                             .foregroundColor(.white)
                             .cornerRadius(30)

@@ -24,7 +24,7 @@ struct QuestionnaireSelectionButton: View {
                     .foregroundStyle(isSelected ? .white : .black)
                     .background(
                         Capsule()
-                            .fill(isSelected ? Color.blueTwo : Color.cardGray)
+                            .fill(isSelected ? .button : .card)
                     )
             }
         )

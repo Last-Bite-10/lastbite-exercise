@@ -26,7 +26,7 @@ struct TodayPlanView: View {
             ForEach(records, id: \.id) { record in
                 ExerciseRow(
                     name: record.exercise!.name,
-                    duration: record.requiredMinutes
+                    duration: record.requiredSeconds / 60
                 ) {
                     healthManager.sendExerciseStart(
                         exerciseId: record.id.uuidString
