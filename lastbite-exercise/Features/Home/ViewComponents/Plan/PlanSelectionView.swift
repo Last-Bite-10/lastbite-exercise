@@ -20,7 +20,7 @@ struct PlanSelectionView: View {
             Text("Choose Your Plan")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(Color.blueTwo)
+                .foregroundColor(.title)
 
             PlanCardView(
                 title: "Start Strong!",

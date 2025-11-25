@@ -15,18 +15,21 @@ struct GetStartedView: View {
     private let soundPlayer = SoundPlayer.shared
 
     var body: some View {
-        VStack(
-            alignment: .center
-        ) {
-            HStack {
-                Image("icon_display")
+        VStack(alignment: .center) {
+            Spacer()
 
-                Text(
-                    "Welcome to ExaMove, where your small moves make a big impact."
-                )
-                .font(.headline)
-                .multilineTextAlignment(.center)
-            }
+            Image("AppIconDisplay")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 200, height: 200)
+
+            Text(
+                "Welcome to ExaMove, where your small \n moves make a big impact."
+            )
+            .font(.headline)
+            .multilineTextAlignment(.center)
+
+            Spacer()
 
             ButtonWSound(
                 action: {
@@ -38,6 +41,8 @@ struct GetStartedView: View {
                 label: { CoreButtonLabel(title: "Get Started") }
             )
             .padding(.horizontal, 48)
+
+            Spacer()
         }
     }
 }

@@ -38,6 +38,7 @@ struct TutorialOverlay: View {
                             isVisible.toggle()
                         }
                         .buttonStyle(.borderedProminent)
+                        .tint(.button)
                         .labelStyle(.iconOnly)
                         .controlSize(.large)
                         .clipShape(Circle())

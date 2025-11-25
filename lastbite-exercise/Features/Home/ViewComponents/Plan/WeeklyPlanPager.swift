@@ -68,6 +68,7 @@ struct WeeklyPlanPager: View {
                 let dailyRecords = exercisesFor(date: dayDate)
 
                 DailyPlanCard(
+                    sessionManager: RecordSessionManager.shared,
                     date: dayDate,
                     records: dailyRecords,
                     isCurrentDay: isToday(dayDate),

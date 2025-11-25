@@ -28,7 +28,7 @@ struct DurationSelectionSheet: View {
         self.existingRecord = existingRecord
         self.onComplete = onComplete
         _selectedMinutes = State(
-            initialValue: existingRecord?.recordedMinutes ?? 5
+            initialValue: existingRecord?.recordedSeconds ?? 5
         )
     }
 
@@ -84,7 +84,7 @@ struct DurationSelectionSheet: View {
                     Button("Done", systemImage: "checkmark") {
                         let record = ExerciseRecord(
                             exercise: exercise,
-                            requiredMinutes: selectedMinutes,
+                            requiredSeconds: selectedMinutes * 60,
                             usedAt: viewModel.currentlyViewedDate
                         )
                         onComplete(record)
@@ -92,7 +92,7 @@ struct DurationSelectionSheet: View {
                     }
                     .fontWeight(.semibold)
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.blueTwo)
+                    .tint(.button)
                 }
             }
         }

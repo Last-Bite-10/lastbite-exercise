@@ -7,15 +7,44 @@
 
 import SwiftUI
 
+enum ExerciseButtonState {
+    case btnDisabled
+    case btnPlay
+    case btnRecording
+}
+
 struct ExerciseRow: View {
     let title: String
     let duration: Int
     let isCompleted: Bool
     var action: () -> Void
     var exercise: Exercise
-    var disableStartButton: Bool = false
+    var buttonState: ExerciseButtonState
 
     @State private var showTutorial = false
+    
+    // MARK: - Setups for each button states
+    var buttonText: String {
+        switch buttonState {
+        case .btnDisabled:
+            return "Play"
+        case .btnPlay:
+            return "Play"
+        case .btnRecording:
+            return "In Progress"
+        }
+    }
+    
+    var buttonIcon: String {
+        switch buttonState {
+        case .btnDisabled:
+            return "play.fill"
+        case .btnPlay:
+            return "play.fill"
+        case .btnRecording:
+            return "record.circle"
+        }
+    }
 
     var body: some View {
         HStack(spacing: 0) {
@@ -23,7 +52,7 @@ struct ExerciseRow: View {
                 if isCompleted {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.title3)
-                        .foregroundStyle(Color.green)
+                        .foregroundStyle(.green)
                 }
                 Text(title)
                     .font(.system(.headline, weight: .bold))
@@ -33,7 +62,7 @@ struct ExerciseRow: View {
                     .strikethrough(isCompleted)
 
                 Image(systemName: "info.circle.fill")
-                    .foregroundColor(Color("BlueTwo"))
+                    .foregroundColor(Color.title)
                     .onTapGesture {
                         showTutorial = true
                     }
@@ -47,11 +76,11 @@ struct ExerciseRow: View {
                 .padding(.trailing, 16)
 
             if !isCompleted {
-                ButtonWSound(disabled: disableStartButton, action: action) {
+                ButtonWSound(disabled: buttonState == .btnDisabled, action: action) {
                     HStack(spacing: 8) {
-                        Image(systemName: "play.fill")
+                        Image(systemName: buttonIcon)
                             .font(.headline)
-                        Text("Start")
+                        Text(buttonText)
                             .font(.headline)
                     }
                     .padding(.horizontal, 18)
@@ -60,8 +89,8 @@ struct ExerciseRow: View {
                     .background(
                         Capsule(style: .continuous)
                             .fill(
-                                disableStartButton
-                                    ? Color.pausedGray : Color.blueTwo
+                                buttonState == .btnDisabled
+                                    ? .disabled : .button
                             )
                     )
                 }
@@ -77,7 +106,7 @@ struct ExerciseRow: View {
                 .foregroundStyle(.white)
                 .background(
                     Capsule(style: .continuous)
-                        .fill(Color.green)
+                        .fill(.green)
                 )
             }
         }

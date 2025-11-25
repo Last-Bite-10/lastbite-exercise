@@ -19,7 +19,7 @@ struct StartStrongView: View {
 
             Text("Start Strong!")
                 .font(.title2.bold())
-                .foregroundColor(Color("BlueTwo"))
+                .foregroundColor(Color.title)
 
             Image("StartSmall")
                 .resizable()
@@ -45,7 +45,7 @@ struct StartStrongView: View {
                 .font(.subheadline)
                 .foregroundColor(.primary)
                 .padding(20)
-                .background(Color.white)
+                .background(.white)
                 .cornerRadius(16)
 
                 Text(
@@ -57,7 +57,7 @@ struct StartStrongView: View {
                 .fixedSize(horizontal: false, vertical: true)
             }
             .padding(30)
-            .background(Color.cardGray)
+            .background(.card)
             .cornerRadius(30)
 
             NavLinkWSound(
