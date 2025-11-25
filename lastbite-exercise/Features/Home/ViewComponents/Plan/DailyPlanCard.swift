@@ -97,11 +97,6 @@ struct DailyPlanCard: View {
                             onStart(record)
                         },
                         exercise: record.exercise!,
-//                        disableStartButton: !isCurrentDay || (
-//                            activeSessionRecord != nil &&
-//                            activeSessionRecord!.exercise != nil &&
-//                            activeSessionRecord!.exercise!.id != record.exercise?.id
-//                        )
                         buttonState: btnState(record)
                     )
                 }

@@ -37,7 +37,7 @@ class RecordViewModel: ObservableObject {
 
         self.timer = TimerService(
             activeTime: record.requiredSeconds,
-            totalTime: 0,
+            totalTime: record.recordedSeconds,
             exerciseRecord: record,
             healthKitManager: healthKitManager,
             watchConnectivityManager: watchConnectivityManager
@@ -167,7 +167,7 @@ class RecordViewModel: ObservableObject {
 
         // Update the record with recorded time
         let recordedSeconds = timer.activeTime
-        record.recordedSeconds += recordedSeconds
+        record.recordedSeconds = recordedSeconds
         record.isCompleted = recordedSeconds >= record.requiredSeconds
         if record.isCompleted {
             record.completedAt = Date()
