@@ -26,6 +26,7 @@ struct ContentView: View {
                         .tabItem {
                             Label("My Exercise", systemImage: "figure.yoga")
                         }
+                        .environmentObject(sessionManager)
 
                     MyProgressView()
                         .tag(1)
@@ -37,7 +38,7 @@ struct ContentView: View {
             }
             
             // Active session indicator overlay
-            ActiveSessionIndicator(sessionManager: sessionManager)
+//            ActiveSessionIndicator(sessionManager: sessionManager)
         }
     }
 }

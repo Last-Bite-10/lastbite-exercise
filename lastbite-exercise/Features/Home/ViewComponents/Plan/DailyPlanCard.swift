@@ -10,10 +10,20 @@ import SwiftUI
 struct DailyPlanCard: View {
     @Environment(HomeViewModel.self) private var viewModel
 
+    @ObservedObject var sessionManager: RecordSessionManager
+    
     let date: Date
     let records: [ExerciseRecord]
     let isCurrentDay: Bool
     let onStart: (ExerciseRecord) -> Void
+
+    var activeSessionRecord: ExerciseRecord? {
+        guard sessionManager.hasActiveSession,
+              let session = sessionManager.activeSession else {
+            return nil
+        }
+        return session.record
+    }
 
     var completedSeconds: Int {
         records.reduce(0) { $0 + $1.recordedSeconds }
@@ -26,6 +36,25 @@ struct DailyPlanCard: View {
     var progress: Double {
         guard totalSeconds > 0 else { return 0 }
         return Double(completedSeconds) / Double(totalSeconds)
+    }
+    
+    func btnState(_ record: ExerciseRecord) -> ExerciseButtonState {
+        if isCurrentDay {
+            return .btnDisabled
+        } else {
+            if activeSessionRecord == nil {
+                return .btnPlay
+            } else {
+                if
+                    activeSessionRecord!.exercise != nil &&
+                    activeSessionRecord!.exercise!.id != record.exercise?.id
+                {
+                    return .btnDisabled
+                } else {
+                    return .btnRecording
+                }
+            }
+        }
     }
 
     var body: some View {
@@ -68,7 +97,12 @@ struct DailyPlanCard: View {
                             onStart(record)
                         },
                         exercise: record.exercise!,
-                        disableStartButton: !isCurrentDay
+//                        disableStartButton: !isCurrentDay || (
+//                            activeSessionRecord != nil &&
+//                            activeSessionRecord!.exercise != nil &&
+//                            activeSessionRecord!.exercise!.id != record.exercise?.id
+//                        )
+                        buttonState: btnState(record)
                     )
                 }
             }
@@ -94,6 +128,7 @@ struct DailyPlanCard: View {
 
 #Preview {
     DailyPlanCard(
+        sessionManager: RecordSessionManager.shared,
         date: Date(),
         records: [],
         isCurrentDay: true,

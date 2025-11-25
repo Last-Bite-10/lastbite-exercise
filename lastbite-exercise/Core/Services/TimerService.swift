@@ -31,8 +31,13 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
         healthKitManager: HealthKitManager,
         watchConnectivityManager: WatchConnectivityManager
     ) {
-        self.progress = 1.0
-        self.activeTime = 0
+        self.progress = exerciseRecord.recordedSeconds > 0
+            ? TimerService.getProgressPercentage(
+                remainingTime: max(0, exerciseRecord.requiredSeconds - exerciseRecord.recordedSeconds),
+                exerciseRecord: exerciseRecord
+            )
+            : 1.0
+        self.activeTime = exerciseRecord.recordedSeconds
         self.totalTime = totalTime
         self.remainingTime = activeTime
         self.timerStatus = .timerStopped
@@ -77,14 +82,9 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
         handleTimerStatusChange()
 
         // Update progress based on active time
-        progress = getProgressPercentage(
-            remainingTime: remainingTime,
-            exerciseRecord: exerciseRecord
-        )
-
-        print(
-            "Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)"
-        )
+        progress = TimerService.getProgressPercentage(remainingTime: remainingTime, exerciseRecord: exerciseRecord)
+        
+        print("Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)")
     }
 
     func handleTimerStatusChange() {
@@ -104,7 +104,7 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
     }
 
     // MARK: - Utility Functions
-    func getProgressPercentage(
+    static func getProgressPercentage(
         remainingTime: Int,
         exerciseRecord: ExerciseRecord
     ) -> Double {

@@ -13,7 +13,7 @@ struct ActiveSessionIndicator: View {
 
     var body: some View {
         if sessionManager.hasActiveSession,
-            let session = sessionManager.activeSession
+           let session = sessionManager.activeSession
         {
             VStack(spacing: 0) {
                 Spacer()

@@ -7,15 +7,44 @@
 
 import SwiftUI
 
+enum ExerciseButtonState {
+    case btnDisabled
+    case btnPlay
+    case btnRecording
+}
+
 struct ExerciseRow: View {
     let title: String
     let duration: Int
     let isCompleted: Bool
     var action: () -> Void
     var exercise: Exercise
-    var disableStartButton: Bool = false
+    var buttonState: ExerciseButtonState
 
     @State private var showTutorial = false
+    
+    // MARK: - Setups for each button states
+    var buttonText: String {
+        switch buttonState {
+        case .btnDisabled:
+            return "Play"
+        case .btnPlay:
+            return "Play"
+        case .btnRecording:
+            return "In Progress"
+        }
+    }
+    
+    var buttonIcon: String {
+        switch buttonState {
+        case .btnDisabled:
+            return "play.fill"
+        case .btnPlay:
+            return "play.fill"
+        case .btnRecording:
+            return "record.circle"
+        }
+    }
 
     var body: some View {
         HStack(spacing: 0) {
@@ -47,11 +76,11 @@ struct ExerciseRow: View {
                 .padding(.trailing, 16)
 
             if !isCompleted {
-                ButtonWSound(disabled: disableStartButton, action: action) {
+                ButtonWSound(disabled: buttonState == .btnDisabled, action: action) {
                     HStack(spacing: 8) {
-                        Image(systemName: "play.fill")
+                        Image(systemName: buttonIcon)
                             .font(.headline)
-                        Text("Start")
+                        Text(buttonText)
                             .font(.headline)
                     }
                     .padding(.horizontal, 18)
@@ -60,7 +89,7 @@ struct ExerciseRow: View {
                     .background(
                         Capsule(style: .continuous)
                             .fill(
-                                disableStartButton
+                                buttonState == .btnDisabled
                                     ? .disabled : .button
                             )
                     )
