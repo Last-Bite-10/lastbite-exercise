@@ -116,7 +116,7 @@ final class RecommendationViewModel {
 
             let record = ExerciseRecord(
                 exercise: exercise,
-                requiredMinutes: minutes,
+                requiredSeconds: minutes * 60,
                 usedAt: usedAtDate,
                 week: week
             )

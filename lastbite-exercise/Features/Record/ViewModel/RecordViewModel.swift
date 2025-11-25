@@ -34,15 +34,15 @@ class RecordViewModel: ObservableObject {
         self.healthKitManager = healthKitManager
         self.context = modelContext
         self.bpmThreshold = Double(healthKitManager.bpmThreshold)
-        
+
         self.timer = TimerService(
-            activeTime: record.requiredMinutes * 60, 
-            totalTime: 0, 
-            exerciseRecord: record, 
-            healthKitManager: healthKitManager, 
+            activeTime: record.requiredSeconds,
+            totalTime: 0,
+            exerciseRecord: record,
+            healthKitManager: healthKitManager,
             watchConnectivityManager: watchConnectivityManager
         )
-        
+
         self.setupProgressSync()
         self.setupTimerObservation()
         self.attachWatchConnectivityManager(watchConnectivityManager)
@@ -64,7 +64,7 @@ class RecordViewModel: ObservableObject {
         }
         .store(in: &cancellables)
     }
-    
+
     private func setupProgressSync() {
         // Send progress updates to Watch whenever they change
         Publishers.CombineLatest4(
@@ -100,14 +100,16 @@ class RecordViewModel: ObservableObject {
                 "progress": Double(progress),
                 "timeRemaining": timeRemaining,
                 "totalDuration": totalDuration,
-                "timerStatus": timerStatus.rawValue
-            ]
+                "timerStatus": timerStatus.rawValue,
+            ],
         ]
 
         // Use application context for state sync (most reliable)
         do {
             try WCSession.default.updateApplicationContext(progressData)
-            print("[iPhone] Sending application context to Watch. Payload : \(progressData)")
+            print(
+                "[iPhone] Sending application context to Watch. Payload : \(progressData)"
+            )
         } catch {
             print(
                 "Failed to update application context: \(error.localizedDescription)"
@@ -122,8 +124,10 @@ class RecordViewModel: ObservableObject {
                     "Failed to send progress message: \(error.localizedDescription)"
                 )
             }
-            
-            print("[iPhone] Sending payload to Watch. Payload : \(progressData)")
+
+            print(
+                "[iPhone] Sending payload to Watch. Payload : \(progressData)"
+            )
         }
     }
 
@@ -131,7 +135,7 @@ class RecordViewModel: ObservableObject {
     func startMonitoring() {
         // Start Watch heart rate monitoring
         watchConnectivityManager?.startWatchHeartRateMonitoring()
-        
+
         // Start HealthKit workout session for background tracking
         healthKitManager.startWorkoutSession()
 
@@ -146,7 +150,9 @@ class RecordViewModel: ObservableObject {
 
     func togglePause() {
         print("Toggle trigger")
-        if timer.timerStatus != .timerPaused && timer.timerStatus != .timerStopped {
+        if timer.timerStatus != .timerPaused
+            && timer.timerStatus != .timerStopped
+        {
             print("Elig for pause. State now : \(timer.timerStatus)")
             pauseTimer()
         } else {
@@ -160,9 +166,9 @@ class RecordViewModel: ObservableObject {
         cleanup()
 
         // Update the record with recorded time
-        let recordedMinutes = timer.activeTime / 60
-        record.recordedMinutes += recordedMinutes
-        record.isCompleted = recordedMinutes >= record.requiredMinutes
+        let recordedSeconds = timer.activeTime
+        record.recordedSeconds += recordedSeconds
+        record.isCompleted = recordedSeconds >= record.requiredSeconds
         if record.isCompleted {
             record.completedAt = Date()
         }
@@ -172,10 +178,12 @@ class RecordViewModel: ObservableObject {
 
         if let exerciseName = record.exercise?.name {
             print(
-                "Exercise finished: \(exerciseName), recorded: \(recordedMinutes) minutes"
+                "Exercise finished: \(exerciseName), recorded: \(Int(recordedSeconds / 60)) minutes"
             )
         } else {
-            print("Exercise finished: recorded: \(recordedMinutes) minutes")
+            print(
+                "Exercise finished: recorded: \(Int(recordedSeconds / 60)) minutes"
+            )
         }
     }
 
@@ -187,19 +195,19 @@ class RecordViewModel: ObservableObject {
         self.healthKitManager.resumeWorkoutSession()
         self.timer.startTimer()
     }
-    
+
     func pauseTimer() {
         self.timer.pauseTimer()
         self.healthKitManager.pauseWorkoutSession()
     }
 
-//    private func handleTimerStatusChange() {
-//        self.timer.
-//    }
-//
-//    private func handleTimerTick() {
-//        self.timer.
-//    }
+    //    private func handleTimerStatusChange() {
+    //        self.timer.
+    //    }
+    //
+    //    private func handleTimerTick() {
+    //        self.timer.
+    //    }
 
     private func subscribeToBPMUpdates(_ manager: WatchConnectivityManager) {
         manager.bpmPublisher
@@ -209,18 +217,22 @@ class RecordViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
-    private func subscribeToWatchTimerStatusUpdates(_ manager: WatchConnectivityManager) {
+
+    private func subscribeToWatchTimerStatusUpdates(
+        _ manager: WatchConnectivityManager
+    ) {
         manager.watchTimerStatusPublisher
             .sink { [weak self] timerStatus in
-                print("[iPhone] Watch timer status updated! New status: \(timerStatus)")
+                print(
+                    "[iPhone] Watch timer status updated! New status: \(timerStatus)"
+                )
                 self?.handleWatchTimerStatusUpdate(timerStatus)
             }
             .store(in: &cancellables)
     }
 
     private func handleBPMUpdate(_ bpm: Double) {
-//        let wasUnder: Bool = timer.timerStatus == .timerBelowBPM
+        //        let wasUnder: Bool = timer.timerStatus == .timerBelowBPM
         timer.handleTimerStatusChange()
 
         // Trigger haptic feedback when BPM drops below threshold
@@ -229,8 +241,10 @@ class RecordViewModel: ObservableObject {
             generator.impactOccurred()
         }
     }
-    
-    private func handleWatchTimerStatusUpdate(_ watchTimerStatus: TimerStatusType) {
+
+    private func handleWatchTimerStatusUpdate(
+        _ watchTimerStatus: TimerStatusType
+    ) {
         // Synchronize the timer status with the watch
         // Only consider timerStopped, timerStarted, and timerPaused from the watch
         switch watchTimerStatus {
@@ -245,7 +259,9 @@ class RecordViewModel: ObservableObject {
             pauseTimer()
         default:
             // Ignore other states like timerBelowBPM, timerAboveBPM as they are iPhone-driven
-            print("[iPhone] Watch sent \(watchTimerStatus), ignoring as it's not a control state")
+            print(
+                "[iPhone] Watch sent \(watchTimerStatus), ignoring as it's not a control state"
+            )
         }
     }
 
@@ -266,12 +282,12 @@ class RecordViewModel: ObservableObject {
         return formatTime(duration: timer.totalTime)
     }
 
-//    var currentBPM: Int? {
-//        guard let bpm = watchConnectivityManager?.latestBPM else {
-//            return nil
-//        }
-//        return Int(bpm)
-//    }
+    //    var currentBPM: Int? {
+    //        guard let bpm = watchConnectivityManager?.latestBPM else {
+    //            return nil
+    //        }
+    //        return Int(bpm)
+    //    }
 
     var isReceivingFromWatch: Bool {
         watchConnectivityManager?.isReceivingFromWatch ?? false

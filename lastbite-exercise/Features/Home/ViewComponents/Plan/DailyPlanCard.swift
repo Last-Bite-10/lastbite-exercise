@@ -15,22 +15,21 @@ struct DailyPlanCard: View {
     let isCurrentDay: Bool
     let onStart: (ExerciseRecord) -> Void
 
-    var completedMinutes: Int {
-        records.reduce(0) { $0 + $1.recordedMinutes }
+    var completedSeconds: Int {
+        records.reduce(0) { $0 + $1.recordedSeconds }
     }
 
-    var totalMinutes: Int {
-        records.reduce(0) { $0 + $1.requiredMinutes }
+    var totalSeconds: Int {
+        records.reduce(0) { $0 + $1.requiredSeconds }
     }
 
     var progress: Double {
-        guard totalMinutes > 0 else { return 0 }
-        return Double(completedMinutes) / Double(totalMinutes)
+        guard totalSeconds > 0 else { return 0 }
+        return Double(completedSeconds) / Double(totalSeconds)
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-
             // MARK: - Header
             HStack {
                 Text(
@@ -45,9 +44,11 @@ struct DailyPlanCard: View {
                 VStack(alignment: .trailing) {
                     Text("\(Int(progress * 100))%")
                         .font(.subheadline.bold())
-                    Text("\(completedMinutes)/\(totalMinutes) mins")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    Text(
+                        "\(Int(completedSeconds / 60))/\(Int(totalSeconds / 60)) mins"
+                    )
+                    .font(.caption)
+                    .foregroundColor(.secondary)
                 }
             }
 
@@ -61,7 +62,7 @@ struct DailyPlanCard: View {
                 ForEach(records) { record in
                     ExerciseRow(
                         title: record.exercise?.name ?? "Exercise",
-                        duration: Int(record.requiredMinutes),
+                        duration: record.requiredSeconds / 60,
                         isCompleted: record.isCompleted,
                         action: {
                             onStart(record)
@@ -97,5 +98,5 @@ struct DailyPlanCard: View {
         records: [],
         isCurrentDay: true,
         onStart: { _ in }
-    )
+    ).environment(HomeViewModel())
 }

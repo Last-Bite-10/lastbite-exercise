@@ -83,21 +83,21 @@ struct RecentHistoryView: View {
 
                         let record1 = ExerciseRecord(
                             exercise: exercise1,
-                            requiredMinutes: 10,
+                            requiredSeconds: 10 * 60,
                             usedAt: Date()
                         )
                         let record2 = ExerciseRecord(
                             exercise: exercise2,
-                            requiredMinutes: 5,
+                            requiredSeconds: 5 * 60,
                             usedAt: Date()
                         )
 
                         record1.isCompleted = true
-                        record1.recordedMinutes = 8
+                        record1.recordedSeconds = 8 * 60
                         record1.completedAt = targetDate
 
                         record2.isCompleted = true
-                        record2.recordedMinutes = 5
+                        record2.recordedSeconds = 5 * 60
                         record2.completedAt = targetDate
 
                         modelContext.insert(record1)
@@ -129,15 +129,17 @@ struct RecentHistoryView: View {
                         } label: {
                             VStack(alignment: .leading, spacing: 8) {
                                 let totalRecorded = item.entries.reduce(0) {
-                                    $0 + $1.recordedMinutes
+                                    $0 + $1.recordedSeconds
                                 }
                                 let totalRequired = item.entries.reduce(0) {
-                                    $0 + $1.requiredMinutes
+                                    $0 + $1.requiredSeconds
                                 }
 
-                                Text("\(totalRecorded)/\(totalRequired) mins")
-                                    .font(.headline)
-                                    .padding(.top, 8)
+                                Text(
+                                    "\(Int(totalRecorded) / 60)/\(Int(totalRequired / 60)) mins"
+                                )
+                                .font(.headline)
+                                .padding(.top, 8)
 
                                 Text(item.date)
                                     .font(.subheadline)
@@ -163,7 +165,7 @@ struct RecentHistoryView: View {
                     for entry in item.entries {
                         let newEntry = ExerciseRecord(
                             exercise: entry.exercise!,
-                            requiredMinutes: entry.requiredMinutes,
+                            requiredSeconds: entry.requiredSeconds,
                             usedAt: Date(),
                             week: entry.week
                         )

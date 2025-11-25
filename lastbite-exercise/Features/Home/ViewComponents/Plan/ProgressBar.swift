@@ -26,12 +26,9 @@ struct ProgressBar: View {
         }
         .frame(height: 12)
         .padding(.trailing, 12)
-        .background(
-            Capsule().stroke(.white.opacity(0.7), lineWidth: 6)
-        )
     }
 }
 
 #Preview {
-    ProgressBar(value: 0.5)
+    ProgressBar(value: 0.2)
 }

@@ -4,8 +4,8 @@
 //
 //  Created by Ammar Alifian Fahdan on 13/11/25.
 
-import Foundation
 import Combine
+import Foundation
 
 @MainActor
 class TimerService: ObservableObject {  // ← Add ObservableObject conformance
@@ -16,13 +16,13 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
     @Published var totalTime: Int
     @Published var timerStatus: TimerStatusType
     @Published var exerciseRecord: ExerciseRecord
-    
+
     var timer: AnyCancellable?
-    
+
     // Used services
     var healthKitManager: HealthKitManager
     var watchConnectivityManager: WatchConnectivityManager
-    
+
     // MARK: - Initialization
     init(
         activeTime: Int,
@@ -37,11 +37,11 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
         self.remainingTime = activeTime
         self.timerStatus = .timerStopped
         self.exerciseRecord = exerciseRecord
-        
+
         self.healthKitManager = healthKitManager
         self.watchConnectivityManager = watchConnectivityManager
     }
-    
+
     // MARK: - Core Functions
     func startTimer() {
         print("Timer started.")
@@ -53,35 +53,40 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
             }
         timerStatus = .timerStarted
     }
-    
+
     func pauseTimer() {
         timer?.cancel()
         timer = nil
         timerStatus = .timerPaused
     }
-    
+
     func stopTimer() {
         timer?.cancel()
         timer = nil
         timerStatus = .timerStopped
     }
-    
+
     // MARK: - Internal Functions
     private func handleTimerTick() {
         if timerStatus != .timerBelowBPM {
             self.activeTime += 1
             self.remainingTime -= 1
         }
-        
+
         self.totalTime += 1
         handleTimerStatusChange()
-        
+
         // Update progress based on active time
-        progress = getProgressPercentage(remainingTime: remainingTime, exerciseRecord: exerciseRecord)
-        
-        print("Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)")
+        progress = getProgressPercentage(
+            remainingTime: remainingTime,
+            exerciseRecord: exerciseRecord
+        )
+
+        print(
+            "Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)"
+        )
     }
-    
+
     func handleTimerStatusChange() {
         if remainingTime < 0 {
             timerStatus = .timerOverflown
@@ -89,7 +94,8 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
         }
 
         if let bpm = watchConnectivityManager.latestBPM,
-           bpm < Double(healthKitManager.bpmThreshold) {
+            bpm < Double(healthKitManager.bpmThreshold)
+        {
             timerStatus = .timerBelowBPM
             return
         }
@@ -97,12 +103,14 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
         timerStatus = .timerStarted
     }
 
-    
     // MARK: - Utility Functions
-    func getProgressPercentage(remainingTime: Int, exerciseRecord: ExerciseRecord) -> Double {
+    func getProgressPercentage(
+        remainingTime: Int,
+        exerciseRecord: ExerciseRecord
+    ) -> Double {
         // Implement your progress calculation here
         return min(
-            Double(remainingTime) / Double(exerciseRecord.requiredMinutes * 60),
+            Double(remainingTime) / Double(exerciseRecord.requiredSeconds),
             1.0
         )
     }
