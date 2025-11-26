@@ -11,7 +11,7 @@ struct DailyPlanCard: View {
     @Environment(HomeViewModel.self) private var viewModel
 
     @ObservedObject var sessionManager: RecordSessionManager
-    
+
     let date: Date
     let records: [ExerciseRecord]
     let isCurrentDay: Bool
@@ -19,7 +19,8 @@ struct DailyPlanCard: View {
 
     var activeSessionRecord: ExerciseRecord? {
         guard sessionManager.hasActiveSession,
-              let session = sessionManager.activeSession else {
+            let session = sessionManager.activeSession
+        else {
             return nil
         }
         return session.record
@@ -37,17 +38,16 @@ struct DailyPlanCard: View {
         guard totalSeconds > 0 else { return 0 }
         return Double(completedSeconds) / Double(totalSeconds)
     }
-    
+
     func btnState(_ record: ExerciseRecord) -> ExerciseButtonState {
-        if isCurrentDay {
+        if !isCurrentDay {
             return .btnDisabled
         } else {
             if activeSessionRecord == nil {
                 return .btnPlay
             } else {
-                if
-                    activeSessionRecord!.exercise != nil &&
-                    activeSessionRecord!.exercise!.id != record.exercise?.id
+                if activeSessionRecord!.exercise != nil
+                    && activeSessionRecord!.exercise!.id != record.exercise?.id
                 {
                     return .btnDisabled
                 } else {
@@ -107,7 +107,10 @@ struct DailyPlanCard: View {
             viewModel.currentlyViewedDate = date
             viewModel.currentlyViewedPlan = records
         }
-        .frame(maxWidth: .infinity, alignment: .leading)  // allow horizontal expansion
+        .onChange(of: records) { _, newRecords in
+            viewModel.currentlyViewedPlan = newRecords
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 28)

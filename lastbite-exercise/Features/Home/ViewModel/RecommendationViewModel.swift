@@ -132,11 +132,9 @@ final class RecommendationViewModel {
     {
         guard let context = modelContext else { return }
 
-        currentWeek?.records?.removeAll(
-            where: {
-                $0.usedAt == usedAt
-            }
-        )
+        currentWeek?.records?.removeAll(where: { existing in
+            Calendar.current.isDate(existing.usedAt!, inSameDayAs: usedAt)
+        })
 
         currentWeek?.records?.append(contentsOf: records)
         try? context.save()
