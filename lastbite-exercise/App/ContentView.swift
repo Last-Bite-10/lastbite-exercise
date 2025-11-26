@@ -16,7 +16,6 @@ struct ContentView: View {
     private let haptic = HapticManager.shared
 
     var body: some View {
-        ZStack {
             if preferences.isEmpty {
                 GetStartedView()
             } else {
@@ -39,7 +38,6 @@ struct ContentView: View {
             
             // Active session indicator overlay
 //            ActiveSessionIndicator(sessionManager: sessionManager)
-        }
     }
 }
 
