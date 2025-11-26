@@ -14,7 +14,6 @@ struct WeeklyPlanPager: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var preferences: [Preference]
     @State private var selectedRecord: ExerciseRecord?
-    @State private var pagerHeight: CGFloat = .zero
     @State private var selection = 0
 
     // MARK: - Derived Properties
@@ -60,37 +59,39 @@ struct WeeklyPlanPager: View {
     // MARK: - Body
     var body: some View {
         // Today's Plan Header
-        WeeklyPlanHeader()
+        VStack {
+            WeeklyPlanHeader()
 
-        ScrollView {
             TabView(selection: $selection) {
                 ForEach(0..<frequencyTypeToInt(), id: \.self) { index in
                     let dayDate = dateForPage(index)
                     let dailyRecords = exercisesFor(date: dayDate)
 
-                    DailyPlanCard(
-                        sessionManager: RecordSessionManager.shared, date: dayDate,
-                        records: dailyRecords,
-                        isCurrentDay: isToday(dayDate),
-                        onStart: { record in selectedRecord = record }
-                    )
-                    .padding(.horizontal)
-                    .tag(index)
+                    ScrollView {
+                        DailyPlanCard(
+                            sessionManager: RecordSessionManager.shared,
+                            date: dayDate,
+                            records: dailyRecords,
+                            isCurrentDay: isToday(dayDate),
+                            onStart: { record in selectedRecord = record }
+                        )
+                        .padding(.horizontal)
+                        .tag(index)
+                    }
                 }
             }
-        }
-        .frame(height: 236)
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-        .onAppear {
-            recommendationVM.setup(modelContext: modelContext)
-            if let preference = preference {
-                recommendationVM.initializeWeeklyExercises(
-                    preference: preference
-                )
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+            .onAppear {
+                recommendationVM.setup(modelContext: modelContext)
+                if let preference = preference {
+                    recommendationVM.initializeWeeklyExercises(
+                        preference: preference
+                    )
+                }
             }
-        }
-        .sheet(item: $selectedRecord) { record in
-            RecordView(record: record, modelContext: modelContext)
+            .sheet(item: $selectedRecord) { record in
+                RecordView(record: record, modelContext: modelContext)
+            }
         }
     }
 }

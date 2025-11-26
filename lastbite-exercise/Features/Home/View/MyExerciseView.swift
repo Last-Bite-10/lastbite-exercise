@@ -67,6 +67,7 @@ struct MyExerciseView: View {
                         WeeklyPlanPager()
                             .environment(recommendationVM)
                             .environment(homeVM)
+                            .frame(height: 300)
                     }
 
                     RecentHistoryView()
@@ -99,5 +100,5 @@ struct MyExerciseView: View {
 }
 
 #Preview {
-    MyExerciseView()
+    MyExerciseView().environment(HomeViewModel())
 }
