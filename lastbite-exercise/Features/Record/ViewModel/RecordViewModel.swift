@@ -36,8 +36,8 @@ class RecordViewModel: ObservableObject {
         self.bpmThreshold = Double(healthKitManager.bpmThreshold)
 
         self.timer = TimerService(
-            activeTime: record.requiredSeconds,
-            totalTime: record.recordedSeconds,
+            activeTime: record.requiredSeconds!,
+            totalTime: record.recordedSeconds!,
             exerciseRecord: record,
             healthKitManager: healthKitManager,
             watchConnectivityManager: watchConnectivityManager
@@ -163,12 +163,13 @@ class RecordViewModel: ObservableObject {
     }
 
     func finishExercise() {
+        record.isRecording = false
         cleanup()
 
         // Update the record with recorded time
         let recordedSeconds = timer.activeTime
         record.recordedSeconds = recordedSeconds
-        record.isCompleted = recordedSeconds >= record.requiredSeconds
+        record.isCompleted = recordedSeconds >= record.requiredSeconds!
         if record.isCompleted {
             record.completedAt = Date()
         }
@@ -189,6 +190,7 @@ class RecordViewModel: ObservableObject {
 
     // MARK: - Private Methods
     func startTimer() {
+        record.isRecording = true
         print("Start Timer initiated")
         self.setupProgressSync()
         self.watchConnectivityManager?.startWatchHeartRateMonitoring()

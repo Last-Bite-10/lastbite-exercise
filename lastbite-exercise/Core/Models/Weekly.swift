@@ -22,11 +22,11 @@ final class Weekly {
     var isStreakAchieved: Bool {
         guard let validRecords = records else { return false }
 
-        let totalRequired = validRecords.reduce(0) { $0 + $1.requiredSeconds }
+        let totalRequired = validRecords.reduce(0) { $0 + $1.requiredSeconds! }
 
         guard totalRequired > 0 else { return false }
 
-        let totalRecorded = validRecords.reduce(0) { $0 + $1.recordedSeconds }
+        let totalRecorded = validRecords.reduce(0) { $0 + $1.recordedSeconds! }
 
         return totalRecorded >= totalRequired
     }

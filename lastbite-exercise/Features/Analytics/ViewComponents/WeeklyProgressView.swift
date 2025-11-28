@@ -46,8 +46,8 @@ struct WeeklyProgressView: View {
             return (0, 0)
         }
 
-        var recorded = records.reduce(0, { $0 + $1.recordedSeconds })
-        var required = records.reduce(0, { $0 + $1.requiredSeconds })
+        var recorded = records.reduce(0, { $0 + $1.recordedSeconds! })
+        var required = records.reduce(0, { $0 + $1.requiredSeconds! })
 
         recorded /= 60
         required /= 60

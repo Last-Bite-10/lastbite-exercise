@@ -32,8 +32,9 @@ struct LastbiteExerciseApp: App {
         }
     }()
 
-    @StateObject private var watchConnectivityManager = WatchConnectivityManager()
-    
+    @StateObject private var watchConnectivityManager =
+        WatchConnectivityManager()
+
     var body: some Scene {
         WindowGroup {
             ContentView()

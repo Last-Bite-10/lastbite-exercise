@@ -27,11 +27,11 @@ struct DailyPlanCard: View {
     }
 
     var completedSeconds: Int {
-        records.reduce(0) { $0 + $1.recordedSeconds }
+        records.reduce(0) { $0 + $1.recordedSeconds! }
     }
 
     var totalSeconds: Int {
-        records.reduce(0) { $0 + $1.requiredSeconds }
+        records.reduce(0) { $0 + $1.requiredSeconds! }
     }
 
     var progress: Double {
@@ -48,16 +48,12 @@ struct DailyPlanCard: View {
         if !isCurrentDay {
             return .btnDisabled
         } else {
-            if activeSessionRecord == nil {
-                return .btnPlay
+            if records.contains(where: { records in
+                records.isRecording
+            }) {
+                return record.isRecording ? .btnRecording : .btnDisabled
             } else {
-                if activeSessionRecord!.exercise != nil
-                    && activeSessionRecord!.exercise!.id != record.exercise?.id
-                {
-                    return .btnDisabled
-                } else {
-                    return .btnRecording
-                }
+                return .btnPlay
             }
         }
     }
@@ -108,7 +104,7 @@ struct DailyPlanCard: View {
                 ForEach(records) { record in
                     ExerciseRow(
                         title: record.exercise?.name ?? "Exercise",
-                        duration: record.requiredSeconds / 60,
+                        duration: record.requiredSeconds! / 60,
                         isCompleted: record.isCompleted,
                         action: {
                             onStart(record)

@@ -12,8 +12,9 @@ import SwiftData
 final class ExerciseRecord: Identifiable {
     var id: UUID = UUID()
     var exercise: Exercise?
-    var requiredSeconds: Int
-    var recordedSeconds: Int
+    var requiredSeconds: Int?
+    var recordedSeconds: Int?
+    var isRecording: Bool = false
     var isCompleted: Bool = false
     var usedAt: Date?
     var createdAt: Date = Date()

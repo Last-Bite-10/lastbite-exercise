@@ -129,10 +129,10 @@ struct RecentHistoryView: View {
                         } label: {
                             VStack(alignment: .leading, spacing: 8) {
                                 let totalRecorded = item.entries.reduce(0) {
-                                    $0 + $1.recordedSeconds
+                                    $0 + $1.recordedSeconds!
                                 }
                                 let totalRequired = item.entries.reduce(0) {
-                                    $0 + $1.requiredSeconds
+                                    $0 + $1.requiredSeconds!
                                 }
 
                                 Text(
@@ -165,7 +165,7 @@ struct RecentHistoryView: View {
                     for entry in item.entries {
                         let newEntry = ExerciseRecord(
                             exercise: entry.exercise!,
-                            requiredSeconds: entry.requiredSeconds,
+                            requiredSeconds: entry.requiredSeconds!,
                             usedAt: Date(),
                             week: entry.week
                         )
