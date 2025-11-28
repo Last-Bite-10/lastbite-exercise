@@ -1,0 +1,1242 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E5A90EC62ED9B1E600BE8BC6 /* ExaMoveWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E5A90EA62ED9B1E600BE8BC6 /* ExaMoveWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E5A90ED82ED9B20600BE8BC6 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A90ED72ED9B20600BE8BC6 /* WidgetKit.framework */; };
+		E5A90EDA2ED9B20600BE8BC6 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A90ED92ED9B20600BE8BC6 /* SwiftUI.framework */; };
+		E5A90EE72ED9B20600BE8BC6 /* ExaMoveWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E5A90ED52ED9B20600BE8BC6 /* ExaMoveWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E5A90EEE2ED9B21900BE8BC6 /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A90EED2ED9B21900BE8BC6 /* ActivityKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E5A90E852ED9B1C900BE8BC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5A90E6B2ED9B1C800BE8BC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A90E722ED9B1C800BE8BC6;
+			remoteInfo = ExaMove;
+		};
+		E5A90E8F2ED9B1C900BE8BC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5A90E6B2ED9B1C800BE8BC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A90E722ED9B1C800BE8BC6;
+			remoteInfo = ExaMove;
+		};
+		E5A90EB32ED9B1E600BE8BC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5A90E6B2ED9B1C800BE8BC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A90EA52ED9B1E600BE8BC6;
+			remoteInfo = "ExaMoveWatch Watch App";
+		};
+		E5A90EBD2ED9B1E600BE8BC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5A90E6B2ED9B1C800BE8BC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A90EA52ED9B1E600BE8BC6;
+			remoteInfo = "ExaMoveWatch Watch App";
+		};
+		E5A90EC42ED9B1E600BE8BC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5A90E6B2ED9B1C800BE8BC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A90EA52ED9B1E600BE8BC6;
+			remoteInfo = "ExaMoveWatch Watch App";
+		};
+		E5A90EE52ED9B20600BE8BC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5A90E6B2ED9B1C800BE8BC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A90ED42ED9B20600BE8BC6;
+			remoteInfo = ExaMoveWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E5A90ECA2ED9B1E600BE8BC6 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				E5A90EC62ED9B1E600BE8BC6 /* ExaMoveWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EEC2ED9B20600BE8BC6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E5A90EE72ED9B20600BE8BC6 /* ExaMoveWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E5A90E732ED9B1C800BE8BC6 /* ExaMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExaMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5A90E842ED9B1C900BE8BC6 /* ExaMoveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExaMoveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5A90E8E2ED9B1C900BE8BC6 /* ExaMoveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExaMoveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5A90EA62ED9B1E600BE8BC6 /* ExaMoveWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ExaMoveWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5A90EB22ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ExaMoveWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5A90EBC2ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ExaMoveWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5A90ED52ED9B20600BE8BC6 /* ExaMoveWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ExaMoveWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5A90ED72ED9B20600BE8BC6 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		E5A90ED92ED9B20600BE8BC6 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		E5A90EED2ED9B21900BE8BC6 /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E50097242ED9B4FE0008051E /* Exceptions for "ExaMoveWatch Watch App" folder in "ExaMove" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/ContentView.swift,
+				App/ExaMoveWatchApp.swift,
+				Resources/Assets.xcassets,
+			);
+			target = E5A90E722ED9B1C800BE8BC6 /* ExaMove */;
+		};
+		E50097252ED9B4FE0008051E /* Exceptions for "ExaMoveWatch Watch App" folder in "ExaMoveWatch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/ContentView.swift,
+				App/ExaMoveWatchApp.swift,
+				Resources/Assets.xcassets,
+			);
+			target = E5A90EA52ED9B1E600BE8BC6 /* ExaMoveWatch Watch App */;
+		};
+		E5A90E962ED9B1C900BE8BC6 /* Exceptions for "ExaMove" folder in "ExaMove" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E5A90E722ED9B1C800BE8BC6 /* ExaMove */;
+		};
+		E5A90EEB2ED9B20600BE8BC6 /* Exceptions for "ExaMoveWidget" folder in "ExaMoveWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E5A90ED42ED9B20600BE8BC6 /* ExaMoveWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		E50097202ED9B4FE0008051E /* ExaMoveWatch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E50097242ED9B4FE0008051E /* Exceptions for "ExaMoveWatch Watch App" folder in "ExaMove" target */,
+				E50097252ED9B4FE0008051E /* Exceptions for "ExaMoveWatch Watch App" folder in "ExaMoveWatch Watch App" target */,
+			);
+			path = "ExaMoveWatch Watch App";
+			sourceTree = "<group>";
+		};
+		E5A90E752ED9B1C800BE8BC6 /* ExaMove */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E5A90E962ED9B1C900BE8BC6 /* Exceptions for "ExaMove" folder in "ExaMove" target */,
+			);
+			path = ExaMove;
+			sourceTree = "<group>";
+		};
+		E5A90E872ED9B1C900BE8BC6 /* ExaMoveTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ExaMoveTests;
+			sourceTree = "<group>";
+		};
+		E5A90E912ED9B1C900BE8BC6 /* ExaMoveUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ExaMoveUITests;
+			sourceTree = "<group>";
+		};
+		E5A90EB52ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "ExaMoveWatch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		E5A90EBF2ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "ExaMoveWatch Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		E5A90EDB2ED9B20600BE8BC6 /* ExaMoveWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E5A90EEB2ED9B20600BE8BC6 /* Exceptions for "ExaMoveWidget" folder in "ExaMoveWidgetExtension" target */,
+			);
+			path = ExaMoveWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E5A90E702ED9B1C800BE8BC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90E812ED9B1C900BE8BC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90E8B2ED9B1C900BE8BC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EA32ED9B1E600BE8BC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EAF2ED9B1E600BE8BC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EB92ED9B1E600BE8BC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90ED22ED9B20600BE8BC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5A90EEE2ED9B21900BE8BC6 /* ActivityKit.framework in Frameworks */,
+				E5A90EDA2ED9B20600BE8BC6 /* SwiftUI.framework in Frameworks */,
+				E5A90ED82ED9B20600BE8BC6 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E5A90E6A2ED9B1C800BE8BC6 = {
+			isa = PBXGroup;
+			children = (
+				E5A90E752ED9B1C800BE8BC6 /* ExaMove */,
+				E50097202ED9B4FE0008051E /* ExaMoveWatch Watch App */,
+				E5A90EDB2ED9B20600BE8BC6 /* ExaMoveWidget */,
+				E5A90E872ED9B1C900BE8BC6 /* ExaMoveTests */,
+				E5A90E912ED9B1C900BE8BC6 /* ExaMoveUITests */,
+				E5A90EB52ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppTests */,
+				E5A90EBF2ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppUITests */,
+				E5A90ED62ED9B20600BE8BC6 /* Frameworks */,
+				E5A90E742ED9B1C800BE8BC6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E5A90E742ED9B1C800BE8BC6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E5A90E732ED9B1C800BE8BC6 /* ExaMove.app */,
+				E5A90E842ED9B1C900BE8BC6 /* ExaMoveTests.xctest */,
+				E5A90E8E2ED9B1C900BE8BC6 /* ExaMoveUITests.xctest */,
+				E5A90EA62ED9B1E600BE8BC6 /* ExaMoveWatch Watch App.app */,
+				E5A90EB22ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppTests.xctest */,
+				E5A90EBC2ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppUITests.xctest */,
+				E5A90ED52ED9B20600BE8BC6 /* ExaMoveWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E5A90ED62ED9B20600BE8BC6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E5A90EED2ED9B21900BE8BC6 /* ActivityKit.framework */,
+				E5A90ED72ED9B20600BE8BC6 /* WidgetKit.framework */,
+				E5A90ED92ED9B20600BE8BC6 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E5A90E722ED9B1C800BE8BC6 /* ExaMove */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5A90E972ED9B1C900BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMove" */;
+			buildPhases = (
+				E5A90E6F2ED9B1C800BE8BC6 /* Sources */,
+				E5A90E702ED9B1C800BE8BC6 /* Frameworks */,
+				E5A90E712ED9B1C800BE8BC6 /* Resources */,
+				E5A90ECA2ED9B1E600BE8BC6 /* Embed Watch Content */,
+				E5A90EEC2ED9B20600BE8BC6 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5A90EC52ED9B1E600BE8BC6 /* PBXTargetDependency */,
+				E5A90EE62ED9B20600BE8BC6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E50097202ED9B4FE0008051E /* ExaMoveWatch Watch App */,
+				E5A90E752ED9B1C800BE8BC6 /* ExaMove */,
+			);
+			name = ExaMove;
+			packageProductDependencies = (
+			);
+			productName = ExaMove;
+			productReference = E5A90E732ED9B1C800BE8BC6 /* ExaMove.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E5A90E832ED9B1C900BE8BC6 /* ExaMoveTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5A90E9C2ED9B1C900BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveTests" */;
+			buildPhases = (
+				E5A90E802ED9B1C900BE8BC6 /* Sources */,
+				E5A90E812ED9B1C900BE8BC6 /* Frameworks */,
+				E5A90E822ED9B1C900BE8BC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5A90E862ED9B1C900BE8BC6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E5A90E872ED9B1C900BE8BC6 /* ExaMoveTests */,
+			);
+			name = ExaMoveTests;
+			packageProductDependencies = (
+			);
+			productName = ExaMoveTests;
+			productReference = E5A90E842ED9B1C900BE8BC6 /* ExaMoveTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E5A90E8D2ED9B1C900BE8BC6 /* ExaMoveUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5A90E9F2ED9B1C900BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveUITests" */;
+			buildPhases = (
+				E5A90E8A2ED9B1C900BE8BC6 /* Sources */,
+				E5A90E8B2ED9B1C900BE8BC6 /* Frameworks */,
+				E5A90E8C2ED9B1C900BE8BC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5A90E902ED9B1C900BE8BC6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E5A90E912ED9B1C900BE8BC6 /* ExaMoveUITests */,
+			);
+			name = ExaMoveUITests;
+			packageProductDependencies = (
+			);
+			productName = ExaMoveUITests;
+			productReference = E5A90E8E2ED9B1C900BE8BC6 /* ExaMoveUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		E5A90EA52ED9B1E600BE8BC6 /* ExaMoveWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5A90EC72ED9B1E600BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveWatch Watch App" */;
+			buildPhases = (
+				E5A90EA22ED9B1E600BE8BC6 /* Sources */,
+				E5A90EA32ED9B1E600BE8BC6 /* Frameworks */,
+				E5A90EA42ED9B1E600BE8BC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ExaMoveWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "ExaMoveWatch Watch App";
+			productReference = E5A90EA62ED9B1E600BE8BC6 /* ExaMoveWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E5A90EB12ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5A90ECB2ED9B1E600BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveWatch Watch AppTests" */;
+			buildPhases = (
+				E5A90EAE2ED9B1E600BE8BC6 /* Sources */,
+				E5A90EAF2ED9B1E600BE8BC6 /* Frameworks */,
+				E5A90EB02ED9B1E600BE8BC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5A90EB42ED9B1E600BE8BC6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E5A90EB52ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppTests */,
+			);
+			name = "ExaMoveWatch Watch AppTests";
+			packageProductDependencies = (
+			);
+			productName = "ExaMoveWatch Watch AppTests";
+			productReference = E5A90EB22ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E5A90EBB2ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5A90ECE2ED9B1E600BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveWatch Watch AppUITests" */;
+			buildPhases = (
+				E5A90EB82ED9B1E600BE8BC6 /* Sources */,
+				E5A90EB92ED9B1E600BE8BC6 /* Frameworks */,
+				E5A90EBA2ED9B1E600BE8BC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5A90EBE2ED9B1E600BE8BC6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E5A90EBF2ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppUITests */,
+			);
+			name = "ExaMoveWatch Watch AppUITests";
+			packageProductDependencies = (
+			);
+			productName = "ExaMoveWatch Watch AppUITests";
+			productReference = E5A90EBC2ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		E5A90ED42ED9B20600BE8BC6 /* ExaMoveWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5A90EE82ED9B20600BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveWidgetExtension" */;
+			buildPhases = (
+				E5A90ED12ED9B20600BE8BC6 /* Sources */,
+				E5A90ED22ED9B20600BE8BC6 /* Frameworks */,
+				E5A90ED32ED9B20600BE8BC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E5A90EDB2ED9B20600BE8BC6 /* ExaMoveWidget */,
+			);
+			name = ExaMoveWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = ExaMoveWidgetExtension;
+			productReference = E5A90ED52ED9B20600BE8BC6 /* ExaMoveWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E5A90E6B2ED9B1C800BE8BC6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2610;
+				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					E5A90E722ED9B1C800BE8BC6 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+					E5A90E832ED9B1C900BE8BC6 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = E5A90E722ED9B1C800BE8BC6;
+					};
+					E5A90E8D2ED9B1C900BE8BC6 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = E5A90E722ED9B1C800BE8BC6;
+					};
+					E5A90EA52ED9B1E600BE8BC6 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+					E5A90EB12ED9B1E600BE8BC6 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = E5A90EA52ED9B1E600BE8BC6;
+					};
+					E5A90EBB2ED9B1E600BE8BC6 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = E5A90EA52ED9B1E600BE8BC6;
+					};
+					E5A90ED42ED9B20600BE8BC6 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+				};
+			};
+			buildConfigurationList = E5A90E6E2ED9B1C800BE8BC6 /* Build configuration list for PBXProject "ExaMove" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E5A90E6A2ED9B1C800BE8BC6;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E5A90E742ED9B1C800BE8BC6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E5A90E722ED9B1C800BE8BC6 /* ExaMove */,
+				E5A90EA52ED9B1E600BE8BC6 /* ExaMoveWatch Watch App */,
+				E5A90ED42ED9B20600BE8BC6 /* ExaMoveWidgetExtension */,
+				E5A90E832ED9B1C900BE8BC6 /* ExaMoveTests */,
+				E5A90E8D2ED9B1C900BE8BC6 /* ExaMoveUITests */,
+				E5A90EB12ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppTests */,
+				E5A90EBB2ED9B1E600BE8BC6 /* ExaMoveWatch Watch AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E5A90E712ED9B1C800BE8BC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90E822ED9B1C900BE8BC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90E8C2ED9B1C900BE8BC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EA42ED9B1E600BE8BC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EB02ED9B1E600BE8BC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EBA2ED9B1E600BE8BC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90ED32ED9B20600BE8BC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E5A90E6F2ED9B1C800BE8BC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90E802ED9B1C900BE8BC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90E8A2ED9B1C900BE8BC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EA22ED9B1E600BE8BC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EAE2ED9B1E600BE8BC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90EB82ED9B1E600BE8BC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A90ED12ED9B20600BE8BC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E5A90E862ED9B1C900BE8BC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5A90E722ED9B1C800BE8BC6 /* ExaMove */;
+			targetProxy = E5A90E852ED9B1C900BE8BC6 /* PBXContainerItemProxy */;
+		};
+		E5A90E902ED9B1C900BE8BC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5A90E722ED9B1C800BE8BC6 /* ExaMove */;
+			targetProxy = E5A90E8F2ED9B1C900BE8BC6 /* PBXContainerItemProxy */;
+		};
+		E5A90EB42ED9B1E600BE8BC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5A90EA52ED9B1E600BE8BC6 /* ExaMoveWatch Watch App */;
+			targetProxy = E5A90EB32ED9B1E600BE8BC6 /* PBXContainerItemProxy */;
+		};
+		E5A90EBE2ED9B1E600BE8BC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5A90EA52ED9B1E600BE8BC6 /* ExaMoveWatch Watch App */;
+			targetProxy = E5A90EBD2ED9B1E600BE8BC6 /* PBXContainerItemProxy */;
+		};
+		E5A90EC52ED9B1E600BE8BC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5A90EA52ED9B1E600BE8BC6 /* ExaMoveWatch Watch App */;
+			targetProxy = E5A90EC42ED9B1E600BE8BC6 /* PBXContainerItemProxy */;
+		};
+		E5A90EE62ED9B20600BE8BC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5A90ED42ED9B20600BE8BC6 /* ExaMoveWidgetExtension */;
+			targetProxy = E5A90EE52ED9B20600BE8BC6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E5A90E982ED9B1C900BE8BC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ExaMove/ExaMove.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExaMove/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.ExaMove;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E5A90E992ED9B1C900BE8BC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ExaMove/ExaMoveRelease.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExaMove/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		E5A90E9A2ED9B1C900BE8BC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E5A90E9B2ED9B1C900BE8BC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E5A90E9D2ED9B1C900BE8BC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.ExaMoveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExaMove.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ExaMove";
+			};
+			name = Debug;
+		};
+		E5A90E9E2ED9B1C900BE8BC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.ExaMoveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExaMove.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ExaMove";
+			};
+			name = Release;
+		};
+		E5A90EA02ED9B1C900BE8BC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.ExaMoveUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ExaMove;
+			};
+			name = Debug;
+		};
+		E5A90EA12ED9B1C900BE8BC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.ExaMoveUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ExaMove;
+			};
+			name = Release;
+		};
+		E5A90EC82ED9B1E600BE8BC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "ExaMoveWatch Watch App/ExaMoveWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ExaMoveWatch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = cloud.rain.ExaMove;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.ExaMove.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Debug;
+		};
+		E5A90EC92ED9B1E600BE8BC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "ExaMoveWatch Watch App/ExaMoveWatch Watch AppRelease.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ExaMoveWatch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = cloud.rain.ExaMove;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Release;
+		};
+		E5A90ECC2ED9B1E600BE8BC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cloud.rain.ExaMoveWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExaMoveWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ExaMoveWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Debug;
+		};
+		E5A90ECD2ED9B1E600BE8BC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cloud.rain.ExaMoveWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExaMoveWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ExaMoveWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Release;
+		};
+		E5A90ECF2ED9B1E600BE8BC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cloud.rain.ExaMoveWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "ExaMoveWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Debug;
+		};
+		E5A90ED02ED9B1E600BE8BC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cloud.rain.ExaMoveWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "ExaMoveWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Release;
+		};
+		E5A90EE92ED9B20600BE8BC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExaMoveWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cloud.rain.ExaMove.ExaMoveWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E5A90EEA2ED9B20600BE8BC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PP2K97M73A;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExaMoveWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.niken.lastbite.ExaMoveWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E5A90E6E2ED9B1C800BE8BC6 /* Build configuration list for PBXProject "ExaMove" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A90E9A2ED9B1C900BE8BC6 /* Debug */,
+				E5A90E9B2ED9B1C900BE8BC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5A90E972ED9B1C900BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMove" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A90E982ED9B1C900BE8BC6 /* Debug */,
+				E5A90E992ED9B1C900BE8BC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5A90E9C2ED9B1C900BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A90E9D2ED9B1C900BE8BC6 /* Debug */,
+				E5A90E9E2ED9B1C900BE8BC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5A90E9F2ED9B1C900BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A90EA02ED9B1C900BE8BC6 /* Debug */,
+				E5A90EA12ED9B1C900BE8BC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5A90EC72ED9B1E600BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A90EC82ED9B1E600BE8BC6 /* Debug */,
+				E5A90EC92ED9B1E600BE8BC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5A90ECB2ED9B1E600BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveWatch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A90ECC2ED9B1E600BE8BC6 /* Debug */,
+				E5A90ECD2ED9B1E600BE8BC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5A90ECE2ED9B1E600BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveWatch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A90ECF2ED9B1E600BE8BC6 /* Debug */,
+				E5A90ED02ED9B1E600BE8BC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5A90EE82ED9B20600BE8BC6 /* Build configuration list for PBXNativeTarget "ExaMoveWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5A90EE92ED9B20600BE8BC6 /* Debug */,
+				E5A90EEA2ED9B20600BE8BC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E5A90E6B2ED9B1C800BE8BC6 /* Project object */;
+}

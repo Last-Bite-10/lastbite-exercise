@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "TutorialCloud.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
