@@ -9,13 +9,23 @@ import SwiftUI
 
 struct StreakView: View {
     var allWeeks: [Weekly]
+    
+    // 🐛 DEBUG: State untuk override streak status
+    @State private var debugStreakOverrides: [Int: Bool] = [:]
+    
+    // Flag untuk enable/disable debug mode
+    @State private var isDebugMode = true // Set false untuk production
 
     private var sortedWeeks: [Weekly] {
         allWeeks.sorted { $0.weekNumber < $1.weekNumber }
     }
 
     var hasAnyStreak: Bool {
-        sortedWeeks.contains(where: { $0.isStreakAchieved == true })
+        // Check both real data and debug overrides
+        if isDebugMode && !debugStreakOverrides.isEmpty {
+            return debugStreakOverrides.values.contains(true)
+        }
+        return sortedWeeks.contains(where: { $0.isStreakAchieved == true })
     }
 
     private var weeksByNumber: [Int: Weekly] {
@@ -46,6 +56,12 @@ struct StreakView: View {
                             Text("W\(weekNumber)")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
+                        }
+                        // 🐛 DEBUG: Tap gesture untuk toggle streak
+                        .onTapGesture {
+                            if isDebugMode {
+                                toggleDebugStreak(for: weekNumber)
+                            }
                         }
                     }
                 }
@@ -117,11 +133,37 @@ struct StreakView: View {
         )
     }
 
+    // 🐛 DEBUG: Function untuk toggle streak status
+    private func toggleDebugStreak(for weekNumber: Int) {
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+            if let currentValue = debugStreakOverrides[weekNumber] {
+                debugStreakOverrides[weekNumber] = !currentValue
+            } else {
+                // Jika belum ada override, set berdasarkan data asli atau default false
+                let currentStatus = weeksByNumber[weekNumber]?.isStreakAchieved ?? false
+                debugStreakOverrides[weekNumber] = !currentStatus
+            }
+        }
+        
+        // 🐛 DEBUG: Print untuk tracking
+        print("🐛 Week \(weekNumber) toggled to: \(debugStreakOverrides[weekNumber] ?? false)")
+    }
+
     private func getIconStyle(for weekNumber: Int, data: Weekly?) -> (
         String, Color
     ) {
         let grayColor = Color.gray.opacity(0.8)
+        
+        // 🐛 DEBUG: Check override first
+        if isDebugMode, let overrideValue = debugStreakOverrides[weekNumber] {
+            if overrideValue {
+                return ("flame.fill", .orange)
+            } else {
+                return ("flame.fill", grayColor)
+            }
+        }
 
+        // Original logic
         if let week = data {
             if week.isStreakAchieved {
                 return ("flame.fill", .orange)

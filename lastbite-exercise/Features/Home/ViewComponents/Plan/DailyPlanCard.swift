@@ -38,6 +38,11 @@ struct DailyPlanCard: View {
         guard totalSeconds > 0 else { return 0 }
         return Double(completedSeconds) / Double(totalSeconds)
     }
+    
+    // ✅ Computed property untuk mendapatkan exercise pertama
+    var firstExercise: Exercise? {
+        records.first?.exercise
+    }
 
     func btnState(_ record: ExerciseRecord) -> ExerciseButtonState {
         if !isCurrentDay {
@@ -55,30 +60,42 @@ struct DailyPlanCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // MARK: - Header
-            HStack {
-                Text(
-                    date.formatted(
-                        .dateTime.weekday(.wide).day().month(.wide).year()
-                    )
-                )
-                .font(.headline.bold())
+            
+            HStack(spacing: 12) {
+                if let exercise = firstExercise {
+                    Image(exercise.imageName ?? "")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 80, height: 80)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+                
+                VStack(spacing: 8) {
+                    HStack {
+                        Text(
+                            date.formatted(
+                                .dateTime.weekday(.wide).day().month(.wide).year()
+                            )
+                        )
+                        .font(.headline.bold())
 
-                Spacer()
+                        Spacer()
 
-                VStack(alignment: .trailing) {
-                    Text("\(Int(progress * 100))%")
-                        .font(.subheadline.bold())
-                    Text(
-                        "\(Int(completedSeconds / 60))/\(Int(totalSeconds / 60)) mins"
-                    )
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text("\(Int(progress * 100))%")
+                                .font(.subheadline.bold())
+                            Text(
+                                "\(Int(completedSeconds / 60))/\(Int(totalSeconds / 60)) mins"
+                            )
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        }
+                    }
+
+                    ProgressBar(value: progress)
+                        .frame(height: 12)
                 }
             }
-
-            ProgressBar(value: progress)
-                .frame(height: 12)
 
             Divider()
 
