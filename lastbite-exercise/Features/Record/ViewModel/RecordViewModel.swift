@@ -36,8 +36,8 @@ class RecordViewModel: ObservableObject {
         self.bpmThreshold = Double(healthKitManager.bpmThreshold)
 
         self.timer = TimerService(
-            activeTime: record.requiredSeconds,
-            totalTime: record.recordedSeconds,
+            activeTime: record.requiredSeconds!,
+            totalTime: record.recordedSeconds!,
             exerciseRecord: record,
             healthKitManager: healthKitManager,
             watchConnectivityManager: watchConnectivityManager
@@ -148,27 +148,13 @@ class RecordViewModel: ObservableObject {
         cleanup()
     }
 
-    func togglePause() {
-        print("Toggle trigger")
-        if timer.timerStatus != .timerPaused
-            && timer.timerStatus != .timerStopped
-        {
-            print("Elig for pause. State now : \(timer.timerStatus)")
-            pauseTimer()
-        } else {
-            startTimer()
-        }
-
-        self.timer.handleTimerStatusChange()
-    }
-
     func finishExercise() {
         cleanup()
 
         // Update the record with recorded time
         let recordedSeconds = timer.activeTime
         record.recordedSeconds = recordedSeconds
-        record.isCompleted = recordedSeconds >= record.requiredSeconds
+        record.isCompleted = recordedSeconds >= record.requiredSeconds!
         if record.isCompleted {
             record.completedAt = Date()
         }
@@ -194,11 +180,13 @@ class RecordViewModel: ObservableObject {
         self.watchConnectivityManager?.startWatchHeartRateMonitoring()
         self.healthKitManager.resumeWorkoutSession()
         self.timer.startTimer()
+        self.timer.handleTimerStatusChange()
     }
 
     func pauseTimer() {
         self.timer.pauseTimer()
         self.healthKitManager.pauseWorkoutSession()
+        self.timer.handleTimerStatusChange()
     }
 
     //    private func handleTimerStatusChange() {

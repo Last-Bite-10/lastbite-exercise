@@ -31,15 +31,15 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
         healthKitManager: HealthKitManager,
         watchConnectivityManager: WatchConnectivityManager
     ) {
-        self.progress = exerciseRecord.recordedSeconds > 0
+        self.progress = exerciseRecord.recordedSeconds! > 0
             ? TimerService.getProgressPercentage(
-                remainingTime: max(0, exerciseRecord.requiredSeconds - exerciseRecord.recordedSeconds),
+                remainingTime: max(0, exerciseRecord.requiredSeconds! - exerciseRecord.recordedSeconds!),
                 exerciseRecord: exerciseRecord
             )
             : 1.0
-        self.activeTime = exerciseRecord.recordedSeconds
+        self.activeTime = exerciseRecord.recordedSeconds!
         self.totalTime = totalTime
-        self.remainingTime = max(0, exerciseRecord.requiredSeconds - exerciseRecord.recordedSeconds)
+        self.remainingTime = max(0, exerciseRecord.requiredSeconds! - exerciseRecord.recordedSeconds!)
         self.timerStatus = .timerStopped
         self.exerciseRecord = exerciseRecord
 
@@ -110,7 +110,7 @@ class TimerService: ObservableObject {  // ← Add ObservableObject conformance
     ) -> Double {
         // Implement your progress calculation here
         return min(
-            Double(remainingTime) / Double(exerciseRecord.requiredSeconds),
+            Double(remainingTime) / Double(exerciseRecord.requiredSeconds!),
             1.0
         )
     }

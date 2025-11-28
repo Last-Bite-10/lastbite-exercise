@@ -70,7 +70,7 @@ struct ExerciseSelectionSheet: View {
                                             HStack {
                                                 Spacer()
                                                 Text(
-                                                    "\(Int(record.requiredSeconds) / 60) min"
+                                                    "\(Int(record.requiredSeconds!) / 60) min"
                                                 )
                                                 .font(.caption.bold())
                                                 .foregroundColor(.white)

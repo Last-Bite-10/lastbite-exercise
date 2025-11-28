@@ -136,13 +136,21 @@ struct RecordContentView: View {
             .padding(.vertical, 36)
 
             VStack {
-                RecordPlayButton(
-                    title: viewModel.timer.timerStatus == .timerPaused
-                        || viewModel.timer.timerStatus == .timerStopped
-                        ? "Start"
-                        : "Pause"
-                ) {
-                    viewModel.togglePause()
+                if viewModel.timer.timerStatus == .timerPaused
+                    || viewModel.timer.timerStatus == .timerStopped
+                {
+                    RecordPlayButton(
+                        title: "Start"
+                    ) {
+                        viewModel.startMonitoring()
+                        viewModel.startTimer()
+                    }
+                } else {
+                    RecordPlayButton(
+                        title: "Pause"
+                    ) {
+                        viewModel.pauseTimer()
+                    }
                 }
 
                 ButtonWSound(
@@ -186,21 +194,6 @@ struct RecordView: View {
                     healthKitManager: healthKitManager,
                     dismiss: dismiss
                 )
-                .onAppear {
-                    viewModel.startMonitoring()
-                }
-            } else {
-                ProgressView()
-                    .onAppear {
-                        // Create session using the session manager
-                        let viewModel = sessionManager.startSession(
-                            record: record,
-                            healthKitManager: healthKitManager,
-                            modelContext: modelContext,
-                            watchConnectivityManager: watchConnectivityManager
-                        )
-                        viewModel.startMonitoring()
-                    }
             }
         }
         // Note: We don't clean up on disappear anymore - session persists!

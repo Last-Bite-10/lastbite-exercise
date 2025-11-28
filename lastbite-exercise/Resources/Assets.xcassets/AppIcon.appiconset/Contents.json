@@ -1,29 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "ExaMove-iOS-Default-1024x10241x.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "tinted"
-        }
-      ],
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
