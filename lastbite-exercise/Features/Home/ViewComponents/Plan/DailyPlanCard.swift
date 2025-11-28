@@ -43,16 +43,12 @@ struct DailyPlanCard: View {
         if !isCurrentDay {
             return .btnDisabled
         } else {
-            if activeSessionRecord == nil {
-                return .btnPlay
+            if records.contains(where: { records in
+                records.isRecording
+            }) {
+                return record.isRecording ? .btnRecording : .btnDisabled
             } else {
-                if activeSessionRecord!.exercise != nil
-                    && activeSessionRecord!.exercise!.id != record.exercise?.id
-                {
-                    return .btnDisabled
-                } else {
-                    return .btnRecording
-                }
+                return .btnPlay
             }
         }
     }

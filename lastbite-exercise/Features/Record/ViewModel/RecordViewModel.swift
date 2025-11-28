@@ -148,7 +148,22 @@ class RecordViewModel: ObservableObject {
         cleanup()
     }
 
+    func togglePause() {
+        print("Toggle trigger")
+        if timer.timerStatus != .timerPaused
+            && timer.timerStatus != .timerStopped
+        {
+            print("Elig for pause. State now : \(timer.timerStatus)")
+            pauseTimer()
+        } else {
+            startTimer()
+        }
+
+        self.timer.handleTimerStatusChange()
+    }
+
     func finishExercise() {
+        record.isRecording = false
         cleanup()
 
         // Update the record with recorded time
@@ -175,18 +190,17 @@ class RecordViewModel: ObservableObject {
 
     // MARK: - Private Methods
     func startTimer() {
+        record.isRecording = true
         print("Start Timer initiated")
         self.setupProgressSync()
         self.watchConnectivityManager?.startWatchHeartRateMonitoring()
         self.healthKitManager.resumeWorkoutSession()
         self.timer.startTimer()
-        self.timer.handleTimerStatusChange()
     }
 
     func pauseTimer() {
         self.timer.pauseTimer()
         self.healthKitManager.pauseWorkoutSession()
-        self.timer.handleTimerStatusChange()
     }
 
     //    private func handleTimerStatusChange() {
