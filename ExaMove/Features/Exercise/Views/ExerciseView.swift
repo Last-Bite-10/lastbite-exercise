@@ -18,6 +18,8 @@ import SwiftUI
 struct ExerciseView: View {
     @Environment(\.modelContext) private var modelContext
 
+    @Binding var showTutorialOverlay: Bool
+
     @State private var viewModel = ExerciseViewModel()
     @State private var healthKitService = HealthKitService()
 
@@ -25,7 +27,9 @@ struct ExerciseView: View {
 
     private var preference: Preference { preferences.first ?? Preference() }
 
-    init() {
+    init(showTutorialOverlay: Binding<Bool>) {
+        _showTutorialOverlay = showTutorialOverlay
+
         healthKitService.requestAuthorization()
 
         let appearance = UINavigationBarAppearance()
@@ -62,25 +66,30 @@ struct ExerciseView: View {
             .toolbarTitleDisplayMode(.large)
         }
 
-        // ✅ Move the environment-based bindings here (AFTER body starts)
-        //        .sheet(isPresented: $viewModel.showPlanModifySheet) {
-        //            ExerciseSelectionSheet()
-        //                .environment(recommendationVM)
-        //                .environment(homeVM)
-        //        }
-        //        .fullScreenCover(isPresented: $viewModel.showQuestionnaire) {
-        //            NavigationStack {
-        //                if preference.planChosen == .beginner {
-        //                    StartSmallView()
-        //                } else {
-        //                    StartStrongView()
-        //                }
-        //            }
-        //        }
+        .sheet(isPresented: $viewModel.showPlanModifySheet) {
+            ExerciseSelectionSheet()
+            //                .environment(recommendationVM)
+            //                .environment(homeVM)
+        }
+        .fullScreenCover(isPresented: $viewModel.showQuestionnaire) {
+            NavigationStack {
+                if preference.planChosen == .beginner {
+                    StartSmallView {
+                        viewModel.showQuestionnaire = false
+                        showTutorialOverlay = true
+                    }
+                } else {
+                    StartStrongView {
+                        viewModel.showQuestionnaire = false
+                        showTutorialOverlay = true
+                    }
+                }
+            }
+        }
 
     }
 }
 
 #Preview {
-    ExerciseView()
+    ExerciseView(showTutorialOverlay: .constant(false))
 }

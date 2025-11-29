@@ -29,16 +29,6 @@ struct PlanSelectionComponent: View {
                 .foregroundColor(.title)
 
             PlanCardComponent(
-                title: "Start Strong!",
-                subtitle: "Start with the WHO recommended 150 mins per week!",
-                image: "StartStrong",
-                action: {
-                    viewModel.showQuestionnaire = true
-                    preference?.planChosen = .expert
-                }
-            )
-
-            PlanCardComponent(
                 title: "Start Small!",
                 subtitle:
                     "Start small with our gradual habit building beginner-friendly plan!",
@@ -46,6 +36,16 @@ struct PlanSelectionComponent: View {
                 action: {
                     viewModel.showQuestionnaire = true
                     preference?.planChosen = .beginner
+                }
+            )
+
+            PlanCardComponent(
+                title: "Start Strong!",
+                subtitle: "Start with the WHO recommended 150 mins per week!",
+                image: "StartStrong",
+                action: {
+                    viewModel.showQuestionnaire = true
+                    preference?.planChosen = .expert
                 }
             )
         }

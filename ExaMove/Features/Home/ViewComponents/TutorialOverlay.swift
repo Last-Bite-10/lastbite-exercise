@@ -61,7 +61,7 @@ struct TutorialOverlay: View {
 
 #Preview {
     ZStack {
-        ExerciseView()
+        ExerciseView(showTutorialOverlay: .constant(true))
         TutorialOverlay(isVisible: .constant(true))
     }
 }

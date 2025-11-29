@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showTutorial: Bool = true
+    @State private var showTutorialOverlay: Bool = false
 
     var body: some View {
         ZStack {
-            ExerciseView()
-            TutorialOverlay(isVisible: $showTutorial)
+            ExerciseView(showTutorialOverlay: $showTutorialOverlay)
+            TutorialOverlay(isVisible: $showTutorialOverlay)
         }
     }
 }
