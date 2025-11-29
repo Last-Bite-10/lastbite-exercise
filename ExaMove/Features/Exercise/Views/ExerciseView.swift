@@ -20,8 +20,8 @@ struct ExerciseView: View {
 
     @Binding var showTutorialOverlay: Bool
 
-    @State private var viewModel = ExerciseViewModel()
     @State private var healthKitService = HealthKitService()
+    @State private var viewModel = ExerciseViewModel()
 
     @Query private var preferences: [Preference]
 
@@ -55,8 +55,9 @@ struct ExerciseView: View {
                     if !preference.finishQuestionnaire {
                         PlanSelectionComponent().environment(viewModel)
                     } else {
-                        //                        WeeklyPlanPager()
-                        //                            .frame(height: 300)
+                        WeeklyPlanComponent()
+                            .frame(height: 300)
+                            .environment(viewModel)
                     }
 
                     HistoryComponent()
@@ -65,28 +66,35 @@ struct ExerciseView: View {
             .navigationTitle("My Exercise")
             .toolbarTitleDisplayMode(.large)
         }
+        .onAppear {
+            viewModel.setup(modelContext: modelContext)
+        }
 
         .sheet(isPresented: $viewModel.showPlanModifySheet) {
-            ExerciseSelectionSheet()
-            //                .environment(recommendationVM)
-            //                .environment(homeVM)
+            ExerciseSelectionSheet().environment(viewModel)
         }
+
         .fullScreenCover(isPresented: $viewModel.showQuestionnaire) {
             NavigationStack {
                 if preference.planChosen == .beginner {
                     StartSmallView {
                         viewModel.showQuestionnaire = false
+                        viewModel.initializeWeeklyExercises(
+                            preference: preference
+                        )
                         showTutorialOverlay = true
                     }
                 } else {
                     StartStrongView {
                         viewModel.showQuestionnaire = false
+                        viewModel.initializeWeeklyExercises(
+                            preference: preference
+                        )
                         showTutorialOverlay = true
                     }
                 }
             }
         }
-
     }
 }
 

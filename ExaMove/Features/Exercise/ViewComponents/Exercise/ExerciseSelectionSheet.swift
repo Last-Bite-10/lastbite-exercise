@@ -5,15 +5,42 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ExerciseSelectionSheet: View {
+    @Environment(ExerciseViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedExerciseRecords: [ExerciseRecord] = []
     @State private var currentExercise: Exercise?
 
-    private let exercises = Exercise.loadExercises()
+    private var exercises: [Exercise] { Exercise.loadExercises() }
+
+    private func isExerciseSelected(_ exercise: Exercise) -> Bool {
+        selectedExerciseRecords.contains(where: {
+            $0.exercise == exercise
+        })
+    }
+
+    private func getExerciseRecord(for exercise: Exercise) -> ExerciseRecord? {
+        selectedExerciseRecords.first(where: { $0.exercise == exercise })
+    }
+
+    private func addOrUpdateExerciseRecord(_ record: ExerciseRecord) {
+        // Remove existing record for this exercise
+        selectedExerciseRecords.removeAll(where: {
+            $0.exercise == record.exercise
+        })
+        // Add new record
+        selectedExerciseRecords.append(record)
+    }
+
+    private func removeExerciseRecord(for exercise: Exercise) {
+        selectedExerciseRecords.removeAll(where: {
+            $0.exercise == exercise
+        })
+    }
 
     var body: some View {
         ZStack {
@@ -60,7 +87,10 @@ struct ExerciseSelectionSheet: View {
 
                 ButtonWSound(
                     action: {
-                        // TODO: add exercise modification logic
+                        viewModel.modifyTodaysRecords(
+                            records: selectedExerciseRecords,
+                            usedAt: Date()
+                        )
                         dismiss()
                     },
                     label: {
@@ -82,7 +112,10 @@ struct ExerciseSelectionSheet: View {
                 .padding(.bottom, 20)
             }
         }
-        .onAppear {
+        .task {
+            if selectedExerciseRecords.isEmpty {
+                selectedExerciseRecords = viewModel.currentSelectedDateRecords
+            }
         }
         .sheet(item: $currentExercise) { exercise in
             DurationSelectionSheet(
@@ -98,34 +131,8 @@ struct ExerciseSelectionSheet: View {
             }
         }
     }
-
-    private func isExerciseSelected(_ exercise: Exercise) -> Bool {
-        selectedExerciseRecords.contains(where: {
-            $0.exercise == exercise
-        })
-    }
-
-    private func getExerciseRecord(for exercise: Exercise) -> ExerciseRecord? {
-        selectedExerciseRecords.first(where: { $0.exercise == exercise })
-    }
-
-    private func addOrUpdateExerciseRecord(_ record: ExerciseRecord) {
-        // Remove existing record for this exercise
-        selectedExerciseRecords.removeAll(where: {
-            $0.exercise == record.exercise
-        })
-        // Add new record
-        selectedExerciseRecords.append(record)
-    }
-
-    private func removeExerciseRecord(for exercise: Exercise) {
-        selectedExerciseRecords.removeAll(where: {
-            $0.exercise == exercise
-        })
-    }
 }
 
 #Preview {
-    ExerciseSelectionSheet()
-    //        .environment(RecommendationViewModel())
+    ExerciseSelectionSheet().environment(ExerciseViewModel())
 }

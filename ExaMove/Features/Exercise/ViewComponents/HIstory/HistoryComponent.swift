@@ -106,7 +106,7 @@ struct HistoryComponent: View {
                         debugPrint(
                             "DEBUG: 2 record palsu berhasil dibuat untuk \(debugPressCount) hari yang lalu."
                         )
-                    #endif
+                    #endif  // DEBUG
                 }
 
             if completedExercises.isEmpty {
