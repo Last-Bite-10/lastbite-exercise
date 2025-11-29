@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  PlanCardView.swift
-//  lastbite-exercise
-//
-//  Created by Ali Ahmad Fahrezy on 05/11/25.
-//
-
 import SwiftUI
 
 struct PlanCardComponent: View {

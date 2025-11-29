@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  ProgressBar.swift
-//  Exa
-//
-//  Created by Ali Ahmad Fahrezy on 30/10/25.
-//
-
 import SwiftUI
 
 struct ProgressBarComponent: View {
@@ -28,7 +21,7 @@ struct ProgressBarComponent: View {
                 )
                 Capsule().fill(
                     .button
-                ).frame(width: max(12, geo.size.width * value < 1 ? value : 1))
+                ).frame(width: max(12, geo.size.width * value))
             }
         }
         .frame(height: 12)

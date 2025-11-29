@@ -11,19 +11,22 @@ struct DurationSelectionSheet: View {
     @Environment(\.dismiss) private var dismiss
     @State private var selectedMinutes: Int
 
+    let durationOptions = [5, 10, 15, 20, 25, 30, 45, 60]
+
     let exercise: Exercise
     let existingRecord: ExerciseRecord?
+    let usedAtDate: Date
     let onComplete: (ExerciseRecord?) -> Void
-
-    let durationOptions = [5, 10, 15, 20, 25, 30, 45, 60]
 
     init(
         exercise: Exercise,
         existingRecord: ExerciseRecord?,
+        usedAtDate: Date,
         onComplete: @escaping (ExerciseRecord?) -> Void
     ) {
         self.exercise = exercise
         self.existingRecord = existingRecord
+        self.usedAtDate = usedAtDate
         self.onComplete = onComplete
         _selectedMinutes = State(
             initialValue: existingRecord?.recordedSeconds.getMinutes() ?? 5
@@ -83,7 +86,7 @@ struct DurationSelectionSheet: View {
                         let record = ExerciseRecord(
                             exercise: exercise,
                             requiredSeconds: TimeInterval(selectedMinutes * 60),
-                            usedAt: Date()  // viewModel.currentlyViewedDate
+                            usedAt: usedAtDate
                         )
                         onComplete(record)
                         dismiss()
@@ -102,6 +105,7 @@ struct DurationSelectionSheet: View {
     DurationSelectionSheet(
         exercise: Exercise.loadExercises().first!,
         existingRecord: nil,
+        usedAtDate: Date(),
         onComplete: { _ in }
     )
 }

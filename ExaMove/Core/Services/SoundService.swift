@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  SoundPlayer.swift
-//  lastbite-exercise
-//
-//  Created by Ali Ahmad Fahrezy on 17/11/25.
-//
-
 import AVFoundation
 
 final class SoundService {

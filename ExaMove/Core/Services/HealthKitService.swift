@@ -10,15 +10,18 @@ import Foundation
 import HealthKit
 
 @Observable
-class HealthKitService: NSObject, HKWorkoutSessionDelegate,
+final class HealthKitService: NSObject, HKWorkoutSessionDelegate,
     HKLiveWorkoutBuilderDelegate
 {
+    static let shared = HealthKitService()
+
     private let healthStore = HKHealthStore()
 
     private var workoutSession: HKWorkoutSession?
     private var workoutBuilder: HKLiveWorkoutBuilder?
 
     var onHeartRateUpdate: ((Int) -> Void)?
+    var bpmThreshold: Int = -1
 
     func requestAuthorization() {
         guard HKHealthStore.isHealthDataAvailable() else { return }

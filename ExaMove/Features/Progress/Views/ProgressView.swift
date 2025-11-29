@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  Analytics.swift
-//  lastbite-exercise
-//
-//  Created by Ali Ahmad Fahrezy on 22/10/25.
-//
-
 import SwiftUI
 
 struct ProgressView: View {

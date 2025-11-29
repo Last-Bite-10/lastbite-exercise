@@ -1,11 +1,4 @@
 //
-//  Trophy.swift
-//  ExaMove
-//
-//  Created by Ali Ahmad Fahrezy on 29/11/25.
-//
-
-//
 // TrophyView.swift
 // lastbite-exercise
 //

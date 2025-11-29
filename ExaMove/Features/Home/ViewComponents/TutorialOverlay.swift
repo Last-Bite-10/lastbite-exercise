@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  TutorialOverlay.swift
-//  lastbite-exercise
-//
-//  Created by Ali Ahmad Fahrezy on 21/11/25.
-//
-
 import SwiftUI
 
 struct TutorialOverlay: View {

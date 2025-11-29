@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  WeeklyPlanPager.swift
-//  lastbite-exercise
-//
-//  Created by Ali Ahmad Fahrezy on 20/11/25.
-//
-
 import SwiftData
 import SwiftUI
 
@@ -21,6 +14,7 @@ struct WeeklyPlanComponent: View {
 
     @Query private var preferences: [Preference]
 
+    @State private var recordViewModel = RecordViewModel()
     @State private var selectedRecord: ExerciseRecord?
     @State private var selection = 0
 
@@ -104,6 +98,7 @@ struct WeeklyPlanComponent: View {
                             isCurrentDay: isToday(dayDate),
                             onStart: { record in selectedRecord = record }
                         )
+                        .environment(recordViewModel)
                         .padding(.horizontal)
                         .tag(index)
                     }
@@ -123,7 +118,14 @@ struct WeeklyPlanComponent: View {
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
             .sheet(item: $selectedRecord) { record in
-                //                RecordView(record: record, modelContext: modelContext)
+                if !recordViewModel.setupDone {
+                    ProgressView().onAppear {
+                        recordViewModel.setup(modelContext, for: record)
+                    }
+                } else {
+                    RecordView()
+                        .environment(recordViewModel)
+                }
             }
         }
     }

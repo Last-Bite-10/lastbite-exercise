@@ -14,6 +14,8 @@ enum ExerciseButtonState {
 }
 
 struct DailyPlanCardComponent: View {
+    @Environment(RecordViewModel.self) private var viewModel
+
     let date: Date
     let records: [ExerciseRecord]
     let isCurrentDay: Bool
@@ -30,7 +32,7 @@ struct DailyPlanCardComponent: View {
     var progress: Double {
         guard totalSeconds > 0 else { return 0 }
 
-        return completedSeconds / totalSeconds
+        return min(completedSeconds / totalSeconds, 1.0)
     }
 
     // ✅ Computed property untuk mendapatkan exercise pertama
@@ -42,10 +44,8 @@ struct DailyPlanCardComponent: View {
         if !isCurrentDay {
             return .btnDisabled
         } else {
-            if records.contains(where: { records in
-                records.isRecording
-            }) {
-                return record.isRecording ? .btnRecording : .btnDisabled
+            if viewModel.timerService?.timerStatus == .timerStarted {
+                return viewModel.record == record ? .btnRecording : .btnDisabled
             } else {
                 return .btnPlay
             }

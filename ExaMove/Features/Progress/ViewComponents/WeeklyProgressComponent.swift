@@ -1,11 +1,4 @@
 //
-//  WeeklyProgressView.swift
-//  ExaMove
-//
-//  Created by Ali Ahmad Fahrezy on 29/11/25.
-//
-
-//
 //  WeeklyProgress.swift
 //  lastbite-exercise
 //
@@ -49,8 +42,8 @@ struct WeeklyProgressComponent: View {
             return (0, 0)
         }
 
-        var recorded = records.reduce(0, { $0 + $1.recordedSeconds })
-        var required = records.reduce(0, { $0 + $1.requiredSeconds })
+        let recorded = records.reduce(0, { $0 + $1.recordedSeconds })
+        let required = records.reduce(0, { $0 + $1.requiredSeconds })
 
         let recordedMinutes = recorded.getMinutes()
         let requiredMinutes = required.getMinutes()

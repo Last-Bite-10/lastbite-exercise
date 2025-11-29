@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  MyExerciseView.swift
-//  lastbite-exercise
-//
-//  Created by Ali Ahmad Fahrezy on 22/10/25.
-//
-
 import SwiftData
 import SwiftUI
 
@@ -20,7 +13,7 @@ struct ExerciseView: View {
 
     @Binding var showTutorialOverlay: Bool
 
-    @State private var healthKitService = HealthKitService()
+    @State private var healthKitService = HealthKitService.shared
     @State private var viewModel = ExerciseViewModel()
 
     @Query private var preferences: [Preference]
@@ -60,7 +53,7 @@ struct ExerciseView: View {
                             .environment(viewModel)
                     }
 
-                    HistoryComponent()
+                    HistoryComponent().environment(viewModel)
                 }
             }
             .navigationTitle("My Exercise")

@@ -5,7 +5,7 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-class ExerciseRecommenderService {
+final class ExerciseRecommenderService {
     private var exercises: [Exercise] = []
     private var feedbackData: [FeedbackRecord] = []
 

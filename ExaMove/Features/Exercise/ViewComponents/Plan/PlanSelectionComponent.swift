@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  PlanSelectionView.swift
-//  lastbite-exercise
-//
-//  Created by Ali Ahmad Fahrezy on 05/11/25.
-//
-
 import SwiftData
 import SwiftUI
 

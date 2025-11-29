@@ -120,7 +120,8 @@ struct ExerciseSelectionSheet: View {
         .sheet(item: $currentExercise) { exercise in
             DurationSelectionSheet(
                 exercise: exercise,
-                existingRecord: getExerciseRecord(for: exercise)
+                existingRecord: getExerciseRecord(for: exercise),
+                usedAtDate: viewModel.currentSelectedDate ?? Date()
             ) { record in
                 if let record = record {
                     addOrUpdateExerciseRecord(record)

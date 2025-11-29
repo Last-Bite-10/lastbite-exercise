@@ -5,13 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-//
-//  HapticManager.swift
-//  lastbite-exercise
-//
-//  Created by Ali Ahmad Fahrezy on 18/11/25.
-//
-
 import UIKit
 
 struct HapticService {

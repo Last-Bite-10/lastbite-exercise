@@ -15,6 +15,7 @@ struct HistoryItem: Identifiable {
 }
 
 struct HistoryComponent: View {
+    @Environment(ExerciseViewModel.self) private var viewModel
     @Environment(\.modelContext) private var modelContext
 
     @State private var selectedItem: HistoryItem?
@@ -147,9 +148,9 @@ struct HistoryComponent: View {
                         newEntries.append(newEntry)
                     }
 
-                    //                    viewModel.modifyExerciseRecords(
-                    //                        records: newEntries
-                    //                    )
+                    viewModel.modifyTodaysRecords(
+                        records: newEntries
+                    )
 
                     selectedItem = nil
                 }
