@@ -1,23 +1,32 @@
 //
-//  ExaMoveApp.swift
-//  ExaMove
+//  lastbite_exerciseApp.swift
+//  Exa
 //
-//  Created by Ali Ahmad Fahrezy on 28/11/25.
+//  Created by Niken Larasati on 20/10/25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 @main
 struct ExaMoveApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Preference.self,
+            Weekly.self,
+            ExerciseRecord.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false,
+            cloudKitDatabase: .automatic
+        )
 
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            return try ModelContainer(
+                for: schema,
+                configurations: [modelConfiguration]
+            )
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
@@ -26,7 +35,7 @@ struct ExaMoveApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(sharedModelContainer)
         }
-        .modelContainer(sharedModelContainer)
     }
 }
