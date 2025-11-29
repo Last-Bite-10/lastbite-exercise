@@ -35,7 +35,6 @@ class RecordViewModel {
 
         connectivityService.sendRecordTimerStatus(.timerStarted, for: record)
         timerService.startTimer()
-        record.recordedSeconds = timerService.totalTime
         //        startLiveActivity(for: entry)
         try? modelContext?.save()
     }
@@ -45,7 +44,7 @@ class RecordViewModel {
 
         connectivityService.sendRecordTimerStatus(.timerPaused, for: record)
         timerService.stopTimer()
-        record.recordedSeconds = timerService.totalTime
+        record.recordedSeconds = timerService.activeTime
         //        updateLiveActivity(for: entry)
         try? modelContext?.save()
     }
@@ -55,7 +54,7 @@ class RecordViewModel {
 
         connectivityService.sendRecordTimerStatus(.timerStopped, for: record)
         timerService.stopTimer()
-        record.recordedSeconds = timerService.totalTime
+        record.recordedSeconds = timerService.activeTime
         //        endLiveActivity(for: entry)
         try? modelContext?.save()
 

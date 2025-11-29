@@ -118,7 +118,9 @@ struct WeeklyPlanComponent: View {
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
             .sheet(item: $selectedRecord) { record in
-                if !recordViewModel.setupDone {
+                if !recordViewModel.setupDone
+                    || recordViewModel.record != record
+                {
                     ProgressView().onAppear {
                         recordViewModel.setup(modelContext, for: record)
                     }

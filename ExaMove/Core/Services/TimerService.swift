@@ -11,9 +11,8 @@ import Foundation
 class TimerService {  // ← Add ObservableObject conformance
     // Properties
     var record: ExerciseRecord
-    var progress: Double
     var activeTime: TimeInterval
-    var totalTime: TimeInterval = 0
+    var totalTime: TimeInterval
     var remainingTime: TimeInterval
     var timerStatus: TimerStatus
 
@@ -23,11 +22,18 @@ class TimerService {  // ← Add ObservableObject conformance
     var healthKitService = HealthKitService.shared
     var connectivityService = WCService.shared
 
+    var progress: Double {
+        return min(
+            remainingTime / record.requiredSeconds,
+            1.0
+        )
+    }
+
     // MARK: - Initialization
     init(record: ExerciseRecord) {
         self.record = record
-        self.progress = TimerService.getProgressPercentage(record)
-        self.activeTime = record.requiredSeconds
+        self.activeTime = record.recordedSeconds
+        self.totalTime = record.recordedSeconds
         self.remainingTime = max(
             0,
             record.requiredSeconds - record.recordedSeconds
@@ -69,9 +75,6 @@ class TimerService {  // ← Add ObservableObject conformance
         self.totalTime += 1
         handleTimerStatusChange(.timerStarted)
 
-        // Update progress based on active time
-        progress = TimerService.getProgressPercentage(record)
-
         Debugging.debug(
             "Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)"
         )
@@ -98,8 +101,8 @@ class TimerService {  // ← Add ObservableObject conformance
         -> Double
     {
         let remainingTime = max(
-            record.requiredSeconds - record.recordedSeconds,
-            0
+            0,
+            record.requiredSeconds - record.recordedSeconds
         )
 
         return min(

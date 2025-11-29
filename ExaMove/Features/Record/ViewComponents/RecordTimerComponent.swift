@@ -13,10 +13,10 @@ struct RecordTimerComponent: View {
     var bgCircleColor: Color {
         let status = viewModel.timerService?.timerStatus ?? .timerStopped
         switch status {
-        case .timerBelowBPM: return .disabled.opacity(1)
-        case .timerPaused: return .disabled.opacity(1)
+        case .timerBelowBPM: return .card.opacity(1)
+        case .timerPaused: return .card.opacity(1)
         case .timerStarted: return .ring1.opacity(0.2)
-        case .timerStopped: return .disabled.opacity(1)
+        case .timerStopped: return .card.opacity(1)
         case .timerOverflown: return .ringOverflow.opacity(1)
         }
     }

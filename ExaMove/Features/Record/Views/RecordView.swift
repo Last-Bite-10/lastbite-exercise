@@ -70,6 +70,7 @@ struct RecordView: View {
                         )
                     }
                 )
+                .padding(.bottom)
 
                 ButtonWSound(
                     action: {
@@ -81,7 +82,11 @@ struct RecordView: View {
                     }
                 )
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 64)
         }
     }
+}
+
+#Preview {
+    RecordView().environment(RecordViewModel())
 }
