@@ -113,7 +113,7 @@ struct WeeklyPlanComponent: View {
                             records: dailyRecord
                         )
                     }
-                    .onChange(of: selection) {
+                    .onChange(of: viewModel.currentWeek?.records) {
                         viewModel.setCurrentRecords(
                             date: dayDate,
                             records: dailyRecord
