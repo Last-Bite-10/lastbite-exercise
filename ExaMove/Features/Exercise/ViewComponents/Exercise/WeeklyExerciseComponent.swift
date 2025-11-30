@@ -140,6 +140,17 @@ struct WeeklyExerciseComponent: View {
                 }
             }
         }
+        .onReceive(
+            NotificationCenter.default.publisher(for: .receiveSelectedRecord)
+        ) { notification in
+            if let recordID = notification.object as? UUID,
+                let record = viewModel.currentWeek?.records?.first(
+                    where: { $0.id == recordID }
+                )
+            {
+                recordViewModel.setup(modelContext, for: record)
+            }
+        }
     }
 }
 

@@ -82,7 +82,7 @@ struct RecordTimerComponent: View {
                             .fontWeight(.bold)
                     }
 
-                    if viewModel.heartRate != nil {
+                    if viewModel.isReceivingFromWatch {
                         Image(systemName: "applewatch")
                             .foregroundStyle(.blue)
                             .font(.caption)

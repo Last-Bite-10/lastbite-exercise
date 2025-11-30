@@ -24,6 +24,8 @@ final class RecordViewModel {
     var heartRate: Int?
     var bpmTreshold: Int
 
+    
+    // MARK: - Setup
     init(healthKitService: HealthKitService, connectivityService: WCService) {
         self.healthKitService = healthKitService
         self.connectivityService = connectivityService
@@ -40,6 +42,7 @@ final class RecordViewModel {
         )
     }
 
+    // MARK: Send Function
     func sendSelectedRecord(_ record: ExerciseRecord) {
         connectivityService.sendSelectedRecord(record)
     }
@@ -47,6 +50,10 @@ final class RecordViewModel {
     func startRecordTimer() {
         guard let timerService else { return }
 
+        healthKitService.startWorkout { heartRate in
+            self.heartRate = heartRate
+            self.connectivityService.sendHeartRate(heartRate)
+        }
         connectivityService.sendRecordTimerStatus(.timerStarted)
         timerService.startTimer()
         //        startLiveActivity(for: entry)
@@ -56,6 +63,7 @@ final class RecordViewModel {
     func pauseRecordTimer() {
         guard let timerService, let record else { return }
 
+        healthKitService.stopWorkout()
         connectivityService.sendRecordTimerStatus(.timerPaused)
         timerService.stopTimer()
         record.recordedSeconds = timerService.activeTime
@@ -66,6 +74,7 @@ final class RecordViewModel {
     func endRecordTimer() {
         guard let timerService, let record else { return }
 
+        healthKitService.stopWorkout()
         connectivityService.sendRecordTimerStatus(.timerStopped)
         timerService.stopTimer()
         record.recordedSeconds = timerService.activeTime
@@ -75,7 +84,6 @@ final class RecordViewModel {
     }
 
     // MARK: - Connectivity
-
     private func setupConnectivityObservers() {
         connectivityService.onRecordTimerUpdate = {
             [weak self] status in

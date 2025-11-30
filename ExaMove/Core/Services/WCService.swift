@@ -10,6 +10,8 @@ import WatchConnectivity
 
 @Observable
 final class WCService: NSObject {
+
+    // Callback function for synchronization
     var onRecordTimerUpdate: ((TimerStatus) -> Void)?
     var onHeartRateUpdate: ((Int) -> Void)?
 
@@ -25,6 +27,17 @@ final class WCService: NSObject {
 
     // Use sendMessage for time-critical data (timer controls, heart rate)
     // This is synchronous and requires both devices to be reachable
+    func sendSelectedRecord(_ record: ExerciseRecord) {
+        guard WCSession.default.isReachable else { return }
+
+        let message: [String: Any] = [
+            "type": "selectedRecord",
+            "recordId": record.id.uuidString,
+        ]
+
+        WCSession.default.sendMessage(message, replyHandler: nil)
+    }
+
     func sendRecordTimerStatus(
         _ status: TimerStatus
     ) {
@@ -43,17 +56,6 @@ final class WCService: NSObject {
                 "❌ Failed to send timer pause: \(error.localizedDescription)"
             )
         }
-    }
-
-    func sendSelectedRecord(_ record: ExerciseRecord) {
-        guard WCSession.default.isReachable else { return }
-
-        let message: [String: Any] = [
-            "type": "selectedRecord",
-            "recordId": record.id.uuidString,
-        ]
-
-        WCSession.default.sendMessage(message, replyHandler: nil)
     }
 
     // Use sendMessage for heart rate (real-time, critical)
@@ -102,14 +104,19 @@ extension WCService: WCSessionDelegate {
             guard let type = message["type"] as? String else { return }
 
             switch type {
+            case "selectedRecord":
+                if let recordIdString = message["recordID"] as? String,
+                    let recordId = UUID(uuidString: recordIdString)
+                {
+                    NotificationCenter.default.post(
+                        name: .receiveSelectedRecord,
+                        object: recordId
+                    )
+                }
+
             case "timerStatus":
                 if let status = message["status"] as? TimerStatus {
                     self?.onRecordTimerUpdate?(status)
-                }
-
-            case "selectedRecord":
-                if let recordIdString = message["recordID"] as? String {
-
                 }
 
             case "heartRate":
@@ -122,4 +129,10 @@ extension WCService: WCSessionDelegate {
             }
         }
     }
+}
+
+extension Notification.Name {
+    static let receiveSelectedRecord = Notification.Name(
+        "receiveSelectedRecord"
+    )
 }
