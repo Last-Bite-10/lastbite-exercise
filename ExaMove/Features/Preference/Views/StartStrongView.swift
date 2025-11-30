@@ -19,7 +19,7 @@ struct StartStrongView: View {
 
             Text("Start Strong!")
                 .font(.title2.bold())
-                .foregroundColor(.title)
+                .foregroundStyle(.title)
 
             Image("StartSmall")
                 .resizable()
@@ -32,7 +32,7 @@ struct StartStrongView: View {
                 )
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
                 .fixedSize(horizontal: false, vertical: true)
 
                 VStack(alignment: .leading, spacing: 16) {
@@ -43,7 +43,7 @@ struct StartStrongView: View {
                     Text("5 day / Week: 30 minutes per day")
                 }
                 .font(.subheadline)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
                 .padding(20)
                 .background(.white)
                 .cornerRadius(16)
@@ -53,7 +53,7 @@ struct StartStrongView: View {
                 )
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
                 .fixedSize(horizontal: false, vertical: true)
             }
             .padding(30)

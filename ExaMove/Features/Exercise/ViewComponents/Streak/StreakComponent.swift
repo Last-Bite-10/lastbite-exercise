@@ -49,14 +49,14 @@ struct StreakComponent: View {
                                 Circle().fill(.card)
 
                                 Image(systemName: iconName)
-                                    .foregroundColor(iconColor)
+                                    .foregroundStyle(iconColor)
                                     .font(.system(size: 24))
                             }
                             .frame(width: 40, height: 40)
 
                             Text("W\(weekNumber)")
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                         // 🐛 DEBUG: Tap gesture untuk toggle streak
                         .onTapGesture {
@@ -85,13 +85,13 @@ struct StreakComponent: View {
                         HStack {
                             Image(systemName: "flame.fill")
                                 .font(.system(size: 24))
-                                .foregroundColor(.gray)
+                                .foregroundStyle(.gray)
                             Text("No streaks yet!")
                                 .font(.headline)
                         }
                         Text("Start exercising to get \nthe fire going!")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 .cornerRadius(12)
@@ -110,14 +110,14 @@ struct StreakComponent: View {
                         HStack {
                             Image(systemName: "flame.fill")
                                 .font(.system(size: 24))
-                                .foregroundColor(.orange)
+                                .foregroundStyle(.orange)
 
                             Text("1 Streak")
                                 .font(.headline)
                         }
                         Text("Keep the Streak Going!")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 .cornerRadius(12)

@@ -15,24 +15,27 @@ struct ContentView: View {
     private let haptic = HapticService.shared
 
     var body: some View {
-        if preferences.isEmpty {
-            GetStartedView()
-        } else {
-            TabView(selection: $selectedTab) {
-                HomeView()
-                    .tag(0)
-                    .tabItem {
-                        Label("My Exercise", systemImage: "figure.yoga")
-                    }
+        Group {
+            if preferences.isEmpty {
+                GetStartedView()
+            } else {
+                TabView(selection: $selectedTab) {
+                    HomeView()
+                        .tag(0)
+                        .tabItem {
+                            Label("My Exercise", systemImage: "figure.yoga")
+                        }
 
-                ProgressView()
-                    .tag(1)
-                    .tabItem {
-                        Label("My Progress", systemImage: "graph.2d")
-                    }
+                    ProgressView()
+                        .tag(1)
+                        .tabItem {
+                            Label("My Progress", systemImage: "graph.2d")
+                        }
+                }
+                .sensoryFeedback(.impact(weight: .light), trigger: selectedTab)
             }
-            .sensoryFeedback(.impact(weight: .light), trigger: selectedTab)
         }
+        .preferredColorScheme(.light)
     }
 }
 

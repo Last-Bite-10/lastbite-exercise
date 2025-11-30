@@ -83,7 +83,7 @@ struct DailyExerciseCardComponent: View {
                                 "\(completedSeconds.getMinutes())/\(totalSeconds.getMinutes()) mins"
                             )
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                         }
                     }
 

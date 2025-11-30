@@ -60,7 +60,7 @@ struct HistorySheetComponent: View {
                     ButtonWSound(action: onSetAsPlan) {
                         Text("Set as today's plan")
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .padding(.vertical, 12)
                             .frame(width: geometry.size.width * 0.5)
                             .background(.button)
@@ -81,7 +81,7 @@ struct HistorySheetComponent: View {
                         },
                         label: {
                             Image(systemName: "xmark")
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                     )
                     .buttonStyle(.borderless)

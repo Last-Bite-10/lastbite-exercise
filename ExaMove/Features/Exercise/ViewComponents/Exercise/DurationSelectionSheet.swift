@@ -46,7 +46,7 @@ struct DurationSelectionSheet: View {
 
                             if selectedMinutes == minutes {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(.blue)
+                                    .foregroundStyle(.blue)
                                     .font(.body.weight(.semibold))
                             }
                         }

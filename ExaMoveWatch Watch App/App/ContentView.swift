@@ -1,21 +1,21 @@
 //
-//  ContentView.swift
-//  ExaMoveWatch Watch App
+//  HomeView.swift
+//  Exa
 //
-//  Created by Ali Ahmad Fahrezy on 28/11/25.
+//  Created by Ali Ahmad Fahrezy on 27/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
+    @Query private var preferences: [Preference]
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            TodaysPlanView()
+                .preferredColorScheme(.light)
         }
-        .padding()
     }
 }
 

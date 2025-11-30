@@ -33,7 +33,7 @@ struct PlanCardComponent: View {
                         .padding(.horizontal, 20)
                         .padding(.vertical, 8)
                         .background(.button)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .clipShape(Capsule())
                 }
             }

@@ -31,7 +31,7 @@ struct HistoryCardComponent: View {
 
                 Text(item.date)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .padding(.bottom, 8)
             }
             .frame(maxWidth: .infinity, alignment: .leading)

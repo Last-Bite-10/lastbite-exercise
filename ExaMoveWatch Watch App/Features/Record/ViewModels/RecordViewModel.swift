@@ -5,7 +5,6 @@
 //  Created by Ali Ahmad Fahrezy on 29/11/25.
 //
 
-import ActivityKit
 import Combine
 import Foundation
 import SwiftData
@@ -29,6 +28,9 @@ final class RecordViewModel {
         self.healthKitService = healthKitService
         self.connectivityService = connectivityService
         self.bpmTreshold = healthKitService.bpmThreshold
+
+        healthKitService.requestAuthorization()
+
         setupConnectivityObservers()
     }
 
@@ -124,92 +126,4 @@ final class RecordViewModel {
     var isReceivingFromWatch: Bool {
         connectivityService.isReceivingFromWatch
     }
-
-    // MARK: - Live Activity
-    //
-    //    func requestLiveActivityAuthorization() async {
-    //        let authorized = ActivityAuthorizationInfo().areActivitiesEnabled
-    //        if !authorized {
-    //            Debugging.debug("Live Activities are not authorized.")
-    //        }
-    //    }
-    //
-    //    private func startLiveActivity(for entry: TimerEntry) {
-    //        guard ActivityAuthorizationInfo().areActivitiesEnabled else {
-    //            Debugging.debug("Live Activities not enabled/authorized.")
-    //            return
-    //        }
-    //
-    //        guard let startDate = entry.startDate else { return }
-    //        let endDate = startDate.addingTimeInterval(entry.targetDuration)
-    //
-    //        let attributes = TimerActivityAttributes(entryId: entry.id.uuidString)
-    //        let initialState = TimerActivityAttributes.ContentState(
-    //            remainingTime: entry.remainingTime,
-    //            entryTitle: entry.title,
-    //            isPaused: false,
-    //            currentHeartRate: entry.currentHeartRate,
-    //            endDate: endDate
-    //        )
-    //
-    //        do {
-    //            activity = try Activity<TimerActivityAttributes>.request(
-    //                attributes: attributes,
-    //                content: ActivityContent(state: initialState, staleDate: nil),
-    //                pushType: nil
-    //            )
-    //            Debugging.debug(
-    //                "✅ Started Live Activity: \(String(describing: activity?.id))"
-    //            )
-    //        } catch {
-    //            Debugging.debug("❌ Failed to start Live Activity: \(error)")
-    //        }
-    //    }
-    //
-    //    private func updateLiveActivity(for entry: TimerEntry) {
-    //        guard let activity else { return }
-    //
-    //        let endDate: Date
-    //        if let startDate = entry.startDate {
-    //            endDate = startDate.addingTimeInterval(entry.targetDuration)
-    //        } else {
-    //            endDate = Date().addingTimeInterval(entry.remainingTime)
-    //        }
-    //
-    //        let updatedState = TimerActivityAttributes.ContentState(
-    //            remainingTime: entry.remainingTime,
-    //            entryTitle: entry.title,
-    //            isPaused: entry.timerState == .paused,
-    //            currentHeartRate: entry.currentHeartRate,
-    //            endDate: endDate
-    //        )
-    //
-    //        Task {
-    //            await activity.update(
-    //                ActivityContent(state: updatedState, staleDate: nil)
-    //            )
-    //        }
-    //    }
-    //
-    //    private func endLiveActivity(for entry: TimerEntry) {
-    //        guard let activity else { return }
-    //
-    //        let finalState = TimerActivityAttributes.ContentState(
-    //            remainingTime: 0,
-    //            entryTitle: entry.title,
-    //            isPaused: false,
-    //            currentHeartRate: entry.currentHeartRate,
-    //            endDate: Date()
-    //        )
-    //
-    //        Task {
-    //            await activity.end(
-    //                ActivityContent(state: finalState, staleDate: nil),
-    //                dismissalPolicy: .immediate
-    //            )
-    //            Debugging.debug("✅ Ended Live Activity")
-    //        }
-    //
-    //        self.activity = nil
-    //    }
 }

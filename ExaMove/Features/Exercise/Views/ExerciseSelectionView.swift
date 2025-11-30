@@ -49,12 +49,12 @@ struct ExerciseSelectionView: View {
                     Text("Choose your\nexercise for today")
                         .font(.title.bold())
                         .multilineTextAlignment(.leading)
-                        .foregroundColor(.title)
+                        .foregroundStyle(.title)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Recommended exercise duration: 30 mins")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.horizontal)
@@ -102,7 +102,7 @@ struct ExerciseSelectionView: View {
                                 !selectedExerciseRecords.isEmpty
                                     ? .button : .disabled
                             )
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .cornerRadius(30)
                             .padding(.horizontal, 40)
                     }

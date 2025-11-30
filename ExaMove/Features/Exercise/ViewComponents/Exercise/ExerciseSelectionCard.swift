@@ -44,7 +44,7 @@ struct ExerciseSelectionCard: View {
                                 "\(record.requiredSeconds.getMinutes()) min"
                             )
                             .font(.caption.bold())
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
                             .background(.title)
@@ -58,7 +58,7 @@ struct ExerciseSelectionCard: View {
 
             Text(exercise.name)
                 .font(.headline)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
         }
         .onTapGesture {
             onSelect(exercise)

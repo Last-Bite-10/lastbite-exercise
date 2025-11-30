@@ -35,8 +35,8 @@ struct WeeklyExerciseComponent: View {
         guard let week = viewModel.currentWeek else { return [] }
 
         let result =
-            week.records?.filter { record in
-                return Calendar.current.isDate(record.usedAt, inSameDayAs: date)
+            week.records?.filter {
+                return Calendar.current.isDate($0.usedAt, inSameDayAs: date)
             } ?? []
 
         Debugging.debug("Exercises for \(date): \(result.count) records found.")
@@ -59,7 +59,7 @@ struct WeeklyExerciseComponent: View {
 
     init(healthKitService: HealthKitService) {
         _recordViewModel = .init(
-            initialValue: RecordViewModel(
+            initialValue: .init(
                 healthKitService: healthKitService,
                 connectivityService: WCService()
             )
@@ -74,7 +74,7 @@ struct WeeklyExerciseComponent: View {
                 Text("This Week's Plan")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(.title)
+                    .foregroundStyle(.title)
 
                 Spacer()
 
@@ -89,7 +89,7 @@ struct WeeklyExerciseComponent: View {
                             Text("Modify")
                                 .font(.headline)
                         }
-                        .foregroundColor(.button)
+                        .foregroundStyle(.button)
                     }
                 )
                 .buttonStyle(.plain)

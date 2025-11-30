@@ -98,31 +98,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		E50097242ED9B4FE0008051E /* Exceptions for "ExaMoveWatch Watch App" folder in "ExaMove" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				App/ContentView.swift,
-				App/ExaMoveWatchApp.swift,
-				Resources/Assets.xcassets,
-			);
-			target = E5A90E722ED9B1C800BE8BC6 /* ExaMove */;
-		};
-		E50097252ED9B4FE0008051E /* Exceptions for "ExaMoveWatch Watch App" folder in "ExaMoveWatch Watch App" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				App/ContentView.swift,
-				App/ExaMoveWatchApp.swift,
-				Resources/Assets.xcassets,
-			);
-			target = E5A90EA52ED9B1E600BE8BC6 /* ExaMoveWatch Watch App */;
-		};
-		E5A90E962ED9B1C900BE8BC6 /* Exceptions for "ExaMove" folder in "ExaMove" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = E5A90E722ED9B1C800BE8BC6 /* ExaMove */;
-		};
 		E5A90EEB2ED9B20600BE8BC6 /* Exceptions for "ExaMoveWidget" folder in "ExaMoveWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -130,22 +105,25 @@
 			);
 			target = E5A90ED42ED9B20600BE8BC6 /* ExaMoveWidgetExtension */;
 		};
+		E5BE5FE92EDBF55F00801DFE /* Exceptions for "ExaMove" folder in "ExaMove" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E5A90E722ED9B1C800BE8BC6 /* ExaMove */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E50097202ED9B4FE0008051E /* ExaMoveWatch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				E50097242ED9B4FE0008051E /* Exceptions for "ExaMoveWatch Watch App" folder in "ExaMove" target */,
-				E50097252ED9B4FE0008051E /* Exceptions for "ExaMoveWatch Watch App" folder in "ExaMoveWatch Watch App" target */,
-			);
 			path = "ExaMoveWatch Watch App";
 			sourceTree = "<group>";
 		};
 		E5A90E752ED9B1C800BE8BC6 /* ExaMove */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				E5A90E962ED9B1C900BE8BC6 /* Exceptions for "ExaMove" folder in "ExaMove" target */,
+				E5BE5FE92EDBF55F00801DFE /* Exceptions for "ExaMove" folder in "ExaMove" target */,
 			);
 			path = ExaMove;
 			sourceTree = "<group>";
@@ -176,6 +154,11 @@
 				E5A90EEB2ED9B20600BE8BC6 /* Exceptions for "ExaMoveWidget" folder in "ExaMoveWidgetExtension" target */,
 			);
 			path = ExaMoveWidget;
+			sourceTree = "<group>";
+		};
+		E5BE5F952EDBF32400801DFE /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -239,6 +222,7 @@
 		E5A90E6A2ED9B1C800BE8BC6 = {
 			isa = PBXGroup;
 			children = (
+				E5BE5F952EDBF32400801DFE /* Shared */,
 				E5A90E752ED9B1C800BE8BC6 /* ExaMove */,
 				E50097202ED9B4FE0008051E /* ExaMoveWatch Watch App */,
 				E5A90EDB2ED9B20600BE8BC6 /* ExaMoveWidget */,
@@ -295,8 +279,8 @@
 				E5A90EE62ED9B20600BE8BC6 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				E50097202ED9B4FE0008051E /* ExaMoveWatch Watch App */,
 				E5A90E752ED9B1C800BE8BC6 /* ExaMove */,
+				E5BE5F952EDBF32400801DFE /* Shared */,
 			);
 			name = ExaMove;
 			packageProductDependencies = (
@@ -362,6 +346,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E50097202ED9B4FE0008051E /* ExaMoveWatch Watch App */,
+				E5BE5F952EDBF32400801DFE /* Shared */,
 			);
 			name = "ExaMoveWatch Watch App";
 			packageProductDependencies = (
@@ -430,6 +418,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				E5A90EDB2ED9B20600BE8BC6 /* ExaMoveWidget */,
+				E5BE5F952EDBF32400801DFE /* Shared */,
 			);
 			name = ExaMoveWidgetExtension;
 			packageProductDependencies = (
@@ -653,6 +642,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -695,6 +685,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -941,6 +932,7 @@
 				INFOPLIST_FILE = "ExaMoveWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = cloud.rain.ExaMove;
@@ -978,6 +970,7 @@
 				INFOPLIST_FILE = "ExaMoveWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Exa Move";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to your heart rate to display it during timer sessions";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = cloud.rain.ExaMove;

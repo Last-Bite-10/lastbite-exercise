@@ -51,7 +51,7 @@ struct RecordTimerComponent: View {
                 .rotationEffect(.degrees(-90))
                 .animation(
                     .easeInOut(duration: 0.5),
-                    value: viewModel.timerService?.progress ?? 0
+                    value: viewModel.timerService?.progress
                 )
 
             VStack {

@@ -19,7 +19,7 @@ struct PlanSelectionComponent: View {
             Text("Choose Your Plan")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(.title)
+                .foregroundStyle(.title)
 
             PlanCardComponent(
                 title: "Start Small!",

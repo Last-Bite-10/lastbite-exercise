@@ -56,11 +56,11 @@ struct WeeklyProgressComponent: View {
             Text("Weekly Progress")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(.title)
+                .foregroundStyle(.title)
 
             Text(getDateString())
                 .font(.subheadline)
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
 
             HStack(spacing: 20) {
                 ZStack {
@@ -73,11 +73,11 @@ struct WeeklyProgressComponent: View {
                 HStack(alignment: .lastTextBaseline, spacing: 4) {
                     Text("\(getMinutes().recordedMinutes)")
                         .font(.system(size: 36, weight: .bold))
-                        .foregroundColor(.title)
+                        .foregroundStyle(.title)
 
                     Text("/\(getMinutes().requiredMinutes) min")
                         .font(.system(size: 24, weight: .semibold))
-                        .foregroundColor(.title)
+                        .foregroundStyle(.title)
                 }
                 .frame(maxWidth: .infinity)
 

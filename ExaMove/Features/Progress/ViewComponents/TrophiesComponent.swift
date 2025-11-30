@@ -47,7 +47,7 @@ struct TrophiesComponent: View {
             Text("My Trophies")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(.title)
+                .foregroundStyle(.title)
                 .onTapGesture {
                     #if DEBUG
                         toggleAllTrophies()
@@ -73,7 +73,7 @@ struct TrophiesComponent: View {
 
                         Text("\(trophy.milestone) Weeks Streak Trophy")
                             .font(.caption)
-                            .foregroundColor(
+                            .foregroundStyle(
                                 trophy.isAchieved
                                     ? .black : .gray.opacity(0.5)
                             )

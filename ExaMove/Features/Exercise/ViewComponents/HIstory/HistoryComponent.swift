@@ -59,7 +59,7 @@ struct HistoryComponent: View {
             Text("Recent History")
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(.title)
+                .foregroundStyle(.title)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .onTapGesture {
                     #if DEBUG
@@ -116,7 +116,7 @@ struct HistoryComponent: View {
                         .font(.headline)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                 }
                 .frame(maxWidth: .infinity, minHeight: 180)
                 .padding(20)

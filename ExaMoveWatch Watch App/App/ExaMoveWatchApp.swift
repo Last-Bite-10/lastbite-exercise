@@ -1,17 +1,41 @@
 //
-//  ExaMoveWatchApp.swift
-//  ExaMoveWatch Watch App
+//  lastbite_exerciseApp.swift
+//  Exa
 //
-//  Created by Ali Ahmad Fahrezy on 28/11/25.
+//  Created by Niken Larasati on 20/10/25.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
 struct ExaMoveWatchApp: App {
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            Preference.self,
+            Weekly.self,
+            ExerciseRecord.self,
+        ])
+        let modelConfiguration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false,
+            cloudKitDatabase: .automatic
+        )
+
+        do {
+            return try ModelContainer(
+                for: schema,
+                configurations: [modelConfiguration]
+            )
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(sharedModelContainer)
         }
     }
 }

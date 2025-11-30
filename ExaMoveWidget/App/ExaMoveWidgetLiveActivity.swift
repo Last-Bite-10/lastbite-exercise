@@ -6,8 +6,8 @@
 //
 
 import ActivityKit
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 struct ExaMoveWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
@@ -65,15 +65,15 @@ extension ExaMoveWidgetAttributes {
 extension ExaMoveWidgetAttributes.ContentState {
     fileprivate static var smiley: ExaMoveWidgetAttributes.ContentState {
         ExaMoveWidgetAttributes.ContentState(emoji: "😀")
-     }
-     
-     fileprivate static var starEyes: ExaMoveWidgetAttributes.ContentState {
-         ExaMoveWidgetAttributes.ContentState(emoji: "🤩")
-     }
+    }
+
+    fileprivate static var starEyes: ExaMoveWidgetAttributes.ContentState {
+        ExaMoveWidgetAttributes.ContentState(emoji: "🤩")
+    }
 }
 
 #Preview("Notification", as: .content, using: ExaMoveWidgetAttributes.preview) {
-   ExaMoveWidgetLiveActivity()
+    ExaMoveWidgetLiveActivity()
 } contentStates: {
     ExaMoveWidgetAttributes.ContentState.smiley
     ExaMoveWidgetAttributes.ContentState.starEyes

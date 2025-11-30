@@ -19,7 +19,7 @@ struct StartSmallView: View {
 
             Text("Start Small!")
                 .font(.title2.bold())
-                .foregroundColor(.title)
+                .foregroundStyle(.title)
 
             Image("StartSmall")
                 .resizable()
@@ -32,7 +32,7 @@ struct StartSmallView: View {
                 )
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
                 .fixedSize(horizontal: false, vertical: true)
 
                 VStack(alignment: .leading, spacing: 16) {
@@ -44,7 +44,7 @@ struct StartSmallView: View {
                     Text("Week 6: 120 minutes total")
                 }
                 .font(.subheadline)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
                 .padding(20)
                 .background(.white)
                 .cornerRadius(16)
@@ -54,7 +54,7 @@ struct StartSmallView: View {
                 )
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
                 .fixedSize(horizontal: false, vertical: true)
             }
             .padding(30)

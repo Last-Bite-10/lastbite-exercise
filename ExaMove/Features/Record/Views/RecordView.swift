@@ -12,7 +12,7 @@ struct RecordView: View {
     @Environment(\.dismiss) private var dismiss
 
     var timerMessage: LocalizedStringKey {
-        switch viewModel.timerService?.timerStatus {
+        switch viewModel.timerService?.timerStatus ?? .timerStopped {
         case .timerPaused:
             return "The time is paused. Continue by increasing your BPM!"
         case .timerStarted:
@@ -26,8 +26,6 @@ struct RecordView: View {
                 "Your exercise is in progress, your heartbeat is being recorded!"
         case .timerBelowBPM:
             return "The time is paused. Continue by increasing your BPM!"
-        case .none:
-            return ""
         }
     }
 
@@ -63,7 +61,6 @@ struct RecordView: View {
                         CoreButtonLabel(
                             title: viewModel.timerService?.timerStatus
                                 != .timerStarted
-
                                 ? "Start" : "Pause"
                         )
                     }

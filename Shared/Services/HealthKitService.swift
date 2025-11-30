@@ -10,9 +10,7 @@ import Foundation
 import HealthKit
 
 @Observable
-final class HealthKitService: NSObject, HKWorkoutSessionDelegate,
-    HKLiveWorkoutBuilderDelegate
-{
+final class HealthKitService: NSObject {
     private let healthStore = HKHealthStore()
 
     private var workoutSession: HKWorkoutSession?
@@ -21,27 +19,47 @@ final class HealthKitService: NSObject, HKWorkoutSessionDelegate,
     var onHeartRateUpdate: ((Int) -> Void)?
     var bpmThreshold: Int = -1
 
+    override init() {
+        super.init()
+        Debugging.debug("HealthKitService initialized")
+    }
+
+    deinit {
+        Debugging.debug("HealthKitService deinitialized")
+    }
+
     func requestAuthorization() {
         guard HKHealthStore.isHealthDataAvailable() else { return }
+
+        let typesToShare: Set = [
+            HKObjectType.workoutType()
+        ]
 
         let typesToRead: Set = [
             HKQuantityType.quantityType(forIdentifier: .heartRate)!,
             HKQuantityType.characteristicType(forIdentifier: .dateOfBirth)!,
         ]
 
-        healthStore.requestAuthorization(toShare: [], read: typesToRead) {
+        healthStore.requestAuthorization(
+            toShare: typesToShare,
+            read: typesToRead
+        ) {
             success,
             error in
             if let error = error {
                 Debugging.debug(
                     "HealthKit authorization error: \(error.localizedDescription)"
                 )
+            } else {
+                Debugging.debug("HealthKit authorization success: \(success)")
             }
         }
     }
 
     func startWorkout(onUpdate: @escaping (Int) -> Void) {
         self.onHeartRateUpdate = onUpdate
+
+        Debugging.debug("Starting workout session...")
 
         // Configure workout session
         let configuration = HKWorkoutConfiguration()
@@ -58,21 +76,41 @@ final class HealthKitService: NSObject, HKWorkoutSessionDelegate,
             workoutSession?.delegate = self
             workoutBuilder?.delegate = self
 
+            Debugging.debug("Workout session created, delegates set")
+
             workoutBuilder?.dataSource = HKLiveWorkoutDataSource(
                 healthStore: healthStore,
                 workoutConfiguration: configuration
             )
 
+            Debugging.debug("Data source configured")
+
+            // Start the session FIRST
             workoutSession?.startActivity(with: Date())
-            workoutBuilder?.beginCollection(
-                withStart: Date(),
-                completion: { success, error in }
-            )
+
+            Debugging.debug("Workout activity started")
+
+            // Then begin collection
+            workoutBuilder?.beginCollection(withStart: Date()) {
+                success,
+                error in
+                if let error = error {
+                    Debugging.debug(
+                        "Failed to begin collection: \(error.localizedDescription)"
+                    )
+                } else {
+                    Debugging.debug("Collection began successfully: \(success)")
+                }
+            }
         } catch {
             Debugging.debug(
                 "Failed to start workout: \(error.localizedDescription)"
             )
         }
+    }
+
+    func pauseWorkout() {
+        workoutSession?.pause()
     }
 
     func stopWorkout() {
@@ -86,17 +124,37 @@ final class HealthKitService: NSObject, HKWorkoutSessionDelegate,
         workoutBuilder = nil
         onHeartRateUpdate = nil
     }
+}
 
-    // MARK: - Live updates
+extension HealthKitService: HKWorkoutSessionDelegate {
+    func workoutSession(
+        _ workoutSession: HKWorkoutSession,
+        didChangeTo toState: HKWorkoutSessionState,
+        from fromState: HKWorkoutSessionState,
+        date: Date
+    ) {
+        Debugging.debug(
+            "Workout session state: \(fromState.rawValue) -> \(toState.rawValue)"
+        )
+    }
+
+    func workoutSession(
+        _ workoutSession: HKWorkoutSession,
+        didFailWithError error: any Error
+    ) {
+    }
+}
+
+extension HealthKitService: HKLiveWorkoutBuilderDelegate {
     func workoutBuilder(
         _ workoutBuilder: HKLiveWorkoutBuilder,
-        didCollectDataOf types: Set<HKSampleType>
+        didCollectDataOf collectedTypes: Set<HKSampleType>
     ) {
         guard
             let heartRateType = HKObjectType.quantityType(
                 forIdentifier: .heartRate
             ),
-            types.contains(heartRateType),
+            collectedTypes.contains(heartRateType),
             let stats = workoutBuilder.statistics(for: heartRateType),
             let quantity = stats.mostRecentQuantity()
         else { return }
@@ -109,21 +167,6 @@ final class HealthKitService: NSObject, HKWorkoutSessionDelegate,
         }
     }
 
-    // MARK: - Required delegate stubs
     func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
     }
-
-    func workoutSession(
-        _ workoutSession: HKWorkoutSession,
-        didFailWithError error: Error
-    ) {
-        Debugging.debug("Workout session error: \(error.localizedDescription)")
-    }
-
-    func workoutSession(
-        _ workoutSession: HKWorkoutSession,
-        didChangeTo toState: HKWorkoutSessionState,
-        from fromState: HKWorkoutSessionState,
-        date: Date
-    ) {}
 }

@@ -20,9 +20,7 @@ struct ExerciseRowComponent: View {
     // MARK: - Setups for each button states
     var buttonText: String {
         switch buttonState {
-        case .btnDisabled:
-            return "Play"
-        case .btnPlay:
+        case .btnPlay, .btnDisabled:
             return "Play"
         case .btnRecording:
             return "In Progress"
@@ -31,9 +29,7 @@ struct ExerciseRowComponent: View {
 
     var buttonIcon: String {
         switch buttonState {
-        case .btnDisabled:
-            return "play.fill"
-        case .btnPlay:
+        case .btnPlay, .btnDisabled:
             return "play.fill"
         case .btnRecording:
             return "record.circle"
@@ -56,7 +52,7 @@ struct ExerciseRowComponent: View {
                     .strikethrough(isCompleted)
 
                 Image(systemName: "info.circle.fill")
-                    .foregroundColor(.title)
+                    .foregroundStyle(.title)
                     .onTapGesture {
                         showTutorial = true
                     }
