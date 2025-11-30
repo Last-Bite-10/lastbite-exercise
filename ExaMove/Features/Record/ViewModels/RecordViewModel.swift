@@ -29,7 +29,6 @@ final class RecordViewModel {
         self.healthKitService = healthKitService
         self.connectivityService = connectivityService
         self.bpmTreshold = healthKitService.bpmThreshold
-        setupConnectivityObservers()
     }
 
     func setup(_ context: ModelContext, for record: ExerciseRecord) {
@@ -42,42 +41,45 @@ final class RecordViewModel {
         )
     }
 
-    // MARK: Send Function
-    func sendSelectedRecord(_ record: ExerciseRecord) {
-        connectivityService.sendSelectedRecord(record)
-    }
-
-    func startRecordTimer() {
-        guard let timerService else { return }
-
-        healthKitService.startWorkout { heartRate in
-            Task { @MainActor in
-                self.heartRate = heartRate
-                self.connectivityService.sendHeartRate(heartRate)
-            }
-        }
-        connectivityService.sendRecordTimerStatus(.timerStarted)
-        timerService.startTimer()
-        //        startLiveActivity(for: entry)
-        try? modelContext?.save()
-    }
-
-    func pauseRecordTimer() {
+    func startRecordTimer(send: Bool = true) {
         guard let timerService, let record else { return }
 
-        healthKitService.stopWorkout()
-        connectivityService.sendRecordTimerStatus(.timerPaused)
+        healthKitService.startWorkout()
+
+        if send {
+            connectivityService.sendRecordTimerStatus(
+                .timerStarted,
+                for: record
+            )
+        }
+
+        timerService.startTimer()
+        //        startLiveActivity(for: entry)
+    }
+
+    func pauseRecordTimer(send: Bool = true) {
+        guard let timerService, let record else { return }
+
+        healthKitService.pauseWorkout()
+        if send {
+            connectivityService.sendRecordTimerStatus(.timerPaused, for: record)
+        }
         timerService.stopTimer()
         record.recordedSeconds = timerService.activeTime
         //        updateLiveActivity(for: entry)
         try? modelContext?.save()
     }
 
-    func endRecordTimer() {
+    func endRecordTimer(send: Bool = true) {
         guard let timerService, let record else { return }
 
         healthKitService.stopWorkout()
-        connectivityService.sendRecordTimerStatus(.timerStopped)
+        if send {
+            connectivityService.sendRecordTimerStatus(
+                .timerStopped,
+                for: record
+            )
+        }
         timerService.stopTimer()
         record.recordedSeconds = timerService.activeTime
         //        endLiveActivity(for: entry)
@@ -85,22 +87,9 @@ final class RecordViewModel {
 
     }
 
-    // MARK: - Connectivity
-    private func setupConnectivityObservers() {
-        connectivityService.onRecordTimerUpdate = {
-            [weak self] status in
-            Task { @MainActor in
-                self?.timerService?.handleTimerStatusChange(status)
-            }
-        }
-
-        connectivityService.onHeartRateUpdate = {
-            [weak self] heartRate in
-            Task { @MainActor in
-                self?.heartRate = heartRate
-                self?.timerService?.handleHeartRateChange(heartRate)
-            }
-        }
+    func receiveHeartRate(_ heartRate: Int) {
+        self.heartRate = heartRate
+        self.timerService?.handleHeartRateChange(heartRate)
     }
 
     // MARK: - Helper Functions

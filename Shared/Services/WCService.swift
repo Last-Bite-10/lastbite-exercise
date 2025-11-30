@@ -12,7 +12,6 @@ import WatchConnectivity
 final class WCService: NSObject {
 
     // Callback function for synchronization
-    var onRecordTimerUpdate: ((TimerStatus) -> Void)?
     var onHeartRateUpdate: ((Int) -> Void)?
 
     var isReceivingFromWatch: Bool = false
@@ -27,29 +26,19 @@ final class WCService: NSObject {
 
     // Use sendMessage for time-critical data (timer controls, heart rate)
     // This is synchronous and requires both devices to be reachable
-    func sendSelectedRecord(_ record: ExerciseRecord) {
-        guard WCSession.default.isReachable else { return }
-
-        let message: [String: Any] = [
-            "type": "selectedRecord",
-            "recordId": record.id.uuidString,
-        ]
-
-        WCSession.default.sendMessage(message, replyHandler: nil)
-    }
-
     func sendRecordTimerStatus(
-        _ status: TimerStatus
+        _ status: TimerStatus,
+        for record: ExerciseRecord
     ) {
-        guard WCSession.default.isReachable else {
-            Debugging.debug("⚠️ Watch not reachable for timer pause")
-            return
-        }
+        guard WCSession.default.isReachable else { return }
 
         let message: [String: Any] = [
             "type": "timerStatus",
             "status": status.rawValue,
+            "recordId": record.id.uuidString,
         ]
+
+        Debugging.debug("Send Record Timer Status Record: \(message)")
 
         WCSession.default.sendMessage(message, replyHandler: nil) { error in
             Debugging.debug(
@@ -66,6 +55,8 @@ final class WCService: NSObject {
             "type": "heartRate",
             "heartRate": heartRate,
         ]
+
+        Debugging.debug("Send Heart Rate: \(message)")
 
         // sendMessage is faster but requires reachability
         WCSession.default.sendMessage(message, replyHandler: nil)
@@ -100,29 +91,24 @@ extension WCService: WCSessionDelegate {
     // Handle real-time messages (timer controls, heart rate)
     func session(_ session: WCSession, didReceiveMessage message: [String: Any])
     {
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.async {
             guard let type = message["type"] as? String else { return }
 
             switch type {
-            case "selectedRecord":
-                if let recordIdString = message["recordID"] as? String,
-                    let recordId = UUID(uuidString: recordIdString)
-                {
-                    NotificationCenter.default.post(
-                        name: .receiveSelectedRecord,
-                        object: recordId
-                    )
-                }
 
             case "timerStatus":
-                if let status = message["status"] as? TimerStatus {
-                    self?.onRecordTimerUpdate?(status)
-                }
+                Debugging.debug("Received timer status update")
+                NotificationCenter.default.post(
+                    name: .receiveRecordTimerStatusUpdate,
+                    object: message
+                )
 
             case "heartRate":
-                if let heartRate = message["heartRate"] as? Int {
-                    self?.onHeartRateUpdate?(heartRate)
-                }
+                Debugging.debug("Received heart rate update")
+                NotificationCenter.default.post(
+                    name: .receiveHeartRateUpdate,
+                    object: message["heartRate"]
+                )
 
             default:
                 break
@@ -132,7 +118,10 @@ extension WCService: WCSessionDelegate {
 }
 
 extension Notification.Name {
-    static let receiveSelectedRecord = Notification.Name(
-        "receiveSelectedRecord"
+    static let receiveRecordTimerStatusUpdate = Notification.Name(
+        "receiveRecordTimerStatusUpdate"
+    )
+    static let receiveHeartRateUpdate = Notification.Name(
+        "receiveHeartRateUpdate"
     )
 }

@@ -17,7 +17,7 @@ struct ExerciseRowComponent: View {
     @Environment(RecordViewModel.self) private var viewModel
 
     var record: ExerciseRecord
-    var action: () -> Void
+    var action: (() -> Void)?
 
     var buttonState: ExerciseButtonState {
         if viewModel.timerService?.timerStatus == .timerStarted {
@@ -61,7 +61,7 @@ struct ExerciseRowComponent: View {
             }
             .simultaneousGesture(
                 TapGesture().onEnded {
-                    action()
+                    action?()
                 }
             )
             .buttonStyle(.plain)

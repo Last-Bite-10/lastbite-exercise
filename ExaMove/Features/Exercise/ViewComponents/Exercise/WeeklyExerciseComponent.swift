@@ -107,7 +107,6 @@ struct WeeklyExerciseComponent: View {
                             isCurrentDay: isToday(dayDate),
                             onStart: { record in
                                 selectedRecord = record
-                                recordViewModel.sendSelectedRecord(record)
                             }
                         )
                         .environment(recordViewModel)
@@ -141,16 +140,46 @@ struct WeeklyExerciseComponent: View {
             }
         }
         .onReceive(
-            NotificationCenter.default.publisher(for: .receiveSelectedRecord)
-        ) { notification in
-            if let recordID = notification.object as? UUID,
-                let record = viewModel.currentWeek?.records?.first(
-                    where: { $0.id == recordID }
-                )
-            {
-                recordViewModel.setup(modelContext, for: record)
+            NotificationCenter.default.publisher(
+                for: .receiveRecordTimerStatusUpdate
+            ),
+            perform: { notification in
+                if let message = notification.object as? [String: Any],
+                    let statusString = message["status"] as? String,
+                    let status = TimerStatus(rawValue: statusString),
+                    let recordIdString = message["recordId"] as? String,
+                    let record = viewModel.currentWeek?.records?.first(where: {
+                        $0.id.uuidString == recordIdString
+                    })
+                {
+                    Debugging.debug(
+                        "Setting up view model for selected record successfully: \(record.id)"
+                    )
+                    recordViewModel.setup(modelContext, for: record)
+                    switch status {
+                    case .timerStarted:
+                        recordViewModel.startRecordTimer(send: false)
+                    case .timerPaused:
+                        recordViewModel.pauseRecordTimer(send: false)
+                    case .timerStopped:
+                        recordViewModel.endRecordTimer(send: false)
+                    default:
+                        recordViewModel.timerService?.handleTimerStatusChange(
+                            status
+                        )
+                    }
+                }
             }
-        }
+        )
+        .onReceive(
+            NotificationCenter.default.publisher(for: .receiveHeartRateUpdate),
+            perform: { notification in
+                if let heartRate = notification.object as? Int {
+                    recordViewModel.receiveHeartRate(heartRate)
+                    Debugging.debug("iPhone Received heart rate: \(heartRate)")
+                }
+            }
+        )
     }
 }
 

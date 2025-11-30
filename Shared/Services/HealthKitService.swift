@@ -19,15 +19,6 @@ final class HealthKitService: NSObject {
     var onHeartRateUpdate: ((Int) -> Void)?
     var bpmThreshold: Int = -1
 
-    override init() {
-        super.init()
-        Debugging.debug("HealthKitService initialized")
-    }
-
-    deinit {
-        Debugging.debug("HealthKitService deinitialized")
-    }
-
     func requestAuthorization() {
         guard HKHealthStore.isHealthDataAvailable() else { return }
 
@@ -56,7 +47,7 @@ final class HealthKitService: NSObject {
         }
     }
 
-    func startWorkout(onUpdate: @escaping (Int) -> Void) {
+    func startWorkout(onUpdate: ((Int) -> Void)? = nil) {
         self.onHeartRateUpdate = onUpdate
 
         Debugging.debug("Starting workout session...")
