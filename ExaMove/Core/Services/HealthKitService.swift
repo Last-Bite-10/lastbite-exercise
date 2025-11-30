@@ -13,8 +13,6 @@ import HealthKit
 final class HealthKitService: NSObject, HKWorkoutSessionDelegate,
     HKLiveWorkoutBuilderDelegate
 {
-    static let shared = HealthKitService()
-
     private let healthStore = HKHealthStore()
 
     private var workoutSession: HKWorkoutSession?

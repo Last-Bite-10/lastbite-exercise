@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlanRowComponent: View {
+struct ExerciseRowComponent: View {
     let title: String
     let duration: Int
     let isCompleted: Bool
@@ -108,8 +108,8 @@ struct PlanRowComponent: View {
             }
         }
         .sheet(isPresented: $showTutorial) {
-            //            ExerciseTutorial(exercise: exercise)
-            //                .presentationDragIndicator(.visible)
+            ExerciseTutorial(exercise: exercise)
+                .presentationDragIndicator(.visible)
         }
     }
 }

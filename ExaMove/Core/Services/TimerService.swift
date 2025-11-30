@@ -8,20 +8,20 @@ import Combine
 import Foundation
 
 @MainActor @Observable
-class TimerService {  // ← Add ObservableObject conformance
+final class TimerService {
     // Properties
     var record: ExerciseRecord
     var activeTime: TimeInterval
     var totalTime: TimeInterval
     var remainingTime: TimeInterval
     var timerStatus: TimerStatus
-
     var timer: AnyCancellable?
 
-    // Used services
-    var healthKitService = HealthKitService.shared
-    var connectivityService = WCService.shared
+    // Used Services
+    private var healthKitService: HealthKitService
+    private var connectivityService: WCService
 
+    // getter
     var progress: Double {
         return min(
             remainingTime / record.requiredSeconds,
@@ -30,7 +30,11 @@ class TimerService {  // ← Add ObservableObject conformance
     }
 
     // MARK: - Initialization
-    init(record: ExerciseRecord) {
+    init(
+        record: ExerciseRecord,
+        healthKitService: HealthKitService,
+        connectivityService: WCService,
+    ) {
         self.record = record
         self.activeTime = record.recordedSeconds
         self.totalTime = record.recordedSeconds
@@ -39,6 +43,8 @@ class TimerService {  // ← Add ObservableObject conformance
             record.requiredSeconds - record.recordedSeconds
         )
         self.timerStatus = .timerStopped
+        self.healthKitService = healthKitService
+        self.connectivityService = connectivityService
     }
 
     // MARK: - Core Functions
@@ -65,21 +71,6 @@ class TimerService {  // ← Add ObservableObject conformance
         timerStatus = .timerStopped
     }
 
-    // MARK: - Internal Functions
-    private func handleTimerTick() {
-        if timerStatus != .timerBelowBPM {
-            self.activeTime += 1
-            self.remainingTime -= 1
-        }
-
-        self.totalTime += 1
-        handleTimerStatusChange(.timerStarted)
-
-        Debugging.debug(
-            "Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)"
-        )
-    }
-
     func handleTimerStatusChange(_ status: TimerStatus) {
         if remainingTime < 0 {
             timerStatus = .timerOverflown
@@ -94,6 +85,21 @@ class TimerService {  // ← Add ObservableObject conformance
             timerStatus = .timerBelowBPM
             return
         }
+    }
+
+    // MARK: - Internal Functions
+    private func handleTimerTick() {
+        if timerStatus != .timerBelowBPM {
+            self.activeTime += 1
+            self.remainingTime -= 1
+        }
+
+        self.totalTime += 1
+        handleTimerStatusChange(.timerStarted)
+
+        Debugging.debug(
+            "Timer ticked!! Timer now : \(self.totalTime) \(self.timerStatus) \(self.activeTime) \(self.remainingTime) \(self.progress)"
+        )
     }
 
     // MARK: - Utility Functions

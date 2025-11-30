@@ -13,7 +13,7 @@ struct ExerciseView: View {
 
     @Binding var showTutorialOverlay: Bool
 
-    @State private var healthKitService = HealthKitService.shared
+    @State private var healthKitService = HealthKitService()
     @State private var viewModel = ExerciseViewModel()
 
     @Query private var preferences: [Preference]
@@ -48,9 +48,11 @@ struct ExerciseView: View {
                     if !preference.finishQuestionnaire {
                         PlanSelectionComponent().environment(viewModel)
                     } else {
-                        WeeklyPlanComponent()
-                            .frame(height: 300)
-                            .environment(viewModel)
+                        WeeklyExerciseComponent(
+                            healthKitService: healthKitService
+                        )
+                        .frame(height: 300)
+                        .environment(viewModel)
                     }
 
                     HistoryComponent().environment(viewModel)
@@ -64,7 +66,7 @@ struct ExerciseView: View {
         }
 
         .sheet(isPresented: $viewModel.showPlanModifySheet) {
-            ExerciseSelectionSheet().environment(viewModel)
+            ExerciseSelectionView().environment(viewModel)
         }
 
         .fullScreenCover(isPresented: $viewModel.showQuestionnaire) {

@@ -11,29 +11,43 @@ import Foundation
 import SwiftData
 
 @MainActor @Observable
-class RecordViewModel {
+final class RecordViewModel {
     //    private var activity: Activity<TimerActivityAttributes>?
 
-    private let connectivityService = WCService.shared
+    private let healthKitService: HealthKitService
+    private let connectivityService: WCService
 
     private var modelContext: ModelContext?
 
     var record: ExerciseRecord?
     var timerService: TimerService?
     var heartRate: Int?
-    var setupDone: Bool = false
+    var bpmTreshold: Int
+
+    init(healthKitService: HealthKitService, connectivityService: WCService) {
+        self.healthKitService = healthKitService
+        self.connectivityService = connectivityService
+        self.bpmTreshold = healthKitService.bpmThreshold
+    }
 
     func setup(_ context: ModelContext, for record: ExerciseRecord) {
         self.modelContext = context
         self.record = record
-        self.timerService = TimerService(record: record)
-        self.setupDone = true
+        self.timerService = TimerService(
+            record: record,
+            healthKitService: healthKitService,
+            connectivityService: connectivityService
+        )
+    }
+
+    func sendSelectedRecord(_ record: ExerciseRecord) {
+        connectivityService.sendSelectedRecord(record)
     }
 
     func startRecordTimer() {
-        guard let timerService, let record else { return }
+        guard let timerService else { return }
 
-        connectivityService.sendRecordTimerStatus(.timerStarted, for: record)
+        connectivityService.sendRecordTimerStatus(.timerStarted)
         timerService.startTimer()
         //        startLiveActivity(for: entry)
         try? modelContext?.save()
@@ -42,7 +56,7 @@ class RecordViewModel {
     func pauseRecordTimer() {
         guard let timerService, let record else { return }
 
-        connectivityService.sendRecordTimerStatus(.timerPaused, for: record)
+        connectivityService.sendRecordTimerStatus(.timerPaused)
         timerService.stopTimer()
         record.recordedSeconds = timerService.activeTime
         //        updateLiveActivity(for: entry)
@@ -52,7 +66,7 @@ class RecordViewModel {
     func endRecordTimer() {
         guard let timerService, let record else { return }
 
-        connectivityService.sendRecordTimerStatus(.timerStopped, for: record)
+        connectivityService.sendRecordTimerStatus(.timerStopped)
         timerService.stopTimer()
         record.recordedSeconds = timerService.activeTime
         //        endLiveActivity(for: entry)
@@ -64,7 +78,7 @@ class RecordViewModel {
 
     private func setupConnectivityObservers() {
         connectivityService.onRecordTimerUpdate = {
-            [weak self] uuid, status in
+            [weak self] status in
             Task { @MainActor in
                 self?.timerService?.handleTimerStatusChange(status)
             }

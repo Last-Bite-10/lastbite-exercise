@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct ExerciseSelectionSheet: View {
+struct ExerciseSelectionView: View {
     @Environment(ExerciseViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
 
@@ -135,5 +135,5 @@ struct ExerciseSelectionSheet: View {
 }
 
 #Preview {
-    ExerciseSelectionSheet().environment(ExerciseViewModel())
+    ExerciseSelectionView().environment(ExerciseViewModel())
 }

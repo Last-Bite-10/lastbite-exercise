@@ -13,7 +13,7 @@ enum ExerciseButtonState {
     case btnRecording
 }
 
-struct DailyPlanCardComponent: View {
+struct DailyExerciseCardComponent: View {
     @Environment(RecordViewModel.self) private var viewModel
 
     let date: Date
@@ -97,7 +97,7 @@ struct DailyPlanCardComponent: View {
             // MARK: - Exercise List
             VStack(spacing: 20) {
                 ForEach(records) { record in
-                    PlanRowComponent(
+                    ExerciseRowComponent(
                         title: record.exercise?.name ?? "Exercise",
                         duration: record.requiredSeconds.getMinutes(),
                         isCompleted: record.isCompleted,
@@ -126,7 +126,7 @@ struct DailyPlanCardComponent: View {
 }
 
 #Preview {
-    DailyPlanCardComponent(
+    DailyExerciseCardComponent(
         date: Date(),
         records: [],
         isCurrentDay: true,

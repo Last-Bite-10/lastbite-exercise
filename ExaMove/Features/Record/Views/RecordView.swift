@@ -11,8 +11,6 @@ struct RecordView: View {
     @Environment(RecordViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
 
-    @State private var healthKitService = HealthKitService.shared
-
     var timerMessage: LocalizedStringKey {
         switch viewModel.timerService?.timerStatus {
         case .timerPaused:
@@ -22,7 +20,7 @@ struct RecordView: View {
                 "Your exercise is in progress, your heartbeat is being recorded!"
         case .timerStopped:
             return
-                "Start now! Remember only your active time **(BPM >= \(healthKitService.bpmThreshold))** will be recorded."
+                "Start now! Remember only your active time **(BPM >= \(viewModel.bpmTreshold))** will be recorded."
         case .timerOverflown:
             return
                 "Your exercise is in progress, your heartbeat is being recorded!"
@@ -88,5 +86,10 @@ struct RecordView: View {
 }
 
 #Preview {
-    RecordView().environment(RecordViewModel())
+    RecordView().environment(
+        RecordViewModel(
+            healthKitService: HealthKitService(),
+            connectivityService: WCService()
+        )
+    )
 }

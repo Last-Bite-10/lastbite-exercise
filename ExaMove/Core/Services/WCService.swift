@@ -10,14 +10,12 @@ import WatchConnectivity
 
 @Observable
 final class WCService: NSObject {
-    static let shared = WCService()
-
-    var onRecordTimerUpdate: ((UUID, TimerStatus) -> Void)?
+    var onRecordTimerUpdate: ((TimerStatus) -> Void)?
     var onHeartRateUpdate: ((Int) -> Void)?
 
     var isReceivingFromWatch: Bool = false
 
-    private override init() {
+    override init() {
         super.init()
         if WCSession.isSupported() {
             WCSession.default.delegate = self
@@ -28,8 +26,7 @@ final class WCService: NSObject {
     // Use sendMessage for time-critical data (timer controls, heart rate)
     // This is synchronous and requires both devices to be reachable
     func sendRecordTimerStatus(
-        _ status: TimerStatus,
-        for record: ExerciseRecord,
+        _ status: TimerStatus
     ) {
         guard WCSession.default.isReachable else {
             Debugging.debug("⚠️ Watch not reachable for timer pause")
@@ -38,7 +35,6 @@ final class WCService: NSObject {
 
         let message: [String: Any] = [
             "type": "timerStatus",
-            "recordId": record.id.uuidString,
             "status": status.rawValue,
         ]
 
@@ -47,6 +43,17 @@ final class WCService: NSObject {
                 "❌ Failed to send timer pause: \(error.localizedDescription)"
             )
         }
+    }
+
+    func sendSelectedRecord(_ record: ExerciseRecord) {
+        guard WCSession.default.isReachable else { return }
+
+        let message: [String: Any] = [
+            "type": "selectedRecord",
+            "recordId": record.id.uuidString,
+        ]
+
+        WCSession.default.sendMessage(message, replyHandler: nil)
     }
 
     // Use sendMessage for heart rate (real-time, critical)
@@ -96,14 +103,13 @@ extension WCService: WCSessionDelegate {
 
             switch type {
             case "timerStatus":
-                if let recordIdString = message["recordId"] as? String,
-                    let recordId = UUID(uuidString: recordIdString),
-                    let status = message["status"] as? TimerStatus
-                {
-                    self?.onRecordTimerUpdate?(
-                        recordId,
-                        status
-                    )
+                if let status = message["status"] as? TimerStatus {
+                    self?.onRecordTimerUpdate?(status)
+                }
+
+            case "selectedRecord":
+                if let recordIdString = message["recordID"] as? String {
+
                 }
 
             case "heartRate":

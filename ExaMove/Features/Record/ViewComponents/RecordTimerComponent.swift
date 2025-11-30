@@ -99,5 +99,10 @@ struct RecordTimerComponent: View {
 }
 
 #Preview {
-    RecordTimerComponent().environment(RecordViewModel())
+    RecordTimerComponent().environment(
+        RecordViewModel(
+            healthKitService: HealthKitService(),
+            connectivityService: WCService()
+        )
+    )
 }

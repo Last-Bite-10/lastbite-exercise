@@ -8,13 +8,13 @@
 import SwiftData
 import SwiftUI
 
-struct WeeklyPlanComponent: View {
+struct WeeklyExerciseComponent: View {
     @Environment(ExerciseViewModel.self) private var viewModel
     @Environment(\.modelContext) private var modelContext
 
     @Query private var preferences: [Preference]
 
-    @State private var recordViewModel = RecordViewModel()
+    @State private var recordViewModel: RecordViewModel
     @State private var selectedRecord: ExerciseRecord?
     @State private var selection = 0
 
@@ -57,6 +57,15 @@ struct WeeklyPlanComponent: View {
         }
     }
 
+    init(healthKitService: HealthKitService) {
+        _recordViewModel = .init(
+            initialValue: RecordViewModel(
+                healthKitService: healthKitService,
+                connectivityService: WCService()
+            )
+        )
+    }
+
     // MARK: - Body
     var body: some View {
         // Today's Plan Header
@@ -92,11 +101,14 @@ struct WeeklyPlanComponent: View {
                     let dailyRecord = exercisesFor(date: dateForPage(index))
 
                     ScrollView {
-                        DailyPlanCardComponent(
+                        DailyExerciseCardComponent(
                             date: dayDate,
                             records: dailyRecord,
                             isCurrentDay: isToday(dayDate),
-                            onStart: { record in selectedRecord = record }
+                            onStart: { record in
+                                selectedRecord = record
+                                recordViewModel.sendSelectedRecord(record)
+                            }
                         )
                         .environment(recordViewModel)
                         .padding(.horizontal)
@@ -118,9 +130,7 @@ struct WeeklyPlanComponent: View {
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
             .sheet(item: $selectedRecord) { record in
-                if !recordViewModel.setupDone
-                    || recordViewModel.record != record
-                {
+                if recordViewModel.record != record {
                     ProgressView().onAppear {
                         recordViewModel.setup(modelContext, for: record)
                     }
@@ -134,5 +144,7 @@ struct WeeklyPlanComponent: View {
 }
 
 #Preview {
-    WeeklyPlanComponent().environment(ExerciseViewModel())
+    WeeklyExerciseComponent(
+        healthKitService: HealthKitService()
+    ).environment(ExerciseViewModel())
 }
