@@ -7,6 +7,14 @@
 import Combine
 import Foundation
 
+enum TimerStatus: String, Codable, Hashable, CaseIterable {
+    case timerPaused
+    case timerStarted
+    case timerStopped
+    case timerOverflown
+    case timerBelowBPM
+}
+
 @MainActor @Observable
 final class TimerService {
     // Properties
