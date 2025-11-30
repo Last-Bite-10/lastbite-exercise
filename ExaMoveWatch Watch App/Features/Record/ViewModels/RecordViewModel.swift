@@ -11,8 +11,6 @@ import SwiftData
 
 @MainActor @Observable
 final class RecordViewModel {
-    //    private var activity: Activity<TimerActivityAttributes>?
-
     private let healthKitService: HealthKitService
     private let connectivityService: WCService
 

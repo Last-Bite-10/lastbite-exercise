@@ -75,6 +75,9 @@ struct ExerciseRowComponent: View {
                             .font(.headline)
                         Text(buttonText)
                             .font(.headline)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .layoutPriority(1)
                     }
                     .padding(.horizontal, 18)
                     .padding(.vertical, 10)

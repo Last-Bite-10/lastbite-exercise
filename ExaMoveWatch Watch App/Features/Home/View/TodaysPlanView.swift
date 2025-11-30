@@ -16,8 +16,34 @@ struct TodaysPlanView: View {
     @Query private var records: [ExerciseRecord]
 
     var todaysRecords: [ExerciseRecord] {
-        records.filter {
-            Calendar.current.isDateInToday($0.usedAt)
+        records
+            .filter { Calendar.current.isDateInToday($0.usedAt) }
+            .sorted { $0.usedAt < $1.usedAt }
+    }
+
+    // When receiving command from iPhone, this will run
+    private func handleRecordTimerStatusUpdate(_ message: [String: Any]) {
+        if let statusString = message["status"] as? String,
+            let status = TimerStatus(rawValue: statusString),
+            let recordIdString = message["recordId"] as? String,
+            let record = todaysRecords.first(where: {
+                $0.id.uuidString == recordIdString
+            })
+        {
+            Debugging.debug(
+                "Setting up view model for selected record successfully: \(record.id)"
+            )
+            viewModel.setup(modelContext, for: record)
+            switch status {
+            case .timerStarted:
+                viewModel.startRecordTimer(send: false)
+            case .timerPaused:
+                viewModel.pauseRecordTimer(send: false)
+            case .timerStopped:
+                viewModel.endRecordTimer(send: false)
+            default:
+                viewModel.timerService?.handleTimerStatusChange(status)
+            }
         }
     }
 
@@ -47,28 +73,8 @@ struct TodaysPlanView: View {
                 for: .receiveRecordTimerStatusUpdate
             ),
             perform: { notification in
-                if let message = notification.object as? [String: Any],
-                    let statusString = message["status"] as? String,
-                    let status = TimerStatus(rawValue: statusString),
-                    let recordIdString = message["recordId"] as? String,
-                    let record = todaysRecords.first(where: {
-                        $0.id.uuidString == recordIdString
-                    })
-                {
-                    Debugging.debug(
-                        "Setting up view model for selected record successfully: \(record.id)"
-                    )
-                    viewModel.setup(modelContext, for: record)
-                    switch status {
-                    case .timerStarted:
-                        viewModel.startRecordTimer(send: false)
-                    case .timerPaused:
-                        viewModel.pauseRecordTimer(send: false)
-                    case .timerStopped:
-                        viewModel.endRecordTimer(send: false)
-                    default:
-                        viewModel.timerService?.handleTimerStatusChange(status)
-                    }
+                if let message = notification.object as? [String: Any] {
+                    handleRecordTimerStatusUpdate(message)
                 }
             }
         )

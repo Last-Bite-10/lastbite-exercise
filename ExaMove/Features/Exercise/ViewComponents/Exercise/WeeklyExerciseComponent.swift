@@ -56,6 +56,36 @@ struct WeeklyExerciseComponent: View {
         case .fiveDays: return 5
         }
     }
+    
+    // When receiving data from watch, this will be called
+    private func handleReceiveRecordTimerStatus(_ message: [String: Any]) {
+        if let statusString = message["status"] as? String,
+            let status = TimerStatus(rawValue: statusString),
+            let recordIdString = message["recordId"] as? String,
+            let record = viewModel.currentWeek?.records?.first(where: {
+                $0.id.uuidString == recordIdString
+            })
+        {
+            recordViewModel.setup(modelContext, for: record)
+
+            switch status {
+            case .timerStarted:
+                recordViewModel.startRecordTimer(send: false)
+            case .timerPaused:
+                recordViewModel.pauseRecordTimer(send: false)
+            case .timerStopped:
+                recordViewModel.endRecordTimer(send: false)
+            default:
+                recordViewModel.timerService?.handleTimerStatusChange(
+                    status
+                )
+            }
+
+            Debugging.debug(
+                "Setting up view model for selected record successfully: \(record.id)"
+            )
+        }
+    }
 
     init(healthKitService: HealthKitService) {
         _recordViewModel = .init(
@@ -144,30 +174,8 @@ struct WeeklyExerciseComponent: View {
                 for: .receiveRecordTimerStatusUpdate
             ),
             perform: { notification in
-                if let message = notification.object as? [String: Any],
-                    let statusString = message["status"] as? String,
-                    let status = TimerStatus(rawValue: statusString),
-                    let recordIdString = message["recordId"] as? String,
-                    let record = viewModel.currentWeek?.records?.first(where: {
-                        $0.id.uuidString == recordIdString
-                    })
-                {
-                    Debugging.debug(
-                        "Setting up view model for selected record successfully: \(record.id)"
-                    )
-                    recordViewModel.setup(modelContext, for: record)
-                    switch status {
-                    case .timerStarted:
-                        recordViewModel.startRecordTimer(send: false)
-                    case .timerPaused:
-                        recordViewModel.pauseRecordTimer(send: false)
-                    case .timerStopped:
-                        recordViewModel.endRecordTimer(send: false)
-                    default:
-                        recordViewModel.timerService?.handleTimerStatusChange(
-                            status
-                        )
-                    }
+                if let message = notification.object as? [String: Any] {
+                    handleReceiveRecordTimerStatus(message)
                 }
             }
         )
