@@ -43,7 +43,7 @@ struct ExerciseRowComponent: View {
                     .font(.headline)
                     .foregroundStyle(.black)
                 Text(
-                    "\(record.requiredSeconds.getMinutes() - record.recordedSeconds.getMinutes()) mins"
+                    "\(record.requiredSeconds.getMinutes()) mins"
                 )
                 .font(.caption2)
                 .foregroundStyle(.black)

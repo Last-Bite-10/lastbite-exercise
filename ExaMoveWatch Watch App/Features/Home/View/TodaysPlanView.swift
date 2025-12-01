@@ -57,27 +57,30 @@ struct TodaysPlanView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Today's Plan")
-                .font(.title3)
-                .bold()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Today's Plan")
+                    .font(.title3)
+                    .bold()
 
-            ForEach(todaysRecords) { record in
-                ExerciseRowComponent(record: record)
-                    .environment(viewModel)
-            }
-        }
-        .padding()
-        .onReceive(
-            NotificationCenter.default.publisher(
-                for: .receiveRecordTimerStatusUpdate
-            ),
-            perform: { notification in
-                if let message = notification.object as? [String: Any] {
-                    handleRecordTimerStatusUpdate(message)
+                ForEach(todaysRecords) { record in
+                    ExerciseRowComponent(record: record)
+                        .environment(viewModel)
+
                 }
             }
-        )
+            .padding()
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: .receiveRecordTimerStatusUpdate
+                ),
+                perform: { notification in
+                    if let message = notification.object as? [String: Any] {
+                        handleRecordTimerStatusUpdate(message)
+                    }
+                }
+            )
+        }
     }
 }
 
