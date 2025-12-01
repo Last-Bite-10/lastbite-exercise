@@ -17,7 +17,12 @@ final class HealthKitService: NSObject {
     private var workoutBuilder: HKLiveWorkoutBuilder?
 
     var onHeartRateUpdate: ((Int) -> Void)?
-    var bpmThreshold: Int = -1
+    var bpmThreshold: Int = 100
+
+    private func getBPMThreshold(_ age: Int) -> Int {
+        let idealBPM: Double = Double(220 - age) * 0.54
+        return Int(floor(idealBPM))
+    }
 
     func requestAuthorization() {
         guard HKHealthStore.isHealthDataAvailable() else { return }
@@ -34,9 +39,33 @@ final class HealthKitService: NSObject {
         healthStore.requestAuthorization(
             toShare: typesToShare,
             read: typesToRead
-        ) {
-            success,
-            error in
+        ) { success, error in
+            if success {
+                do {
+                    let dob = try self.healthStore.dateOfBirthComponents()
+                    let calendar = Calendar.current
+                    if let birthDate = calendar.date(from: dob) {
+                        let ageComponent = calendar.dateComponents(
+                            [.year],
+                            from: birthDate,
+                            to: Date()
+                        )
+                        let age = ageComponent.year ?? 20
+
+                        print("DoB = \(birthDate)")
+
+                        Task { @MainActor in
+                            self.bpmThreshold = self.getBPMThreshold(age)
+                            print("BPM threshold : \(self.bpmThreshold)")
+                        }
+
+                        print("Threshold: \(self.bpmThreshold)")
+                    }
+                } catch {
+                    Debugging.debug("Failed to get date of birth.")
+                }
+            }
+
             if let error = error {
                 Debugging.debug(
                     "HealthKit authorization error: \(error.localizedDescription)"
